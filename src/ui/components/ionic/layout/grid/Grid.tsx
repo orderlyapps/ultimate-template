@@ -1,0 +1,8 @@
+import { IonGrid } from "@ionic/react";
+import type { ComponentProps } from "react";
+
+interface GridProps extends ComponentProps<typeof IonGrid> {}
+
+export const Grid: React.FC<GridProps> = ({ children, ...props }) => {
+  return <IonGrid {...props}>{children}</IonGrid>;
+};
