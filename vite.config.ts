@@ -35,10 +35,16 @@ export default defineConfig({
       "@assets": resolve(__dirname, "src/ui/assets"),
       "@colors": resolve(__dirname, "src/ui/colors"),
 
-      "@layout": resolve(__dirname, "src/ui/components/layout"),
-      "@input": resolve(__dirname, "src/ui/components/input"),
-      "@display": resolve(__dirname, "src/ui/components/display"),
-      "@navigation": resolve(__dirname, "src/ui/components/navigation"),
+      "@layout": resolve(__dirname, "src/ui/components/custom/layout"),
+      "@input": resolve(__dirname, "src/ui/components/custom/input"),
+      "@display": resolve(__dirname, "src/ui/components/custom/display"),
+      "@navigation": resolve(__dirname, "src/ui/components/custom/navigation"),
+
+      "@ionic-layout": resolve(__dirname, "src/ui/components/ionic/layout"),
+      "@ionic-input": resolve(__dirname, "src/ui/components/ionic/input"),
+      "@ionic-display": resolve(__dirname, "src/ui/components/ionic/display"),
+      "@ionic-navigation": resolve(__dirname, "src/ui/components/ionic/navigation"),
+
       "@components": resolve(__dirname, "src/ui/components"),
 
       "@css": resolve(__dirname, "src/ui/css"),

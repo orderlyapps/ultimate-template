@@ -33,7 +33,7 @@
       "@pages/*": ["src/routes/pages/*"],
       "@home/*": ["src/routes/pages/home/*"],
       "@settings/*": ["src/routes/pages/settings/*"],
-      
+
       "@tabs/*": ["src/routes/tabs/*"],
 
       "@routes/*": ["src/routes/*"],
@@ -56,10 +56,16 @@
       "@assets/*": ["src/ui/assets/*"],
       "@colors/*": ["src/ui/colors/*"],
 
-      "@layout/*": ["src/ui/components/layout/*"],
-      "@input/*": ["src/ui/components/input/*"],
-      "@display/*": ["src/ui/components/display/*"],
-      "@navigation/*": ["src/ui/components/navigation/*"],
+      "@layout/*": ["src/ui/components/custom/layout/*"],
+      "@input/*": ["src/ui/components/custom/input/*"],
+      "@display/*": ["src/ui/components/custom/display/*"],
+      "@navigation/*": ["src/ui/components/custom/navigation/*"],
+
+      "@ionic-layout/*": ["src/ui/components/ionic/layout/*"],
+      "@ionic-input/*": ["src/ui/components/ionic/input/*"],
+      "@ionic-display/*": ["src/ui/components/ionic/display/*"],
+      "@ionic-navigation/*": ["src/ui/components/ionic/navigation/*"],
+
       "@components/*": ["src/ui/components/*"],
 
       "@css/*": ["src/ui/css/*"],
