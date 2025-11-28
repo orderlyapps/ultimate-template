@@ -1,0 +1,81 @@
+{
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "types": ["vite/client"],
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+
+    "baseUrl": ".",
+    "paths": {
+      // FEATURES
+      "@feature/*": ["src/feature/*"],
+
+      // ROUTES
+      "@pages/*": ["src/routes/pages/*"],
+      "@home/*": ["src/routes/pages/home/*"],
+      "@settings/*": ["src/routes/pages/settings/*"],
+      
+      "@tabs/*": ["src/routes/tabs/*"],
+
+      "@routes/*": ["src/routes/*"],
+
+      // SERVICES
+      "@tanstack-db/*": ["src/services/state/tanstack-db/*"],
+      "@supabase/*": ["src/services/state/supabase/*"],
+      "@zustand/*": ["src/services/state/zustand/*"],
+      "@state/*": ["src/services/state/*"],
+
+      "@docx/*": ["src/services/docx/*"],
+      "@map/*": ["src/services/map/*"],
+      "@pdf/*": ["src/services/pdf/*"],
+      "@types/*": ["src/services/types/*"],
+
+      "@services/*": ["src/services/*"],
+
+      // UI
+      "@icons/*": ["src/ui/assets/icons/*"],
+      "@assets/*": ["src/ui/assets/*"],
+      "@colors/*": ["src/ui/colors/*"],
+
+      "@layout/*": ["src/ui/components/layout/*"],
+      "@input/*": ["src/ui/components/input/*"],
+      "@display/*": ["src/ui/components/display/*"],
+      "@navigation/*": ["src/ui/components/navigation/*"],
+      "@components/*": ["src/ui/components/*"],
+
+      "@css/*": ["src/ui/css/*"],
+
+      "@ui/*": ["src/ui/*"],
+
+      // UTIL
+      "@constants/*": ["src/util/constants/*"],
+      "@date/*": ["src/util/date/*"],
+      "@filter/*": ["src/util/filter/*"],
+      "@format/*": ["src/util/format/*"],
+      "@sort/*": ["src/util/sort/*"],
+      "@util/*": ["src/util/*"],
+
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["src"]
+}
