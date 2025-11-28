@@ -6,7 +6,7 @@ import {
   IonContent,
 } from "@ionic/react";
 
-const Settings: React.FC = () => {
+export const Settings: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
@@ -21,5 +21,3 @@ const Settings: React.FC = () => {
     </IonPage>
   );
 };
-
-export default Settings;

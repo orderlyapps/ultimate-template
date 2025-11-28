@@ -8,6 +8,7 @@ export default defineConfig({
     alias: {
       // FEATURES
       "@feature": resolve(__dirname, "src/feature"),
+      "@testing": resolve(__dirname, "src/feature/testing"),
 
       // ROUTES
       "@pages": resolve(__dirname, "src/routes/pages"),
@@ -43,7 +44,10 @@ export default defineConfig({
       "@ionic-layout": resolve(__dirname, "src/ui/components/ionic/layout"),
       "@ionic-input": resolve(__dirname, "src/ui/components/ionic/input"),
       "@ionic-display": resolve(__dirname, "src/ui/components/ionic/display"),
-      "@ionic-navigation": resolve(__dirname, "src/ui/components/ionic/navigation"),
+      "@ionic-navigation": resolve(
+        __dirname,
+        "src/ui/components/ionic/navigation"
+      ),
 
       "@components": resolve(__dirname, "src/ui/components"),
 

@@ -1,6 +1,13 @@
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/react';
+import {
+  IonPage,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+} from "@ionic/react";
+import { NavItem } from "@navigation/nav-item/NavItem";
 
-const Home: React.FC = () => {
+export const Home: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
@@ -9,13 +16,8 @@ const Home: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
-        The world is your oyster.
-        <p>
-          An oyster is a type of edible saltwater bivalve mollusk.
-        </p>
+        <NavItem routerLink="/home/test">Go to Test Page</NavItem>
       </IonContent>
     </IonPage>
   );
 };
-
-export default Home;
