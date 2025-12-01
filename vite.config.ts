@@ -4,6 +4,8 @@ import { resolve } from "path";
 
 // https://vite.dev/config/
 export default defineConfig({
+
+
   resolve: {
     alias: {
       // FEATURES
@@ -66,6 +68,7 @@ export default defineConfig({
       "@": resolve(__dirname, "src"),
     },
   },
+
   plugins: [
     react({
       babel: {
