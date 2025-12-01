@@ -21,7 +21,9 @@ export default defineConfig({
       "@routes": resolve(__dirname, "src/routes"),
 
       // SERVICES
-      "@tanstack-db": resolve(__dirname, "src/services/state/tanstack-db"),
+      "@tanstack-query": resolve(__dirname, "src/services/state/tanstack/query"),
+      "@tanstack-db": resolve(__dirname, "src/services/state/tanstack/db"),
+      
       "@supabase": resolve(__dirname, "src/services/state/supabase"),
       "@zustand": resolve(__dirname, "src/services/state/zustand"),
       "@state": resolve(__dirname, "src/services/state"),

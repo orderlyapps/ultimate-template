@@ -1,5 +1,7 @@
 import { IonReactRouter } from "@ionic/react-router";
 import { IonApp, setupIonicReact, IonTabs } from "@ionic/react";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "@tanstack-query/client";
 import { pages } from "@pages/Pages";
 import { tabs } from "@tabs/Tabs";
 
@@ -9,14 +11,16 @@ setupIonicReact();
 
 function App() {
   return (
-    <IonApp>
-      <IonReactRouter>
-        <IonTabs>
-          {pages}
-          {tabs}
-        </IonTabs>
-      </IonReactRouter>
-    </IonApp>
+    <QueryClientProvider client={queryClient}>
+      <IonApp>
+        <IonReactRouter>
+          <IonTabs>
+            {pages}
+            {tabs}
+          </IonTabs>
+        </IonReactRouter>
+      </IonApp>
+    </QueryClientProvider>
   );
 }
 
