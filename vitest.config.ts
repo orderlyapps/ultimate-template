@@ -7,11 +7,34 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "jsdom",
-    setupFiles: ["./src/feature/testing/setup.ts"],
+    setupFiles: [
+      "./src/feature/testing/polyfills.ts",
+      "./src/feature/testing/setup.ts",
+    ],
     include: ["src/**/*.{test,spec}.{ts,tsx}"],
     coverage: {
       reporter: ["text", "json", "html"],
       exclude: ["node_modules/", "src/feature/testing/"],
+    },
+    deps: {
+      optimizer: {
+        web: {
+          // Exclude Stencil from optimization to avoid initialization issues
+          exclude: ["@ionic/core"],
+        },
+      },
+    },
+    environmentOptions: {
+      jsdom: {
+        resources: "usable",
+      },
+    },
+    // Suppress Stencil async style errors
+    onConsoleLog(log) {
+      if (log.includes("includes") || log.includes("Stencil")) {
+        return false;
+      }
+      return true;
     },
   },
   resolve: {

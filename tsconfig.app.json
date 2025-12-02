@@ -5,7 +5,7 @@
     "useDefineForClassFields": true,
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "ESNext",
-    "types": ["vite/client"],
+    "types": ["vite/client", "vitest/globals", "node"],
     "skipLibCheck": true,
 
     /* Bundler mode */
@@ -28,6 +28,7 @@
     "paths": {
       // FEATURES
       "@feature/*": ["src/feature/*"],
+      "@testing/*": ["src/feature/testing/*"],
 
       // ROUTES
       "@pages/*": ["src/routes/pages/*"],

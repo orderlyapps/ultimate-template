@@ -1,5 +1,6 @@
 import { render, type RenderOptions } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { IonApp } from "@ionic/react";
 import type { ReactElement } from "react";
 
 function createTestQueryClient() {
@@ -20,7 +21,9 @@ interface WrapperProps {
 function AllProviders({ children }: WrapperProps) {
   const queryClient = createTestQueryClient();
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      <IonApp>{children}</IonApp>
+    </QueryClientProvider>
   );
 }
 
