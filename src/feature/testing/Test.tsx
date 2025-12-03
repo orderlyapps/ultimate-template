@@ -1,4 +1,4 @@
-import { IonItem } from "@ionic/react";
+import { Item } from "@ionic-layout/item/Item";
 
 interface TestProps {
   hello: string;
@@ -6,8 +6,8 @@ interface TestProps {
 
 export const Test: React.FC<TestProps> = ({ hello }) => {
   return (
-    <IonItem>
+    <Item>
       <div>{hello}</div>
-    </IonItem>
+    </Item>
   );
 };
