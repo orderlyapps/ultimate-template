@@ -1,7 +1,7 @@
 import { IonBackButton } from "@ionic/react";
 import type { ComponentProps } from "react";
 
-interface BackButtonProps extends Omit<ComponentProps<typeof IonBackButton>, "ref"> {}
+type BackButtonProps = Omit<ComponentProps<typeof IonBackButton>, "ref">;
 
 export const BackButton: React.FC<BackButtonProps> = (props) => {
   return <IonBackButton {...props} />;

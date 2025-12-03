@@ -29,12 +29,12 @@ if (typeof document !== "undefined" && !document.adoptedStyleSheets) {
 // Mock CSSStyleSheet.replaceSync
 if (typeof CSSStyleSheet !== "undefined") {
   if (!CSSStyleSheet.prototype.replaceSync) {
-    CSSStyleSheet.prototype.replaceSync = function (_text: string) {
+    CSSStyleSheet.prototype.replaceSync = function () {
       // No-op for testing
     };
   }
   if (!CSSStyleSheet.prototype.replace) {
-    CSSStyleSheet.prototype.replace = function (_text: string) {
+    CSSStyleSheet.prototype.replace = function () {
       return Promise.resolve(this);
     };
   }

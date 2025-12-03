@@ -1,7 +1,7 @@
 import { IonChip } from "@ionic/react";
 import type { ComponentProps } from "react";
 
-interface ChipProps extends ComponentProps<typeof IonChip> {}
+type ChipProps = ComponentProps<typeof IonChip>;
 
 export const Chip: React.FC<ChipProps> = ({ children, ...props }) => {
   return <IonChip {...props}>{children}</IonChip>;
