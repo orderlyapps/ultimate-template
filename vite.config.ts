@@ -1,11 +1,10 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { VitePWA } from "vite-plugin-pwa";
 import { resolve } from "path";
 
 // https://vite.dev/config/
 export default defineConfig({
-
-
   resolve: {
     alias: {
       // FEATURES
@@ -21,9 +20,12 @@ export default defineConfig({
       "@routes": resolve(__dirname, "src/routes"),
 
       // SERVICES
-      "@tanstack-query": resolve(__dirname, "src/services/state/tanstack/query"),
+      "@tanstack-query": resolve(
+        __dirname,
+        "src/services/state/tanstack/query"
+      ),
       "@tanstack-db": resolve(__dirname, "src/services/state/tanstack/db"),
-      
+
       "@supabase": resolve(__dirname, "src/services/state/supabase"),
       "@zustand": resolve(__dirname, "src/services/state/zustand"),
       "@state": resolve(__dirname, "src/services/state"),
@@ -75,6 +77,34 @@ export default defineConfig({
     react({
       babel: {
         plugins: [["babel-plugin-react-compiler"]],
+      },
+    }),
+    VitePWA({
+      registerType: "autoUpdate",
+      includeAssets: [
+        "assets/pwa/favicon-196.png",
+        "assets/pwa/apple-icon-180.png",
+        "assets/pwa/logo.svg",
+      ],
+      manifest: {
+        name: "Ultimate Template",
+        short_name: "Ultimate",
+        background_color: "#4a6da7",
+        theme_color: "#4a6da7",
+        icons: [
+          {
+            src: "assets/pwa/manifest-icon-192.maskable.png",
+            sizes: "192x192",
+            type: "image/png",
+          },
+
+          {
+            src: "assets/pwa/manifest-icon-512.maskable.png",
+            sizes: "512x512",
+            type: "image/png",
+            purpose: "maskable",
+          },
+        ],
       },
     }),
   ],

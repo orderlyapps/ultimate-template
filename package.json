@@ -5,12 +5,15 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "deploy:beta": "pnpm run build && npx wrangler pages deploy dist --project-name=orderly --branch=beta",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "generate-pwa-assets": "npx pwa-asset-generator public/assets/pwa/logo.svg ./public/assets/pwa/ --background '#4a6da7' --padding '10%' --scrape false --favicon true --log false",
+    "wrangler:update": "pnpm add -D wrangler@latest"
   },
   "dependencies": {
     "@ionic/react": "^8.7.11",
