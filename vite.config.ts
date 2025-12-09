@@ -91,6 +91,21 @@ export default defineConfig({
         short_name: "Ultimate",
         background_color: "#4a6da7",
         theme_color: "#4a6da7",
+        display: "standalone",
+        display_override: ["standalone"],
+        screenshots: [
+          {
+            src: "assets/pwa/apple-splash-1284-2778.jpg",
+            sizes: "1284x2778",
+            type: "image/jpeg",
+          },
+          {
+            src: "assets/pwa/apple-splash-1536-2048.jpg",
+            sizes: "1536x2048",
+            type: "image/jpeg",
+            form_factor: "wide",
+          },
+        ],
         icons: [
           {
             src: "assets/pwa/manifest-icon-192.maskable.png",
@@ -105,6 +120,7 @@ export default defineConfig({
             purpose: "maskable",
           },
         ],
+        
       },
     }),
   ],

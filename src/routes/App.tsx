@@ -7,9 +7,9 @@ import { tabs } from "@tabs/Tabs";
 
 import "@css/index.css";
 
-setupIonicReact();
+setupIonicReact({ swipeBackEnabled: false });
 
-function App() {
+const App: React.FC = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <IonApp>
@@ -22,6 +22,6 @@ function App() {
       </IonApp>
     </QueryClientProvider>
   );
-}
+};
 
 export default App;
