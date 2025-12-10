@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "build": "tsc -b && vitest run && vite build",
     "deploy:beta": "pnpm run build && npx wrangler pages deploy dist --project-name=orderly --branch=beta",
-    "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest",

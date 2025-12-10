@@ -4,7 +4,9 @@ import {
   IonToolbar,
   IonTitle,
   IonContent,
+  IonList
 } from "@ionic/react";
+import { SelectTheme } from "@feature/theme/SelectTheme";
 
 export const Settings: React.FC = () => {
   return (
@@ -15,8 +17,9 @@ export const Settings: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
-        The world is your oyster.
-        <p>An oyster is a type of edible saltwater bivalve mollusk.</p>
+        <IonList inset>
+          <SelectTheme />
+        </IonList>
       </IonContent>
     </IonPage>
   );

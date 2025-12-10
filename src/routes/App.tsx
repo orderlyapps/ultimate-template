@@ -4,12 +4,15 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "@tanstack-query/client";
 import { pages } from "@pages/Pages";
 import { tabs } from "@tabs/Tabs";
+import { useTheme } from "@feature/theme/useTheme";
 
 import "@css/index.css";
 
 setupIonicReact({ swipeBackEnabled: false });
 
 const App: React.FC = () => {
+  useTheme();
+
   return (
     <QueryClientProvider client={queryClient}>
       <IonApp>
