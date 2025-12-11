@@ -5,6 +5,12 @@ import { resolve } from "path";
 
 // https://vite.dev/config/
 export default defineConfig({
+  css: {
+    transformer: "postcss",
+  },
+  build: {
+    cssMinify: "esbuild",
+  },
   resolve: {
     alias: {
       // FEATURES
