@@ -54,12 +54,10 @@ describe("useAuth", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     
-    act(() => {
-      useAuthStore.setState({
-        session: null,
-        user: null,
-        isLoading: true,
-      });
+    useAuthStore.setState({
+      session: null,
+      user: null,
+      isLoading: true,
     });
 
     mockGetSession.mockResolvedValue({ data: { session: null } });
@@ -80,10 +78,12 @@ describe("useAuth", () => {
       });
     });
 
-    it("should set up auth state change listener", () => {
+    it("should set up auth state change listener", async () => {
       renderHook(() => useAuth());
 
-      expect(mockOnAuthStateChange).toHaveBeenCalled();
+      await waitFor(() => {
+        expect(mockOnAuthStateChange).toHaveBeenCalled();
+      });
     });
 
     it("should unsubscribe on unmount", () => {
@@ -147,10 +147,12 @@ describe("useAuth", () => {
       });
     });
 
-    it("should return isLoading from store", () => {
+    it("should return isLoading from store", async () => {
       const { result } = renderHook(() => useAuth());
 
-      expect(result.current.isLoading).toBe(true);
+      await waitFor(() => {
+        expect(result.current.isLoading).toBe(true);
+      });
     });
   });
 

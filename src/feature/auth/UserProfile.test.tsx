@@ -1,6 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { render, screen } from "@feature/testing/render";
-import { act } from "@testing-library/react";
+import { render, screen, waitFor } from "@feature/testing/render";
 import { UserProfile } from "./UserProfile";
 import { useAuthStore } from "./useAuthStore";
 import type { Session, User } from "@supabase/supabase-js";
@@ -38,74 +37,84 @@ const mockSession: Session = {
 
 describe("UserProfile", () => {
   beforeEach(() => {
-    act(() => {
-      useAuthStore.setState({
-        session: null,
-        user: null,
-        isLoading: false,
-      });
+    useAuthStore.setState({
+      session: null,
+      user: null,
+      isLoading: false,
     });
   });
 
   describe("when not authenticated", () => {
-    it("should render Account label", () => {
+    it("should render Account label", async () => {
       render(<UserProfile />);
 
-      expect(screen.getByText("Account")).toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.getByText("Account")).toBeInTheDocument();
+      });
     });
 
-    it("should render not signed in message", () => {
+    it("should render not signed in message", async () => {
       render(<UserProfile />);
 
-      expect(screen.getByText("Not signed in")).toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.getByText("Not signed in")).toBeInTheDocument();
+      });
     });
 
-    it("should not render avatar", () => {
+    it("should not render avatar", async () => {
       render(<UserProfile />);
 
-      const avatar = document.querySelector("ion-avatar");
-      expect(avatar).not.toBeInTheDocument();
+      await waitFor(() => {
+        const avatar = document.querySelector("ion-avatar");
+        expect(avatar).not.toBeInTheDocument();
+      });
     });
   });
 
   describe("when authenticated", () => {
     beforeEach(() => {
-      act(() => {
-        useAuthStore.setState({
-          session: mockSession,
-          user: mockUser,
-          isLoading: false,
-        });
+      useAuthStore.setState({
+        session: mockSession,
+        user: mockUser,
+        isLoading: false,
       });
     });
 
-    it("should render user full name", () => {
+    it("should render user full name", async () => {
       render(<UserProfile />);
 
-      expect(screen.getByText("Test User")).toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.getByText("Test User")).toBeInTheDocument();
+      });
     });
 
-    it("should render user email", () => {
+    it("should render user email", async () => {
       render(<UserProfile />);
 
-      expect(screen.getByText("test@example.com")).toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.getByText("test@example.com")).toBeInTheDocument();
+      });
     });
 
-    it("should render avatar with correct src", () => {
+    it("should render avatar with correct src", async () => {
       render(<UserProfile />);
 
-      const avatar = document.querySelector("ion-avatar");
-      expect(avatar).toBeInTheDocument();
+      await waitFor(() => {
+        const avatar = document.querySelector("ion-avatar");
+        expect(avatar).toBeInTheDocument();
 
-      const img = avatar?.querySelector("img");
-      expect(img).toHaveAttribute("src", "https://example.com/avatar.png");
+        const img = avatar?.querySelector("img");
+        expect(img).toHaveAttribute("src", "https://example.com/avatar.png");
+      });
     });
 
-    it("should render avatar with alt text", () => {
+    it("should render avatar with alt text", async () => {
       render(<UserProfile />);
 
-      const img = document.querySelector("ion-avatar img");
-      expect(img).toHaveAttribute("alt", "Test User");
+      await waitFor(() => {
+        const img = document.querySelector("ion-avatar img");
+        expect(img).toHaveAttribute("alt", "Test User");
+      });
     });
   });
 
@@ -118,27 +127,29 @@ describe("UserProfile", () => {
         },
       };
 
-      act(() => {
-        useAuthStore.setState({
-          session: { ...mockSession, user: userWithoutAvatar },
-          user: userWithoutAvatar,
-          isLoading: false,
-        });
+      useAuthStore.setState({
+        session: { ...mockSession, user: userWithoutAvatar },
+        user: userWithoutAvatar,
+        isLoading: false,
       });
     });
 
-    it("should not render avatar when no avatar_url", () => {
+    it("should not render avatar when no avatar_url", async () => {
       render(<UserProfile />);
 
-      const avatar = document.querySelector("ion-avatar");
-      expect(avatar).not.toBeInTheDocument();
+      await waitFor(() => {
+        const avatar = document.querySelector("ion-avatar");
+        expect(avatar).not.toBeInTheDocument();
+      });
     });
 
-    it("should still render user name and email", () => {
+    it("should still render user name and email", async () => {
       render(<UserProfile />);
 
-      expect(screen.getByText("Test User")).toBeInTheDocument();
-      expect(screen.getByText("test@example.com")).toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.getByText("Test User")).toBeInTheDocument();
+        expect(screen.getByText("test@example.com")).toBeInTheDocument();
+      });
     });
   });
 
@@ -151,26 +162,28 @@ describe("UserProfile", () => {
         },
       };
 
-      act(() => {
-        useAuthStore.setState({
-          session: { ...mockSession, user: userWithoutName },
-          user: userWithoutName,
-          isLoading: false,
-        });
+      useAuthStore.setState({
+        session: { ...mockSession, user: userWithoutName },
+        user: userWithoutName,
+        isLoading: false,
       });
     });
 
-    it("should render avatar with fallback alt text", () => {
+    it("should render avatar with fallback alt text", async () => {
       render(<UserProfile />);
 
-      const img = document.querySelector("ion-avatar img");
-      expect(img).toHaveAttribute("alt", "User avatar");
+      await waitFor(() => {
+        const img = document.querySelector("ion-avatar img");
+        expect(img).toHaveAttribute("alt", "User avatar");
+      });
     });
 
-    it("should still render email", () => {
+    it("should still render email", async () => {
       render(<UserProfile />);
 
-      expect(screen.getByText("test@example.com")).toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.getByText("test@example.com")).toBeInTheDocument();
+      });
     });
   });
 });

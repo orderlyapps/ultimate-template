@@ -1,6 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@feature/testing/render";
-import { act } from "@testing-library/react";
 import { Login } from "./LoginPage";
 import { useAuthStore } from "./useAuthStore";
 
@@ -23,64 +22,72 @@ describe("Login", () => {
     vi.clearAllMocks();
     mockSignInWithOAuth.mockResolvedValue({ error: null });
 
-    act(() => {
-      useAuthStore.setState({
-        session: null,
-        user: null,
-        isLoading: false,
-      });
+    useAuthStore.setState({
+      session: null,
+      user: null,
+      isLoading: false,
     });
   });
 
   describe("when loading", () => {
     beforeEach(() => {
-      act(() => {
-        useAuthStore.setState({
-          session: null,
-          user: null,
-          isLoading: true,
-        });
+      useAuthStore.setState({
+        session: null,
+        user: null,
+        isLoading: true,
       });
     });
 
-    it("should render spinner while loading", () => {
+    it("should render spinner while loading", async () => {
       render(<Login />);
 
-      const spinner = document.querySelector("ion-spinner");
-      expect(spinner).toBeInTheDocument();
+      await waitFor(() => {
+        const spinner = document.querySelector("ion-spinner");
+        expect(spinner).toBeInTheDocument();
+      });
     });
 
-    it("should not render sign in button while loading", () => {
+    it("should not render sign in button while loading", async () => {
       render(<Login />);
 
-      expect(screen.queryByText("Sign in with Google")).not.toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.queryByText("Sign in with Google")).not.toBeInTheDocument();
+      });
     });
   });
 
   describe("when not loading", () => {
-    it("should render welcome message", () => {
+    it("should render welcome message", async () => {
       render(<Login />);
 
-      expect(screen.getByText("Welcome")).toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.getByText("Welcome")).toBeInTheDocument();
+      });
     });
 
-    it("should render sign in prompt", () => {
+    it("should render sign in prompt", async () => {
       render(<Login />);
 
-      expect(screen.getByText("Sign in to continue")).toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.getByText("Sign in to continue")).toBeInTheDocument();
+      });
     });
 
-    it("should render Google sign in button", () => {
+    it("should render Google sign in button", async () => {
       render(<Login />);
 
-      expect(screen.getByText("Sign in with Google")).toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.getByText("Sign in with Google")).toBeInTheDocument();
+      });
     });
 
-    it("should not render spinner", () => {
+    it("should not render spinner", async () => {
       render(<Login />);
 
-      const spinner = document.querySelector("ion-spinner");
-      expect(spinner).not.toBeInTheDocument();
+      await waitFor(() => {
+        const spinner = document.querySelector("ion-spinner");
+        expect(spinner).not.toBeInTheDocument();
+      });
     });
   });
 

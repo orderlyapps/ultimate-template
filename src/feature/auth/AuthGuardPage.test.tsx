@@ -1,6 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { render, screen } from "@feature/testing/render";
-import { act } from "@testing-library/react";
+import { render, screen, waitFor } from "@feature/testing/render";
 import { AuthGuard } from "./AuthGuardPage";
 import { useAuthStore } from "./useAuthStore";
 import type { Session, User } from "@supabase/supabase-js";
@@ -47,112 +46,120 @@ const mockSession: Session = {
 
 describe("AuthGuard", () => {
   beforeEach(() => {
-    act(() => {
-      useAuthStore.setState({
-        session: null,
-        user: null,
-        isLoading: true,
-      });
+    useAuthStore.setState({
+      session: null,
+      user: null,
+      isLoading: true,
     });
   });
 
   describe("when loading", () => {
-    it("should render spinner while loading", () => {
+    it("should render spinner while loading", async () => {
       render(
         <AuthGuard>
           <div>Protected Content</div>
         </AuthGuard>
       );
 
-      const spinner = document.querySelector("ion-spinner");
-      expect(spinner).toBeInTheDocument();
+      await waitFor(() => {
+        const spinner = document.querySelector("ion-spinner");
+        expect(spinner).toBeInTheDocument();
+      });
     });
 
-    it("should not render children while loading", () => {
+    it("should not render children while loading", async () => {
       render(
         <AuthGuard>
           <div>Protected Content</div>
         </AuthGuard>
       );
 
-      expect(screen.queryByText("Protected Content")).not.toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.queryByText("Protected Content")).not.toBeInTheDocument();
+      });
     });
   });
 
   describe("when not authenticated", () => {
     beforeEach(() => {
-      act(() => {
-        useAuthStore.setState({
-          session: null,
-          user: null,
-          isLoading: false,
-        });
+      useAuthStore.setState({
+        session: null,
+        user: null,
+        isLoading: false,
       });
     });
 
-    it("should redirect to login page", () => {
+    it("should redirect to login page", async () => {
       render(
         <AuthGuard>
           <div>Protected Content</div>
         </AuthGuard>
       );
 
-      const redirect = screen.getByTestId("redirect");
-      expect(redirect).toBeInTheDocument();
-      expect(redirect).toHaveAttribute("data-to", "/login");
+      await waitFor(() => {
+        const redirect = screen.getByTestId("redirect");
+        expect(redirect).toBeInTheDocument();
+        expect(redirect).toHaveAttribute("data-to", "/login");
+      });
     });
 
-    it("should not render children", () => {
+    it("should not render children", async () => {
       render(
         <AuthGuard>
           <div>Protected Content</div>
         </AuthGuard>
       );
 
-      expect(screen.queryByText("Protected Content")).not.toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.queryByText("Protected Content")).not.toBeInTheDocument();
+      });
     });
   });
 
   describe("when authenticated", () => {
     beforeEach(() => {
-      act(() => {
-        useAuthStore.setState({
-          session: mockSession,
-          user: mockUser,
-          isLoading: false,
-        });
+      useAuthStore.setState({
+        session: mockSession,
+        user: mockUser,
+        isLoading: false,
       });
     });
 
-    it("should render children", () => {
+    it("should render children", async () => {
       render(
         <AuthGuard>
           <div>Protected Content</div>
         </AuthGuard>
       );
 
-      expect(screen.getByText("Protected Content")).toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.getByText("Protected Content")).toBeInTheDocument();
+      });
     });
 
-    it("should not render spinner", () => {
+    it("should not render spinner", async () => {
       render(
         <AuthGuard>
           <div>Protected Content</div>
         </AuthGuard>
       );
 
-      const spinner = document.querySelector("ion-spinner");
-      expect(spinner).not.toBeInTheDocument();
+      await waitFor(() => {
+        const spinner = document.querySelector("ion-spinner");
+        expect(spinner).not.toBeInTheDocument();
+      });
     });
 
-    it("should not redirect", () => {
+    it("should not redirect", async () => {
       render(
         <AuthGuard>
           <div>Protected Content</div>
         </AuthGuard>
       );
 
-      expect(screen.queryByTestId("redirect")).not.toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.queryByTestId("redirect")).not.toBeInTheDocument();
+      });
     });
   });
 });

@@ -1,6 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@feature/testing/render";
-import { act } from "@testing-library/react";
 import { SignOutButton } from "./SignOutButton";
 import { useAuthStore } from "./useAuthStore";
 import type { Session, User } from "@supabase/supabase-js";
@@ -41,26 +40,28 @@ describe("SignOutButton", () => {
     vi.clearAllMocks();
     mockSignOut.mockResolvedValue({ error: null });
 
-    act(() => {
-      useAuthStore.setState({
-        session: mockSession,
-        user: mockUser,
-        isLoading: false,
-      });
+    useAuthStore.setState({
+      session: mockSession,
+      user: mockUser,
+      isLoading: false,
     });
   });
 
-  it("should render sign out button with text", () => {
+  it("should render sign out button with text", async () => {
     render(<SignOutButton />);
 
-    expect(screen.getByText("Sign Out")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText("Sign Out")).toBeInTheDocument();
+    });
   });
 
-  it("should render logout icon", () => {
+  it("should render logout icon", async () => {
     render(<SignOutButton />);
 
-    const icon = document.querySelector("ion-icon");
-    expect(icon).toBeInTheDocument();
+    await waitFor(() => {
+      const icon = document.querySelector("ion-icon");
+      expect(icon).toBeInTheDocument();
+    });
   });
 
   it("should call signOut when clicked", async () => {
@@ -91,41 +92,51 @@ describe("SignOutButton", () => {
   });
 
   describe("size prop", () => {
-    it("should render with default size", () => {
+    it("should render with default size", async () => {
       render(<SignOutButton />);
 
-      const button = document.querySelector("ion-button");
-      expect(button).toHaveAttribute("size", "default");
+      await waitFor(() => {
+        const button = document.querySelector("ion-button");
+        expect(button).toHaveAttribute("size", "default");
+      });
     });
 
-    it("should render with small size", () => {
+    it("should render with small size", async () => {
       render(<SignOutButton size="small" />);
 
-      const button = document.querySelector("ion-button");
-      expect(button).toHaveAttribute("size", "small");
+      await waitFor(() => {
+        const button = document.querySelector("ion-button");
+        expect(button).toHaveAttribute("size", "small");
+      });
     });
 
-    it("should render with large size", () => {
+    it("should render with large size", async () => {
       render(<SignOutButton size="large" />);
 
-      const button = document.querySelector("ion-button");
-      expect(button).toHaveAttribute("size", "large");
+      await waitFor(() => {
+        const button = document.querySelector("ion-button");
+        expect(button).toHaveAttribute("size", "large");
+      });
     });
   });
 
   describe("color prop", () => {
-    it("should render with default danger color", () => {
+    it("should render with default danger color", async () => {
       render(<SignOutButton />);
 
-      const button = document.querySelector("ion-button");
-      expect(button).toHaveAttribute("color", "danger");
+      await waitFor(() => {
+        const button = document.querySelector("ion-button");
+        expect(button).toHaveAttribute("color", "danger");
+      });
     });
 
-    it("should render with custom color", () => {
+    it("should render with custom color", async () => {
       render(<SignOutButton color="primary" />);
 
-      const button = document.querySelector("ion-button");
-      expect(button).toHaveAttribute("color", "primary");
+      await waitFor(() => {
+        const button = document.querySelector("ion-button");
+        expect(button).toHaveAttribute("color", "primary");
+      });
     });
   });
 });

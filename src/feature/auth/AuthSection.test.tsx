@@ -1,6 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { render, screen } from "@feature/testing/render";
-import { act } from "@testing-library/react";
+import { render, screen, waitFor } from "@feature/testing/render";
 import { AuthSection } from "./AuthSection";
 import { useAuthStore } from "./useAuthStore";
 import type { Session, User } from "@supabase/supabase-js";
@@ -40,63 +39,71 @@ const mockSession: Session = {
 
 describe("AuthSection", () => {
   beforeEach(() => {
-    act(() => {
-      useAuthStore.setState({
-        session: null,
-        user: null,
-        isLoading: false,
-      });
+    useAuthStore.setState({
+      session: null,
+      user: null,
+      isLoading: false,
     });
   });
 
   describe("when not authenticated", () => {
-    it("should render UserProfile component", () => {
+    it("should render UserProfile component", async () => {
       render(<AuthSection />);
 
-      expect(screen.getByText("Not signed in")).toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.getByText("Not signed in")).toBeInTheDocument();
+      });
     });
 
-    it("should render SignInButton", () => {
+    it("should render SignInButton", async () => {
       render(<AuthSection />);
 
-      expect(screen.getByText("Sign in with Google")).toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.getByText("Sign in with Google")).toBeInTheDocument();
+      });
     });
 
-    it("should not render SignOutButton", () => {
+    it("should not render SignOutButton", async () => {
       render(<AuthSection />);
 
-      expect(screen.queryByText("Sign Out")).not.toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.queryByText("Sign Out")).not.toBeInTheDocument();
+      });
     });
   });
 
   describe("when authenticated", () => {
     beforeEach(() => {
-      act(() => {
-        useAuthStore.setState({
-          session: mockSession,
-          user: mockUser,
-          isLoading: false,
-        });
+      useAuthStore.setState({
+        session: mockSession,
+        user: mockUser,
+        isLoading: false,
       });
     });
 
-    it("should render UserProfile with user info", () => {
+    it("should render UserProfile with user info", async () => {
       render(<AuthSection />);
 
-      expect(screen.getByText("Test User")).toBeInTheDocument();
-      expect(screen.getByText("test@example.com")).toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.getByText("Test User")).toBeInTheDocument();
+        expect(screen.getByText("test@example.com")).toBeInTheDocument();
+      });
     });
 
-    it("should render SignOutButton", () => {
+    it("should render SignOutButton", async () => {
       render(<AuthSection />);
 
-      expect(screen.getByText("Sign Out")).toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.getByText("Sign Out")).toBeInTheDocument();
+      });
     });
 
-    it("should not render SignInButton", () => {
+    it("should not render SignInButton", async () => {
       render(<AuthSection />);
 
-      expect(screen.queryByText("Sign in with Google")).not.toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.queryByText("Sign in with Google")).not.toBeInTheDocument();
+      });
     });
   });
 });

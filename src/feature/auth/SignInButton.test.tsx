@@ -1,6 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@feature/testing/render";
-import { act } from "@testing-library/react";
 import { SignInButton } from "./SignInButton";
 import { useAuthStore } from "./useAuthStore";
 
@@ -23,26 +22,28 @@ describe("SignInButton", () => {
     vi.clearAllMocks();
     mockSignInWithOAuth.mockResolvedValue({ error: null });
 
-    act(() => {
-      useAuthStore.setState({
-        session: null,
-        user: null,
-        isLoading: false,
-      });
+    useAuthStore.setState({
+      session: null,
+      user: null,
+      isLoading: false,
     });
   });
 
-  it("should render sign in button with text", () => {
+  it("should render sign in button with text", async () => {
     render(<SignInButton />);
 
-    expect(screen.getByText("Sign in with Google")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText("Sign in with Google")).toBeInTheDocument();
+    });
   });
 
-  it("should render Google icon", () => {
+  it("should render Google icon", async () => {
     render(<SignInButton />);
 
-    const icon = document.querySelector("ion-icon");
-    expect(icon).toBeInTheDocument();
+    await waitFor(() => {
+      const icon = document.querySelector("ion-icon");
+      expect(icon).toBeInTheDocument();
+    });
   });
 
   it("should call signInWithGoogle when clicked", async () => {
@@ -78,25 +79,31 @@ describe("SignInButton", () => {
   });
 
   describe("size prop", () => {
-    it("should render with default size", () => {
+    it("should render with default size", async () => {
       render(<SignInButton />);
 
-      const button = document.querySelector("ion-button");
-      expect(button).toHaveAttribute("size", "default");
+      await waitFor(() => {
+        const button = document.querySelector("ion-button");
+        expect(button).toHaveAttribute("size", "default");
+      });
     });
 
-    it("should render with small size", () => {
+    it("should render with small size", async () => {
       render(<SignInButton size="small" />);
 
-      const button = document.querySelector("ion-button");
-      expect(button).toHaveAttribute("size", "small");
+      await waitFor(() => {
+        const button = document.querySelector("ion-button");
+        expect(button).toHaveAttribute("size", "small");
+      });
     });
 
-    it("should render with large size", () => {
+    it("should render with large size", async () => {
       render(<SignInButton size="large" />);
 
-      const button = document.querySelector("ion-button");
-      expect(button).toHaveAttribute("size", "large");
+      await waitFor(() => {
+        const button = document.querySelector("ion-button");
+        expect(button).toHaveAttribute("size", "large");
+      });
     });
   });
 });
