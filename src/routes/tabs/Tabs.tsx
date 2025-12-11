@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   IonIcon,
   IonLabel,
@@ -6,15 +7,35 @@ import {
 } from "@ionic/react";
 import { settings, home } from "ionicons/icons";
 
-export const tabs = (
-  <IonTabBar slot="bottom">
-    <IonTabButton tab="home" href="/home">
-      <IonIcon icon={home} />
-      <IonLabel>Home</IonLabel>
-    </IonTabButton>
-    <IonTabButton tab="settings" href="/settings">
-      <IonIcon icon={settings} />
-      <IonLabel>Settings</IonLabel>
-    </IonTabButton>
-  </IonTabBar>
-);
+const useOrientation = () => {
+  const [isPortrait, setIsPortrait] = useState(
+    window.matchMedia("(orientation: portrait)").matches
+  );
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(orientation: portrait)");
+    const handler = (e: MediaQueryListEvent) => setIsPortrait(e.matches);
+    mediaQuery.addEventListener("change", handler);
+    return () => mediaQuery.removeEventListener("change", handler);
+  }, []);
+
+  return isPortrait;
+};
+
+export const Tabs: React.FC = () => {
+  const isPortrait = useOrientation();
+  const layout = isPortrait ? "icon-top" : "icon-start";
+
+  return (
+    <IonTabBar slot="bottom">
+      <IonTabButton tab="home" href="/home" layout={layout}>
+        <IonIcon icon={home} />
+        <IonLabel>Home</IonLabel>
+      </IonTabButton>
+      <IonTabButton tab="settings" href="/settings" layout={layout}>
+        <IonIcon icon={settings} />
+        <IonLabel>Settings</IonLabel>
+      </IonTabButton>
+    </IonTabBar>
+  );
+};
