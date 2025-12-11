@@ -10,6 +10,55 @@ export default defineConfig({
   },
   build: {
     cssMinify: "esbuild",
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("node_modules")) {
+            // Core React
+            if (id.includes("/react-dom/") || id.includes("/react/")) {
+              return "react";
+            }
+            // Routing
+            if (id.includes("/react-router")) {
+              return "router";
+            }
+            // Ionic UI framework
+            if (id.includes("/@ionic/") || id.includes("/ionicons/")) {
+              return "ionic";
+            }
+            // State management
+            if (
+              id.includes("/zustand/") ||
+              id.includes("/@tanstack/react-query") ||
+              id.includes("/@tanstack/react-db") ||
+              id.includes("/@tanstack/query-db-collection")
+            ) {
+              return "state";
+            }
+            // Supabase
+            if (id.includes("/@supabase/")) {
+              return "supabase";
+            }
+            // Map libraries
+            if (
+              id.includes("/mapbox-gl/") ||
+              id.includes("/react-map-gl/") ||
+              id.includes("/@mapbox/")
+            ) {
+              return "map";
+            }
+            // Document generation
+            if (id.includes("/@react-pdf/") || id.includes("/docx/")) {
+              return "docs";
+            }
+            // Utilities
+            if (id.includes("/date-fns/") || id.includes("/zod/")) {
+              return "utils";
+            }
+          }
+        },
+      },
+    },
   },
   resolve: {
     alias: {
