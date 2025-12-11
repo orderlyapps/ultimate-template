@@ -1,0 +1,4 @@
+ion-item {
+  /* Prevent theme switch glitches */
+  --transition: none;
+}

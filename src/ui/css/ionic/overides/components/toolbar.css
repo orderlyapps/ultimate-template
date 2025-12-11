@@ -1,0 +1,3 @@
+.ion-palette-dark ion-toolbar.collapse-toolbar {
+  --background: var(--content-background-dark);
+}

@@ -1,0 +1,18 @@
+@media screen and (orientation: landscape) {
+  ion-content::part(scroll) {
+    padding-left: 20%;
+    padding-right: 20%;
+  }
+}
+
+/* Override padding for full screen content. eg. Map screens */
+ion-content.full-screen-content::part(scroll) {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* Override padding for using ion-content in ion-modal */
+ion-modal ion-content::part(scroll) {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
