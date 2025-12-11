@@ -1,11 +1,7 @@
 import { useState, useEffect } from "react";
-import {
-  IonIcon,
-  IonLabel,
-  IonTabBar,
-  IonTabButton,
-} from "@ionic/react";
-import { settings, home } from "ionicons/icons";
+import { IonIcon, IonLabel, IonTabBar, IonTabButton } from "@ionic/react";
+import home from "@icons/home.svg";
+import settings from "@icons/settings.svg";
 
 const useOrientation = () => {
   const [isPortrait, setIsPortrait] = useState(
@@ -29,7 +25,7 @@ export const Tabs: React.FC = () => {
   return (
     <IonTabBar slot="bottom">
       <IonTabButton tab="home" href="/home" layout={layout}>
-        <IonIcon icon={home} />
+        <IonIcon src={home} />
         <IonLabel>Home</IonLabel>
       </IonTabButton>
       <IonTabButton tab="settings" href="/settings" layout={layout}>
