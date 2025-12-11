@@ -26,7 +26,9 @@ export default defineConfig({
       ),
       "@tanstack-db": resolve(__dirname, "src/services/state/tanstack/db"),
 
-      "@supabase": resolve(__dirname, "src/services/state/supabase"),
+      "@supabase/auth": resolve(__dirname, "src/services/state/supabase/auth"),
+      "@supabase-db": resolve(__dirname, "src/services/state/supabase"),
+      
       "@zustand": resolve(__dirname, "src/services/state/zustand"),
       "@state": resolve(__dirname, "src/services/state"),
 

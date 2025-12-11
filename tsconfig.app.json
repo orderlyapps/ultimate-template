@@ -43,7 +43,9 @@
       "@tanstack-query/*": ["src/services/state/tanstack/query/*"],
       "@tanstack-db/*": ["src/services/state/tanstack/db/*"],
 
-      "@supabase/*": ["src/services/state/supabase/*"],
+      "@supabase/auth*": ["src/services/state/supabase/auth*"],
+      "@supabase-db*": ["src/services/state/supabase/*"],
+      
       "@zustand/*": ["src/services/state/zustand/*"],
       "@state/*": ["src/services/state/*"],
 
