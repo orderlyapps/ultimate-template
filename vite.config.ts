@@ -28,7 +28,7 @@ export default defineConfig({
 
       "@supabase/auth": resolve(__dirname, "src/services/state/supabase/auth"),
       "@supabase-db": resolve(__dirname, "src/services/state/supabase"),
-      
+
       "@zustand": resolve(__dirname, "src/services/state/zustand"),
       "@state": resolve(__dirname, "src/services/state"),
 
@@ -82,7 +82,10 @@ export default defineConfig({
       },
     }),
     VitePWA({
-      registerType: "autoUpdate",
+      registerType: "prompt",
+      devOptions: {
+        enabled: true,
+      },
       includeAssets: [
         "assets/pwa/favicon-196.png",
         "assets/pwa/apple-icon-180.png",
@@ -122,7 +125,6 @@ export default defineConfig({
             purpose: "maskable",
           },
         ],
-        
       },
     }),
   ],

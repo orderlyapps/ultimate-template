@@ -5,6 +5,7 @@ import { queryClient } from "@tanstack-query/client";
 import { pages } from "@pages/Pages";
 import { Tabs } from "@tabs/Tabs";
 import { useTheme } from "@feature/theme/useTheme";
+import { PwaUpdatePrompt } from "@feature/pwa/PwaUpdatePrompt";
 
 import "@css/index.css";
 
@@ -18,6 +19,7 @@ const App: React.FC = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <IonApp>
+        <PwaUpdatePrompt />
         <IonReactRouter>
           <IonTabs>
             {pages}
