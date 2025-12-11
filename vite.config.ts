@@ -23,8 +23,11 @@ export default defineConfig({
               return "router";
             }
             // Ionic UI framework
-            if (id.includes("/@ionic/") || id.includes("/ionicons/")) {
+            if (id.includes("/@ionic/")) {
               return "ionic";
+            }
+            if (id.includes("/ionicons/")) {
+              return "ionicons";
             }
             // State management
             if (
