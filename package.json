@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port 3000",
     "build": "tsc -b && vitest run && vite build",
     "deploy:beta": "pnpm run build && npx wrangler pages deploy dist --project-name=orderly --branch=beta",
     "lint": "eslint .",
