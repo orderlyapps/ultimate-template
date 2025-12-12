@@ -184,6 +184,25 @@ export default defineConfig({
           },
         ],
       },
+      workbox: {
+        globIgnores: ["**/*.map"],
+        runtimeCaching: [
+          {
+            urlPattern: ({ url }) => url.pathname.endsWith(".svg"),
+            handler: "CacheFirst",
+            options: {
+              cacheName: "svg",
+              expiration: {
+                maxEntries: 200,
+                maxAgeSeconds: 60 * 60 * 24 * 30,
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
+        ],
+      },
     }),
   ],
 });
