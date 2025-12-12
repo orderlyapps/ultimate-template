@@ -1,5 +1,4 @@
 import { Label } from "@ionic-display/label/Label";
-import { Text } from "@ionic-display/text/Text";
 import { Select } from "@ionic-input/select/Select";
 import { IonItem, IonSelect, IonSelectOption } from "@ionic/react";
 import type { ComponentProps } from "react";
@@ -22,9 +21,7 @@ export const SelectItem: React.FC<SelectItemProps> = ({
 
   return (
     <IonItem>
-      <Label>
-        <Text bold>{label}</Text>
-      </Label>
+      <Label>{label}</Label>
       <Select {...defaultProps}>
         {options.map((option) => (
           <IonSelectOption key={option.value} value={option.value}>
