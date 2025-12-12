@@ -5,6 +5,11 @@ import { resolve } from "path";
 
 // https://vite.dev/config/
 export default defineConfig({
+  define: {
+    "import.meta.env.VITE_BUILD_TIME_ISO": JSON.stringify(
+      new Date().toISOString()
+    ),
+  },
   css: {
     transformer: "postcss",
   },
