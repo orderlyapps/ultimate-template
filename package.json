@@ -13,6 +13,7 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage",
+    "generate-licenses": "license-checker --production --json --direct --summary --out ./src/services/app/details/open-source-licenses/licenses.json --customPath ./src/services/app/details/open-source-licenses/licensesTemplate.json",
     "generate-pwa-assets": "npx pwa-asset-generator public/assets/pwa/logo.svg ./public/assets/pwa/ --background '#4a6da7' --padding '10%' --scrape false --favicon true --log false",
     "wrangler:update": "pnpm add -D wrangler@latest"
   },
@@ -58,6 +59,7 @@
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
     "jsdom": "^27.2.0",
+    "license-checker": "^25.0.1",
     "supabase": "^2.64.2",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.4",

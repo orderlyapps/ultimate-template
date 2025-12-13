@@ -9,6 +9,7 @@ import {
 import { SelectTheme } from "@feature/theme/SelectTheme";
 import { AuthSection } from "@feature/auth/AuthSection";
 import { BuildInfo } from "@feature/app/details/BuildInfo";
+import { OpenSourceLicenses } from "@services/app/details/open-source-licenses/OpenSourceLicenses";
 
 export const Settings: React.FC = () => {
   return (
@@ -23,6 +24,7 @@ export const Settings: React.FC = () => {
           <SelectTheme />
           <AuthSection />
           <BuildInfo />
+          <OpenSourceLicenses />
         </IonList>
       </IonContent>
     </IonPage>
