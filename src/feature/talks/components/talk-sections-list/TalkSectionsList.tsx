@@ -12,6 +12,7 @@ import { List } from "@ionic-layout/list/List";
 import { ItemOptionDelete } from "@input/sliding-item-option/ItemOptionDelete";
 import { useTalksStore } from "@feature/talks/state/useTalksStore";
 import type { Outline } from "@feature/talks/state/useTalksStore";
+import { formatTimeAllocation } from "@feature/talks/utils/format-time-allocation";
 
 type Props = {
   talk: Outline;
@@ -57,7 +58,7 @@ export function TalkSectionsList({ talk }: Props) {
               <IonLabel>
                 <Text bold>{section.name}</Text>
                 <br />
-                <Text size="sm">{section.subsections.length} subsections</Text>
+                <Text size="sm">{formatTimeAllocation(section)}</Text>
               </IonLabel>
             </Item>
 
