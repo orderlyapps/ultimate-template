@@ -47,7 +47,12 @@ export function TalkSectionsList({ talk }: Props) {
       >
         {sections.map((section, index) => (
           <IonItemSliding key={section.id}>
-            <Item lines="full">
+            <Item
+              button
+              detail
+              lines="full"
+              routerLink={`/home/talks/${talk.id}/sections/${section.id}`}
+            >
               <IonReorder slot="start" />
               <IonLabel>
                 <Text bold>{section.name}</Text>
