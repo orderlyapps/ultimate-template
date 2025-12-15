@@ -1,6 +1,6 @@
 import { IonIcon, IonItemOption } from "@ionic/react";
 import deleteIcon from "@icons/delete.svg";
-import type { ComponentProps } from "react";
+import type { ComponentProps, MouseEvent, ReactNode, RefObject } from "react";
 
 export const ItemOptionDelete = ({
   children,
@@ -8,13 +8,23 @@ export const ItemOptionDelete = ({
   slidingRef,
   ...rest
 }: {
-  children?: React.ReactNode;
+  children?: ReactNode;
   onClick: () => void;
-  slidingRef: React.RefObject<HTMLIonItemSlidingElement | null>;
+  slidingRef?: RefObject<HTMLIonItemSlidingElement | null>;
 } & ComponentProps<typeof IonItemOption>) => {
-  const handleOptionClick = async () => {
+  const handleOptionClick = async (e: MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
     onClick();
-    await slidingRef?.current?.close();
+
+    const slidingEl =
+      slidingRef?.current ||
+      ((e.currentTarget as HTMLElement).closest(
+        "ion-item-sliding"
+      ) as HTMLIonItemSlidingElement | null);
+
+    await slidingEl?.close();
   };
 
   return (

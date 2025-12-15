@@ -1,8 +1,9 @@
-import { IonLabel } from "@ionic/react";
+import { IonItemOptions, IonItemSliding, IonLabel } from "@ionic/react";
 import { Item } from "@ionic-layout/item/Item";
 import { List } from "@ionic-layout/list/List";
 import { Text } from "@ionic-display/text/Text";
 import { useTalksStore } from "@feature/state/useTalksStore";
+import { ItemOptionDelete } from "@input/sliding-item-option/ItemOptionDelete";
 
 type Props = {
   onSelectTalk?: (id: string) => void;
@@ -10,6 +11,7 @@ type Props = {
 
 export function TalksOutlineList({ onSelectTalk }: Props) {
   const talks = useTalksStore((s) => s.talks);
+  const removeTalk = useTalksStore((s) => s.removeTalk);
 
   if (talks.length === 0) {
     return (
@@ -26,18 +28,19 @@ export function TalksOutlineList({ onSelectTalk }: Props) {
   return (
     <List>
       {talks.map((talk) => (
-        <Item
-          key={talk.id}
-          button
-          detail
-          onClick={() => onSelectTalk?.(talk.id)}
-        >
-          <IonLabel>
-            <Text bold>{talk.name}</Text>
-            <br />
-            <Text size="sm">{talk.sections.length} sections</Text>
-          </IonLabel>
-        </Item>
+        <IonItemSliding key={talk.id}>
+          <Item button detail onClick={() => onSelectTalk?.(talk.id)}>
+            <IonLabel>
+              <Text bold>{talk.name}</Text>
+              <br />
+              <Text size="sm">{talk.sections.length} sections</Text>
+            </IonLabel>
+          </Item>
+
+          <IonItemOptions side="end">
+            <ItemOptionDelete expandable onClick={() => removeTalk(talk.id)} />
+          </IonItemOptions>
+        </IonItemSliding>
       ))}
     </List>
   );
