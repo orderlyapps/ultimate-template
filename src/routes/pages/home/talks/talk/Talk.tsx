@@ -8,7 +8,6 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import { Text } from "@ionic-display/text/Text";
-import { AddButton } from "@input/button/add-button/AddButton";
 import { useTalksStore } from "@feature/talks/state/useTalksStore";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
@@ -16,6 +15,8 @@ import { AddSectionAlert } from "@feature/talks/components/add-section-alert/Add
 import { Space } from "@layout/space/Space";
 import { TalkSectionsList } from "../../../../../feature/talks/components/talk-sections-list/TalkSectionsList";
 import { EditableCondensedHeader } from "@feature/talks/components/editable-condensed-header/EditableCondensedHeader";
+import { TalkPresentationModal } from "../../../../../feature/talks/components/talk-presentation-modal/TalkPresentationModal";
+import { TalkToolbarEndButtons } from "../../../../../feature/talks/components/talk-toolbar-end-buttons/TalkToolbarEndButtons";
 
 export const Talk: React.FC = () => {
   const { talkId } = useParams<{ talkId: string }>();
@@ -23,6 +24,7 @@ export const Talk: React.FC = () => {
   const updateTalkName = useTalksStore((s) => s.updateTalkName);
   const [isAddSectionOpen, setIsAddSectionOpen] = useState(false);
   const [addSectionAlertKey, setAddSectionAlertKey] = useState(0);
+  const [isPresentationOpen, setIsPresentationOpen] = useState(false);
 
   return (
     <IonPage>
@@ -31,15 +33,15 @@ export const Talk: React.FC = () => {
           <IonButtons slot="start">
             <IonBackButton defaultHref="/home/talks" text="Talks" />
           </IonButtons>
-          <IonButtons slot="end">
-            <AddButton
-              disabled={!talkId}
-              onClick={() => {
-                setAddSectionAlertKey((k) => k + 1);
-                setIsAddSectionOpen(true);
-              }}
-            />
-          </IonButtons>
+          <TalkToolbarEndButtons
+            talkId={talkId}
+            hasTalk={!!talk}
+            onOpenPresentation={() => setIsPresentationOpen(true)}
+            onOpenAddSection={() => {
+              setAddSectionAlertKey((k) => k + 1);
+              setIsAddSectionOpen(true);
+            }}
+          />
           <IonTitle>{talk?.name ?? "Talk"}</IonTitle>
         </IonToolbar>
       </IonHeader>
@@ -67,6 +69,11 @@ export const Talk: React.FC = () => {
               talkId={talk.id}
               isOpen={isAddSectionOpen}
               onDismiss={() => setIsAddSectionOpen(false)}
+            />
+            <TalkPresentationModal
+              isOpen={isPresentationOpen}
+              talk={talk}
+              onDismiss={() => setIsPresentationOpen(false)}
             />
           </>
         ) : (
