@@ -1,7 +1,8 @@
 import { Label } from "@ionic-display/label/Label";
 import { Text } from "@ionic-display/text/Text";
 import { Accordion } from "@ionic-layout/accordion/Accordion";
-import { Item } from "@ionic-layout/item/Item";
+import { AccordionContent } from "@ionic-layout/accordion-content/AccordionContent";
+import { ItemAccordionHeader } from "@ionic-layout/accordion-header/AccordionHeader";
 import { OpenSourceLicenseDetails } from "./OpenSourceLicenseDetails";
 import type { LicenseListItem } from "../license-types";
 
@@ -12,14 +13,12 @@ type Props = {
   >;
 };
 
-export function OpenSourceLicenseItem({
-  item,
-}: Props) {
+export function OpenSourceLicenseItem({ item }: Props) {
   const { key, licenseName, version } = item;
 
   return (
     <Accordion value={key}>
-      <Item slot="header" button detail={false}>
+      <ItemAccordionHeader>
         <Label>{key}</Label>
 
         <Text slot="end" className="ion-text-end ion-no-margin">
@@ -27,11 +26,11 @@ export function OpenSourceLicenseItem({
           {licenseName && version && " - "}
           {version && <span>{version}</span>}
         </Text>
-      </Item>
+      </ItemAccordionHeader>
 
-      <div slot="content">
+      <AccordionContent>
         <OpenSourceLicenseDetails item={item} />
-      </div>
+      </AccordionContent>
     </Accordion>
   );
 }
