@@ -49,7 +49,6 @@ export const Talk: React.FC = () => {
         </IonHeader>
         {talk ? (
           <>
-            <Text size="lg">{talk.sections.length} sections</Text>
             <Space height="2" />
             <TalkSectionsList talk={talk} />
             <AddSectionAlert

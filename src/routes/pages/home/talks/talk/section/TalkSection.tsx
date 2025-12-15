@@ -53,9 +53,6 @@ export const TalkSection: React.FC = () => {
         </IonHeader>
         {talk && section ? (
           <>
-            <Text size="lg">{talk.name}</Text>
-            <Space height="2" />
-            <Text>{section.subsections.length} subsections</Text>
             <Space height="2" />
             <TalkSubsectionsList talkId={talk.id} section={section} />
             <AddSubsectionAlert
