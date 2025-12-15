@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { IonIcon, IonLabel, IonTabBar, IonTabButton } from "@ionic/react";
 import home from "@icons/home.svg";
+import ministry from "@icons/ministry.svg";
+import schedules from "@icons/schedules.svg";
+import publishers from "@icons/publishers.svg";
 import settings from "@icons/settings.svg";
 
 const useOrientation = () => {
@@ -28,8 +31,20 @@ export const Tabs: React.FC = () => {
         <IonIcon src={home} />
         <IonLabel>Home</IonLabel>
       </IonTabButton>
+      <IonTabButton tab="ministry" href="/ministry" layout={layout}>
+        <IonIcon src={ministry} />
+        <IonLabel>Ministry</IonLabel>
+      </IonTabButton>
+      <IonTabButton tab="schedules" href="/schedules" layout={layout}>
+        <IonIcon src={schedules} />
+        <IonLabel>Schedules</IonLabel>
+      </IonTabButton>
+      <IonTabButton tab="publishers" href="/publishers" layout={layout}>
+        <IonIcon src={publishers} />
+        <IonLabel>Publishers</IonLabel>
+      </IonTabButton>
       <IonTabButton tab="settings" href="/settings" layout={layout}>
-        <IonIcon icon={settings} />
+        <IonIcon src={settings} />
         <IonLabel>Settings</IonLabel>
       </IonTabButton>
     </IonTabBar>
