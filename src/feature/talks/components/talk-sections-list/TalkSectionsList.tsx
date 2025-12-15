@@ -4,6 +4,7 @@ import {
   IonLabel,
   IonReorder,
   IonReorderGroup,
+  type ReorderEndCustomEvent,
 } from "@ionic/react";
 import type { Section } from "@feature/talks/state/useTalksStore";
 import { Text } from "@ionic-display/text/Text";
@@ -37,7 +38,7 @@ export function TalkSectionsList({ talkId, sections }: Props) {
     <List>
       <IonReorderGroup
         disabled={false}
-        onIonItemReorder={(e) => {
+        onIonReorderEnd={(e: ReorderEndCustomEvent) => {
           const fromIndex = e.detail.from;
           const toIndex = e.detail.to;
           reorderSections(talkId, fromIndex, toIndex);
