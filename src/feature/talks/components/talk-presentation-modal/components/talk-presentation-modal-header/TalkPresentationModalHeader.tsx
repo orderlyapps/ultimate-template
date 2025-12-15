@@ -6,8 +6,8 @@ import {
 } from "@ionic/react";
 import { CloseButton } from "@input/button/close-button/CloseButton";
 import type { Outline } from "@feature/talks/state/useTalksStore";
-import { TalkPresentationCountdownProgressBar } from "../talk-presentation-countdown/talk-presentation-countdown-progress-bar/TalkPresentationCountdownProgressBar";
-import { TalkPresentationCountdownTimeText } from "../talk-presentation-countdown/talk-presentation-countdown-time-text/TalkPresentationCountdownTimeText";
+import { TalkPresentationCountdownProgressBar } from "../talk-presentation-countdown/components/talk-presentation-countdown-progress-bar/TalkPresentationCountdownProgressBar";
+import { TalkPresentationCountdownTimeText } from "../talk-presentation-countdown/components/talk-presentation-countdown-time-text/TalkPresentationCountdownTimeText";
 import type { TalkPresentationCountdown } from "../../hooks/useTalkPresentationCountdown";
 
 type Props = {
