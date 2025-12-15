@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import { render, screen } from "@feature/testing/render";
+import { render, screen } from "@services/app/testing/render";
 import { act } from "@testing-library/react";
 import { format, formatDistanceStrict } from "date-fns";
 import { BuildInfo } from "./BuildInfo";

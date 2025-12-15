@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { render, screen } from "@feature/testing/render";
+import { render, screen } from "@services/app/testing/render";
 import { Button } from "./Button";
 
 describe("Button", () => {

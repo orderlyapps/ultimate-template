@@ -1,4 +1,4 @@
-import { Test as TestComponent } from "@feature/testing/Test";
+import { Test as TestComponent } from "@services/app/testing/Test";
 import {
   IonPage,
   IonHeader,

@@ -1,4 +1,4 @@
-import { render, screen } from "@feature/testing/render";
+import { render, screen } from "@services/app/testing/render";
 import { SelectItem } from "./SelectItem";
 
 const mockOptions = [

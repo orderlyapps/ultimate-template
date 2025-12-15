@@ -1,4 +1,4 @@
-import { render, screen } from "@feature/testing/render";
+import { render, screen } from "@services/app/testing/render";
 import { SelectTheme } from "./SelectTheme";
 import { useThemeStore } from "./themeStore";
 import { act } from "@testing-library/react";

@@ -39,8 +39,8 @@ export default defineConfig({
     globals: true,
     environment: "jsdom",
     setupFiles: [
-      "./src/feature/testing/polyfills.ts",
-      "./src/feature/testing/setup.ts",
+      "./src/services/app/testing/polyfills.ts",
+      "./src/services/app/testing/setup.ts",
     ],
     include: ["src/**/*.{test,spec}.{ts,tsx}"],
     coverage: {

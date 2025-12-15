@@ -29,7 +29,7 @@
     "paths": {
       // FEATURES
       "@feature/*": ["src/feature/*"],
-      "@testing/*": ["src/feature/testing/*"],
+      "@testing/*": ["src/services/app/testing/*"],
 
       // ROUTES
       "@pages/*": ["src/routes/pages/*"],

@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { render, screen, fireEvent, waitFor } from "@feature/testing/render";
+import { render, screen, fireEvent, waitFor } from "@services/app/testing/render";
 import { SignOutButton } from "./SignOutButton";
 import { useAuthStore } from "./useAuthStore";
 import type { Session, User } from "@supabase/supabase-js";

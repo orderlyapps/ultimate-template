@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { render, screen, fireEvent, waitFor } from "@feature/testing/render";
+import { render, screen, fireEvent, waitFor } from "@services/app/testing/render";
 import { SignInButton } from "./SignInButton";
 import { useAuthStore } from "./useAuthStore";
 
