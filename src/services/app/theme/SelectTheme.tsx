@@ -19,6 +19,7 @@ export const SelectTheme = () => {
       value={preference}
       options={themeOptions}
       onIonChange={(e) => setPreference(e.detail.value)}
+      interface="popover"
     />
   );
 };
