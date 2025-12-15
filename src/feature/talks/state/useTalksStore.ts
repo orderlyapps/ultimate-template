@@ -8,6 +8,7 @@ export type Subsection = {
 };
 
 export type Section = {
+  id: string;
   name: string;
   subsections: Subsection[];
 };
@@ -20,10 +21,16 @@ export type Outline = {
   updatedAt: number;
 };
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
+}
+
 interface TalksState {
   talks: Outline[];
   addTalk: (name: string) => void;
   addSection: (talkId: string, name: string) => void;
+  removeSection: (talkId: string, sectionIndex: number) => void;
+  reorderSections: (talkId: string, fromIndex: number, toIndex: number) => void;
   removeTalk: (id: string) => void;
 }
 
@@ -64,7 +71,46 @@ export const useTalksStore = create<TalksState>()(
 
               return {
                 ...t,
-                sections: [...t.sections, { name, subsections: [] }],
+                sections: [...t.sections, { id: createId(), name, subsections: [] }],
+                updatedAt: now,
+              };
+            }),
+          };
+        }),
+      removeSection: (talkId, sectionIndex) =>
+        set((state) => {
+          const now = Date.now();
+
+          return {
+            talks: state.talks.map((t) => {
+              if (t.id !== talkId) return t;
+
+              return {
+                ...t,
+                sections: t.sections.filter((_, i) => i !== sectionIndex),
+                updatedAt: now,
+              };
+            }),
+          };
+        }),
+      reorderSections: (talkId, fromIndex, toIndex) =>
+        set((state) => {
+          const now = Date.now();
+
+          return {
+            talks: state.talks.map((t) => {
+              if (t.id !== talkId) return t;
+
+              const nextSections = [...t.sections];
+              const [moved] = nextSections.splice(fromIndex, 1);
+
+              if (!moved) return t;
+
+              nextSections.splice(toIndex, 0, moved);
+
+              return {
+                ...t,
+                sections: nextSections,
                 updatedAt: now,
               };
             }),
@@ -77,6 +123,65 @@ export const useTalksStore = create<TalksState>()(
     }),
     {
       name: "talks-store",
+      partialize: (state) => ({
+        talks: state.talks,
+      }),
+      version: 1,
+      migrate: (persistedState) => {
+        if (!isRecord(persistedState)) {
+          return { talks: [] as Outline[] };
+        }
+
+        const talksRaw = persistedState.talks;
+
+        if (!Array.isArray(talksRaw)) {
+          return { talks: [] as Outline[] };
+        }
+
+        const talks: Outline[] = talksRaw
+          .filter(isRecord)
+          .map((t): Outline => {
+            const sectionsRaw = Array.isArray(t.sections) ? t.sections : [];
+
+            const sections: Section[] = sectionsRaw
+              .filter(isRecord)
+              .map((s): Section => {
+                const subsectionsRaw = Array.isArray(s.subsections)
+                  ? s.subsections
+                  : [];
+
+                const subsections: Subsection[] = subsectionsRaw
+                  .filter(isRecord)
+                  .map((ss): Subsection => {
+                    return {
+                      name: typeof ss.name === "string" ? ss.name : "",
+                      content: typeof ss.content === "string" ? ss.content : "",
+                      timeAllocation:
+                        typeof ss.timeAllocation === "number" ? ss.timeAllocation : 0,
+                    };
+                  });
+
+                return {
+                  id: typeof s.id === "string" ? s.id : createId(),
+                  name: typeof s.name === "string" ? s.name : "",
+                  subsections,
+                };
+              });
+
+            const createdAt = typeof t.createdAt === "number" ? t.createdAt : 0;
+            const updatedAt = typeof t.updatedAt === "number" ? t.updatedAt : 0;
+
+            return {
+              id: typeof t.id === "string" ? t.id : createId(),
+              name: typeof t.name === "string" ? t.name : "",
+              sections,
+              createdAt,
+              updatedAt,
+            };
+          });
+
+        return { talks };
+      },
     }
   )
 );
