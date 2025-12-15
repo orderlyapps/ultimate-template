@@ -8,8 +8,12 @@ import {
 } from "@ionic/react";
 import { CloseButton } from "@input/button/close-button/CloseButton";
 import type { Outline } from "@feature/talks/state/useTalksStore";
-import { useState } from "react";
-import { TalkPresentationTimePicker } from "./talk-presentation-time-picker/TalkPresentationTimePicker";
+import { useRef, useState } from "react";
+import {
+  getTotalAllocatedSeconds,
+  toLocalDatetimeValue,
+} from "./talk-presentation-modal-utils";
+import { TalkPresentationModalContent } from "./talk-presentation-modal-content/TalkPresentationModalContent";
 
 interface TalkPresentationModalProps {
   isOpen: boolean;
@@ -17,57 +21,72 @@ interface TalkPresentationModalProps {
   onDismiss: () => void;
 }
 
-function getTotalAllocatedSeconds(talk: Outline) {
-  return talk.sections.reduce((talkTotal, section) => {
-    const sectionTotal = section.subsections.reduce(
-      (subTotal, subsection) => subTotal + (subsection.timeAllocation ?? 0),
-      0
-    );
-    return talkTotal + sectionTotal;
-  }, 0);
-}
-
-function toLocalDatetimeValue(date: Date) {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  const hours = String(date.getHours()).padStart(2, "0");
-  const minutes = String(date.getMinutes()).padStart(2, "0");
-  return `${year}-${month}-${day}T${hours}:${minutes}`;
-}
-
 export const TalkPresentationModal: React.FC<TalkPresentationModalProps> = ({
   isOpen,
   talk,
   onDismiss,
 }) => {
+  const modalRef = useRef<HTMLIonModalElement | null>(null);
   const [selectedTime, setSelectedTime] = useState<string>(() => {
     return toLocalDatetimeValue(new Date());
   });
+  const [startMs, setStartMs] = useState<number | null>(null);
+  const [endMs, setEndMs] = useState<number | null>(null);
+
+  const isRunning = startMs !== null && endMs !== null;
+
+  const handleStart = () => {
+    const nextEndMs = new Date(selectedTime).getTime();
+    if (!Number.isFinite(nextEndMs)) return;
+    const nextStartMs = Date.now();
+    if (nextEndMs <= nextStartMs) return;
+
+    setStartMs(nextStartMs);
+    setEndMs(nextEndMs);
+  };
 
   return (
     <IonModal
+      ref={modalRef}
       isOpen={isOpen}
-      onDidDismiss={onDismiss}
+      onDidDismiss={() => {
+        setStartMs(null);
+        setEndMs(null);
+        onDismiss();
+      }}
       onWillPresent={() => {
         const totalSeconds = getTotalAllocatedSeconds(talk);
         const nextDate = new Date();
         nextDate.setSeconds(nextDate.getSeconds() + totalSeconds);
         setSelectedTime(toLocalDatetimeValue(nextDate));
+        setStartMs(null);
+        setEndMs(null);
       }}
     >
       <IonHeader>
         <IonToolbar>
           <IonTitle>{talk.name}</IonTitle>
           <IonButtons slot="end">
-            <CloseButton onClick={onDismiss} />
+            <CloseButton
+              onClick={() => {
+                modalRef.current?.dismiss();
+              }}
+            />
           </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
-        <TalkPresentationTimePicker
-          value={selectedTime}
-          onChange={(nextValue) => setSelectedTime(nextValue)}
+        <TalkPresentationModalContent
+          isRunning={isRunning}
+          startMs={startMs}
+          endMs={endMs}
+          selectedTime={selectedTime}
+          onSelectedTimeChange={(nextValue) => setSelectedTime(nextValue)}
+          onStart={handleStart}
+          onFinished={() => {
+            setStartMs(null);
+            setEndMs(null);
+          }}
         />
       </IonContent>
     </IonModal>
