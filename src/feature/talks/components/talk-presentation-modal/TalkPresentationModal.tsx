@@ -6,6 +6,7 @@ import type { Outline } from "@feature/talks/state/useTalksStore";
 import { useRef } from "react";
 import { TalkPresentationModalContent } from "./components/talk-presentation-modal-content/TalkPresentationModalContent";
 import { TalkPresentationModalHeader } from "./components/talk-presentation-modal-header/TalkPresentationModalHeader";
+import { useTalkPresentationCountdown } from "./hooks/useTalkPresentationCountdown";
 import { useTalkPresentationModalStore } from "./hooks/useTalkPresentationModalStore";
 
 interface TalkPresentationModalProps {
@@ -28,6 +29,12 @@ export const TalkPresentationModal: React.FC<TalkPresentationModalProps> = ({
   const endMs = useTalkPresentationModalStore((s) => s.endMs);
   const finish = useTalkPresentationModalStore((s) => s.finish);
 
+  const countdown = useTalkPresentationCountdown({
+    startMs,
+    endMs,
+    onFinished: finish,
+  });
+
   return (
     <IonModal
       ref={modalRef}
@@ -42,9 +49,7 @@ export const TalkPresentationModal: React.FC<TalkPresentationModalProps> = ({
     >
       <TalkPresentationModalHeader
         talk={talk}
-        startMs={startMs}
-        endMs={endMs}
-        onFinished={finish}
+        countdown={countdown}
         onClose={() => {
           modalRef.current?.dismiss();
         }}
