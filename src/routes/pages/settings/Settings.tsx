@@ -8,8 +8,8 @@ import {
 } from "@ionic/react";
 import { SelectTheme } from "@feature/theme/SelectTheme";
 import { AuthSection } from "@feature/auth/AuthSection";
-import { BuildInfo } from "@feature/app/details/BuildInfo";
 import { OpenSourceLicenses } from "@services/app/details/open-source-licenses/OpenSourceLicenses";
+import { BuildInfo } from "@services/app/details/build-info/BuildInfo";
 
 export const Settings: React.FC = () => {
   return (
