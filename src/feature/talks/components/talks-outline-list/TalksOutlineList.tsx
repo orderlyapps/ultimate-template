@@ -4,11 +4,13 @@ import { List } from "@ionic-layout/list/List";
 import { Text } from "@ionic-display/text/Text";
 import { useTalksStore } from "@feature/talks/state/useTalksStore";
 import { ItemOptionDelete } from "@input/sliding-item-option/ItemOptionDelete";
+import { ItemOptionCopy } from "@input/sliding-item-option/ItemOptionCopy";
 import { formatTimeAllocation } from "@feature/talks/utils/format-time-allocation";
 
 export function TalksOutlineList() {
   const talks = useTalksStore((s) => s.talks);
   const removeTalk = useTalksStore((s) => s.removeTalk);
+  const duplicateTalk = useTalksStore((s) => s.duplicateTalk);
 
   if (talks.length === 0) {
     return (
@@ -40,6 +42,7 @@ export function TalksOutlineList() {
           </Item>
 
           <IonItemOptions side="end">
+            <ItemOptionCopy expandable onClick={() => duplicateTalk(talk.id)} />
             <ItemOptionDelete expandable onClick={() => removeTalk(talk.id)} />
           </IonItemOptions>
         </IonItemSliding>

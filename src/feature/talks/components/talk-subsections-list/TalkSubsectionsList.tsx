@@ -10,6 +10,7 @@ import { Text } from "@ionic-display/text/Text";
 import { Item } from "@ionic-layout/item/Item";
 import { List } from "@ionic-layout/list/List";
 import { ItemOptionDelete } from "@input/sliding-item-option/ItemOptionDelete";
+import { ItemOptionCopy } from "@input/sliding-item-option/ItemOptionCopy";
 import { useTalksStore } from "@feature/talks/state/useTalksStore";
 import type { Section } from "@feature/talks/state/useTalksStore";
 import { formatTimeAllocation } from "@feature/talks/utils/format-time-allocation";
@@ -23,6 +24,7 @@ export function TalkSubsectionsList({ talkId, section }: Props) {
   const subsections = section.subsections;
   const removeSubsection = useTalksStore((s) => s.removeSubsection);
   const reorderSubsections = useTalksStore((s) => s.reorderSubsections);
+  const duplicateSubsection = useTalksStore((s) => s.duplicateSubsection);
 
   if (subsections.length === 0) {
     return (
@@ -64,6 +66,10 @@ export function TalkSubsectionsList({ talkId, section }: Props) {
             </Item>
 
             <IonItemOptions side="end">
+              <ItemOptionCopy
+                expandable
+                onClick={() => duplicateSubsection(talkId, section.id, index)}
+              />
               <ItemOptionDelete
                 expandable
                 onClick={() => removeSubsection(talkId, section.id, index)}

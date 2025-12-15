@@ -29,10 +29,17 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 interface TalksState {
   talks: Outline[];
   addTalk: (name: string) => void;
+  duplicateTalk: (talkId: string) => void;
   updateTalkName: (talkId: string, name: string) => void;
   addSection: (talkId: string, name: string) => void;
+  duplicateSection: (talkId: string, sectionIndex: number) => void;
   updateSectionName: (talkId: string, sectionId: string, name: string) => void;
   addSubsection: (talkId: string, sectionId: string, name: string) => void;
+  duplicateSubsection: (
+    talkId: string,
+    sectionId: string,
+    subsectionIndex: number
+  ) => void;
   updateSubsectionName: (
     talkId: string,
     sectionId: string,
@@ -84,6 +91,41 @@ export const useTalksStore = create<TalksState>()(
             talks: [newTalk, ...state.talks],
           };
         }),
+      duplicateTalk: (talkId) =>
+        set((state) => {
+          const now = Date.now();
+          const talkIndex = state.talks.findIndex((t) => t.id === talkId);
+          const talkToCopy = state.talks[talkIndex];
+
+          if (!talkToCopy) {
+            return state;
+          }
+
+          const copiedTalk: Outline = {
+            ...talkToCopy,
+            id: createId(),
+            name: `${talkToCopy.name} copy`,
+            createdAt: now,
+            updatedAt: now,
+            sections: talkToCopy.sections.map((section) => {
+              return {
+                ...section,
+                id: createId(),
+                subsections: section.subsections.map((ss) => ({
+                  ...ss,
+                  id: createId(),
+                })),
+              };
+            }),
+          };
+
+          const nextTalks = [...state.talks];
+          nextTalks.splice(talkIndex + 1, 0, copiedTalk);
+
+          return {
+            talks: nextTalks,
+          };
+        }),
       updateTalkName: (talkId, name) =>
         set((state) => {
           const now = Date.now();
@@ -106,6 +148,38 @@ export const useTalksStore = create<TalksState>()(
               return {
                 ...t,
                 sections: [...t.sections, { id: createId(), name, subsections: [] }],
+                updatedAt: now,
+              };
+            }),
+          };
+        }),
+      duplicateSection: (talkId, sectionIndex) =>
+        set((state) => {
+          const now = Date.now();
+
+          return {
+            talks: state.talks.map((t) => {
+              if (t.id !== talkId) return t;
+
+              const sectionToCopy = t.sections[sectionIndex];
+              if (!sectionToCopy) return t;
+
+              const copiedSection: Section = {
+                ...sectionToCopy,
+                id: createId(),
+                name: `${sectionToCopy.name} copy`,
+                subsections: sectionToCopy.subsections.map((ss) => ({
+                  ...ss,
+                  id: createId(),
+                })),
+              };
+
+              const nextSections = [...t.sections];
+              nextSections.splice(sectionIndex + 1, 0, copiedSection);
+
+              return {
+                ...t,
+                sections: nextSections,
                 updatedAt: now,
               };
             }),
@@ -149,6 +223,41 @@ export const useTalksStore = create<TalksState>()(
                       ...section.subsections,
                       { id: createId(), name, content: "", timeAllocation: 150 },
                     ],
+                  };
+                }),
+                updatedAt: now,
+              };
+            }),
+          };
+        }),
+      duplicateSubsection: (talkId, sectionId, subsectionIndex) =>
+        set((state) => {
+          const now = Date.now();
+
+          return {
+            talks: state.talks.map((t) => {
+              if (t.id !== talkId) return t;
+
+              return {
+                ...t,
+                sections: t.sections.map((section) => {
+                  if (section.id !== sectionId) return section;
+
+                  const subsectionToCopy = section.subsections[subsectionIndex];
+                  if (!subsectionToCopy) return section;
+
+                  const copiedSubsection: Subsection = {
+                    ...subsectionToCopy,
+                    id: createId(),
+                    name: `${subsectionToCopy.name} copy`,
+                  };
+
+                  const nextSubsections = [...section.subsections];
+                  nextSubsections.splice(subsectionIndex + 1, 0, copiedSubsection);
+
+                  return {
+                    ...section,
+                    subsections: nextSubsections,
                   };
                 }),
                 updatedAt: now,
