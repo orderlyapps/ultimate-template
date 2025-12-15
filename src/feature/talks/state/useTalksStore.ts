@@ -23,6 +23,7 @@ export type Outline = {
 interface TalksState {
   talks: Outline[];
   addTalk: (name: string) => void;
+  addSection: (talkId: string, name: string) => void;
   removeTalk: (id: string) => void;
 }
 
@@ -51,6 +52,22 @@ export const useTalksStore = create<TalksState>()(
 
           return {
             talks: [newTalk, ...state.talks],
+          };
+        }),
+      addSection: (talkId, name) =>
+        set((state) => {
+          const now = Date.now();
+
+          return {
+            talks: state.talks.map((t) => {
+              if (t.id !== talkId) return t;
+
+              return {
+                ...t,
+                sections: [...t.sections, { name, subsections: [] }],
+                updatedAt: now,
+              };
+            }),
           };
         }),
       removeTalk: (id) =>
