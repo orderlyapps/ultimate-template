@@ -29,8 +29,16 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 interface TalksState {
   talks: Outline[];
   addTalk: (name: string) => void;
+  updateTalkName: (talkId: string, name: string) => void;
   addSection: (talkId: string, name: string) => void;
+  updateSectionName: (talkId: string, sectionId: string, name: string) => void;
   addSubsection: (talkId: string, sectionId: string, name: string) => void;
+  updateSubsectionName: (
+    talkId: string,
+    sectionId: string,
+    subsectionId: string,
+    name: string
+  ) => void;
   updateSubsection: (
     talkId: string,
     sectionId: string,
@@ -76,6 +84,17 @@ export const useTalksStore = create<TalksState>()(
             talks: [newTalk, ...state.talks],
           };
         }),
+      updateTalkName: (talkId, name) =>
+        set((state) => {
+          const now = Date.now();
+
+          return {
+            talks: state.talks.map((t) => {
+              if (t.id !== talkId) return t;
+              return { ...t, name, updatedAt: now };
+            }),
+          };
+        }),
       addSection: (talkId, name) =>
         set((state) => {
           const now = Date.now();
@@ -87,6 +106,25 @@ export const useTalksStore = create<TalksState>()(
               return {
                 ...t,
                 sections: [...t.sections, { id: createId(), name, subsections: [] }],
+                updatedAt: now,
+              };
+            }),
+          };
+        }),
+      updateSectionName: (talkId, sectionId, name) =>
+        set((state) => {
+          const now = Date.now();
+
+          return {
+            talks: state.talks.map((t) => {
+              if (t.id !== talkId) return t;
+
+              return {
+                ...t,
+                sections: t.sections.map((section) => {
+                  if (section.id !== sectionId) return section;
+                  return { ...section, name };
+                }),
                 updatedAt: now,
               };
             }),
@@ -111,6 +149,32 @@ export const useTalksStore = create<TalksState>()(
                       ...section.subsections,
                       { id: createId(), name, content: "", timeAllocation: 150 },
                     ],
+                  };
+                }),
+                updatedAt: now,
+              };
+            }),
+          };
+        }),
+      updateSubsectionName: (talkId, sectionId, subsectionId, name) =>
+        set((state) => {
+          const now = Date.now();
+
+          return {
+            talks: state.talks.map((t) => {
+              if (t.id !== talkId) return t;
+
+              return {
+                ...t,
+                sections: t.sections.map((section) => {
+                  if (section.id !== sectionId) return section;
+
+                  return {
+                    ...section,
+                    subsections: section.subsections.map((ss) => {
+                      if (ss.id !== subsectionId) return ss;
+                      return { ...ss, name };
+                    }),
                   };
                 }),
                 updatedAt: now,

@@ -15,10 +15,12 @@ import { useState } from "react";
 import { AddSectionAlert } from "@feature/talks/components/add-section-alert/AddSectionAlert";
 import { Space } from "@layout/space/Space";
 import { TalkSectionsList } from "../../../../../feature/talks/components/talk-sections-list/TalkSectionsList";
+import { EditableCondensedHeader } from "@feature/talks/components/editable-condensed-header/EditableCondensedHeader";
 
 export const Talk: React.FC = () => {
   const { talkId } = useParams<{ talkId: string }>();
   const talk = useTalksStore((s) => s.talks.find((t) => t.id === talkId));
+  const updateTalkName = useTalksStore((s) => s.updateTalkName);
   const [isAddSectionOpen, setIsAddSectionOpen] = useState(false);
   const [addSectionAlertKey, setAddSectionAlertKey] = useState(0);
 
@@ -44,7 +46,16 @@ export const Talk: React.FC = () => {
       <IonContent fullscreen className="ion-padding">
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">{talk?.name ?? "Talk"}</IonTitle>
+            <EditableCondensedHeader
+              value={talk?.name ?? "Talk"}
+              header="Rename Talk"
+              placeholder="Talk name"
+              disabled={!talkId || !talk}
+              onSave={(nextValue) => {
+                if (!talkId) return;
+                updateTalkName(talkId, nextValue);
+              }}
+            />
           </IonToolbar>
         </IonHeader>
         {talk ? (

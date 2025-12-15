@@ -15,11 +15,13 @@ import { AddButton } from "@input/button/add-button/AddButton";
 import { useState } from "react";
 import { AddSubsectionAlert } from "@feature/talks/components/add-subsection-alert/AddSubsectionAlert";
 import { TalkSubsectionsList } from "@feature/talks/components/talk-subsections-list/TalkSubsectionsList";
+import { EditableCondensedHeader } from "@feature/talks/components/editable-condensed-header/EditableCondensedHeader";
 
 export const TalkSection: React.FC = () => {
   const { talkId, sectionId } = useParams<{ talkId: string; sectionId: string }>();
   const talk = useTalksStore((s) => s.talks.find((t) => t.id === talkId));
   const section = talk?.sections.find((s) => s.id === sectionId);
+  const updateSectionName = useTalksStore((s) => s.updateSectionName);
   const [isAddSubsectionOpen, setIsAddSubsectionOpen] = useState(false);
   const [addSubsectionAlertKey, setAddSubsectionAlertKey] = useState(0);
 
@@ -48,7 +50,16 @@ export const TalkSection: React.FC = () => {
       <IonContent fullscreen className="ion-padding">
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">{section?.name ?? "Section"}</IonTitle>
+            <EditableCondensedHeader
+              value={section?.name ?? "Section"}
+              header="Rename Section"
+              placeholder="Section name"
+              disabled={!talkId || !sectionId || !talk || !section}
+              onSave={(nextValue) => {
+                if (!talkId || !sectionId) return;
+                updateSectionName(talkId, sectionId, nextValue);
+              }}
+            />
           </IonToolbar>
         </IonHeader>
         {talk && section ? (
