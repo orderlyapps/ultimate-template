@@ -1,32 +1,32 @@
 import {
-  IonPage,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
+  IonBackButton,
+  IonButtons,
   IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
 } from "@ionic/react";
-import { List } from "@ionic-layout/list/List";
-import { NavItem } from "@navigation/nav-item/NavItem";
 import { Space } from "@layout/space/Space";
 
-export const Home: React.FC = () => {
+export const Talks: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Home</IonTitle>
+          <IonButtons slot="start">
+            <IonBackButton defaultHref="/home" />
+          </IonButtons>
+          <IonTitle>Talks</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen className="ion-padding">
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Home</IonTitle>
+            <IonTitle size="large">Talks</IonTitle>
           </IonToolbar>
         </IonHeader>
         <Space height="2" />
-        <List>
-          <NavItem routerLink="/home/talks">Talks</NavItem>
-        </List>
       </IonContent>
     </IonPage>
   );
