@@ -34,7 +34,7 @@ export const BuildInfo: React.FC<BuildInfoProps> = ({ buildTimeIso }) => {
 
   return (
     <Item lines="none">
-      <Label>App Build</Label>
+      <Label>Built</Label>
 
       <Text slot="end" className="ion-text-end ion-no-margin">
         {builtAt}

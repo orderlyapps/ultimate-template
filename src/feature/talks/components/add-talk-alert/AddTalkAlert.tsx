@@ -1,5 +1,5 @@
 import { IonAlert } from "@ionic/react";
-import { useTalksStore } from "@feature/state/useTalksStore";
+import { useTalksStore } from "@feature/talks/state/useTalksStore";
 
 type Props = {
   isOpen: boolean;

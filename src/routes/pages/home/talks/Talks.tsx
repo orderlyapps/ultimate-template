@@ -10,8 +10,8 @@ import {
 import { Space } from "@layout/space/Space";
 import { AddButton } from "@input/button/add-button/AddButton";
 import { useState } from "react";
-import { AddTalkAlert } from "../../../../feature/components/add-talk-alert/AddTalkAlert";
-import { TalksOutlineList } from "../../../../feature/components/talks-outline-list/TalksOutlineList";
+import { AddTalkAlert } from "../../../../feature/talks/components/add-talk-alert/AddTalkAlert";
+import { TalksOutlineList } from "../../../../feature/talks/components/talks-outline-list/TalksOutlineList";
 
 export const Talks: React.FC = () => {
   const [isAddTalkOpen, setIsAddTalkOpen] = useState(false);

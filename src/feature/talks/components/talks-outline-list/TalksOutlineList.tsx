@@ -2,7 +2,7 @@ import { IonItemOptions, IonItemSliding, IonLabel } from "@ionic/react";
 import { Item } from "@ionic-layout/item/Item";
 import { List } from "@ionic-layout/list/List";
 import { Text } from "@ionic-display/text/Text";
-import { useTalksStore } from "@feature/state/useTalksStore";
+import { useTalksStore } from "@feature/talks/state/useTalksStore";
 import { ItemOptionDelete } from "@input/sliding-item-option/ItemOptionDelete";
 
 type Props = {
