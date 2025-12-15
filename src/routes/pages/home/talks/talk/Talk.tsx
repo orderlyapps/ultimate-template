@@ -14,7 +14,7 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { AddSectionAlert } from "@feature/talks/components/add-section-alert/AddSectionAlert";
 import { Space } from "@layout/space/Space";
-import { TalkSectionsList } from "./talk-sections-list/TalkSectionsList";
+import { TalkSectionsList } from "../../../../../feature/talks/components/talk-sections-list/TalkSectionsList";
 
 export const Talk: React.FC = () => {
   const { talkId } = useParams<{ talkId: string }>();
