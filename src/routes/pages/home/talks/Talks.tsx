@@ -15,6 +15,7 @@ import { TalksOutlineList } from "../../../../feature/components/talks-outline-l
 
 export const Talks: React.FC = () => {
   const [isAddTalkOpen, setIsAddTalkOpen] = useState(false);
+  const [addTalkAlertKey, setAddTalkAlertKey] = useState(0);
 
   return (
     <IonPage>
@@ -24,7 +25,12 @@ export const Talks: React.FC = () => {
             <IonBackButton defaultHref="/home" text="Home" />
           </IonButtons>
           <IonButtons slot="end">
-            <AddButton onClick={() => setIsAddTalkOpen(true)} />
+            <AddButton
+              onClick={() => {
+                setAddTalkAlertKey((k) => k + 1);
+                setIsAddTalkOpen(true);
+              }}
+            />
           </IonButtons>
           <IonTitle>Talks</IonTitle>
         </IonToolbar>
@@ -38,6 +44,7 @@ export const Talks: React.FC = () => {
         <Space height="2" />
         <TalksOutlineList />
         <AddTalkAlert
+          key={addTalkAlertKey}
           isOpen={isAddTalkOpen}
           onDismiss={() => setIsAddTalkOpen(false)}
         />
