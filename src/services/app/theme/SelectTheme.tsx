@@ -1,5 +1,8 @@
-import { useThemeStore, type ThemePreference } from "@feature/theme/themeStore";
 import { SelectItem } from "@input/select/SelectItem";
+import {
+  useThemeStore,
+  type ThemePreference,
+} from "@services/app/theme/themeStore";
 
 const themeOptions: readonly { value: ThemePreference; label: string }[] = [
   { value: "system", label: "System" },

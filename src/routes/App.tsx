@@ -4,10 +4,10 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "@tanstack-query/client";
 import { pages } from "@pages/Pages";
 import { Tabs } from "@tabs/Tabs";
-import { useTheme } from "@feature/theme/useTheme";
-import { PwaUpdatePrompt } from "@feature/pwa/PwaUpdatePrompt";
+import { PwaUpdatePrompt } from "@services/app/pwa/PwaUpdatePrompt";
 
 import "@css/index.css";
+import { useTheme } from "@services/app/theme/useTheme";
 
 setupIonicReact({
   swipeBackEnabled: false,
