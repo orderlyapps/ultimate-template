@@ -5,11 +5,7 @@ import { Text } from "@ionic-display/text/Text";
 import { useTalksStore } from "@feature/talks/state/useTalksStore";
 import { ItemOptionDelete } from "@input/sliding-item-option/ItemOptionDelete";
 
-type Props = {
-  onSelectTalk?: (id: string) => void;
-};
-
-export function TalksOutlineList({ onSelectTalk }: Props) {
+export function TalksOutlineList() {
   const talks = useTalksStore((s) => s.talks);
   const removeTalk = useTalksStore((s) => s.removeTalk);
 
@@ -29,7 +25,12 @@ export function TalksOutlineList({ onSelectTalk }: Props) {
     <List>
       {talks.map((talk) => (
         <IonItemSliding key={talk.id}>
-          <Item button detail onClick={() => onSelectTalk?.(talk.id)}>
+          <Item
+            button
+            detail
+            routerLink={`/home/talks/${talk.id}`}
+            routerDirection="forward"
+          >
             <IonLabel>
               <Text bold>{talk.name}</Text>
               <br />

@@ -10,14 +10,12 @@ import {
 import { Space } from "@layout/space/Space";
 import { AddButton } from "@input/button/add-button/AddButton";
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { AddTalkAlert } from "../../../../feature/talks/components/add-talk-alert/AddTalkAlert";
 import { TalksOutlineList } from "../../../../feature/talks/components/talks-outline-list/TalksOutlineList";
 
 export const Talks: React.FC = () => {
   const [isAddTalkOpen, setIsAddTalkOpen] = useState(false);
   const [addTalkAlertKey, setAddTalkAlertKey] = useState(0);
-  const history = useHistory();
 
   return (
     <IonPage>
@@ -44,11 +42,7 @@ export const Talks: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <Space height="2" />
-        <TalksOutlineList
-          onSelectTalk={(talkId) => {
-            history.push(`/home/talks/${talkId}`);
-          }}
-        />
+        <TalksOutlineList />
         <AddTalkAlert
           key={addTalkAlertKey}
           isOpen={isAddTalkOpen}
