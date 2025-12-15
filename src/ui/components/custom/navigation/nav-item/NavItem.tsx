@@ -1,6 +1,6 @@
-import { Label } from "@ionic-display/label/Label";
 import { Text } from "@ionic-display/text/Text";
 import { Item } from "@ionic-layout/item/Item";
+import { IonLabel } from "@ionic/react";
 
 export const NavItem = ({
   children,
@@ -11,9 +11,9 @@ export const NavItem = ({
 }) => {
   return (
     <Item routerLink={routerLink}>
-      <Label color="primary" className="ion-margin">
+      <IonLabel color="primary" className="ion-margin">
         <Text size="xl">{children}</Text>
-      </Label>
+      </IonLabel>
     </Item>
   );
 };

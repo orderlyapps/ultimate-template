@@ -33,8 +33,8 @@ export const BuildInfo: React.FC<BuildInfoProps> = ({ buildTimeIso }) => {
   const secondary = `${timeAgo}`;
 
   return (
-    <Item>
-      <Label>Built</Label>
+    <Item lines="none">
+      <Label>App Build</Label>
 
       <Text slot="end" className="ion-text-end ion-no-margin">
         {builtAt}

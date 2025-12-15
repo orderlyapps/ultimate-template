@@ -5,11 +5,8 @@ import {
   IonTitle,
   IonContent,
 } from "@ionic/react";
-import { OpenSourceLicenses } from "@services/app/details/open-source-licenses/OpenSourceLicenses";
-import { BuildInfo } from "@services/app/details/build-info/BuildInfo";
-import { AuthSection } from "@services/app/auth/AuthSection";
-import { SelectTheme } from "@services/app/theme/SelectTheme";
 import { List } from "@ionic-layout/list/List";
+import { NavItem } from "@navigation/nav-item/NavItem";
 
 export const Settings: React.FC = () => {
   return (
@@ -21,10 +18,10 @@ export const Settings: React.FC = () => {
       </IonHeader>
       <IonContent>
         <List>
-          <SelectTheme />
-          <AuthSection />
-          <BuildInfo />
-          <OpenSourceLicenses />
+          <NavItem routerLink="/settings/profile">Profile</NavItem>
+          <NavItem routerLink="/settings/appearance">Appearance</NavItem>
+          <NavItem routerLink="/settings/features">Features</NavItem>
+          <NavItem routerLink="/settings/app-details">App Details</NavItem>
         </List>
       </IonContent>
     </IonPage>
