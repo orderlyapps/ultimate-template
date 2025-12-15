@@ -30,20 +30,23 @@ export const TalkSubsection: React.FC = () => {
           <IonButtons slot="start">
             <IonBackButton
               defaultHref={`/home/talks/${talkId}/sections/${sectionId}`}
-              text="Section"
+              text={section?.name ?? "Section"}
             />
           </IonButtons>
           <IonTitle>{subsection?.name ?? "Subsection"}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen className="ion-padding">
+        <IonHeader collapse="condense">
+          <IonToolbar>
+            <IonTitle size="large">{subsection?.name ?? "Subsection"}</IonTitle>
+          </IonToolbar>
+        </IonHeader>
         {talk && section && subsection ? (
           <TalkSubsectionDetails
             talkId={talk.id}
             sectionId={section.id}
             subsection={subsection}
-            talkName={talk.name}
-            sectionName={section.name}
           />
         ) : (
           <Text>Subsection not found</Text>

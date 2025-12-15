@@ -42,6 +42,11 @@ export const Talk: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen className="ion-padding">
+        <IonHeader collapse="condense">
+          <IonToolbar>
+            <IonTitle size="large">{talk?.name ?? "Talk"}</IonTitle>
+          </IonToolbar>
+        </IonHeader>
         {talk ? (
           <>
             <Text size="lg">{talk.sections.length} sections</Text>

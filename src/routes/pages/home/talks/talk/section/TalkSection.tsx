@@ -28,7 +28,10 @@ export const TalkSection: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref={`/home/talks/${talkId}`} text="Talk" />
+            <IonBackButton
+              defaultHref={`/home/talks/${talkId}`}
+              text={talk?.name ?? "Talk"}
+            />
           </IonButtons>
           <IonButtons slot="end">
             <AddButton
@@ -43,6 +46,11 @@ export const TalkSection: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen className="ion-padding">
+        <IonHeader collapse="condense">
+          <IonToolbar>
+            <IonTitle size="large">{section?.name ?? "Section"}</IonTitle>
+          </IonToolbar>
+        </IonHeader>
         {talk && section ? (
           <>
             <Text size="lg">{talk.name}</Text>

@@ -1,4 +1,3 @@
-import { Text } from "@ionic-display/text/Text";
 import { Textarea } from "@ionic-input/textarea/Textarea";
 import { Space } from "@layout/space/Space";
 import { useTalksStore } from "@feature/talks/state/useTalksStore";
@@ -13,24 +12,17 @@ type Props = {
   talkId: string;
   sectionId: string;
   subsection: Subsection;
-  talkName: string;
-  sectionName: string;
 };
 
 export function TalkSubsectionDetails({
   talkId,
   sectionId,
   subsection,
-  talkName,
-  sectionName,
 }: Props) {
   const updateSubsection = useTalksStore((s) => s.updateSubsection);
 
   return (
     <>
-      <Text size="lg">{talkName}</Text>
-      <Space height="2" />
-      <Text>{sectionName}</Text>
       <Space height="2" />
       <Item lines="none">
         <IonLabel>
