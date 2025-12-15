@@ -46,7 +46,7 @@ export const Talk: React.FC = () => {
           <>
             <Text size="lg">{talk.sections.length} sections</Text>
             <Space height="2" />
-            <TalkSectionsList talkId={talk.id} sections={talk.sections} />
+            <TalkSectionsList talk={talk} />
             <AddSectionAlert
               key={addSectionAlertKey}
               talkId={talk.id}

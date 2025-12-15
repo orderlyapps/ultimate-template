@@ -6,19 +6,19 @@ import {
   IonReorderGroup,
   type ReorderEndCustomEvent,
 } from "@ionic/react";
-import type { Section } from "@feature/talks/state/useTalksStore";
 import { Text } from "@ionic-display/text/Text";
 import { Item } from "@ionic-layout/item/Item";
 import { List } from "@ionic-layout/list/List";
 import { ItemOptionDelete } from "@input/sliding-item-option/ItemOptionDelete";
 import { useTalksStore } from "@feature/talks/state/useTalksStore";
+import type { Outline } from "@feature/talks/state/useTalksStore";
 
 type Props = {
-  talkId: string;
-  sections: Section[];
+  talk: Outline;
 };
 
-export function TalkSectionsList({ talkId, sections }: Props) {
+export function TalkSectionsList({ talk }: Props) {
+  const sections = talk.sections;
   const removeSection = useTalksStore((s) => s.removeSection);
   const reorderSections = useTalksStore((s) => s.reorderSections);
 
@@ -41,7 +41,7 @@ export function TalkSectionsList({ talkId, sections }: Props) {
         onIonReorderEnd={(e: ReorderEndCustomEvent) => {
           const fromIndex = e.detail.from;
           const toIndex = e.detail.to;
-          reorderSections(talkId, fromIndex, toIndex);
+          reorderSections(talk.id, fromIndex, toIndex);
           e.detail.complete();
         }}
       >
@@ -59,7 +59,7 @@ export function TalkSectionsList({ talkId, sections }: Props) {
             <IonItemOptions side="end">
               <ItemOptionDelete
                 expandable
-                onClick={() => removeSection(talkId, index)}
+                onClick={() => removeSection(talk.id, index)}
               />
             </IonItemOptions>
           </IonItemSliding>
