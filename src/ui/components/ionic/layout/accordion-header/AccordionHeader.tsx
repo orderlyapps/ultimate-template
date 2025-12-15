@@ -7,10 +7,17 @@ type ItemProps = ComponentProps<typeof Item>;
 
 export const ItemAccordionHeader: React.FC<ItemProps> = ({
   children,
+  lines,
   ...props
 }) => {
   return (
-    <Item slot="header" button detail={false} {...props}>
+    <Item
+      slot="header"
+      button
+      detail={false}
+      lines={lines || "inset"}
+      {...props}
+    >
       {children}
 
       <Icon

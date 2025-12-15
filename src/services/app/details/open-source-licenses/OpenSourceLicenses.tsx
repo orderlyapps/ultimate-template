@@ -1,4 +1,3 @@
-import { List } from "@ionic-layout/list/List";
 import { AccordionGroup } from "@ionic-layout/accordion-group/AccordionGroup";
 import { useState } from "react";
 import { OpenSourceLicenseItem } from "./components/OpenSourceLicenseItem";
@@ -22,9 +21,7 @@ export function OpenSourceLicenses() {
       const licenseText = safeString(value.licenseText);
 
       const haystack = normalize(
-        [key, repo, description, licenseName, version]
-          .filter(Boolean)
-          .join(" ")
+        [key, repo, description, licenseName, version].filter(Boolean).join(" ")
       );
 
       return {
@@ -44,13 +41,11 @@ export function OpenSourceLicenses() {
     <>
       <OpenSourceLicensesSearchbar query={query} onQueryChange={setQuery} />
 
-      <List inset>
-        <AccordionGroup>
-          {items.map((item) => (
-            <OpenSourceLicenseItem key={item.key} item={item} />
-          ))}
-        </AccordionGroup>
-      </List>
+      <AccordionGroup>
+        {items.map((item) => (
+          <OpenSourceLicenseItem key={item.key} item={item} />
+        ))}
+      </AccordionGroup>
     </>
   );
 }
