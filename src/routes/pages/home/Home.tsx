@@ -6,7 +6,6 @@ import {
   IonContent,
 } from "@ionic/react";
 import { Space } from "@layout/space/Space";
-import { NavItem } from "@navigation/nav-item/NavItem";
 
 export const Home: React.FC = () => {
   return (
@@ -23,7 +22,6 @@ export const Home: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <Space height="2" />
-        <NavItem routerLink="/home/test">Go to Test Page</NavItem>
       </IonContent>
     </IonPage>
   );
