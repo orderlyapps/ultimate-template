@@ -1,15 +1,11 @@
 import {
   IonContent,
-  IonHeader,
   IonModal,
-  IonTitle,
-  IonToolbar,
-  IonButtons,
 } from "@ionic/react";
-import { CloseButton } from "@input/button/close-button/CloseButton";
 import type { Outline } from "@feature/talks/state/useTalksStore";
 import { useRef } from "react";
 import { TalkPresentationModalContent } from "./components/talk-presentation-modal-content/TalkPresentationModalContent";
+import { TalkPresentationModalHeader } from "./components/talk-presentation-modal-header/TalkPresentationModalHeader";
 import { useTalkPresentationModalStore } from "./hooks/useTalkPresentationModalStore";
 
 interface TalkPresentationModalProps {
@@ -28,6 +24,9 @@ export const TalkPresentationModal: React.FC<TalkPresentationModalProps> = ({
     (s) => s.initializeForTalk
   );
   const reset = useTalkPresentationModalStore((s) => s.reset);
+  const startMs = useTalkPresentationModalStore((s) => s.startMs);
+  const endMs = useTalkPresentationModalStore((s) => s.endMs);
+  const finish = useTalkPresentationModalStore((s) => s.finish);
 
   return (
     <IonModal
@@ -41,18 +40,15 @@ export const TalkPresentationModal: React.FC<TalkPresentationModalProps> = ({
         initializeForTalk(talk);
       }}
     >
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>{talk.name}</IonTitle>
-          <IonButtons slot="end">
-            <CloseButton
-              onClick={() => {
-                modalRef.current?.dismiss();
-              }}
-            />
-          </IonButtons>
-        </IonToolbar>
-      </IonHeader>
+      <TalkPresentationModalHeader
+        talk={talk}
+        startMs={startMs}
+        endMs={endMs}
+        onFinished={finish}
+        onClose={() => {
+          modalRef.current?.dismiss();
+        }}
+      />
       <IonContent className="ion-padding">
         <TalkPresentationModalContent />
       </IonContent>
