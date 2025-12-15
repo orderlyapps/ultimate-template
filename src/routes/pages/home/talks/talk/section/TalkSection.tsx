@@ -18,7 +18,10 @@ import { TalkSubsectionsList } from "@feature/talks/components/talk-subsections-
 import { EditableCondensedHeader } from "@feature/talks/components/editable-condensed-header/EditableCondensedHeader";
 
 export const TalkSection: React.FC = () => {
-  const { talkId, sectionId } = useParams<{ talkId: string; sectionId: string }>();
+  const { talkId, sectionId } = useParams<{
+    talkId: string;
+    sectionId: string;
+  }>();
   const talk = useTalksStore((s) => s.talks.find((t) => t.id === talkId));
   const section = talk?.sections.find((s) => s.id === sectionId);
   const updateSectionName = useTalksStore((s) => s.updateSectionName);
@@ -44,7 +47,7 @@ export const TalkSection: React.FC = () => {
               }}
             />
           </IonButtons>
-          <IonTitle>{section?.name ?? "Section"}</IonTitle>
+          <IonTitle />
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen className="ion-padding">

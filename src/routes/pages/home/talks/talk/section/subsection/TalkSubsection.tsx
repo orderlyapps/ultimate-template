@@ -35,7 +35,7 @@ export const TalkSubsection: React.FC = () => {
               text={section?.name ?? "Section"}
             />
           </IonButtons>
-          <IonTitle>{subsection?.name ?? "Subsection"}</IonTitle>
+          <IonTitle />
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen className="ion-padding">
@@ -45,10 +45,22 @@ export const TalkSubsection: React.FC = () => {
               value={subsection?.name ?? "Subsection"}
               header="Rename Subsection"
               placeholder="Subsection name"
-              disabled={!talkId || !sectionId || !subsectionId || !talk || !section || !subsection}
+              disabled={
+                !talkId ||
+                !sectionId ||
+                !subsectionId ||
+                !talk ||
+                !section ||
+                !subsection
+              }
               onSave={(nextValue) => {
                 if (!talkId || !sectionId || !subsectionId) return;
-                updateSubsectionName(talkId, sectionId, subsectionId, nextValue);
+                updateSubsectionName(
+                  talkId,
+                  sectionId,
+                  subsectionId,
+                  nextValue
+                );
               }}
             />
           </IonToolbar>
