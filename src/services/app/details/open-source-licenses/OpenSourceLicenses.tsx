@@ -6,6 +6,12 @@ import licensesJson from "./licenses.json";
 import type { LicenseListItem, LicensesMap } from "./license-types";
 import { normalize, safeString } from "./license-utils";
 
+function isLicensed(licenseName: string) {
+  const v = licenseName.trim();
+  if (v.length === 0) return false;
+  return !/^(unlicensed|unknown|none|noassertion)$/i.test(v);
+}
+
 export function OpenSourceLicenses() {
   const licenses = licensesJson as LicensesMap;
 
@@ -34,6 +40,7 @@ export function OpenSourceLicenses() {
         haystack,
       };
     })
+    .filter((x) => isLicensed(x.licenseName))
     .filter((x) => (q.length === 0 ? true : x.haystack.includes(q)))
     .sort((a, b) => a.key.localeCompare(b.key));
 
