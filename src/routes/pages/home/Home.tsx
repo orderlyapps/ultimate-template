@@ -5,6 +5,7 @@ import {
   IonTitle,
   IonContent,
 } from "@ionic/react";
+import { Space } from "@layout/space/Space";
 import { NavItem } from "@navigation/nav-item/NavItem";
 
 export const Home: React.FC = () => {
@@ -15,7 +16,13 @@ export const Home: React.FC = () => {
           <IonTitle>Home</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent className="ion-padding">
+      <IonContent fullscreen className="ion-padding">
+        <IonHeader collapse="condense">
+          <IonToolbar>
+            <IonTitle size="large">Home</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+        <Space height="2" />
         <NavItem routerLink="/home/test">Go to Test Page</NavItem>
       </IonContent>
     </IonPage>

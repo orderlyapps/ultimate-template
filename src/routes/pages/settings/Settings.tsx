@@ -7,6 +7,7 @@ import {
 } from "@ionic/react";
 import { List } from "@ionic-layout/list/List";
 import { NavItem } from "@navigation/nav-item/NavItem";
+import { Space } from "@layout/space/Space";
 
 export const Settings: React.FC = () => {
   return (
@@ -16,7 +17,13 @@ export const Settings: React.FC = () => {
           <IonTitle>Settings</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
+      <IonContent fullscreen>
+        <IonHeader collapse="condense">
+          <IonToolbar>
+            <IonTitle size="large">Settings</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+        <Space height="2" />
         <List>
           <NavItem routerLink="/settings/profile">Profile</NavItem>
           <NavItem routerLink="/settings/appearance">Appearance</NavItem>
