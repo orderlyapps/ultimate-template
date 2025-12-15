@@ -31,6 +31,12 @@ interface TalksState {
   addTalk: (name: string) => void;
   addSection: (talkId: string, name: string) => void;
   addSubsection: (talkId: string, sectionId: string, name: string) => void;
+  updateSubsection: (
+    talkId: string,
+    sectionId: string,
+    subsectionId: string,
+    updates: Partial<Pick<Subsection, "content" | "timeAllocation">>
+  ) => void;
   removeSubsection: (talkId: string, sectionId: string, subsectionIndex: number) => void;
   reorderSubsections: (
     talkId: string,
@@ -105,6 +111,32 @@ export const useTalksStore = create<TalksState>()(
                       ...section.subsections,
                       { id: createId(), name, content: "", timeAllocation: 150 },
                     ],
+                  };
+                }),
+                updatedAt: now,
+              };
+            }),
+          };
+        }),
+      updateSubsection: (talkId, sectionId, subsectionId, updates) =>
+        set((state) => {
+          const now = Date.now();
+
+          return {
+            talks: state.talks.map((t) => {
+              if (t.id !== talkId) return t;
+
+              return {
+                ...t,
+                sections: t.sections.map((section) => {
+                  if (section.id !== sectionId) return section;
+
+                  return {
+                    ...section,
+                    subsections: section.subsections.map((ss) => {
+                      if (ss.id !== subsectionId) return ss;
+                      return { ...ss, ...updates };
+                    }),
                   };
                 }),
                 updatedAt: now,

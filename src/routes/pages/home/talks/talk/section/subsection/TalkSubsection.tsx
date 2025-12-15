@@ -7,9 +7,9 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { Text } from "@ionic-display/text/Text";
-import { Space } from "@layout/space/Space";
 import { useTalksStore } from "@feature/talks/state/useTalksStore";
+import { TalkSubsectionDetails } from "../../../../../../../feature/talks/components/talk-subsection-details/TalkSubsectionDetails";
+import { Text } from "@ionic-display/text/Text";
 import { useParams } from "react-router-dom";
 
 export const TalkSubsection: React.FC = () => {
@@ -38,13 +38,13 @@ export const TalkSubsection: React.FC = () => {
       </IonHeader>
       <IonContent fullscreen className="ion-padding">
         {talk && section && subsection ? (
-          <>
-            <Text size="lg">{talk.name}</Text>
-            <Space height="2" />
-            <Text>{section.name}</Text>
-            <Space height="2" />
-            <Text>{subsection.timeAllocation}s</Text>
-          </>
+          <TalkSubsectionDetails
+            talkId={talk.id}
+            sectionId={section.id}
+            subsection={subsection}
+            talkName={talk.name}
+            sectionName={section.name}
+          />
         ) : (
           <Text>Subsection not found</Text>
         )}
