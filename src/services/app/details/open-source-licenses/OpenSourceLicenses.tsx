@@ -1,4 +1,5 @@
 import { List } from "@ionic-layout/list/List";
+import { AccordionGroup } from "@ionic-layout/accordion-group/AccordionGroup";
 import { useState } from "react";
 import { OpenSourceLicenseItem } from "./components/OpenSourceLicenseItem";
 import { OpenSourceLicensesSearchbar } from "./components/OpenSourceLicensesSearchbar";
@@ -10,7 +11,6 @@ export function OpenSourceLicenses() {
   const licenses = licensesJson as LicensesMap;
 
   const [query, setQuery] = useState("");
-  const [openKey, setOpenKey] = useState<string | null>(null);
 
   const q = normalize(query);
   const items: LicenseListItem[] = Object.entries(licenses)
@@ -45,16 +45,11 @@ export function OpenSourceLicenses() {
       <OpenSourceLicensesSearchbar query={query} onQueryChange={setQuery} />
 
       <List inset>
-        {items.map((item) => (
-          <OpenSourceLicenseItem
-            key={item.key}
-            item={item}
-            isOpen={openKey === item.key}
-            onToggle={() =>
-              setOpenKey((prev) => (prev === item.key ? null : item.key))
-            }
-          />
-        ))}
+        <AccordionGroup>
+          {items.map((item) => (
+            <OpenSourceLicenseItem key={item.key} item={item} />
+          ))}
+        </AccordionGroup>
       </List>
     </>
   );

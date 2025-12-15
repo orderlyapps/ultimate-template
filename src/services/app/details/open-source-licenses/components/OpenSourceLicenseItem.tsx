@@ -1,8 +1,7 @@
-import { Icon } from "@ionic-display/icon/Icon";
 import { Label } from "@ionic-display/label/Label";
 import { Text } from "@ionic-display/text/Text";
+import { Accordion } from "@ionic-layout/accordion/Accordion";
 import { Item } from "@ionic-layout/item/Item";
-import { chevronDown, chevronUp } from "ionicons/icons";
 import { OpenSourceLicenseDetails } from "./OpenSourceLicenseDetails";
 import type { LicenseListItem } from "../license-types";
 
@@ -11,38 +10,28 @@ type Props = {
     LicenseListItem,
     "key" | "licenseName" | "version" | "description" | "repo" | "licenseText"
   >;
-  isOpen: boolean;
-  onToggle: () => void;
 };
 
 export function OpenSourceLicenseItem({
   item,
-  isOpen,
-  onToggle,
 }: Props) {
   const { key, licenseName, version } = item;
 
   return (
-    <div>
-      <Item button detail={false} onClick={onToggle}>
+    <Accordion value={key}>
+      <Item slot="header" button detail={false}>
         <Label>{key}</Label>
 
         <Text slot="end" className="ion-text-end ion-no-margin">
           {licenseName && <span>{licenseName}</span>}
-          {licenseName && version && <br />}
+          {licenseName && version && " - "}
           {version && <span>{version}</span>}
         </Text>
-
-        <Icon
-          slot="end"
-          icon={isOpen ? chevronUp : chevronDown}
-          aria-hidden="true"
-        />
       </Item>
 
-      {isOpen && (
+      <div slot="content">
         <OpenSourceLicenseDetails item={item} />
-      )}
-    </div>
+      </div>
+    </Accordion>
   );
 }
