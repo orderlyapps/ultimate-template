@@ -4,6 +4,7 @@ import { Home } from "@pages/home/Home";
 import { Talks } from "@pages/home/talks/Talks";
 import { Talk } from "@pages/home/talks/talk/Talk";
 import { TalkSection } from "@pages/home/talks/talk/section/TalkSection";
+import { TalkSubsection } from "@pages/home/talks/talk/section/subsection/TalkSubsection";
 import { Ministry } from "@pages/ministry/Ministry";
 import { Schedules } from "@pages/schedules/Schedules";
 import { Publishers } from "@pages/publishers/Publishers";
@@ -24,6 +25,11 @@ export const pages = (
       exact
       path="/home/talks/:talkId/sections/:sectionId"
       render={() => <TalkSection />}
+    />
+    <Route
+      exact
+      path="/home/talks/:talkId/sections/:sectionId/subsections/:subsectionId"
+      render={() => <TalkSubsection />}
     />
     <Route exact path="/ministry" render={() => <Ministry />} />
     <Route exact path="/schedules" render={() => <Schedules />} />

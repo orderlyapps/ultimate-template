@@ -48,7 +48,12 @@ export function TalkSubsectionsList({ talkId, section }: Props) {
       >
         {subsections.map((subsection, index) => (
           <IonItemSliding key={subsection.id}>
-            <Item lines="full">
+            <Item
+              button
+              detail
+              lines="full"
+              routerLink={`/home/talks/${talkId}/sections/${section.id}/subsections/${subsection.id}`}
+            >
               <IonReorder slot="start" />
               <IonLabel>
                 <Text bold>{subsection.name}</Text>
