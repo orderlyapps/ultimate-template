@@ -14,6 +14,7 @@ import { useParams } from "react-router-dom";
 import { AddButton } from "@input/button/add-button/AddButton";
 import { useState } from "react";
 import { AddSubsectionAlert } from "@feature/talks/components/add-subsection-alert/AddSubsectionAlert";
+import { TalkSubsectionsList } from "@feature/talks/components/talk-subsections-list/TalkSubsectionsList";
 
 export const TalkSection: React.FC = () => {
   const { talkId, sectionId } = useParams<{ talkId: string; sectionId: string }>();
@@ -47,6 +48,8 @@ export const TalkSection: React.FC = () => {
             <Text size="lg">{talk.name}</Text>
             <Space height="2" />
             <Text>{section.subsections.length} subsections</Text>
+            <Space height="2" />
+            <TalkSubsectionsList talkId={talk.id} section={section} />
             <AddSubsectionAlert
               key={addSubsectionAlertKey}
               talkId={talk.id}

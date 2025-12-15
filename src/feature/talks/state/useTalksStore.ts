@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 export type Subsection = {
+  id: string;
   name: string;
   content: string;
   timeAllocation: number;
@@ -30,6 +31,13 @@ interface TalksState {
   addTalk: (name: string) => void;
   addSection: (talkId: string, name: string) => void;
   addSubsection: (talkId: string, sectionId: string, name: string) => void;
+  removeSubsection: (talkId: string, sectionId: string, subsectionIndex: number) => void;
+  reorderSubsections: (
+    talkId: string,
+    sectionId: string,
+    fromIndex: number,
+    toIndex: number
+  ) => void;
   removeSection: (talkId: string, sectionIndex: number) => void;
   reorderSections: (talkId: string, fromIndex: number, toIndex: number) => void;
   removeTalk: (id: string) => void;
@@ -95,8 +103,61 @@ export const useTalksStore = create<TalksState>()(
                     ...section,
                     subsections: [
                       ...section.subsections,
-                      { name, content: "", timeAllocation: 150 },
+                      { id: createId(), name, content: "", timeAllocation: 150 },
                     ],
+                  };
+                }),
+                updatedAt: now,
+              };
+            }),
+          };
+        }),
+      removeSubsection: (talkId, sectionId, subsectionIndex) =>
+        set((state) => {
+          const now = Date.now();
+
+          return {
+            talks: state.talks.map((t) => {
+              if (t.id !== talkId) return t;
+
+              return {
+                ...t,
+                sections: t.sections.map((section) => {
+                  if (section.id !== sectionId) return section;
+
+                  return {
+                    ...section,
+                    subsections: section.subsections.filter((_, i) => i !== subsectionIndex),
+                  };
+                }),
+                updatedAt: now,
+              };
+            }),
+          };
+        }),
+      reorderSubsections: (talkId, sectionId, fromIndex, toIndex) =>
+        set((state) => {
+          const now = Date.now();
+
+          return {
+            talks: state.talks.map((t) => {
+              if (t.id !== talkId) return t;
+
+              return {
+                ...t,
+                sections: t.sections.map((section) => {
+                  if (section.id !== sectionId) return section;
+
+                  const nextSubsections = [...section.subsections];
+                  const [moved] = nextSubsections.splice(fromIndex, 1);
+
+                  if (!moved) return section;
+
+                  nextSubsections.splice(toIndex, 0, moved);
+
+                  return {
+                    ...section,
+                    subsections: nextSubsections,
                   };
                 }),
                 updatedAt: now,
@@ -153,7 +214,7 @@ export const useTalksStore = create<TalksState>()(
       partialize: (state) => ({
         talks: state.talks,
       }),
-      version: 1,
+      version: 2,
       migrate: (persistedState) => {
         if (!isRecord(persistedState)) {
           return { talks: [] as Outline[] };
@@ -181,10 +242,11 @@ export const useTalksStore = create<TalksState>()(
                   .filter(isRecord)
                   .map((ss): Subsection => {
                     return {
+                      id: typeof ss.id === "string" ? ss.id : createId(),
                       name: typeof ss.name === "string" ? ss.name : "",
                       content: typeof ss.content === "string" ? ss.content : "",
                       timeAllocation:
-                        typeof ss.timeAllocation === "number" ? ss.timeAllocation : 0,
+                        typeof ss.timeAllocation === "number" ? ss.timeAllocation : 150,
                     };
                   });
 
