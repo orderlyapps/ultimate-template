@@ -1,6 +1,7 @@
-import { IonButton } from "@ionic/react";
 import { TalkPresentationTimePicker } from "../talk-presentation-time-picker/TalkPresentationTimePicker";
 import { useTalkPresentationModalStore } from "../../hooks/useTalkPresentationModalStore";
+import { Button } from "@ionic-input/button/Button";
+import { Space } from "@layout/space/Space";
 
 export function TalkPresentationModalContent() {
   const selectedTime = useTalkPresentationModalStore((s) => s.selectedTime);
@@ -19,13 +20,15 @@ export function TalkPresentationModalContent() {
 
   return (
     <>
+      <Space />
       <TalkPresentationTimePicker
         value={selectedTime}
         onChange={(nextValue) => setSelectedTime(nextValue)}
       />
-      <IonButton expand="block" onClick={start}>
+      <Space />
+      <Button expand="block" onClick={start}>
         Start
-      </IonButton>
+      </Button>
     </>
   );
 }
