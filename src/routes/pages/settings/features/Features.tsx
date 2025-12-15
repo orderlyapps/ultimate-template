@@ -14,7 +14,7 @@ export const Features: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/settings" />
+            <IonBackButton defaultHref="/settings" text="Settings" />
           </IonButtons>
           <IonTitle>Features</IonTitle>
         </IonToolbar>
