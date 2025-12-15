@@ -29,6 +29,7 @@ interface TalksState {
   talks: Outline[];
   addTalk: (name: string) => void;
   addSection: (talkId: string, name: string) => void;
+  addSubsection: (talkId: string, sectionId: string, name: string) => void;
   removeSection: (talkId: string, sectionIndex: number) => void;
   reorderSections: (talkId: string, fromIndex: number, toIndex: number) => void;
   removeTalk: (id: string) => void;
@@ -72,6 +73,32 @@ export const useTalksStore = create<TalksState>()(
               return {
                 ...t,
                 sections: [...t.sections, { id: createId(), name, subsections: [] }],
+                updatedAt: now,
+              };
+            }),
+          };
+        }),
+      addSubsection: (talkId, sectionId, name) =>
+        set((state) => {
+          const now = Date.now();
+
+          return {
+            talks: state.talks.map((t) => {
+              if (t.id !== talkId) return t;
+
+              return {
+                ...t,
+                sections: t.sections.map((section) => {
+                  if (section.id !== sectionId) return section;
+
+                  return {
+                    ...section,
+                    subsections: [
+                      ...section.subsections,
+                      { name, content: "", timeAllocation: 150 },
+                    ],
+                  };
+                }),
                 updatedAt: now,
               };
             }),
