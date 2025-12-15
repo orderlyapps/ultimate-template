@@ -1,6 +1,6 @@
 import { Redirect } from "react-router-dom";
 import { IonSpinner, IonPage, IonContent } from "@ionic/react";
-import { useAuth } from "@feature/auth/useAuth";
+import { useAuth } from "@services/app/auth/useAuth";
 
 interface AuthGuardProps {
   children: React.ReactNode;

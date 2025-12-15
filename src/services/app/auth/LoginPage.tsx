@@ -5,7 +5,7 @@ import {
   IonSpinner,
   IonIcon,
 } from "@ionic/react";
-import { useAuth } from "@feature/auth/useAuth";
+import { useAuth } from "@services/app/auth/useAuth";
 import { logoGoogle } from "ionicons/icons";
 
 export const Login: React.FC = () => {

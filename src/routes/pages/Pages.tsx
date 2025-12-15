@@ -3,8 +3,8 @@ import { IonRouterOutlet } from "@ionic/react";
 import { Home } from "@pages/home/Home";
 import { Test } from "@pages/home/Test";
 import { Settings } from "@pages/settings/Settings";
-import { Login } from "@feature/auth/LoginPage";
-import { AuthGuard } from "@feature/auth/AuthGuardPage";
+import { Login } from "@services/app/auth/LoginPage";
+import { AuthGuard } from "@services/app/auth/AuthGuard";
 
 export const pages = (
   <IonRouterOutlet>
