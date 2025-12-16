@@ -4,6 +4,7 @@ import {
 } from "@ionic/react";
 import type { Outline } from "@feature/talks/state/useTalksStore";
 import { useRef } from "react";
+import { TalkPresentationModalFooter } from "./components/talk-presentation-modal-footer/TalkPresentationModalFooter";
 import { TalkPresentationModalContent } from "./components/talk-presentation-modal-content/TalkPresentationModalContent";
 import { TalkPresentationModalHeader } from "./components/talk-presentation-modal-header/TalkPresentationModalHeader";
 import { useTalkPresentationCountdown } from "./hooks/useTalkPresentationCountdown";
@@ -54,9 +55,10 @@ export const TalkPresentationModal: React.FC<TalkPresentationModalProps> = ({
           modalRef.current?.dismiss();
         }}
       />
-      <IonContent className="ion-padding">
+      <IonContent className="ion-padding" fullscreen>
         <TalkPresentationModalContent talk={talk} />
       </IonContent>
+      <TalkPresentationModalFooter talk={talk} />
     </IonModal>
   );
 };
