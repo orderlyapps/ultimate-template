@@ -4,6 +4,7 @@ import { Button } from "@ionic-input/button/Button";
 import { Space } from "@layout/space/Space";
 import type { Outline } from "@feature/talks/state/useTalksStore";
 import { TalkPresentationTalkViewer } from "./components/talk-presentation-talk-viewer/TalkPresentationTalkViewer";
+import { IonList } from "@ionic/react";
 
 type Props = {
   talk: Outline;
@@ -25,7 +26,7 @@ export function TalkPresentationModalContent({ talk }: Props) {
   }
 
   return (
-    <>
+    <IonList lines="none" inset>
       <Space />
       <TalkPresentationTimePicker
         value={selectedTime}
@@ -35,6 +36,6 @@ export function TalkPresentationModalContent({ talk }: Props) {
       <Button expand="block" onClick={start}>
         Start
       </Button>
-    </>
+    </IonList>
   );
 }
