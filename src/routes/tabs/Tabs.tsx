@@ -24,27 +24,28 @@ const useOrientation = () => {
 export const Tabs: React.FC = () => {
   const isPortrait = useOrientation();
   const layout = isPortrait ? "icon-top" : "icon-start";
+  const className = isPortrait ? "" : "ion-padding-end";
 
   return (
     <IonTabBar slot="bottom">
       <IonTabButton tab="home" href="/home" layout={layout}>
-        <IonIcon src={home} />
+        <IonIcon src={home} className={className} />
         <IonLabel>Home</IonLabel>
       </IonTabButton>
       <IonTabButton tab="ministry" href="/ministry" layout={layout}>
-        <IonIcon src={ministry} />
+        <IonIcon src={ministry} className={className} />
         <IonLabel>Ministry</IonLabel>
       </IonTabButton>
       <IonTabButton tab="schedules" href="/schedules" layout={layout}>
-        <IonIcon src={schedules} />
+        <IonIcon src={schedules} className={className} />
         <IonLabel>Schedules</IonLabel>
       </IonTabButton>
       <IonTabButton tab="publishers" href="/publishers" layout={layout}>
-        <IonIcon src={publishers} />
+        <IonIcon src={publishers} className={className} />
         <IonLabel>Publishers</IonLabel>
       </IonTabButton>
       <IonTabButton tab="settings" href="/settings" layout={layout}>
-        <IonIcon src={settings} />
+        <IonIcon src={settings} className={className} />
         <IonLabel>Settings</IonLabel>
       </IonTabButton>
     </IonTabBar>
