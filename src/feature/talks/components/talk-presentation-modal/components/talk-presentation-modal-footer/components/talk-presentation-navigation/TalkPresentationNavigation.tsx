@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { IonButton, IonButtons, IonTitle } from "@ionic/react";
 
 type Props = {
@@ -5,7 +6,7 @@ type Props = {
   canNext: boolean;
   onPrev: () => void;
   onNext: () => void;
-  time: string;
+  title: ReactNode;
 };
 
 export function TalkPresentationNavigation({
@@ -13,7 +14,7 @@ export function TalkPresentationNavigation({
   canNext,
   onPrev,
   onNext,
-  time,
+  title,
 }: Props) {
   return (
     <>
@@ -22,7 +23,7 @@ export function TalkPresentationNavigation({
           Back
         </IonButton>
       </IonButtons>
-      <IonTitle>{time}</IonTitle>
+      <IonTitle>{title}</IonTitle>
       <IonButtons slot="end">
         <IonButton expand="block" disabled={!canNext} onClick={onNext}>
           Next

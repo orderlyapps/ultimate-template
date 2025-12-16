@@ -35,7 +35,9 @@ export function TalkPresentationTalkViewer({ talk }: Props) {
   const maxIndex = Math.max(0, items.length - 1);
 
   const currentIndex = useTalkPresentationModalStore((s) => s.currentIndex);
-  const setCurrentIndex = useTalkPresentationModalStore((s) => s.setCurrentIndex);
+  const setCurrentIndex = useTalkPresentationModalStore(
+    (s) => s.setCurrentIndex
+  );
 
   useEffect(() => {
     if (items.length === 0) {
@@ -58,7 +60,6 @@ export function TalkPresentationTalkViewer({ talk }: Props) {
   return (
     <>
       <TalkPresentationSubsectionContent
-        indexDisplay={`${clampedIndex + 1} / ${items.length}`}
         sectionName={current.sectionName}
         subsectionName={current.subsectionName}
         content={current.content}

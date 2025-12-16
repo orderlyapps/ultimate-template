@@ -1,5 +1,8 @@
 import type { Outline } from "@feature/talks/state/useTalksStore";
 import { IonFooter, IonToolbar } from "@ionic/react";
+import { TalkPresentationCountdownProgressBar } from "../talk-presentation-modal-header/components/talk-presentation-countdown-progress-bar/TalkPresentationCountdownProgressBar";
+import { TalkPresentationCountdownTimeText } from "../talk-presentation-modal-header/components/talk-presentation-countdown-time-text/TalkPresentationCountdownTimeText";
+import { useTalkPresentationSubsectionCountdown } from "../../hooks/useTalkPresentationSubsectionCountdown";
 import { useTalkPresentationModalStore } from "../../hooks/useTalkPresentationModalStore";
 import { TalkPresentationNavigation } from "./components/talk-presentation-navigation/TalkPresentationNavigation";
 
@@ -25,13 +28,18 @@ export function TalkPresentationModalFooter({ talk }: Props) {
   const prev = useTalkPresentationModalStore((s) => s.prev);
 
   const isRunning = startMs !== null && endMs !== null;
-  if (!isRunning) return null;
-
   const totalItems = getTotalItems(talk);
-  if (totalItems === 0) return null;
-
   const maxIndex = Math.max(0, totalItems - 1);
   const clampedIndex = Math.min(maxIndex, Math.max(0, currentIndex));
+
+  const countdown = useTalkPresentationSubsectionCountdown({
+    talk,
+    presentationStartMs: startMs,
+    currentIndex: clampedIndex,
+  });
+
+  if (!isRunning) return null;
+  if (totalItems === 0) return null;
 
   return (
     <IonFooter>
@@ -41,9 +49,20 @@ export function TalkPresentationModalFooter({ talk }: Props) {
           canNext={clampedIndex < maxIndex}
           onPrev={() => prev()}
           onNext={() => next(maxIndex)}
-          time={"00:00"}
+          title={
+            countdown ? (
+              <TalkPresentationCountdownTimeText
+                remainingSeconds={countdown.remainingSeconds}
+              />
+            ) : (
+              ""
+            )
+          }
         />
       </IonToolbar>
+      {countdown ? (
+        <TalkPresentationCountdownProgressBar value={countdown.progress} />
+      ) : null}
     </IonFooter>
   );
 }

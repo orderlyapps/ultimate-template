@@ -1,7 +1,4 @@
-import {
-  IonContent,
-  IonModal,
-} from "@ionic/react";
+import { IonContent, IonModal } from "@ionic/react";
 import type { Outline } from "@feature/talks/state/useTalksStore";
 import { useRef } from "react";
 import { TalkPresentationModalFooter } from "./components/talk-presentation-modal-footer/TalkPresentationModalFooter";
@@ -55,7 +52,7 @@ export const TalkPresentationModal: React.FC<TalkPresentationModalProps> = ({
           modalRef.current?.dismiss();
         }}
       />
-      <IonContent className="ion-padding" fullscreen>
+      <IonContent>
         <TalkPresentationModalContent talk={talk} />
       </IonContent>
       <TalkPresentationModalFooter talk={talk} />
