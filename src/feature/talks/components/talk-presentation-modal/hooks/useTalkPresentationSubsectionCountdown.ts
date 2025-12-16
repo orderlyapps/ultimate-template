@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import type { Outline } from "@feature/talks/state/useTalksStore";
 import { getTalkPresentationCountdownValues } from "../components/talk-presentation-modal-header/utils/getTalkPresentationCountdownValues";
 
 export type TalkPresentationSubsectionCountdown = ReturnType<
@@ -7,56 +6,16 @@ export type TalkPresentationSubsectionCountdown = ReturnType<
 >;
 
 type Params = {
-  talk: Outline;
-  presentationStartMs: number | null;
-  currentIndex: number;
+  subsectionStartMs: number | null;
+  subsectionEndMs: number | null;
 };
 
-function getSubsectionBounds(params: {
-  talk: Outline;
-  presentationStartMs: number;
-  currentIndex: number;
-}) {
-  const { talk, presentationStartMs, currentIndex } = params;
-
-  let startMs = presentationStartMs;
-  let flatIndex = 0;
-
-  for (const section of talk.sections) {
-    for (const subsection of section.subsections) {
-      const allocationSeconds = Math.max(0, subsection.timeAllocation ?? 0);
-      const endMs = startMs + allocationSeconds * 1000;
-
-      if (flatIndex === currentIndex) {
-        if (allocationSeconds <= 0) return null;
-        return { startMs, endMs };
-      }
-
-      startMs = endMs;
-      flatIndex += 1;
-    }
-  }
-
-  return null;
-}
-
 export function useTalkPresentationSubsectionCountdown({
-  talk,
-  presentationStartMs,
-  currentIndex,
+  subsectionStartMs,
+  subsectionEndMs,
 }: Params): TalkPresentationSubsectionCountdown | null {
   const [nowMs, setNowMs] = useState(() => Date.now());
-
-  const bounds =
-    presentationStartMs !== null
-      ? getSubsectionBounds({
-          talk,
-          presentationStartMs,
-          currentIndex,
-        })
-      : null;
-
-  const isRunning = presentationStartMs !== null && bounds !== null;
+  const isRunning = subsectionStartMs !== null && subsectionEndMs !== null;
 
   useEffect(() => {
     if (!isRunning) return;
@@ -68,10 +27,10 @@ export function useTalkPresentationSubsectionCountdown({
     return () => window.clearInterval(intervalId);
   }, [isRunning]);
 
-  return isRunning && bounds
+  return isRunning && subsectionStartMs !== null && subsectionEndMs !== null
     ? getTalkPresentationCountdownValues({
-        startMs: bounds.startMs,
-        endMs: bounds.endMs,
+        startMs: subsectionStartMs,
+        endMs: subsectionEndMs,
         nowMs,
       })
     : null;

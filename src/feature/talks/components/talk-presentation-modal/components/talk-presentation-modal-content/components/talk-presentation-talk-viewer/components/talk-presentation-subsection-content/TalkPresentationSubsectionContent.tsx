@@ -1,6 +1,6 @@
 import { Text } from "@ionic-display/text/Text";
-import { IonList } from "@ionic/react";
-import { Space } from "@layout/space/Space";
+import { Item } from "@ionic-layout/item/Item";
+import { IonLabel, IonList } from "@ionic/react";
 
 type Props = {
   sectionName: string;
@@ -16,17 +16,26 @@ export function TalkPresentationSubsectionContent({
   const safeContent = content.trim().length ? content : "No content";
 
   return (
-    <IonList>
-      <Space height="1" />
-      <Text bold size="lg">
-        {sectionName}
-      </Text>
-      <Space height="1" />
-      <Text bold size="xl">
-        {subsectionName}
-      </Text>
-      <Space height="2" />
-      <Text style={{ whiteSpace: "pre-wrap" }}>{safeContent}</Text>
+    <IonList lines="none">
+      <Item>
+        <IonLabel className="ion-text-nowrap">
+          <Text bold size="sm" color="primary">
+            {sectionName}
+          </Text>
+        </IonLabel>
+      </Item>
+      <Item>
+        <IonLabel>
+          <Text bold size="xl">
+            {subsectionName}
+          </Text>
+        </IonLabel>
+      </Item>
+      <Item>
+        <IonLabel>
+          <Text style={{ whiteSpace: "pre-wrap" }}>{safeContent}</Text>
+        </IonLabel>
+      </Item>
     </IonList>
   );
 }

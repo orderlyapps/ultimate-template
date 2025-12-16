@@ -2,12 +2,19 @@ import { create } from "zustand";
 import type { Outline } from "@feature/talks/state/useTalksStore";
 import { getTotalAllocatedSeconds } from "../utils/getTotalAllocatedSeconds";
 import { toLocalDatetimeValue } from "../utils/toLocalDatetimeValue";
+import {
+  getFlatSubsectionAllocationsSeconds,
+  recalculateTalkPresentationSubsectionTiming,
+} from "../utils/recalculateTalkPresentationSubsectionTiming";
 
 interface TalkPresentationModalState {
   talkId: string | null;
   selectedTime: string;
   startMs: number | null;
   endMs: number | null;
+  allocationsSeconds: number[];
+  subsectionStartMs: number | null;
+  subsectionEndMs: number | null;
   currentIndex: number;
   setSelectedTime: (selectedTime: string) => void;
   setCurrentIndex: (currentIndex: number) => void;
@@ -29,31 +36,96 @@ export const useTalkPresentationModalStore = create<TalkPresentationModalState>(
     selectedTime: getDefaultSelectedTime(),
     startMs: null,
     endMs: null,
+    allocationsSeconds: [],
+    subsectionStartMs: null,
+    subsectionEndMs: null,
     currentIndex: 0,
     setSelectedTime: (selectedTime) => set({ selectedTime }),
     setCurrentIndex: (currentIndex) => {
-      const nextIndex = Math.max(0, Math.floor(currentIndex));
-      set({ currentIndex: nextIndex });
+      const rawNextIndex = Math.max(0, Math.floor(currentIndex));
+      const { endMs, allocationsSeconds } = get();
+      const maxIndex = Math.max(0, allocationsSeconds.length - 1);
+      const nextIndex = Math.min(rawNextIndex, maxIndex);
+
+      if (endMs === null || allocationsSeconds.length === 0) {
+        set({ currentIndex: nextIndex });
+        return;
+      }
+
+      const recalculation = recalculateTalkPresentationSubsectionTiming({
+        allocationsSeconds,
+        currentIndex: nextIndex,
+        currentTimeMs: Date.now(),
+        endTimeMs: endMs,
+      });
+
+      set({
+        currentIndex: nextIndex,
+        subsectionStartMs: recalculation?.subsectionStartMs ?? null,
+        subsectionEndMs: recalculation?.subsectionEndMs ?? null,
+      });
     },
     next: (maxIndex) => {
       const currentIndex = get().currentIndex;
       const safeMax = Math.max(0, Math.floor(maxIndex));
-      set({ currentIndex: Math.min(safeMax, currentIndex + 1) });
+      const nextIndex = Math.min(safeMax, currentIndex + 1);
+      const { endMs, allocationsSeconds } = get();
+
+      if (endMs === null || allocationsSeconds.length === 0) {
+        set({ currentIndex: nextIndex });
+        return;
+      }
+
+      const recalculation = recalculateTalkPresentationSubsectionTiming({
+        allocationsSeconds,
+        currentIndex: nextIndex,
+        currentTimeMs: Date.now(),
+        endTimeMs: endMs,
+      });
+
+      set({
+        currentIndex: nextIndex,
+        subsectionStartMs: recalculation?.subsectionStartMs ?? null,
+        subsectionEndMs: recalculation?.subsectionEndMs ?? null,
+      });
     },
     prev: () => {
       const currentIndex = get().currentIndex;
-      set({ currentIndex: Math.max(0, currentIndex - 1) });
+      const nextIndex = Math.max(0, currentIndex - 1);
+      const { endMs, allocationsSeconds } = get();
+
+      if (endMs === null || allocationsSeconds.length === 0) {
+        set({ currentIndex: nextIndex });
+        return;
+      }
+
+      const recalculation = recalculateTalkPresentationSubsectionTiming({
+        allocationsSeconds,
+        currentIndex: nextIndex,
+        currentTimeMs: Date.now(),
+        endTimeMs: endMs,
+      });
+
+      set({
+        currentIndex: nextIndex,
+        subsectionStartMs: recalculation?.subsectionStartMs ?? null,
+        subsectionEndMs: recalculation?.subsectionEndMs ?? null,
+      });
     },
     initializeForTalk: (talk) => {
       const totalSeconds = getTotalAllocatedSeconds(talk);
       const nextDate = new Date();
       nextDate.setSeconds(nextDate.getSeconds() + totalSeconds);
+      const allocationsSeconds = getFlatSubsectionAllocationsSeconds(talk);
 
       set({
         talkId: talk.id,
         selectedTime: toLocalDatetimeValue(nextDate),
         startMs: null,
         endMs: null,
+        allocationsSeconds,
+        subsectionStartMs: null,
+        subsectionEndMs: null,
         currentIndex: 0,
       });
     },
@@ -63,19 +135,31 @@ export const useTalkPresentationModalStore = create<TalkPresentationModalState>(
         selectedTime: getDefaultSelectedTime(),
         startMs: null,
         endMs: null,
+        allocationsSeconds: [],
+        subsectionStartMs: null,
+        subsectionEndMs: null,
         currentIndex: 0,
       });
     },
     start: () => {
-      const { selectedTime } = get();
+      const { selectedTime, allocationsSeconds } = get();
       const nextEndMs = new Date(selectedTime).getTime();
       if (!Number.isFinite(nextEndMs)) return;
       const nextStartMs = Date.now();
       if (nextEndMs <= nextStartMs) return;
 
+      const recalculation = recalculateTalkPresentationSubsectionTiming({
+        allocationsSeconds,
+        currentIndex: 0,
+        currentTimeMs: nextStartMs,
+        endTimeMs: nextEndMs,
+      });
+
       set({
         startMs: nextStartMs,
         endMs: nextEndMs,
+        subsectionStartMs: recalculation?.subsectionStartMs ?? null,
+        subsectionEndMs: recalculation?.subsectionEndMs ?? null,
         currentIndex: 0,
       });
     },
@@ -83,6 +167,8 @@ export const useTalkPresentationModalStore = create<TalkPresentationModalState>(
       set({
         startMs: null,
         endMs: null,
+        subsectionStartMs: null,
+        subsectionEndMs: null,
         currentIndex: 0,
       });
     },

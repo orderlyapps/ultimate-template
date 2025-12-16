@@ -23,6 +23,8 @@ function getTotalItems(talk: Outline): number {
 export function TalkPresentationModalFooter({ talk }: Props) {
   const startMs = useTalkPresentationModalStore((s) => s.startMs);
   const endMs = useTalkPresentationModalStore((s) => s.endMs);
+  const subsectionStartMs = useTalkPresentationModalStore((s) => s.subsectionStartMs);
+  const subsectionEndMs = useTalkPresentationModalStore((s) => s.subsectionEndMs);
   const currentIndex = useTalkPresentationModalStore((s) => s.currentIndex);
   const next = useTalkPresentationModalStore((s) => s.next);
   const prev = useTalkPresentationModalStore((s) => s.prev);
@@ -33,9 +35,8 @@ export function TalkPresentationModalFooter({ talk }: Props) {
   const clampedIndex = Math.min(maxIndex, Math.max(0, currentIndex));
 
   const countdown = useTalkPresentationSubsectionCountdown({
-    talk,
-    presentationStartMs: startMs,
-    currentIndex: clampedIndex,
+    subsectionStartMs,
+    subsectionEndMs,
   });
 
   if (!isRunning) return null;
