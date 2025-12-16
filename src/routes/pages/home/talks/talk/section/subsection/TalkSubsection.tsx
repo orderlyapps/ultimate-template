@@ -38,7 +38,7 @@ export const TalkSubsection: React.FC = () => {
           <IonTitle />
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen className="ion-padding">
+      <IonContent id="fullscreen" className="ion-padding">
         <IonHeader collapse="condense">
           <IonToolbar id="collapse">
             <EditableCondensedHeader

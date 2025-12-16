@@ -2,7 +2,7 @@ import { IonText } from "@ionic/react";
 import type { ComponentProps } from "react";
 
 type TextProps = ComponentProps<typeof IonText> & {
-  size?: "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+  size?: "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl" | "xxxl";
   bold?: boolean;
 };
 
@@ -13,7 +13,8 @@ const textSize = {
   md: "1rem",
   lg: "1.15rem",
   xl: "1.375rem",
-  xxl: "1.5",
+  xxl: "1.5rem",
+  xxxl: "2rem",
 };
 
 export const Text = ({

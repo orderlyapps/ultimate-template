@@ -43,15 +43,9 @@ export function TimeAllocationStepper({
   const nextUp = clamp(currentAligned + stepSeconds);
 
   return (
-    <Grid
-      style={{
-        padding: 0,
-        margin: 0,
-        minWidth: "9.5rem",
-      }}
-    >
-      <Row style={{ alignItems: "center", justifyContent: "space-between" }}>
-        <Col size="auto">
+    <Grid>
+      <Row>
+        <Col className="ion-text-end">
           <IonButton
             fill="outline"
             disabled={nextDown === currentAligned}
@@ -61,11 +55,11 @@ export function TimeAllocationStepper({
           </IonButton>
         </Col>
 
-        <Col style={{ textAlign: "center" }}>
-          <Text size="xl">{formatMinutesSeconds(currentAligned)} min</Text>
+        <Col className="ion-text-center">
+          <Text size="xxxl">{formatMinutesSeconds(currentAligned)} min</Text>
         </Col>
 
-        <Col size="auto">
+        <Col>
           <IonButton
             fill="outline"
             disabled={nextUp === currentAligned}
