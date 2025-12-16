@@ -15,6 +15,8 @@ interface TalkPresentationModalState {
   allocationsSeconds: number[];
   subsectionStartMs: number | null;
   subsectionEndMs: number | null;
+  subsectionTimingAdjustmentPercent: number | null;
+  subsectionTimingAdjustmentMs: number | null;
   currentIndex: number;
   setSelectedTime: (selectedTime: string) => void;
   setCurrentIndex: (currentIndex: number) => void;
@@ -39,6 +41,8 @@ export const useTalkPresentationModalStore = create<TalkPresentationModalState>(
     allocationsSeconds: [],
     subsectionStartMs: null,
     subsectionEndMs: null,
+    subsectionTimingAdjustmentPercent: null,
+    subsectionTimingAdjustmentMs: null,
     currentIndex: 0,
     setSelectedTime: (selectedTime) => set({ selectedTime }),
     setCurrentIndex: (currentIndex) => {
@@ -63,6 +67,12 @@ export const useTalkPresentationModalStore = create<TalkPresentationModalState>(
         currentIndex: nextIndex,
         subsectionStartMs: recalculation?.subsectionStartMs ?? null,
         subsectionEndMs: recalculation?.subsectionEndMs ?? null,
+        subsectionTimingAdjustmentPercent:
+          recalculation !== null
+            ? recalculation.percentageDifference * 100
+            : null,
+        subsectionTimingAdjustmentMs:
+          recalculation !== null ? recalculation.subsectionTimingAdjustmentMs : null,
       });
     },
     next: (maxIndex) => {
@@ -87,6 +97,12 @@ export const useTalkPresentationModalStore = create<TalkPresentationModalState>(
         currentIndex: nextIndex,
         subsectionStartMs: recalculation?.subsectionStartMs ?? null,
         subsectionEndMs: recalculation?.subsectionEndMs ?? null,
+        subsectionTimingAdjustmentPercent:
+          recalculation !== null
+            ? recalculation.percentageDifference * 100
+            : null,
+        subsectionTimingAdjustmentMs:
+          recalculation !== null ? recalculation.subsectionTimingAdjustmentMs : null,
       });
     },
     prev: () => {
@@ -110,6 +126,12 @@ export const useTalkPresentationModalStore = create<TalkPresentationModalState>(
         currentIndex: nextIndex,
         subsectionStartMs: recalculation?.subsectionStartMs ?? null,
         subsectionEndMs: recalculation?.subsectionEndMs ?? null,
+        subsectionTimingAdjustmentPercent:
+          recalculation !== null
+            ? recalculation.percentageDifference * 100
+            : null,
+        subsectionTimingAdjustmentMs:
+          recalculation !== null ? recalculation.subsectionTimingAdjustmentMs : null,
       });
     },
     initializeForTalk: (talk) => {
@@ -126,6 +148,8 @@ export const useTalkPresentationModalStore = create<TalkPresentationModalState>(
         allocationsSeconds,
         subsectionStartMs: null,
         subsectionEndMs: null,
+        subsectionTimingAdjustmentPercent: null,
+        subsectionTimingAdjustmentMs: null,
         currentIndex: 0,
       });
     },
@@ -138,6 +162,8 @@ export const useTalkPresentationModalStore = create<TalkPresentationModalState>(
         allocationsSeconds: [],
         subsectionStartMs: null,
         subsectionEndMs: null,
+        subsectionTimingAdjustmentPercent: null,
+        subsectionTimingAdjustmentMs: null,
         currentIndex: 0,
       });
     },
@@ -160,6 +186,12 @@ export const useTalkPresentationModalStore = create<TalkPresentationModalState>(
         endMs: nextEndMs,
         subsectionStartMs: recalculation?.subsectionStartMs ?? null,
         subsectionEndMs: recalculation?.subsectionEndMs ?? null,
+        subsectionTimingAdjustmentPercent:
+          recalculation !== null
+            ? recalculation.percentageDifference * 100
+            : null,
+        subsectionTimingAdjustmentMs:
+          recalculation !== null ? recalculation.subsectionTimingAdjustmentMs : null,
         currentIndex: 0,
       });
     },
@@ -169,6 +201,8 @@ export const useTalkPresentationModalStore = create<TalkPresentationModalState>(
         endMs: null,
         subsectionStartMs: null,
         subsectionEndMs: null,
+        subsectionTimingAdjustmentPercent: null,
+        subsectionTimingAdjustmentMs: null,
         currentIndex: 0,
       });
     },

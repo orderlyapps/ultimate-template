@@ -18,6 +18,7 @@ export type TalkPresentationSubsectionTimingRecalculation = {
   allocatedTimeRemainingMs: number;
   actualTimeRemainingMs: number;
   percentageDifference: number;
+  subsectionTimingAdjustmentMs: number;
   updatedCurrentSubsectionAllocationMs: number;
   subsectionStartMs: number;
   subsectionEndMs: number;
@@ -53,10 +54,14 @@ export function recalculateTalkPresentationSubsectionTiming(params: {
         allocatedTimeRemainingMs
       : 0;
 
+  const currentSubsectionAllocationMs = currentAllocationSeconds * 1000;
   const updatedCurrentSubsectionAllocationMs = Math.max(
     0,
-    currentAllocationSeconds * 1000 * (1 + percentageDifference)
+    currentSubsectionAllocationMs * (1 + percentageDifference)
   );
+
+  const subsectionTimingAdjustmentMs =
+    updatedCurrentSubsectionAllocationMs - currentSubsectionAllocationMs;
 
   const subsectionStartMs = currentTimeMs;
   const subsectionEndMs = Math.min(
@@ -70,6 +75,7 @@ export function recalculateTalkPresentationSubsectionTiming(params: {
     allocatedTimeRemainingMs,
     actualTimeRemainingMs,
     percentageDifference,
+    subsectionTimingAdjustmentMs,
     updatedCurrentSubsectionAllocationMs,
     subsectionStartMs,
     subsectionEndMs,
