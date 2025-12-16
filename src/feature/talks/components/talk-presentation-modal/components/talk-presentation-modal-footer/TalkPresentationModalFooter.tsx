@@ -41,6 +41,7 @@ export function TalkPresentationModalFooter({ talk }: Props) {
           canNext={clampedIndex < maxIndex}
           onPrev={() => prev()}
           onNext={() => next(maxIndex)}
+          time={"00:00"}
         />
       </IonToolbar>
     </IonFooter>
