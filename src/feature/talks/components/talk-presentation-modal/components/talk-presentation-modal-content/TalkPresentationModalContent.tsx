@@ -2,8 +2,14 @@ import { TalkPresentationTimePicker } from "../talk-presentation-time-picker/Tal
 import { useTalkPresentationModalStore } from "../../hooks/useTalkPresentationModalStore";
 import { Button } from "@ionic-input/button/Button";
 import { Space } from "@layout/space/Space";
+import type { Outline } from "@feature/talks/state/useTalksStore";
+import { TalkPresentationTalkViewer } from "../talk-presentation-talk-viewer/TalkPresentationTalkViewer";
 
-export function TalkPresentationModalContent() {
+type Props = {
+  talk: Outline;
+};
+
+export function TalkPresentationModalContent({ talk }: Props) {
   const selectedTime = useTalkPresentationModalStore((s) => s.selectedTime);
   const setSelectedTime = useTalkPresentationModalStore(
     (s) => s.setSelectedTime
@@ -15,7 +21,7 @@ export function TalkPresentationModalContent() {
   const isRunning = startMs !== null && endMs !== null;
 
   if (isRunning && startMs !== null && endMs !== null) {
-    return null;
+    return <TalkPresentationTalkViewer talk={talk} />;
   }
 
   return (

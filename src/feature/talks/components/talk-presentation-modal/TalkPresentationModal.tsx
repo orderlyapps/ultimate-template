@@ -55,7 +55,7 @@ export const TalkPresentationModal: React.FC<TalkPresentationModalProps> = ({
         }}
       />
       <IonContent className="ion-padding">
-        <TalkPresentationModalContent />
+        <TalkPresentationModalContent talk={talk} />
       </IonContent>
     </IonModal>
   );
