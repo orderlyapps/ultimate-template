@@ -1,7 +1,7 @@
 import type { Outline } from "@feature/talks/state/useTalksStore";
 import { IonFooter, IonToolbar } from "@ionic/react";
 import { useTalkPresentationModalStore } from "../../hooks/useTalkPresentationModalStore";
-import { TalkPresentationNavigation } from "../talk-presentation-talk-viewer/components/talk-presentation-navigation/TalkPresentationNavigation";
+import { TalkPresentationNavigation } from "../talk-presentation-modal-content/components/talk-presentation-talk-viewer/components/talk-presentation-navigation/TalkPresentationNavigation";
 
 type Props = {
   talk: Outline;

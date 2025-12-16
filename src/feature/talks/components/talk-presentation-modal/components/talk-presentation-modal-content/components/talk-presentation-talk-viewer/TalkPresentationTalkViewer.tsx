@@ -1,6 +1,6 @@
 import type { Outline } from "@feature/talks/state/useTalksStore";
 import { useEffect } from "react";
-import { useTalkPresentationModalStore } from "../../hooks/useTalkPresentationModalStore";
+import { useTalkPresentationModalStore } from "../../../../hooks/useTalkPresentationModalStore";
 import { TalkPresentationEmptyState } from "./components/talk-presentation-empty-state/TalkPresentationEmptyState";
 import { TalkPresentationSubsectionContent } from "./components/talk-presentation-subsection-content/TalkPresentationSubsectionContent";
 

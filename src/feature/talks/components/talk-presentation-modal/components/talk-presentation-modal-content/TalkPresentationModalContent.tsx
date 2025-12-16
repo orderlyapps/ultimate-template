@@ -1,9 +1,9 @@
-import { TalkPresentationTimePicker } from "../talk-presentation-time-picker/TalkPresentationTimePicker";
+import { TalkPresentationTimePicker } from "./components/talk-presentation-time-picker/TalkPresentationTimePicker";
 import { useTalkPresentationModalStore } from "../../hooks/useTalkPresentationModalStore";
 import { Button } from "@ionic-input/button/Button";
 import { Space } from "@layout/space/Space";
 import type { Outline } from "@feature/talks/state/useTalksStore";
-import { TalkPresentationTalkViewer } from "../talk-presentation-talk-viewer/TalkPresentationTalkViewer";
+import { TalkPresentationTalkViewer } from "./components/talk-presentation-talk-viewer/TalkPresentationTalkViewer";
 
 type Props = {
   talk: Outline;
