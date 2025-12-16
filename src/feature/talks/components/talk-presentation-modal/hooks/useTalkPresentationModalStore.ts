@@ -12,6 +12,7 @@ interface TalkPresentationModalState {
   selectedTime: string;
   startMs: number | null;
   endMs: number | null;
+  finishDeltaMs: number | null;
   allocationsSeconds: number[];
   subsectionStartMs: number | null;
   subsectionEndMs: number | null;
@@ -38,6 +39,7 @@ export const useTalkPresentationModalStore = create<TalkPresentationModalState>(
     selectedTime: getDefaultSelectedTime(),
     startMs: null,
     endMs: null,
+    finishDeltaMs: null,
     allocationsSeconds: [],
     subsectionStartMs: null,
     subsectionEndMs: null,
@@ -145,6 +147,7 @@ export const useTalkPresentationModalStore = create<TalkPresentationModalState>(
         selectedTime: toLocalDatetimeValue(nextDate),
         startMs: null,
         endMs: null,
+        finishDeltaMs: null,
         allocationsSeconds,
         subsectionStartMs: null,
         subsectionEndMs: null,
@@ -159,6 +162,7 @@ export const useTalkPresentationModalStore = create<TalkPresentationModalState>(
         selectedTime: getDefaultSelectedTime(),
         startMs: null,
         endMs: null,
+        finishDeltaMs: null,
         allocationsSeconds: [],
         subsectionStartMs: null,
         subsectionEndMs: null,
@@ -184,6 +188,7 @@ export const useTalkPresentationModalStore = create<TalkPresentationModalState>(
       set({
         startMs: nextStartMs,
         endMs: nextEndMs,
+        finishDeltaMs: null,
         subsectionStartMs: recalculation?.subsectionStartMs ?? null,
         subsectionEndMs: recalculation?.subsectionEndMs ?? null,
         subsectionTimingAdjustmentPercent:
@@ -196,9 +201,13 @@ export const useTalkPresentationModalStore = create<TalkPresentationModalState>(
       });
     },
     finish: () => {
+      const endMs = get().endMs;
+      const finishDeltaMs = endMs === null ? null : Date.now() - endMs;
+
       set({
         startMs: null,
         endMs: null,
+        finishDeltaMs,
         subsectionStartMs: null,
         subsectionEndMs: null,
         subsectionTimingAdjustmentPercent: null,

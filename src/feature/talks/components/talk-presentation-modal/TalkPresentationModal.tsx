@@ -44,6 +44,7 @@ export const TalkPresentationModal: React.FC<TalkPresentationModalProps> = ({
       onWillPresent={() => {
         initializeForTalk(talk);
       }}
+      id="fullscreen"
     >
       <TalkPresentationModalHeader
         talk={talk}
