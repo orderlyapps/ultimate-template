@@ -2,6 +2,8 @@ import { Text } from "@ionic-display/text/Text";
 import { Item } from "@ionic-layout/item/Item";
 import { IonLabel, IonList } from "@ionic/react";
 import { useTalkPresentationModalStore } from "../../../../../../hooks/useTalkPresentationModalStore";
+import { useTalkPresentationSubsectionCountdown } from "../../../../../../hooks/useTalkPresentationSubsectionCountdown";
+import { TalkPresentationCountdownProgressBar } from "../../../../../talk-presentation-modal-header/components/talk-presentation-countdown-progress-bar/TalkPresentationCountdownProgressBar";
 
 type Props = {
   sectionName: string;
@@ -30,7 +32,18 @@ export function TalkPresentationSubsectionContent({
   const subsectionTimingAdjustmentMs = useTalkPresentationModalStore(
     (s) => s.subsectionTimingAdjustmentMs
   );
+  const subsectionStartMs = useTalkPresentationModalStore(
+    (s) => s.subsectionStartMs
+  );
+  const subsectionEndMs = useTalkPresentationModalStore(
+    (s) => s.subsectionEndMs
+  );
   const safeContent = content.trim().length ? content : "No content";
+
+  const countdown = useTalkPresentationSubsectionCountdown({
+    subsectionStartMs,
+    subsectionEndMs,
+  });
 
   return (
     <IonList lines="none">
@@ -55,6 +68,11 @@ export function TalkPresentationSubsectionContent({
             </IonLabel>
           </Item>
         </>
+      ) : null}
+      {countdown ? (
+        <Item>
+          <TalkPresentationCountdownProgressBar value={countdown.progress} />
+        </Item>
       ) : null}
       <Item>
         <IonLabel className="ion-text-nowrap">

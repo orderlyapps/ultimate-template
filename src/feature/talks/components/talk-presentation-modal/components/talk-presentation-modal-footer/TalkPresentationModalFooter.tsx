@@ -1,6 +1,5 @@
 import type { Outline } from "@feature/talks/state/useTalksStore";
 import { IonFooter, IonToolbar } from "@ionic/react";
-import { TalkPresentationCountdownProgressBar } from "../talk-presentation-modal-header/components/talk-presentation-countdown-progress-bar/TalkPresentationCountdownProgressBar";
 import { TalkPresentationCountdownTimeText } from "../talk-presentation-modal-header/components/talk-presentation-countdown-time-text/TalkPresentationCountdownTimeText";
 import { useTalkPresentationSubsectionCountdown } from "../../hooks/useTalkPresentationSubsectionCountdown";
 import { useTalkPresentationModalStore } from "../../hooks/useTalkPresentationModalStore";
@@ -61,9 +60,6 @@ export function TalkPresentationModalFooter({ talk }: Props) {
           }
         />
       </IonToolbar>
-      {countdown ? (
-        <TalkPresentationCountdownProgressBar value={countdown.progress} />
-      ) : null}
     </IonFooter>
   );
 }
