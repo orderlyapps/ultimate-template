@@ -1,4 +1,11 @@
 ion-item {
-  /* Prevent theme switch glitches */
-  --transition: none;
+  --transition: none; /* Prevent theme switch glitches */
+
+  --background: var(--content-background);
+}
+
+.ion-palette-dark {
+  ion-item {
+    --background: var(--content-background-dark);
+  }
 }

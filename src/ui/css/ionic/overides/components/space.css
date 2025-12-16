@@ -1,0 +1,9 @@
+#space {
+  background: var(--content-background);
+}
+
+.ion-palette-dark {
+  #space {
+    background: var(--content-background-dark);
+  }
+}

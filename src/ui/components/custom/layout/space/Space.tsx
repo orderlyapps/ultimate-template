@@ -5,5 +5,5 @@ interface SpacerProps {
 }
 
 export const Space: React.FC<SpacerProps> = ({ height = "5" }) => {
-  return <div style={{ height: height + "rem" }}></div>;
+  return <div id="space" style={{ height: height + "rem" }}></div>;
 };
