@@ -19,7 +19,7 @@ export const Home: React.FC = () => {
       </IonHeader>
       <IonContent fullscreen className="ion-padding">
         <IonHeader collapse="condense">
-          <IonToolbar>
+          <IonToolbar id="collapse">
             <IonTitle size="large">Home</IonTitle>
           </IonToolbar>
         </IonHeader>

@@ -47,7 +47,7 @@ export const Talk: React.FC = () => {
       </IonHeader>
       <IonContent fullscreen className="ion-padding">
         <IonHeader collapse="condense">
-          <IonToolbar>
+          <IonToolbar id="collapse">
             <EditableCondensedHeader
               value={talk?.name ?? "Talk"}
               header="Rename Talk"
