@@ -1,9 +1,8 @@
+import { Item } from "@ionic-layout/item/Item";
 import {
   IonDatetime,
-  IonDatetimeButton,
-  IonItem,
-  IonLabel,
-  IonModal,
+  IonDatetimeButton, IonLabel,
+  IonModal
 } from "@ionic/react";
 import { useId } from "react";
 
@@ -17,10 +16,10 @@ export function TalkPresentationTimePicker({ value, onChange }: Props) {
 
   return (
     <>
-      <IonItem>
+      <Item>
         <IonLabel>End Time</IonLabel>
         <IonDatetimeButton datetime={datetimeId} />
-      </IonItem>
+      </Item>
 
       <IonModal keepContentsMounted>
         <IonDatetime
