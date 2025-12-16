@@ -9,13 +9,6 @@ type Props = {
   content: string;
 };
 
-function formatPercent(value: number) {
-  const rounded = Math.round(value);
-  const safeRounded = Object.is(rounded, -0) ? 0 : rounded;
-  const sign = safeRounded > 0 ? "+" : "";
-  return `${sign}${safeRounded}%`;
-}
-
 function formatDeltaMinutesSeconds(deltaMs: number) {
   const roundedSeconds = Math.round(deltaMs / 1000);
   const safeSeconds = Object.is(roundedSeconds, -0) ? 0 : roundedSeconds;
@@ -41,6 +34,28 @@ export function TalkPresentationSubsectionContent({
 
   return (
     <IonList lines="none">
+      {subsectionTimingAdjustmentPercent !== null ? (
+        <>
+          <Item>
+            <IonLabel className="ion-text-center">
+              <Text
+                bold
+                size="xl"
+                color={
+                  subsectionTimingAdjustmentMs !== null &&
+                  subsectionTimingAdjustmentMs > 0
+                    ? "success"
+                    : "danger"
+                }
+              >
+                {subsectionTimingAdjustmentMs !== null
+                  ? `${formatDeltaMinutesSeconds(subsectionTimingAdjustmentMs)}`
+                  : ""}
+              </Text>
+            </IonLabel>
+          </Item>
+        </>
+      ) : null}
       <Item>
         <IonLabel className="ion-text-nowrap">
           <Text bold size="sm" color="primary">
@@ -55,18 +70,6 @@ export function TalkPresentationSubsectionContent({
           </Text>
         </IonLabel>
       </Item>
-      {subsectionTimingAdjustmentPercent !== null ? (
-        <Item>
-          <IonLabel>
-            <Text size="sm" color="medium">
-              Timing adjusted: {formatPercent(subsectionTimingAdjustmentPercent)}
-              {subsectionTimingAdjustmentMs !== null
-                ? ` (${formatDeltaMinutesSeconds(subsectionTimingAdjustmentMs)})`
-                : ""}
-            </Text>
-          </IonLabel>
-        </Item>
-      ) : null}
       <Item>
         <IonLabel>
           <Text style={{ whiteSpace: "pre-wrap" }}>{safeContent}</Text>
