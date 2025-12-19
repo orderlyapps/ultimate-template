@@ -55,6 +55,7 @@ export const HelpTextSettings: React.FC = () => {
             <IonToggle
               checked={isGloballyDisabled}
               onIonChange={toggleGlobalDisable}
+              slot="end"
             />
           </IonItem>
         </IonList>
