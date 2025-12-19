@@ -12,6 +12,7 @@ import { Settings } from "@pages/settings/Settings";
 import { Profile } from "@pages/settings/profile/Profile";
 import { Appearance } from "@pages/settings/appearance/Appearance";
 import { Features } from "@pages/settings/features/Features";
+import { HelpTextSettings } from "@pages/settings/help-text/HelpTextSettings";
 import { AppDetails } from "@pages/settings/app-details/AppDetails";
 import { Login } from "@services/app/auth/LoginPage";
 import { FeatureGuard } from "@services/app/features/FeatureGuard";
@@ -63,6 +64,7 @@ export const pages = (
     <Route exact path="/settings/profile" render={() => <Profile />} />
     <Route exact path="/settings/appearance" render={() => <Appearance />} />
     <Route exact path="/settings/features" render={() => <Features />} />
+    <Route exact path="/settings/help-text" render={() => <HelpTextSettings />} />
     <Route exact path="/settings/app-details" render={() => <AppDetails />} />
     <Route exact path="/" render={() => <Redirect to="/home" />} />
   </IonRouterOutlet>

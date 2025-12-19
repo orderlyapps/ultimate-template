@@ -28,6 +28,7 @@ export const Settings: React.FC = () => {
           <NavItem routerLink="/settings/profile">Profile</NavItem>
           <NavItem routerLink="/settings/appearance">Appearance</NavItem>
           <NavItem routerLink="/settings/features">Features</NavItem>
+          <NavItem routerLink="/settings/help-text">Help Text</NavItem>
           <NavItem routerLink="/settings/app-details">App Details</NavItem>
         </List>
       </IonContent>

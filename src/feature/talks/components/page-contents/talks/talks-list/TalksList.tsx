@@ -6,6 +6,9 @@ import { useTalksStore } from "@feature/talks/state/useTalksStore";
 import { ItemOptionDelete } from "@input/sliding-item-option/ItemOptionDelete";
 import { ItemOptionCopy } from "@input/sliding-item-option/ItemOptionCopy";
 import { formatTimeAllocation } from "@feature/talks/utils/format-time-allocation";
+import { TalksGettingStartedHelp } from "./components/TalksGettingStartedHelp";
+import { TalksNavigationHelp } from "./components/TalksNavigationHelp";
+import { TalksSwipeActionsHelp } from "./components/TalksSwipeActionsHelp";
 
 export function TalksList() {
   const talks = useTalksStore((s) => s.talks);
@@ -14,18 +17,24 @@ export function TalksList() {
 
   if (talks.length === 0) {
     return (
-      <List>
-        <Item lines="none">
-          <IonLabel>
-            <Text>No talks yet</Text>
-          </IonLabel>
-        </Item>
-      </List>
+      <>
+        <TalksGettingStartedHelp />
+        <List>
+          <Item lines="none">
+            <IonLabel>
+              <Text>No talks yet</Text>
+            </IonLabel>
+          </Item>
+        </List>
+      </>
     );
   }
 
   return (
-    <List>
+    <>
+      <TalksNavigationHelp />
+      <TalksSwipeActionsHelp />
+      <List>
       {talks.map((talk) => (
         <IonItemSliding key={talk.id}>
           <Item
@@ -47,6 +56,7 @@ export function TalksList() {
           </IonItemOptions>
         </IonItemSliding>
       ))}
-    </List>
+      </List>
+    </>
   );
 }

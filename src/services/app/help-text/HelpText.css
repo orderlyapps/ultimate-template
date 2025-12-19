@@ -1,0 +1,43 @@
+.help-text-card {
+  border-left: 4px solid var(--ion-color-primary);
+  margin: 16px 0;
+}
+
+.help-text-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+}
+
+.help-text-body {
+  flex: 1;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ion-color-medium-shade);
+}
+
+.help-text-dismiss-button {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ion-color-medium);
+  transition: color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.help-text-dismiss-button:hover {
+  color: var(--ion-color-medium-shade);
+}
+
+.help-text-dismiss-button:active {
+  color: var(--ion-color-dark);
+}
+
+.help-text-dismiss-button ion-icon {
+  font-size: 20px;
+}
