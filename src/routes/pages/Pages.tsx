@@ -14,22 +14,47 @@ import { Appearance } from "@pages/settings/appearance/Appearance";
 import { Features } from "@pages/settings/features/Features";
 import { AppDetails } from "@pages/settings/app-details/AppDetails";
 import { Login } from "@services/app/auth/LoginPage";
+import { FeatureGuard } from "@services/app/features/FeatureGuard";
 
 export const pages = (
   <IonRouterOutlet>
     <Route exact path="/login" render={() => <Login />} />
     <Route exact path="/home" render={() => <Home />} />
-    <Route exact path="/home/talks" render={() => <Talks />} />
-    <Route exact path="/home/talks/:talkId" render={() => <Talk />} />
+    <Route
+      exact
+      path="/home/talks"
+      render={() => (
+        <FeatureGuard id="talks" fallback={<Redirect to="/home" />}>
+          <Talks />
+        </FeatureGuard>
+      )}
+    />
+    <Route
+      exact
+      path="/home/talks/:talkId"
+      render={() => (
+        <FeatureGuard id="talks" fallback={<Redirect to="/home" />}>
+          <Talk />
+        </FeatureGuard>
+      )}
+    />
     <Route
       exact
       path="/home/talks/:talkId/sections/:sectionId"
-      render={() => <TalkSection />}
+      render={() => (
+        <FeatureGuard id="talks" fallback={<Redirect to="/home" />}>
+          <TalkSection />
+        </FeatureGuard>
+      )}
     />
     <Route
       exact
       path="/home/talks/:talkId/sections/:sectionId/subsections/:subsectionId"
-      render={() => <TalkSubsection />}
+      render={() => (
+        <FeatureGuard id="talks" fallback={<Redirect to="/home" />}>
+          <TalkSubsection />
+        </FeatureGuard>
+      )}
     />
     <Route exact path="/ministry" render={() => <Ministry />} />
     <Route exact path="/schedules" render={() => <Schedules />} />

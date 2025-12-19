@@ -8,6 +8,7 @@ import {
 import { List } from "@ionic-layout/list/List";
 import { NavItem } from "@navigation/nav-item/NavItem";
 import { Space } from "@layout/space/Space";
+import { FeatureGuard } from "@services/app/features/FeatureGuard";
 
 export const Home: React.FC = () => {
   return (
@@ -25,7 +26,9 @@ export const Home: React.FC = () => {
         </IonHeader>
         <Space height="2" />
         <List>
-          <NavItem routerLink="/home/talks">Talks</NavItem>
+          <FeatureGuard id="talks">
+            <NavItem routerLink="/home/talks">Talks</NavItem>
+          </FeatureGuard>
         </List>
       </IonContent>
     </IonPage>
