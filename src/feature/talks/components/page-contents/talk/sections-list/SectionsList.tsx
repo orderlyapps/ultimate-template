@@ -14,6 +14,7 @@ import { ItemOptionCopy } from "@input/sliding-item-option/ItemOptionCopy";
 import { useTalksStore } from "@feature/talks/state/useTalksStore";
 import type { Outline } from "@feature/talks/state/useTalksStore";
 import { formatTimeAllocation } from "@feature/talks/utils/format-time-allocation";
+import { SectionsListHelp } from "./components/SectionsListHelp";
 
 type Props = {
   talk: Outline;
@@ -39,6 +40,7 @@ export function SectionsList({ talk }: Props) {
 
   return (
     <List>
+      <SectionsListHelp />
       <IonReorderGroup
         disabled={false}
         onIonReorderEnd={(e: ReorderEndCustomEvent) => {

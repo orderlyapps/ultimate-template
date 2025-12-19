@@ -22,7 +22,6 @@ export function EditableCondensedHeader({
   return (
     <>
       <IonTitle
-        size="small"
         onClick={() => {
           if (disabled) return;
           setAlertKey((k) => k + 1);
