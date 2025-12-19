@@ -13,9 +13,9 @@ import { useTalksStore } from "@feature/talks/state/useTalksStore";
 import { useParams } from "react-router-dom";
 import { AddButton } from "@input/button/add-button/AddButton";
 import { useState } from "react";
-import { AddSubsectionAlert } from "@feature/talks/components/add-subsection-alert/AddSubsectionAlert";
-import { TalkSubsectionsList } from "@feature/talks/components/talk-subsections-list/TalkSubsectionsList";
-import { EditableCondensedHeader } from "@feature/talks/components/editable-condensed-header/EditableCondensedHeader";
+import { AddSubsectionAlert } from "@feature/talks/components/add-alerts/add-subsection-alert/AddSubsectionAlert";
+import { SubsectionsList } from "@feature/talks/components/page-contents/section/subsections-list/SubsectionsList";
+import { EditableCondensedHeader } from "@feature/talks/components/edit-header/EditHeader";
 
 export const TalkSection: React.FC = () => {
   const { talkId, sectionId } = useParams<{
@@ -68,7 +68,7 @@ export const TalkSection: React.FC = () => {
         {talk && section ? (
           <>
             <Space height="2" />
-            <TalkSubsectionsList talkId={talk.id} section={section} />
+            <SubsectionsList talkId={talk.id} section={section} />
             <AddSubsectionAlert
               key={addSubsectionAlertKey}
               talkId={talk.id}

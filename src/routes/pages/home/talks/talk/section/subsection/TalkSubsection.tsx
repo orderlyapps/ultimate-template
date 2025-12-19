@@ -8,10 +8,10 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import { useTalksStore } from "@feature/talks/state/useTalksStore";
-import { TalkSubsectionDetails } from "../../../../../../../feature/talks/components/talk-subsection-details/TalkSubsectionDetails";
 import { Text } from "@ionic-display/text/Text";
 import { useParams } from "react-router-dom";
-import { EditableCondensedHeader } from "@feature/talks/components/editable-condensed-header/EditableCondensedHeader";
+import { EditableCondensedHeader } from "@feature/talks/components/edit-header/EditHeader";
+import { SubsectionDetails } from "@feature/talks/components/page-contents/subsection/subsection-details/SubsectionDetails";
 
 export const TalkSubsection: React.FC = () => {
   const { talkId, sectionId, subsectionId } = useParams<{
@@ -66,7 +66,7 @@ export const TalkSubsection: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         {talk && section && subsection ? (
-          <TalkSubsectionDetails
+          <SubsectionDetails
             talkId={talk.id}
             sectionId={section.id}
             subsection={subsection}
