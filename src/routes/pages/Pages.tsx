@@ -15,47 +15,22 @@ import { Features } from "@pages/settings/features/Features";
 import { HelpTextSettings } from "@pages/settings/help-text/HelpTextSettings";
 import { AppDetails } from "@pages/settings/app-details/AppDetails";
 import { Login } from "@services/app/auth/LoginPage";
-import { FeatureGuard } from "@services/app/features/FeatureGuard";
 
 export const pages = (
   <IonRouterOutlet>
     <Route exact path="/login" render={() => <Login />} />
     <Route exact path="/home" render={() => <Home />} />
-    <Route
-      exact
-      path="/home/talks"
-      render={() => (
-        <FeatureGuard id="talks" fallback={<Redirect to="/home" />}>
-          <Talks />
-        </FeatureGuard>
-      )}
-    />
-    <Route
-      exact
-      path="/home/talks/:talkId"
-      render={() => (
-        <FeatureGuard id="talks" fallback={<Redirect to="/home" />}>
-          <Talk />
-        </FeatureGuard>
-      )}
-    />
+    <Route exact path="/home/talks" render={() => <Talks />} />
+    <Route exact path="/home/talks/:talkId" render={() => <Talk />} />
     <Route
       exact
       path="/home/talks/:talkId/sections/:sectionId"
-      render={() => (
-        <FeatureGuard id="talks" fallback={<Redirect to="/home" />}>
-          <TalkSection />
-        </FeatureGuard>
-      )}
+      render={() => <TalkSection />}
     />
     <Route
       exact
       path="/home/talks/:talkId/sections/:sectionId/subsections/:subsectionId"
-      render={() => (
-        <FeatureGuard id="talks" fallback={<Redirect to="/home" />}>
-          <TalkSubsection />
-        </FeatureGuard>
-      )}
+      render={() => <TalkSubsection />}
     />
     <Route exact path="/ministry" render={() => <Ministry />} />
     <Route exact path="/schedules" render={() => <Schedules />} />
@@ -64,7 +39,11 @@ export const pages = (
     <Route exact path="/settings/profile" render={() => <Profile />} />
     <Route exact path="/settings/appearance" render={() => <Appearance />} />
     <Route exact path="/settings/features" render={() => <Features />} />
-    <Route exact path="/settings/help-text" render={() => <HelpTextSettings />} />
+    <Route
+      exact
+      path="/settings/help-text"
+      render={() => <HelpTextSettings />}
+    />
     <Route exact path="/settings/app-details" render={() => <AppDetails />} />
     <Route exact path="/" render={() => <Redirect to="/home" />} />
   </IonRouterOutlet>
