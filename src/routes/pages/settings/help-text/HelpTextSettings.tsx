@@ -49,11 +49,11 @@ export const HelpTextSettings: React.FC = () => {
         <IonList>
           <IonItem>
             <IonLabel>
-              <h2>Disable All Help Text</h2>
-              <p>Turn off all contextual help throughout the app</p>
+              <h2>Enable Help Text</h2>
+              <p>Show contextual help throughout the app</p>
             </IonLabel>
             <IonToggle
-              checked={isGloballyDisabled}
+              checked={!isGloballyDisabled}
               onIonChange={toggleGlobalDisable}
               slot="end"
             />

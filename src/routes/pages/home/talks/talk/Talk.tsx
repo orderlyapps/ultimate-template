@@ -13,7 +13,7 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { AddSectionAlert } from "@feature/talks/components/add-alerts/add-section-alert/AddSectionAlert";
 import { Space } from "@layout/space/Space";
-import { SectionsList } from "../../../../../feature/talks/components/page-contents/section/sections-list/SectionsList";
+import { SectionsList } from "../../../../../feature/talks/components/page-contents/talk/sections-list/SectionsList";
 import { EditableCondensedHeader } from "@feature/talks/components/edit-header/EditHeader";
 import { PresentationModal } from "../../../../../feature/talks/components/page-contents/talk/presentation-modal/PresentationModal";
 import { TalkPageHeaderButtons } from "../../../../../feature/talks/components/page-contents/talk/talk-page-header-buttons/TalkPageHeaderButtons";
