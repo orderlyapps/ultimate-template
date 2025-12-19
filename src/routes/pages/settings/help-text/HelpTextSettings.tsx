@@ -10,6 +10,8 @@ import {
   IonToggle,
   IonButton,
   IonText,
+  IonButtons,
+  IonBackButton,
 } from "@ionic/react";
 import { useHelpTextStore } from "@services/app/help-text/useHelpTextStore";
 import { Space } from "@layout/space/Space";
@@ -30,12 +32,15 @@ export const HelpTextSettings: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
+          <IonButtons>
+            <IonBackButton defaultHref="/settings" text="Settings" />
+          </IonButtons>
           <IonTitle>Help Text Settings</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
+      <IonContent fullscreen className="ion-padding">
         <IonHeader collapse="condense">
-          <IonToolbar id="collapse">
+          <IonToolbar>
             <IonTitle size="large">Help Text Settings</IonTitle>
           </IonToolbar>
         </IonHeader>

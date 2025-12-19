@@ -17,7 +17,7 @@ export const Schedules: React.FC = () => {
       </IonHeader>
       <IonContent fullscreen className="ion-padding">
         <IonHeader collapse="condense">
-          <IonToolbar id="collapse">
+          <IonToolbar >
             <IonTitle size="large">Schedules</IonTitle>
           </IonToolbar>
         </IonHeader>

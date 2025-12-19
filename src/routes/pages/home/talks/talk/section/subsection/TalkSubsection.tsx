@@ -38,9 +38,9 @@ export const TalkSubsection: React.FC = () => {
           <IonTitle />
         </IonToolbar>
       </IonHeader>
-      <IonContent id="fullscreen" className="ion-padding">
+      <IonContent id="fullscreen" fullscreen className="ion-padding">
         <IonHeader collapse="condense">
-          <IonToolbar id="collapse">
+          <IonToolbar >
             <EditableCondensedHeader
               value={subsection?.name ?? "Subsection"}
               header="Rename Subsection"

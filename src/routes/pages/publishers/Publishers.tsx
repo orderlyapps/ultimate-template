@@ -17,7 +17,7 @@ export const Publishers: React.FC = () => {
       </IonHeader>
       <IonContent fullscreen className="ion-padding">
         <IonHeader collapse="condense">
-          <IonToolbar id="collapse">
+          <IonToolbar >
             <IonTitle size="large">Publishers</IonTitle>
           </IonToolbar>
         </IonHeader>

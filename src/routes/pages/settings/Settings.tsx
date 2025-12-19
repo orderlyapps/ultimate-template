@@ -19,7 +19,7 @@ export const Settings: React.FC = () => {
       </IonHeader>
       <IonContent fullscreen>
         <IonHeader collapse="condense">
-          <IonToolbar id="collapse">
+          <IonToolbar >
             <IonTitle size="large">Settings</IonTitle>
           </IonToolbar>
         </IonHeader>

@@ -37,7 +37,7 @@ export const Talks: React.FC = () => {
       </IonHeader>
       <IonContent fullscreen className="ion-padding">
         <IonHeader collapse="condense">
-          <IonToolbar id="collapse">
+          <IonToolbar >
             <IonTitle size="large">Talks</IonTitle>
           </IonToolbar>
         </IonHeader>
