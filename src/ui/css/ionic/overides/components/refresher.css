@@ -12,10 +12,8 @@ native iOS refresher to work properly: */
 .ion-content-scroll-host::before,
 .ion-content-scroll-host::after {
   position: absolute;
-  
   width: 1px;
   height: 1px;
-  
   content: "";
 }
 

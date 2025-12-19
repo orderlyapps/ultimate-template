@@ -20,16 +20,16 @@
 
 /* APP */
 @import "./overides/app/responsive.css";
-@import "./overides/app/theme.css";
 @import "./overides/app/variables.css";
+@import "./overides/app/theme.css";
 
 /* COMPONENTS */
 @import "./overides/components/content.css";
 @import "./overides/components/item.css";
+@import "./overides/components/item-divider.css";
 @import "./overides/components/modal.css";
 @import "./overides/components/refresher.css";
 @import "./overides/components/space.css";
-@import "./overides/components/toolbar.css";
 
 /* COLORS */
 @import "./overides/colors/primary.css";

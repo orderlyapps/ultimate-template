@@ -1,9 +1,0 @@
-ion-content {
-  --background: var(--content-background);
-}
-
-.ion-palette-dark {
-  ion-content {
-    --background: var(--content-background-dark);
-  }
-}

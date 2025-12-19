@@ -1,4 +1,4 @@
-ion-modal.auto-height {
+ion-modal#auto-height {
   --height: auto;
 }
 
