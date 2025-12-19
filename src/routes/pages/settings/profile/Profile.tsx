@@ -7,6 +7,7 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
+import { Space } from "@layout/space/Space";
 import { AuthSection } from "@services/app/auth/AuthSection";
 
 export const Profile: React.FC = () => {
@@ -20,7 +21,13 @@ export const Profile: React.FC = () => {
           <IonTitle>Profile</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent className="ion-padding">
+      <IonContent fullscreen className="ion-padding">
+        <IonHeader collapse="condense">
+          <IonToolbar>
+            <IonTitle size="large">Profile</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+        <Space height="2" />
         <AuthSection />
       </IonContent>
     </IonPage>

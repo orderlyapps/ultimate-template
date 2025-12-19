@@ -36,7 +36,13 @@ export const Features: React.FC = () => {
           <IonTitle>Features</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent className="ion-padding">
+      <IonContent fullscreen className="ion-padding">
+        <IonHeader collapse="condense">
+          <IonToolbar>
+            <IonTitle size="large">Features</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+        <Space height="2" />
         <List>
           {featureGroups.length > 0 ? (
             <>
@@ -49,7 +55,9 @@ export const Features: React.FC = () => {
                     <Toggle
                       slot="end"
                       checked={groupEnabled}
-                      onIonChange={(e) => setGroupEnabled(group.id, e.detail.checked)}
+                      onIonChange={(e) =>
+                        setGroupEnabled(group.id, e.detail.checked)
+                      }
                     />
                   </Item>
                 );

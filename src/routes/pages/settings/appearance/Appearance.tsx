@@ -7,6 +7,7 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
+import { Space } from "@layout/space/Space";
 import { SelectTheme } from "@services/app/theme/SelectTheme";
 
 export const Appearance: React.FC = () => {
@@ -20,7 +21,13 @@ export const Appearance: React.FC = () => {
           <IonTitle>Appearance</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent className="ion-padding">
+      <IonContent fullscreen className="ion-padding">
+        <IonHeader collapse="condense">
+          <IonToolbar>
+            <IonTitle size="large">Appearance</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+        <Space height="2" />
         <SelectTheme />
       </IonContent>
     </IonPage>

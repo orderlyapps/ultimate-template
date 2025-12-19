@@ -35,13 +35,13 @@ export const HelpTextSettings: React.FC = () => {
           <IonButtons>
             <IonBackButton defaultHref="/settings" text="Settings" />
           </IonButtons>
-          <IonTitle>Help Text Settings</IonTitle>
+          <IonTitle>Help Text</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen className="ion-padding">
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Help Text Settings</IonTitle>
+            <IonTitle size="large">Help Text</IonTitle>
           </IonToolbar>
         </IonHeader>
         <Space height="2" />

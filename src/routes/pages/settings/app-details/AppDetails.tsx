@@ -23,7 +23,12 @@ export const AppDetails: React.FC = () => {
           <IonTitle>App Details</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
+      <IonContent fullscreen>
+        <IonHeader collapse="condense">
+          <IonToolbar>
+            <IonTitle size="large">App Details</IonTitle>
+          </IonToolbar>
+        </IonHeader>
         <List>
           <Space height="2" />
           <BuildInfo />
