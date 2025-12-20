@@ -22,12 +22,16 @@ export type Outline = {
   updatedAt: number;
 };
 
+export type SortOption = "updated" | "created" | "alphabetical";
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
 }
 
 interface TalksState {
   talks: Outline[];
+  sortOption: SortOption;
+  setSortOption: (option: SortOption) => void;
   addTalk: (name: string) => void;
   duplicateTalk: (talkId: string) => void;
   updateTalkName: (talkId: string, name: string) => void;
@@ -81,6 +85,8 @@ export const useTalksStore = create<TalksState>()(
   persist(
     (set) => ({
       talks: [],
+      sortOption: "alphabetical",
+      setSortOption: (sortOption) => set({ sortOption }),
       addTalk: (name) =>
         set((state) => {
           const now = Date.now();
@@ -451,8 +457,9 @@ export const useTalksStore = create<TalksState>()(
       name: "talks-store",
       partialize: (state) => ({
         talks: state.talks,
+        sortOption: state.sortOption,
       }),
-      version: 2,
+      version: 3,
       migrate: (persistedState) => {
         if (!isRecord(persistedState)) {
           return { talks: [] as Outline[] };
@@ -507,7 +514,17 @@ export const useTalksStore = create<TalksState>()(
           };
         });
 
-        return { talks };
+        const sortOptionRaw = persistedState.sortOption;
+        let sortOption: SortOption = "alphabetical";
+        if (
+          sortOptionRaw === "updated" ||
+          sortOptionRaw === "created" ||
+          sortOptionRaw === "alphabetical"
+        ) {
+          sortOption = sortOptionRaw;
+        }
+
+        return { talks, sortOption };
       },
     }
   )

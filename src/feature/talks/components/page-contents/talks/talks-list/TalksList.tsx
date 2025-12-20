@@ -5,6 +5,7 @@ import { Text } from "@ionic-display/text/Text";
 import { useTalksStore } from "@feature/talks/state/useTalksStore";
 import { ItemOptionDelete } from "@input/sliding-item-option/ItemOptionDelete";
 import { ItemOptionCopy } from "@input/sliding-item-option/ItemOptionCopy";
+import { SelectItem } from "@input/select/SelectItem";
 import { formatTimeAllocation } from "@feature/talks/utils/format-time-allocation";
 import { TalksGettingStartedHelp } from "./components/TalksGettingStartedHelp";
 import { TalksNavigationHelp } from "./components/TalksNavigationHelp";
@@ -12,6 +13,9 @@ import { TalksSwipeActionsHelp } from "./components/TalksSwipeActionsHelp";
 
 export function TalksList() {
   const talks = useTalksStore((s) => s.talks);
+  const sortOption = useTalksStore((s) => s.sortOption);
+  const setSortOption = useTalksStore((s) => s.setSortOption);
+
   const removeTalk = useTalksStore((s) => s.removeTalk);
   const duplicateTalk = useTalksStore((s) => s.duplicateTalk);
 
@@ -30,12 +34,36 @@ export function TalksList() {
     );
   }
 
+  const sortedTalks = [...talks].sort((a, b) => {
+    if (sortOption === "updated") {
+      return b.updatedAt - a.updatedAt;
+    }
+    if (sortOption === "created") {
+      return b.createdAt - a.createdAt;
+    }
+    if (sortOption === "alphabetical") {
+      return a.name.localeCompare(b.name);
+    }
+    return 0;
+  });
+
   return (
     <>
       <TalksNavigationHelp />
       <TalksSwipeActionsHelp />
       <List>
-        {talks.map((talk) => (
+        <SelectItem
+          label="Sort by"
+          value={sortOption}
+          onIonChange={(e) => setSortOption(e.detail.value as any)}
+          options={[
+            { label: "A-Z", value: "alphabetical" },
+            { label: "Updated", value: "updated" },
+            { label: "Created", value: "created" },
+          ]}
+          interface="popover"
+        />
+        {sortedTalks.map((talk) => (
           <IonItemSliding key={talk.id}>
             <Item
               button
