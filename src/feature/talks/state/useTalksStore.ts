@@ -52,7 +52,11 @@ interface TalksState {
     subsectionId: string,
     updates: Partial<Pick<Subsection, "content" | "timeAllocation">>
   ) => void;
-  removeSubsection: (talkId: string, sectionId: string, subsectionIndex: number) => void;
+  removeSubsection: (
+    talkId: string,
+    sectionId: string,
+    subsectionIndex: number
+  ) => void;
   reorderSubsections: (
     talkId: string,
     sectionId: string,
@@ -62,6 +66,7 @@ interface TalksState {
   removeSection: (talkId: string, sectionIndex: number) => void;
   reorderSections: (talkId: string, fromIndex: number, toIndex: number) => void;
   removeTalk: (id: string) => void;
+  importTalk: (talk: Outline) => void;
 }
 
 function createId() {
@@ -147,7 +152,10 @@ export const useTalksStore = create<TalksState>()(
 
               return {
                 ...t,
-                sections: [...t.sections, { id: createId(), name, subsections: [] }],
+                sections: [
+                  ...t.sections,
+                  { id: createId(), name, subsections: [] },
+                ],
                 updatedAt: now,
               };
             }),
@@ -221,7 +229,12 @@ export const useTalksStore = create<TalksState>()(
                     ...section,
                     subsections: [
                       ...section.subsections,
-                      { id: createId(), name, content: "", timeAllocation: 150 },
+                      {
+                        id: createId(),
+                        name,
+                        content: "",
+                        timeAllocation: 150,
+                      },
                     ],
                   };
                 }),
@@ -253,7 +266,11 @@ export const useTalksStore = create<TalksState>()(
                   };
 
                   const nextSubsections = [...section.subsections];
-                  nextSubsections.splice(subsectionIndex + 1, 0, copiedSubsection);
+                  nextSubsections.splice(
+                    subsectionIndex + 1,
+                    0,
+                    copiedSubsection
+                  );
 
                   return {
                     ...section,
@@ -332,7 +349,9 @@ export const useTalksStore = create<TalksState>()(
 
                   return {
                     ...section,
-                    subsections: section.subsections.filter((_, i) => i !== subsectionIndex),
+                    subsections: section.subsections.filter(
+                      (_, i) => i !== subsectionIndex
+                    ),
                   };
                 }),
                 updatedAt: now,
@@ -413,6 +432,20 @@ export const useTalksStore = create<TalksState>()(
         set((state) => ({
           talks: state.talks.filter((t) => t.id !== id),
         })),
+      importTalk: (talk) =>
+        set((state) => {
+          const now = Date.now();
+          const newTalk: Outline = {
+            ...talk,
+            id: createId(),
+            createdAt: now,
+            updatedAt: now,
+          };
+
+          return {
+            talks: [newTalk, ...state.talks],
+          };
+        }),
     }),
     {
       name: "talks-store",
@@ -431,48 +464,48 @@ export const useTalksStore = create<TalksState>()(
           return { talks: [] as Outline[] };
         }
 
-        const talks: Outline[] = talksRaw
-          .filter(isRecord)
-          .map((t): Outline => {
-            const sectionsRaw = Array.isArray(t.sections) ? t.sections : [];
+        const talks: Outline[] = talksRaw.filter(isRecord).map((t): Outline => {
+          const sectionsRaw = Array.isArray(t.sections) ? t.sections : [];
 
-            const sections: Section[] = sectionsRaw
-              .filter(isRecord)
-              .map((s): Section => {
-                const subsectionsRaw = Array.isArray(s.subsections)
-                  ? s.subsections
-                  : [];
+          const sections: Section[] = sectionsRaw
+            .filter(isRecord)
+            .map((s): Section => {
+              const subsectionsRaw = Array.isArray(s.subsections)
+                ? s.subsections
+                : [];
 
-                const subsections: Subsection[] = subsectionsRaw
-                  .filter(isRecord)
-                  .map((ss): Subsection => {
-                    return {
-                      id: typeof ss.id === "string" ? ss.id : createId(),
-                      name: typeof ss.name === "string" ? ss.name : "",
-                      content: typeof ss.content === "string" ? ss.content : "",
-                      timeAllocation:
-                        typeof ss.timeAllocation === "number" ? ss.timeAllocation : 150,
-                    };
-                  });
+              const subsections: Subsection[] = subsectionsRaw
+                .filter(isRecord)
+                .map((ss): Subsection => {
+                  return {
+                    id: typeof ss.id === "string" ? ss.id : createId(),
+                    name: typeof ss.name === "string" ? ss.name : "",
+                    content: typeof ss.content === "string" ? ss.content : "",
+                    timeAllocation:
+                      typeof ss.timeAllocation === "number"
+                        ? ss.timeAllocation
+                        : 150,
+                  };
+                });
 
-                return {
-                  id: typeof s.id === "string" ? s.id : createId(),
-                  name: typeof s.name === "string" ? s.name : "",
-                  subsections,
-                };
-              });
+              return {
+                id: typeof s.id === "string" ? s.id : createId(),
+                name: typeof s.name === "string" ? s.name : "",
+                subsections,
+              };
+            });
 
-            const createdAt = typeof t.createdAt === "number" ? t.createdAt : 0;
-            const updatedAt = typeof t.updatedAt === "number" ? t.updatedAt : 0;
+          const createdAt = typeof t.createdAt === "number" ? t.createdAt : 0;
+          const updatedAt = typeof t.updatedAt === "number" ? t.updatedAt : 0;
 
-            return {
-              id: typeof t.id === "string" ? t.id : createId(),
-              name: typeof t.name === "string" ? t.name : "",
-              sections,
-              createdAt,
-              updatedAt,
-            };
-          });
+          return {
+            id: typeof t.id === "string" ? t.id : createId(),
+            name: typeof t.name === "string" ? t.name : "",
+            sections,
+            createdAt,
+            updatedAt,
+          };
+        });
 
         return { talks };
       },

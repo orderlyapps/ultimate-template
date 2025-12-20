@@ -36,6 +36,7 @@ export const Talk: React.FC = () => {
           <TalkPageHeaderButtons
             talkId={talkId}
             hasTalk={!!talk}
+            talk={talk}
             onOpenPresentation={() => setIsPresentationOpen(true)}
             onOpenAddSection={() => {
               setAddSectionAlertKey((k) => k + 1);
@@ -47,7 +48,7 @@ export const Talk: React.FC = () => {
       </IonHeader>
       <IonContent fullscreen className="ion-padding">
         <IonHeader collapse="condense">
-          <IonToolbar >
+          <IonToolbar>
             <EditableCondensedHeader
               value={talk?.name ?? "Talk"}
               header="Rename Talk"

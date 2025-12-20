@@ -1,4 +1,4 @@
-import { IonButton, IonIcon, IonSpinner } from "@ionic/react";
+import { IonButton, IonIcon, IonItemOption, IonSpinner } from "@ionic/react";
 import { useState } from "react";
 import exportIcon from "@icons/export.svg";
 
@@ -7,6 +7,8 @@ interface FileExportProps {
   filename: string;
   label?: string;
   disabled?: boolean;
+  iconOnly?: boolean;
+  asItemOption?: boolean;
 }
 
 export const FileExport: React.FC<FileExportProps> = ({
@@ -14,6 +16,8 @@ export const FileExport: React.FC<FileExportProps> = ({
   filename,
   label = "Export",
   disabled = false,
+  iconOnly = false,
+  asItemOption = false,
 }) => {
   const [isExporting, setIsExporting] = useState(false);
 
@@ -42,14 +46,36 @@ export const FileExport: React.FC<FileExportProps> = ({
     }
   };
 
+  const Content = () => (
+    <>
+      {isExporting ? (
+        <IonSpinner
+          name="crescent"
+          slot={iconOnly ? undefined : "start"}
+          className={iconOnly ? "" : "ion-margin-end"}
+        />
+      ) : (
+        <IonIcon slot={iconOnly ? "icon-only" : "start"} src={exportIcon} />
+      )}
+      {!iconOnly && label}
+    </>
+  );
+
+  if (asItemOption) {
+    return (
+      <IonItemOption
+        color="secondary"
+        onClick={handleExport}
+        disabled={disabled || isExporting}
+      >
+        <Content />
+      </IonItemOption>
+    );
+  }
+
   return (
     <IonButton onClick={handleExport} disabled={disabled || isExporting}>
-      {isExporting ? (
-        <IonSpinner name="crescent" slot="start" className="ion-margin-end" />
-      ) : (
-        <IonIcon slot="start" src={exportIcon} />
-      )}
-      {label}
+      <Content />
     </IonButton>
   );
 };

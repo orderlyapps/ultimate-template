@@ -7,6 +7,7 @@ interface FileImportProps {
   accept?: string;
   label?: string;
   disabled?: boolean;
+  iconOnly?: boolean;
 }
 
 export const FileImport: React.FC<FileImportProps> = ({
@@ -14,6 +15,7 @@ export const FileImport: React.FC<FileImportProps> = ({
   accept = "*",
   label = "Import",
   disabled = false,
+  iconOnly = false,
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -42,8 +44,8 @@ export const FileImport: React.FC<FileImportProps> = ({
         style={{ display: "none" }}
       />
       <IonButton onClick={handleClick} disabled={disabled}>
-        <IonIcon slot="start" src={importIcon} />
-        {label}
+        <IonIcon slot={iconOnly ? "icon-only" : "start"} src={importIcon} />
+        {!iconOnly && label}
       </IonButton>
     </>
   );

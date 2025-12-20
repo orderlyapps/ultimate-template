@@ -35,27 +35,34 @@ export function TalksList() {
       <TalksNavigationHelp />
       <TalksSwipeActionsHelp />
       <List>
-      {talks.map((talk) => (
-        <IonItemSliding key={talk.id}>
-          <Item
-            button
-            detail
-            routerLink={`/home/talks/${talk.id}`}
-            routerDirection="forward"
-          >
-            <IonLabel>
-              <Text bold>{talk.name}</Text>
-              <br />
-              <Text size="sm">{formatTimeAllocation(talk)}</Text>
-            </IonLabel>
-          </Item>
+        {talks.map((talk) => (
+          <IonItemSliding key={talk.id}>
+            <Item
+              button
+              detail
+              routerLink={`/home/talks/${talk.id}`}
+              routerDirection="forward"
+            >
+              <IonLabel>
+                <Text bold>{talk.name}</Text>
+                <br />
+                <Text size="sm">{formatTimeAllocation(talk)}</Text>
+              </IonLabel>
+            </Item>
 
-          <IonItemOptions side="end">
-            <ItemOptionCopy expandable onClick={() => duplicateTalk(talk.id)} />
-            <ItemOptionDelete expandable onClick={() => removeTalk(talk.id)} />
-          </IonItemOptions>
-        </IonItemSliding>
-      ))}
+            <IonItemOptions side="end">
+              <ItemOptionCopy
+                expandable
+                onClick={() => duplicateTalk(talk.id)}
+              />
+
+              <ItemOptionDelete
+                expandable
+                onClick={() => removeTalk(talk.id)}
+              />
+            </IonItemOptions>
+          </IonItemSliding>
+        ))}
       </List>
     </>
   );
