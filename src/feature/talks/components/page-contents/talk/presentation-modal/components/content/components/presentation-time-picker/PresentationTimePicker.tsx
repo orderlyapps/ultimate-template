@@ -6,7 +6,6 @@ import {
   IonModal,
 } from "@ionic/react";
 import { useId } from "react";
-import { PresentationTimePickerHelp } from "./components/PresentationTimePickerHelp";
 
 type Props = {
   value: string;
@@ -18,7 +17,6 @@ export function PresentationTimePicker({ value, onChange }: Props) {
 
   return (
     <>
-      <PresentationTimePickerHelp />
       <Item>
         <IonLabel>End Time</IonLabel>
         <IonDatetimeButton datetime={datetimeId} />
