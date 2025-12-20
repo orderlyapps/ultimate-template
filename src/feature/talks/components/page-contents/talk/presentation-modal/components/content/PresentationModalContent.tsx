@@ -5,6 +5,7 @@ import { Space } from "@layout/space/Space";
 import type { Outline } from "@feature/talks/state/useTalksStore";
 import { PresentationViewer } from "./components/presentation-view/PresentationView";
 import { IonList } from "@ionic/react";
+import { PresentationModalContentHelp } from "./components/PresentationModalContentHelp";
 
 type Props = {
   talk: Outline;
@@ -27,6 +28,7 @@ export function PresentationModalContent({ talk }: Props) {
 
   return (
     <IonList lines="none" inset>
+      <PresentationModalContentHelp />
       <Space />
       <PresentationTimePicker
         value={selectedTime}

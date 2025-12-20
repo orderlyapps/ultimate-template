@@ -14,6 +14,7 @@ import { ItemOptionCopy } from "@input/sliding-item-option/ItemOptionCopy";
 import { useTalksStore } from "@feature/talks/state/useTalksStore";
 import type { Section } from "@feature/talks/state/useTalksStore";
 import { formatTimeAllocation } from "@feature/talks/utils/format-time-allocation";
+import { SubsectionsListHelp } from "./components/SubsectionsListHelp";
 
 type Props = {
   talkId: string;
@@ -40,6 +41,7 @@ export function SubsectionsList({ talkId, section }: Props) {
 
   return (
     <List>
+      <SubsectionsListHelp />
       <IonReorderGroup
         disabled={false}
         onIonReorderEnd={(e: ReorderEndCustomEvent) => {
