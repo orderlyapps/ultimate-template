@@ -93,6 +93,10 @@
     /* Background color of the entire app */
     --ion-background-color: var(--content-background-dark);
 
+    ion-content {
+    --background: var(--content-background-dark);
+    }
+
     /* --ion-background-color-rgb: "0, 255, 255";                   Background color of the entire app, rgb format */
     /* --ion-text-color: "#00F";                                    Text color of the entire app */
     /* --ion-text-color-rgb: "0, 0, 0";                             Text color of the entire app, rgb format */
