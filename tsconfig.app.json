@@ -46,7 +46,7 @@
 
       "@supabase/auth*": ["src/services/state/supabase/auth*"],
       "@supabase-db*": ["src/services/state/supabase/*"],
-      
+
       "@zustand/*": ["src/services/state/zustand/*"],
       "@state/*": ["src/services/state/*"],
 
@@ -67,6 +67,9 @@
       "@display/*": ["src/ui/components/custom/display/*"],
       "@navigation/*": ["src/ui/components/custom/navigation/*"],
 
+      "@tiptap-ui/components/*": ["src/ui/components/tiptap/generated/components/*"],
+      "@tiptap-ui/*": ["src/ui/components/tiptap/*"],
+      
       "@ionic-layout/*": ["src/ui/components/ionic/layout/*"],
       "@ionic-input/*": ["src/ui/components/ionic/input/*"],
       "@ionic-display/*": ["src/ui/components/ionic/display/*"],

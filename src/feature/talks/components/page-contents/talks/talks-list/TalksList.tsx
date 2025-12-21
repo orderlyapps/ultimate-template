@@ -2,7 +2,7 @@ import { IonItemOptions, IonItemSliding, IonLabel } from "@ionic/react";
 import { Item } from "@ionic-layout/item/Item";
 import { List } from "@ionic-layout/list/List";
 import { Text } from "@ionic-display/text/Text";
-import { useTalksStore } from "@feature/talks/state/useTalksStore";
+import { useTalksStore, type SortOption } from "@feature/talks/state/useTalksStore";
 import { ItemOptionDelete } from "@input/sliding-item-option/ItemOptionDelete";
 import { ItemOptionCopy } from "@input/sliding-item-option/ItemOptionCopy";
 import { SelectItem } from "@input/select/SelectItem";
@@ -55,7 +55,7 @@ export function TalksList() {
         <SelectItem
           label="Sort by"
           value={sortOption}
-          onIonChange={(e) => setSortOption(e.detail.value as any)}
+          onIonChange={(e) => setSortOption(e.detail.value as SortOption)}
           options={[
             { label: "A-Z", value: "alphabetical" },
             { label: "Updated", value: "updated" },

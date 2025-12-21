@@ -7,6 +7,7 @@ export function useTheme() {
   useEffect(() => {
     const applyTheme = (isDark: boolean) => {
       document.documentElement.classList.toggle("ion-palette-dark", isDark);
+      document.documentElement.classList.toggle("dark", isDark);
     };
 
     if (preference === "system") {
