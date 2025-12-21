@@ -7,7 +7,7 @@
     "dev": "vite --port 3000 --host",
     "build": "tsc -b && vite build",
     "test:lint:build": "eslint . && tsc -b && vitest run && vite build",
-    "deploy:beta": "pnpm run build:test && npx wrangler pages deploy dist --project-name=orderly --branch=beta",
+    "deploy:beta": "pnpm run test:lint:build && npx wrangler pages deploy dist --project-name=orderly --branch=beta",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest",
