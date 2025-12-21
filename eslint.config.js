@@ -9,7 +9,7 @@ export default defineConfig([
   globalIgnores([
     "dist",
     "**/*.d.ts",
-    "src/ui/components/tiptap/generated",
+    "src/ui/components/tiptap/*",
     "coverage",
     "dev-dist",
   ]),

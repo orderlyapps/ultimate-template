@@ -67,7 +67,6 @@
       "@display/*": ["src/ui/components/custom/display/*"],
       "@navigation/*": ["src/ui/components/custom/navigation/*"],
 
-      "@tiptap-ui/components/*": ["src/ui/components/tiptap/generated/components/*"],
       "@tiptap-ui/*": ["src/ui/components/tiptap/*"],
       
       "@ionic-layout/*": ["src/ui/components/ionic/layout/*"],

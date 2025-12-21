@@ -112,10 +112,6 @@ export default defineConfig({
       "@display": resolve(__dirname, "src/ui/components/custom/display"),
       "@navigation": resolve(__dirname, "src/ui/components/custom/navigation"),
 
-      "@tiptap-ui/components": resolve(
-        __dirname,
-        "src/ui/components/tiptap/generated/components"
-      ),
       "@tiptap-ui": resolve(__dirname, "src/ui/components/tiptap"),
 
       "@ionic-layout": resolve(__dirname, "src/ui/components/ionic/layout"),
