@@ -18,7 +18,7 @@ export function RTFModalEditor({
   setIsOpen,
   title,
 }: {
-  initialContent?: string;
+  initialContent?: string | Record<string, unknown>;
   onUpdate?: (editor: Editor) => void;
   setIsOpen: (isOpen: boolean) => void;
   title: string;

@@ -4,7 +4,7 @@ import { persist } from "zustand/middleware";
 export type Subsection = {
   id: string;
   name: string;
-  content: string;
+  content: Record<string, unknown> | string;
   timeAllocation: number;
 };
 

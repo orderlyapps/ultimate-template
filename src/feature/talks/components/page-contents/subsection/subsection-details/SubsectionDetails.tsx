@@ -32,7 +32,7 @@ export function SubsectionDetails({ talkId, sectionId, subsection }: Props) {
   const handleEditorUpdate = useCallback(
     (editor: Editor) => {
       updateSubsection(talkId, sectionId, subsection.id, {
-        content: editor.getHTML(),
+        content: editor.getJSON(),
       });
     },
     [talkId, sectionId, subsection.id, updateSubsection]

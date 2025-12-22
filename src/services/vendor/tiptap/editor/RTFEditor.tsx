@@ -29,10 +29,10 @@ export function RTFEditor({
   canEdit = true,
   content,
 }: {
-  initialContent?: string;
+  initialContent?: string | Record<string, unknown>;
   onUpdate?: (editor: Editor) => void;
   canEdit: boolean;
-  content?: string;
+  content?: string | Record<string, unknown>;
 }) {
   const editor = useEditor({
     editable: canEdit,
@@ -88,7 +88,7 @@ export function RTFEditor({
 
   return (
     <EditorContext.Provider value={{ editor }}>
-      <IonList lines="none" className="ion-no-padding-xxx">
+      <IonList lines="none">
         {canEdit && (
           <IonItemDivider sticky>
             <Toolbar>
