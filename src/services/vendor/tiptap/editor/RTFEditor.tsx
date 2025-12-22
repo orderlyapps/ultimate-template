@@ -9,14 +9,19 @@ import { Highlight } from "@tiptap/extension-highlight";
 import { Subscript } from "@tiptap/extension-subscript";
 import { Superscript } from "@tiptap/extension-superscript";
 import { Selection } from "@tiptap/extensions";
-import { Toolbar } from "@tiptap-ui/components/tiptap-ui-primitive/toolbar";
-import { ImageUploadNode } from "@tiptap-ui/components/tiptap-node/image-upload-node/image-upload-node-extension";
-import { HorizontalRule } from "@tiptap-ui/components/tiptap-node/horizontal-rule-node/horizontal-rule-node-extension";
-import { handleImageUpload, MAX_FILE_SIZE } from "@tiptap-ui/lib/tiptap-utils";
+import { Toolbar } from "@services/vendor/tiptap/generated-source/components/tiptap-ui-primitive/toolbar";
+import { ImageUploadNode } from "@services/vendor/tiptap/generated-source/components/tiptap-node/image-upload-node/image-upload-node-extension";
+import { HorizontalRule } from "@services/vendor/tiptap/generated-source/components/tiptap-node/horizontal-rule-node/horizontal-rule-node-extension";
+import {
+  handleImageUpload,
+  MAX_FILE_SIZE,
+} from "@services/vendor/tiptap/generated-source/lib/tiptap-utils";
 
 import { RTFEditorToolbar } from "@services/vendor/tiptap/editor/components/editor-toolbar/RTFEditorToolbar";
 import { IonItem, IonItemDivider, IonList } from "@ionic/react";
 import { useEffect } from "react";
+
+import "./RTFEditor.scss";
 
 export function RTFEditor({
   initialContent,
@@ -83,7 +88,7 @@ export function RTFEditor({
 
   return (
     <EditorContext.Provider value={{ editor }}>
-      <IonList lines="none">
+      <IonList lines="none" className="ion-no-padding-xxx">
         {canEdit && (
           <IonItemDivider sticky>
             <Toolbar>

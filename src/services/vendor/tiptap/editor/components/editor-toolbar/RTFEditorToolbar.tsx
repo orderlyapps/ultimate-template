@@ -1,15 +1,15 @@
-import { Spacer } from "@tiptap-ui/components/tiptap-ui-primitive/spacer";
-import { ToolbarGroup, ToolbarSeparator } from "@tiptap-ui/components/tiptap-ui-primitive/toolbar";
-import { BlockquoteButton } from "@tiptap-ui/components/tiptap-ui/blockquote-button";
-import { CodeBlockButton } from "@tiptap-ui/components/tiptap-ui/code-block-button";
-import { ColorHighlightPopover } from "@tiptap-ui/components/tiptap-ui/color-highlight-popover";
-import { HeadingDropdownMenu } from "@tiptap-ui/components/tiptap-ui/heading-dropdown-menu";
-import { ImageUploadButton } from "@tiptap-ui/components/tiptap-ui/image-upload-button";
-import { LinkPopover } from "@tiptap-ui/components/tiptap-ui/link-popover";
-import { ListDropdownMenu } from "@tiptap-ui/components/tiptap-ui/list-dropdown-menu";
-import { MarkButton } from "@tiptap-ui/components/tiptap-ui/mark-button";
-import { TextAlignButton } from "@tiptap-ui/components/tiptap-ui/text-align-button";
-import { UndoRedoButton } from "@tiptap-ui/components/tiptap-ui/undo-redo-button";
+import { Spacer } from "@services/vendor/tiptap/generated-source/components/tiptap-ui-primitive/spacer";
+import { ToolbarGroup, ToolbarSeparator } from "@services/vendor/tiptap/generated-source/components/tiptap-ui-primitive/toolbar";
+import { BlockquoteButton } from "@services/vendor/tiptap/generated-source/components/tiptap-ui/blockquote-button";
+import { CodeBlockButton } from "@services/vendor/tiptap/generated-source/components/tiptap-ui/code-block-button";
+import { ColorHighlightPopover } from "@services/vendor/tiptap/generated-source/components/tiptap-ui/color-highlight-popover";
+import { HeadingDropdownMenu } from "@services/vendor/tiptap/generated-source/components/tiptap-ui/heading-dropdown-menu";
+import { ImageUploadButton } from "@services/vendor/tiptap/generated-source/components/tiptap-ui/image-upload-button";
+import { LinkPopover } from "@services/vendor/tiptap/generated-source/components/tiptap-ui/link-popover";
+import { ListDropdownMenu } from "@services/vendor/tiptap/generated-source/components/tiptap-ui/list-dropdown-menu";
+import { MarkButton } from "@services/vendor/tiptap/generated-source/components/tiptap-ui/mark-button";
+import { TextAlignButton } from "@services/vendor/tiptap/generated-source/components/tiptap-ui/text-align-button";
+import { UndoRedoButton } from "@services/vendor/tiptap/generated-source/components/tiptap-ui/undo-redo-button";
 
 export const RTFEditorToolbar = () => {
     return (

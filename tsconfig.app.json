@@ -55,6 +55,8 @@
       "@pdf/*": ["src/services/pdf/*"],
       "@types/*": ["src/services/types/*"],
 
+      "@tiptap-ui/*": ["src/services/vendor/tiptap/generated-source/*"],
+
       "@services/*": ["src/services/*"],
 
       // UI
@@ -67,8 +69,6 @@
       "@display/*": ["src/ui/components/custom/display/*"],
       "@navigation/*": ["src/ui/components/custom/navigation/*"],
 
-      "@tiptap-ui/*": ["src/ui/components/tiptap/*"],
-      
       "@ionic-layout/*": ["src/ui/components/ionic/layout/*"],
       "@ionic-input/*": ["src/ui/components/ionic/input/*"],
       "@ionic-display/*": ["src/ui/components/ionic/display/*"],

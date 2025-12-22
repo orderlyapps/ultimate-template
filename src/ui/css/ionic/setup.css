@@ -24,8 +24,10 @@
 @import "./overides/app/theme.css";
 
 /* COMPONENTS */
+@import "./overides/components/card.css";
 @import "./overides/components/item.css";
 @import "./overides/components/item-divider.css";
+@import "./overides/components/list.css";
 @import "./overides/components/modal.css";
 @import "./overides/components/refresher.css";
 @import "./overides/components/space.css";

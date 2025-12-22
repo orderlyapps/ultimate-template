@@ -1,0 +1,5 @@
+.ion-palette-dark {
+    ion-card {
+        --ion-item-background: var(--ion-card-background);
+    }
+}

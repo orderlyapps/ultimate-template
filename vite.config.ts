@@ -100,6 +100,7 @@ export default defineConfig({
       "@pdf": resolve(__dirname, "src/services/pdf"),
       "@types": resolve(__dirname, "src/services/types"),
 
+      "@tiptap-ui": resolve(__dirname, "src/services/vendor/tiptap/generated-source"),
       "@services": resolve(__dirname, "src/services"),
 
       // UI
@@ -112,7 +113,6 @@ export default defineConfig({
       "@display": resolve(__dirname, "src/ui/components/custom/display"),
       "@navigation": resolve(__dirname, "src/ui/components/custom/navigation"),
 
-      "@tiptap-ui": resolve(__dirname, "src/ui/components/tiptap"),
 
       "@ionic-layout": resolve(__dirname, "src/ui/components/ionic/layout"),
       "@ionic-input": resolve(__dirname, "src/ui/components/ionic/input"),
