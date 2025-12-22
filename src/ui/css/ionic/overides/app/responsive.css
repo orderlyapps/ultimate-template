@@ -7,29 +7,29 @@
 
 @media screen and (min-width: 768px) {
   ion-content::part(scroll) {
+    padding-left: 20%;
+    padding-right: 20%;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  ion-content::part(scroll) {
     padding-left: 25%;
     padding-right: 25%;
   }
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 1280px) {
   ion-content::part(scroll) {
     padding-left: 30%;
     padding-right: 30%;
   }
 }
 
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 1440px) {
   ion-content::part(scroll) {
     padding-left: 35%;
     padding-right: 35%;
-  }
-}
-
-@media screen and (min-width: 1440px) {
-  ion-content::part(scroll) {
-    padding-left: 37%;
-    padding-right: 37%;
   }
 }
 

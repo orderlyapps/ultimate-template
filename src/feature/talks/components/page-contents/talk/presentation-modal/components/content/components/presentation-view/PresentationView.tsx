@@ -18,7 +18,9 @@ function getPresentationItems(talk: Outline): PresentationItem[] {
       items.push({
         sectionName: section.name,
         subsectionName: subsection.name,
-        content: subsection.content,
+        content: typeof subsection.content === 'string' 
+          ? subsection.content 
+          : JSON.stringify(subsection.content),
       });
     }
   }

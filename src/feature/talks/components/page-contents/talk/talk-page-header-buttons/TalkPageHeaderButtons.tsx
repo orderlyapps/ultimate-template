@@ -1,5 +1,5 @@
 import { IonButton, IonButtons, IonIcon } from "@ionic/react";
-import { playOutline } from "ionicons/icons";
+import play from "@icons/play.svg";
 import { AddButton } from "@input/button/add-button/AddButton";
 import { FileExport } from "@input/file-export/FileExport";
 import type { Outline } from "@feature/talks/state/useTalksStore";
@@ -29,7 +29,7 @@ export const TalkPageHeaderButtons: React.FC<TalkPageHeaderButtonsProps> = ({
         />
       )}
       <IonButton disabled={!talkId || !hasTalk} onClick={onOpenPresentation}>
-        <IonIcon icon={playOutline} slot="icon-only" />
+        <IonIcon src={play} slot="icon-only" />
       </IonButton>
       <AddButton disabled={!talkId} onClick={onOpenAddSection} />
     </IonButtons>
