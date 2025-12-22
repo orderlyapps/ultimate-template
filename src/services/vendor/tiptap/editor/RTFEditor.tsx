@@ -22,17 +22,20 @@ import { IonItem, IonItemDivider, IonList } from "@ionic/react";
 import { useEffect } from "react";
 
 import "./RTFEditor.scss";
+import type { Size } from "@input/size/size-select/SizeSelect";
 
 export function RTFEditor({
   initialContent,
   onUpdate,
   canEdit = true,
   content,
+  fontSize = "md",
 }: {
   initialContent?: string | Record<string, unknown>;
   onUpdate?: (editor: Editor) => void;
   canEdit: boolean;
   content?: string | Record<string, unknown>;
+  fontSize?: Size;
 }) {
   const editor = useEditor({
     editable: canEdit,
@@ -100,7 +103,7 @@ export function RTFEditor({
           <EditorContent
             editor={editor}
             role="presentation"
-            className="simple-editor-content"
+            className={`simple-editor-content rtf-editor-font-size-${fontSize}`}
           />
         </IonItem>
       </IonList>

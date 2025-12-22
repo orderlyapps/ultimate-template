@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import type { Size } from "@input/size/size-select/SizeSelect";
 
 export type Subsection = {
   id: string;
@@ -31,7 +32,9 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 interface TalksState {
   talks: Outline[];
   sortOption: SortOption;
+  presentationTextSize: Size;
   setSortOption: (option: SortOption) => void;
+  setPresentationTextSize: (size: Size) => void;
   addTalk: (name: string) => void;
   duplicateTalk: (talkId: string) => void;
   updateTalkName: (talkId: string, name: string) => void;
@@ -86,7 +89,9 @@ export const useTalksStore = create<TalksState>()(
     (set) => ({
       talks: [],
       sortOption: "alphabetical",
+      presentationTextSize: "lg",
       setSortOption: (sortOption) => set({ sortOption }),
+      setPresentationTextSize: (presentationTextSize) => set({ presentationTextSize }),
       addTalk: (name) =>
         set((state) => {
           const now = Date.now();
@@ -458,8 +463,9 @@ export const useTalksStore = create<TalksState>()(
       partialize: (state) => ({
         talks: state.talks,
         sortOption: state.sortOption,
+        presentationTextSize: state.presentationTextSize,
       }),
-      version: 3,
+      version: 4,
       migrate: (persistedState) => {
         if (!isRecord(persistedState)) {
           return { talks: [] as Outline[] };
@@ -524,7 +530,22 @@ export const useTalksStore = create<TalksState>()(
           sortOption = sortOptionRaw;
         }
 
-        return { talks, sortOption };
+        const presentationTextSizeRaw = persistedState.presentationTextSize;
+        let presentationTextSize: Size = "xl";
+        if (
+          presentationTextSizeRaw === "xxs" ||
+          presentationTextSizeRaw === "xs" ||
+          presentationTextSizeRaw === "sm" ||
+          presentationTextSizeRaw === "md" ||
+          presentationTextSizeRaw === "lg" ||
+          presentationTextSizeRaw === "xl" ||
+          presentationTextSizeRaw === "xxl" ||
+          presentationTextSizeRaw === "xxxl"
+        ) {
+          presentationTextSize = presentationTextSizeRaw;
+        }
+
+        return { talks, sortOption, presentationTextSize };
       },
     }
   )

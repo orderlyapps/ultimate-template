@@ -7,7 +7,7 @@ import { PresentationViewContent } from "./components/presentation-view-content/
 type PresentationItem = {
   sectionName: string;
   subsectionName: string;
-  content: string;
+  content: string | Record<string, unknown>;
 };
 
 function getPresentationItems(talk: Outline): PresentationItem[] {
@@ -18,9 +18,7 @@ function getPresentationItems(talk: Outline): PresentationItem[] {
       items.push({
         sectionName: section.name,
         subsectionName: subsection.name,
-        content: typeof subsection.content === 'string' 
-          ? subsection.content 
-          : JSON.stringify(subsection.content),
+        content: subsection.content,
       });
     }
   }

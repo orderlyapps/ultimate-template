@@ -1,14 +1,11 @@
-import {
-  IonButtons,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-} from "@ionic/react";
+import { IonButtons, IonHeader, IonTitle, IonToolbar } from "@ionic/react";
 import { CloseButton } from "@input/button/close-button/CloseButton";
 import type { Outline } from "@feature/talks/state/useTalksStore";
+import { useTalksStore } from "@feature/talks/state/useTalksStore";
 import { ProgressBar } from "./components/progress-bar/ProgressBar";
 import { TimeText } from "./components/time-text/TimeText";
 import type { TalkPresentationCountdown } from "../../hooks/useTalkPresentationCountdown";
+import { SizeButtons } from "@input/size/size-buttons/SizeButtons";
 
 type Props = {
   talk: Outline;
@@ -16,30 +13,31 @@ type Props = {
   onClose: () => void;
 };
 
-export function PresentationModalHeader({
-  talk,
-  countdown,
-  onClose,
-}: Props) {
+export function PresentationModalHeader({ talk, countdown, onClose }: Props) {
+  const presentationTextSize = useTalksStore((state) => state.presentationTextSize);
+  const setPresentationTextSize = useTalksStore((state) => state.setPresentationTextSize);
+
   return (
     <IonHeader>
       <IonToolbar>
+        <IonButtons slot="start">
+          <CloseButton onClick={onClose} />
+        </IonButtons>
         <IonTitle>
           {countdown ? (
-            <TimeText
-              remainingSeconds={countdown.remainingSeconds}
-            />
+            <TimeText remainingSeconds={countdown.remainingSeconds} />
           ) : (
             talk.name
           )}
         </IonTitle>
         <IonButtons slot="end">
-          <CloseButton onClick={onClose} />
+          <SizeButtons 
+            value={presentationTextSize}
+            onSizeChange={setPresentationTextSize}
+          />
         </IonButtons>
       </IonToolbar>
-      {countdown ? (
-        <ProgressBar value={countdown.progress} />
-      ) : null}
+      {countdown ? <ProgressBar value={countdown.progress} /> : null}
     </IonHeader>
   );
 }

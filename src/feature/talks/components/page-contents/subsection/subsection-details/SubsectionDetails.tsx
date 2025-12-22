@@ -1,7 +1,7 @@
 // import { Textarea } from "@ionic-input/textarea/Textarea";
 import { Space } from "@layout/space/Space";
 import { useTalksStore } from "@feature/talks/state/useTalksStore";
-import { IonCardContent, IonLabel } from "@ionic/react";
+import { IonLabel } from "@ionic/react";
 import type { Subsection } from "@feature/talks/state/useTalksStore";
 import { Card } from "@ionic-display/card/Card";
 import { Item } from "@ionic-layout/item/Item";
@@ -56,12 +56,10 @@ export function SubsectionDetails({ talkId, sectionId, subsection }: Props) {
       </Item>
 
       <Card onClick={() => setIsOpen(true)}>
-        <IonCardContent>
-          <RTFEditor
-            content={currentSubsection?.content || subsection.content}
-            canEdit={false}
-          />
-        </IonCardContent>
+        <RTFEditor
+          content={currentSubsection?.content || subsection.content}
+          canEdit={false}
+        />
       </Card>
 
       <RTFModalEditor

@@ -10,6 +10,7 @@ import {
 } from "@ionic/react";
 import { CloseButton } from "@input/button/close-button/CloseButton";
 import { RTFEditor } from "@services/vendor/tiptap/editor/RTFEditor";
+import type { Size } from "@input/size/size-select/SizeSelect";
 
 export function RTFModalEditor({
   initialContent,
@@ -17,16 +18,18 @@ export function RTFModalEditor({
   isOpen,
   setIsOpen,
   title,
+  fontSize = "md",
 }: {
   initialContent?: string | Record<string, unknown>;
   onUpdate?: (editor: Editor) => void;
   setIsOpen: (isOpen: boolean) => void;
   title: string;
+  fontSize?: Size
   isOpen: boolean;
 }) {
   return (
-    <IonModal isOpen={isOpen} id="fullscreen" presentingElement={undefined}>
-      <IonHeader className="ion-no-border">
+    <IonModal isOpen={isOpen} id="fullscreen">
+      <IonHeader>
         <IonToolbar>
           <IonTitle>{title}</IonTitle>
           <IonButtons slot="end">
@@ -39,6 +42,7 @@ export function RTFModalEditor({
           initialContent={initialContent}
           canEdit={true}
           onUpdate={onUpdate}
+          fontSize={fontSize}
         />
       </IonContent>
     </IonModal>
