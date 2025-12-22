@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
-import { EditorContent, EditorContext, useEditor } from "@tiptap/react";
-
+import { Editor, EditorContent, EditorContext, useEditor } from "@tiptap/react";
 // --- Tiptap Core Extensions ---
 import { StarterKit } from "@tiptap/starter-kit";
 import { Image } from "@tiptap/extension-image";
@@ -11,49 +9,28 @@ import { Highlight } from "@tiptap/extension-highlight";
 import { Subscript } from "@tiptap/extension-subscript";
 import { Superscript } from "@tiptap/extension-superscript";
 import { Selection } from "@tiptap/extensions";
-
-// --- UI Primitives ---
-
-// --- Tiptap Node ---
+import { Toolbar } from "@tiptap-ui/components/tiptap-ui-primitive/toolbar";
 import { ImageUploadNode } from "@tiptap-ui/components/tiptap-node/image-upload-node/image-upload-node-extension";
 import { HorizontalRule } from "@tiptap-ui/components/tiptap-node/horizontal-rule-node/horizontal-rule-node-extension";
-import "@tiptap-ui/components/tiptap-node/blockquote-node/blockquote-node.scss";
-import "@tiptap-ui/components/tiptap-node/code-block-node/code-block-node.scss";
-import "@tiptap-ui/components/tiptap-node/horizontal-rule-node/horizontal-rule-node.scss";
-import "@tiptap-ui/components/tiptap-node/list-node/list-node.scss";
-import "@tiptap-ui/components/tiptap-node/image-node/image-node.scss";
-import "@tiptap-ui/components/tiptap-node/heading-node/heading-node.scss";
-import "@tiptap-ui/components/tiptap-node/paragraph-node/paragraph-node.scss";
-
-// --- Tiptap UI ---
-
-// --- Icons ---
-
-// --- Hooks ---
-import { useIsBreakpoint } from "@tiptap-ui/hooks/use-is-breakpoint";
-
-// --- Components ---
-
-// --- Lib ---
 import { handleImageUpload, MAX_FILE_SIZE } from "@tiptap-ui/lib/tiptap-utils";
 
-// --- Styles ---
-import "@tiptap-ui/components/tiptap-templates/editor/RTFEditor.scss";
+import { RTFEditorToolbar } from "@services/vendor/tiptap/editor/components/editor-toolbar/RTFEditorToolbar";
+import { IonItem, IonItemDivider, IonList } from "@ionic/react";
+import { useEffect } from "react";
 
-export function RTFViewer({
-  content,
+export function RTFEditor({
+  initialContent,
   onUpdate,
+  canEdit = true,
+  content,
 }: {
+  initialContent?: string;
+  onUpdate?: (editor: Editor) => void;
+  canEdit: boolean;
   content?: string;
-  onUpdate?: (editor: any) => void;
 }) {
-  const isMobile = useIsBreakpoint();
-  const [mobileView, setMobileView] = useState<"main" | "highlighter" | "link">(
-    "main"
-  );
-
   const editor = useEditor({
-    editable: false,
+    editable: canEdit,
     immediatelyRender: false,
     editorProps: {
       attributes: {
@@ -90,7 +67,7 @@ export function RTFViewer({
         onError: (error) => console.error("Upload failed:", error),
       }),
     ],
-    content: content,
+    content: initialContent || content,
     onUpdate: ({ editor }) => {
       if (onUpdate) {
         onUpdate(editor);
@@ -99,26 +76,29 @@ export function RTFViewer({
   });
 
   useEffect(() => {
-    if (!isMobile && mobileView !== "main") {
-      setMobileView("main");
-    }
-  }, [isMobile, mobileView]);
-
-  useEffect(() => {
     if (editor && content !== undefined) {
       editor.commands.setContent(content);
     }
   }, [editor, content]);
 
   return (
-    <div className="simple-editor-wrapper">
-      <EditorContext.Provider value={{ editor }}>
-        <EditorContent
-          editor={editor}
-          role="presentation"
-          className="simple-editor-content"
-        />
-      </EditorContext.Provider>
-    </div>
+    <EditorContext.Provider value={{ editor }}>
+      <IonList lines="none">
+        {canEdit && (
+          <IonItemDivider sticky>
+            <Toolbar>
+              <RTFEditorToolbar />
+            </Toolbar>
+          </IonItemDivider>
+        )}
+        <IonItem>
+          <EditorContent
+            editor={editor}
+            role="presentation"
+            className="simple-editor-content"
+          />
+        </IonItem>
+      </IonList>
+    </EditorContext.Provider>
   );
 }

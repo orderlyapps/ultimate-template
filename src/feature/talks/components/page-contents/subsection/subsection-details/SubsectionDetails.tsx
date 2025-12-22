@@ -7,9 +7,10 @@ import { Card } from "@ionic-display/card/Card";
 import { Item } from "@ionic-layout/item/Item";
 import { TimeAllocationStepper } from "@feature/talks/components/page-contents/subsection/time-allocation-stepper/TimeAllocationStepper";
 import { SubsectionDetailsHelp } from "./components/SubsectionDetailsHelp";
-import { SimpleEditor } from "@tiptap-ui/components/tiptap-templates/editor/RTFEditor";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { Editor } from "@tiptap/core";
+import { RTFModalEditor } from "@services/vendor/tiptap/modal-editor/RTFModalEditor";
+import { RTFEditor } from "@services/vendor/tiptap/editor/RTFEditor";
 
 type Props = {
   talkId: string;
@@ -18,7 +19,15 @@ type Props = {
 };
 
 export function SubsectionDetails({ talkId, sectionId, subsection }: Props) {
+  const [isOpen, setIsOpen] = useState(false);
+
   const updateSubsection = useTalksStore((s) => s.updateSubsection);
+  const currentSubsection = useTalksStore((s) =>
+    s.talks
+      .find((t) => t.id === talkId)
+      ?.sections.find((sec) => sec.id === sectionId)
+      ?.subsections.find((sub) => sub.id === subsection.id)
+  );
 
   const handleEditorUpdate = useCallback(
     (editor: Editor) => {
@@ -46,14 +55,22 @@ export function SubsectionDetails({ talkId, sectionId, subsection }: Props) {
         </IonLabel>
       </Item>
 
-      <Card>
+      <Card onClick={() => setIsOpen(true)}>
         <IonCardContent>
-          <SimpleEditor
-            initialContent={subsection.content}
-            onUpdate={handleEditorUpdate}
+          <RTFEditor
+            content={currentSubsection?.content || subsection.content}
+            canEdit={false}
           />
         </IonCardContent>
       </Card>
+
+      <RTFModalEditor
+        onUpdate={handleEditorUpdate}
+        initialContent={subsection.content}
+        title={subsection.name}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      />
     </>
   );
 }

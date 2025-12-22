@@ -4,7 +4,7 @@ import { IonLabel, IonList } from "@ionic/react";
 import { useTalkPresentationModalStore } from "../../../../../../hooks/useTalkPresentationModalStore";
 import { useTalkPresentationSubsectionCountdown } from "../../../../../../hooks/useTalkPresentationSubsectionCountdown";
 import { ProgressBar } from "../../../../../header/components/progress-bar/ProgressBar";
-import { RTFViewer } from "@tiptap-ui/components/tiptap-templates/viewer/RTFViewer";
+import { RTFEditor } from "@services/vendor/tiptap/editor/RTFEditor";
 
 type Props = {
   sectionName: string;
@@ -91,8 +91,7 @@ export function PresentationViewContent({
       </Item>
       <Item>
         <IonLabel>
-          <RTFViewer content={safeContent} />
-          {/* <Text style={{ whiteSpace: "pre-wrap" }}>{safeContent}</Text> */}
+          <RTFEditor content={safeContent} canEdit={false} />
         </IonLabel>
       </Item>
     </IonList>
