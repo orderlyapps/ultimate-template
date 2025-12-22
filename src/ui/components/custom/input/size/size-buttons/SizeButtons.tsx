@@ -36,7 +36,7 @@ export const SizeButtons: React.FC<SizeButtonsProps> = ({
     <>
       <IonButton
         fill="clear"
-        size="small"
+        size="large"
         onClick={handleDecrease}
         disabled={disabled || !canDecrease}
       >
@@ -44,7 +44,7 @@ export const SizeButtons: React.FC<SizeButtonsProps> = ({
       </IonButton>
       <IonButton
         fill="clear"
-        size="small"
+        size="large"
         onClick={handleIncrease}
         disabled={disabled || !canIncrease}
       >
