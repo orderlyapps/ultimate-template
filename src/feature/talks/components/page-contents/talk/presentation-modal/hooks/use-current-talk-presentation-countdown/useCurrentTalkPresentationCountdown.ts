@@ -2,10 +2,8 @@ import { useTalkPresentationModalStore } from "../use-talk-presentation-modal-st
 import { useTalkPresentationCountdown } from "../use-talk-presentation-countdown/useTalkPresentationCountdown";
 
 export function useCurrentTalkPresentationCountdown() {
-  const selectedTime = useTalkPresentationModalStore((s) => s.selectedTime);
-  const setSelectedTime = useTalkPresentationModalStore(
-    (s) => s.setSelectedTime
-  );
+  const endTime = useTalkPresentationModalStore((s) => s.endTime);
+  const setEndTime = useTalkPresentationModalStore((s) => s.setEndTime);
   const startMs = useTalkPresentationModalStore((s) => s.startMs);
   const endMs = useTalkPresentationModalStore((s) => s.endMs);
   const start = useTalkPresentationModalStore((s) => s.start);
@@ -18,8 +16,8 @@ export function useCurrentTalkPresentationCountdown() {
   });
 
   return {
-    selectedTime,
-    setSelectedTime,
+    endTime,
+    setEndTime,
     startMs,
     endMs,
     start,

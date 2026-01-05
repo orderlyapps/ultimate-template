@@ -10,8 +10,7 @@ import { useCurrentTalkPresentationCountdown } from "@feature/talks/components/p
 
 export function PresentationTimePicker() {
   const datetimeId = useId();
-  const { selectedTime, setSelectedTime } =
-    useCurrentTalkPresentationCountdown();
+  const { endTime, setEndTime } = useCurrentTalkPresentationCountdown();
 
   return (
     <>
@@ -24,12 +23,12 @@ export function PresentationTimePicker() {
         <IonDatetime
           id={datetimeId}
           presentation="time"
-          value={selectedTime}
+          value={endTime}
           onIonChange={(e) => {
             const next = e.detail.value;
             const nextValue = Array.isArray(next) ? next[0] : next;
             if (typeof nextValue !== "string") return;
-            setSelectedTime(nextValue);
+            setEndTime(nextValue);
           }}
           showDefaultButtons={true}
         />

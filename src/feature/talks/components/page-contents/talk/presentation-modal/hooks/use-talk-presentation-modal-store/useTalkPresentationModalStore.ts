@@ -6,7 +6,7 @@ import { initializeTalkState } from "./utils/initializeTalkState";
 
 interface TalkPresentationModalState {
   talkId: string | null;
-  selectedTime: string;
+  endTime: string;
   startMs: number | null;
   endMs: number | null;
   finishDeltaMs: number | null;
@@ -16,7 +16,7 @@ interface TalkPresentationModalState {
   subsectionTimingAdjustmentPercent: number | null;
   subsectionTimingAdjustmentMs: number | null;
   currentIndex: number;
-  setSelectedTime: (selectedTime: string) => void;
+  setEndTime: (selectedTime: string) => void;
   setCurrentIndex: (currentIndex: number) => void;
   next: (maxIndex: number) => void;
   prev: () => void;
@@ -33,7 +33,7 @@ function getDefaultSelectedTime() {
 export const useTalkPresentationModalStore = create<TalkPresentationModalState>(
   (set, get) => ({
     talkId: null,
-    selectedTime: getDefaultSelectedTime(),
+    endTime: getDefaultSelectedTime(),
     startMs: null,
     endMs: null,
     finishDeltaMs: null,
@@ -43,7 +43,7 @@ export const useTalkPresentationModalStore = create<TalkPresentationModalState>(
     subsectionTimingAdjustmentPercent: null,
     subsectionTimingAdjustmentMs: null,
     currentIndex: 0,
-    setSelectedTime: (selectedTime) => set({ selectedTime }),
+    setEndTime: (selectedTime) => set({ endTime: selectedTime }),
     setCurrentIndex: (currentIndex) => {
       const rawNextIndex = Math.max(0, Math.floor(currentIndex));
       const { endMs, allocationsSeconds } = get();
@@ -145,7 +145,7 @@ export const useTalkPresentationModalStore = create<TalkPresentationModalState>(
     reset: () => {
       set({
         talkId: null,
-        selectedTime: getDefaultSelectedTime(),
+        endTime: getDefaultSelectedTime(),
         startMs: null,
         endMs: null,
         finishDeltaMs: null,
@@ -158,7 +158,7 @@ export const useTalkPresentationModalStore = create<TalkPresentationModalState>(
       });
     },
     start: () => {
-      const { selectedTime, allocationsSeconds } = get();
+      const { endTime: selectedTime, allocationsSeconds } = get();
       const nextEndMs = new Date(selectedTime).getTime();
       if (!Number.isFinite(nextEndMs)) return;
       const nextStartMs = Date.now();
