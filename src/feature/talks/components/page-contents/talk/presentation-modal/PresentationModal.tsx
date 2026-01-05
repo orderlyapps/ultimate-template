@@ -4,7 +4,6 @@ import { useRef } from "react";
 import { PresentationModalFooter } from "./components/footer/PresentationModalFooter";
 import { PresentationModalContent } from "./components/content/PresentationModalContent";
 import { PresentationModalHeader } from "./components/header/PresentationModalHeader";
-import { useTalkPresentationCountdown } from "./hooks/useTalkPresentationCountdown";
 import { useTalkPresentationModalStore } from "./hooks/useTalkPresentationModalStore";
 
 interface TalkPresentationModalProps {
@@ -23,15 +22,6 @@ export const PresentationModal: React.FC<TalkPresentationModalProps> = ({
     (s) => s.initializeForTalk
   );
   const reset = useTalkPresentationModalStore((s) => s.reset);
-  const startMs = useTalkPresentationModalStore((s) => s.startMs);
-  const endMs = useTalkPresentationModalStore((s) => s.endMs);
-  const finish = useTalkPresentationModalStore((s) => s.finish);
-
-  const countdown = useTalkPresentationCountdown({
-    startMs,
-    endMs,
-    onFinished: finish,
-  });
 
   return (
     <IonModal
@@ -48,7 +38,6 @@ export const PresentationModal: React.FC<TalkPresentationModalProps> = ({
     >
       <PresentationModalHeader
         talk={talk}
-        countdown={countdown}
         onClose={() => {
           modalRef.current?.dismiss();
         }}

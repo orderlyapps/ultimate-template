@@ -4,18 +4,32 @@ import type { Outline } from "@feature/talks/state/useTalksStore";
 import { useTalksStore } from "@feature/talks/state/useTalksStore";
 import { ProgressBar } from "./components/progress-bar/ProgressBar";
 import { TimeText } from "./components/time-text/TimeText";
-import type { TalkPresentationCountdown } from "../../hooks/useTalkPresentationCountdown";
+import { useTalkPresentationCountdown } from "../../hooks/useTalkPresentationCountdown";
 import { SizeButtons } from "@input/size/size-buttons/SizeButtons";
+import { useTalkPresentationModalStore } from "@feature/talks/components/page-contents/talk/presentation-modal/hooks/useTalkPresentationModalStore";
 
 type Props = {
   talk: Outline;
-  countdown: TalkPresentationCountdown | null;
   onClose: () => void;
 };
 
-export function PresentationModalHeader({ talk, countdown, onClose }: Props) {
-  const presentationTextSize = useTalksStore((state) => state.presentationTextSize);
-  const setPresentationTextSize = useTalksStore((state) => state.setPresentationTextSize);
+export function PresentationModalHeader({ talk, onClose }: Props) {
+  const presentationTextSize = useTalksStore(
+    (state) => state.presentationTextSize
+  );
+  const setPresentationTextSize = useTalksStore(
+    (state) => state.setPresentationTextSize
+  );
+
+  const startMs = useTalkPresentationModalStore((s) => s.startMs);
+  const endMs = useTalkPresentationModalStore((s) => s.endMs);
+  const finish = useTalkPresentationModalStore((s) => s.finish);
+
+  const countdown = useTalkPresentationCountdown({
+    startMs,
+    endMs,
+    onFinished: finish,
+  });
 
   return (
     <IonHeader>
@@ -31,7 +45,7 @@ export function PresentationModalHeader({ talk, countdown, onClose }: Props) {
           )}
         </IonTitle>
         <IonButtons slot="end">
-          <SizeButtons 
+          <SizeButtons
             value={presentationTextSize}
             onSizeChange={setPresentationTextSize}
           />

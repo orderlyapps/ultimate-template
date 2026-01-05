@@ -2,23 +2,21 @@ import { IonButton, IonButtons, IonIcon } from "@ionic/react";
 import play from "@icons/play.svg";
 import { AddButton } from "@input/button/add-button/AddButton";
 import { FileExport } from "@input/file-export/FileExport";
-import type { Outline } from "@feature/talks/state/useTalksStore";
+import { useTalksStore } from "@feature/talks/state/useTalksStore";
+import { useParams } from "react-router-dom";
 
 interface TalkPageHeaderButtonsProps {
-  talkId?: string;
-  hasTalk: boolean;
   onOpenPresentation: () => void;
   onOpenAddSection: () => void;
-  talk?: Outline;
 }
 
 export const TalkPageHeaderButtons: React.FC<TalkPageHeaderButtonsProps> = ({
-  talkId,
-  hasTalk,
   onOpenPresentation,
   onOpenAddSection,
-  talk,
 }) => {
+  const { talkId } = useParams<{ talkId: string }>();
+  const talk = useTalksStore((s) => s.talks.find((t) => t.id === talkId));
+
   return (
     <IonButtons slot="end">
       {talk && (
@@ -28,10 +26,10 @@ export const TalkPageHeaderButtons: React.FC<TalkPageHeaderButtonsProps> = ({
           iconOnly
         />
       )}
-      <IonButton disabled={!talkId || !hasTalk} onClick={onOpenPresentation}>
+      <IonButton onClick={onOpenPresentation}>
         <IonIcon src={play} slot="icon-only" />
       </IonButton>
-      <AddButton disabled={!talkId} onClick={onOpenAddSection} />
+      <AddButton onClick={onOpenAddSection} />
     </IonButtons>
   );
 };

@@ -34,9 +34,6 @@ export const Talk: React.FC = () => {
             <IonBackButton defaultHref="/home/talks" text="Talks" />
           </IonButtons>
           <TalkPageHeaderButtons
-            talkId={talkId}
-            hasTalk={!!talk}
-            talk={talk}
             onOpenPresentation={() => setIsPresentationOpen(true)}
             onOpenAddSection={() => {
               setAddSectionAlertKey((k) => k + 1);
