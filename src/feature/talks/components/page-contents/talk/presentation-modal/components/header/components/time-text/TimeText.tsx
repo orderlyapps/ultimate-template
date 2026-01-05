@@ -14,7 +14,7 @@ type Props = {
 };
 
 export function TimeText({ remainingSeconds }: Props = {}) {
-  const countdown = useCurrentTalkPresentationCountdown();
+  const { countdown } = useCurrentTalkPresentationCountdown();
 
   const seconds = remainingSeconds ?? countdown?.remainingSeconds;
 

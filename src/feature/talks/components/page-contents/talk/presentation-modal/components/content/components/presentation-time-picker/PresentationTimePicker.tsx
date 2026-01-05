@@ -6,14 +6,12 @@ import {
   IonModal,
 } from "@ionic/react";
 import { useId } from "react";
+import { useCurrentTalkPresentationCountdown } from "@feature/talks/components/page-contents/talk/presentation-modal/hooks/use-current-talk-presentation-countdown/useCurrentTalkPresentationCountdown";
 
-type Props = {
-  value: string;
-  onChange: (nextValue: string) => void;
-};
-
-export function PresentationTimePicker({ value, onChange }: Props) {
+export function PresentationTimePicker() {
   const datetimeId = useId();
+  const { selectedTime, setSelectedTime } =
+    useCurrentTalkPresentationCountdown();
 
   return (
     <>
@@ -26,12 +24,12 @@ export function PresentationTimePicker({ value, onChange }: Props) {
         <IonDatetime
           id={datetimeId}
           presentation="time"
-          value={value}
+          value={selectedTime}
           onIonChange={(e) => {
             const next = e.detail.value;
             const nextValue = Array.isArray(next) ? next[0] : next;
             if (typeof nextValue !== "string") return;
-            onChange(nextValue);
+            setSelectedTime(nextValue);
           }}
           showDefaultButtons={true}
         />

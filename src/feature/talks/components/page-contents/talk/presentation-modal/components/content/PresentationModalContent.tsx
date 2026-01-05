@@ -4,16 +4,10 @@ import { Space } from "@layout/space/Space";
 import { PresentationViewer } from "./components/presentation-view/PresentationView";
 import { IonList } from "@ionic/react";
 import { PresentationModalContentHelp } from "./components/PresentationModalContentHelp";
-import { useTalkPresentationModalStore } from "@feature/talks/components/page-contents/talk/presentation-modal/hooks/use-talk-presentation-modal-store/useTalkPresentationModalStore";
+import { useCurrentTalkPresentationCountdown } from "@feature/talks/components/page-contents/talk/presentation-modal/hooks/use-current-talk-presentation-countdown/useCurrentTalkPresentationCountdown";
 
 export function PresentationModalContent() {
-  const selectedTime = useTalkPresentationModalStore((s) => s.selectedTime);
-  const setSelectedTime = useTalkPresentationModalStore(
-    (s) => s.setSelectedTime
-  );
-  const startMs = useTalkPresentationModalStore((s) => s.startMs);
-  const endMs = useTalkPresentationModalStore((s) => s.endMs);
-  const start = useTalkPresentationModalStore((s) => s.start);
+  const { startMs, endMs, start } = useCurrentTalkPresentationCountdown();
 
   const isRunning = startMs !== null && endMs !== null;
 
@@ -24,12 +18,13 @@ export function PresentationModalContent() {
   return (
     <IonList lines="none" inset>
       <PresentationModalContentHelp />
+
       <Space />
-      <PresentationTimePicker
-        value={selectedTime}
-        onChange={(nextValue) => setSelectedTime(nextValue)}
-      />
+
+      <PresentationTimePicker />
+
       <Space />
+      
       <Button expand="block" onClick={start}>
         Start
       </Button>
