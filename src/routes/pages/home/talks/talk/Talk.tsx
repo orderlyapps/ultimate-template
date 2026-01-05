@@ -17,6 +17,7 @@ import { TalkPageHeaderButtons } from "../../../../../feature/talks/components/p
 export const Talk: React.FC = () => {
   const { talkId } = useParams<{ talkId: string }>();
   const talk = useTalksStore((s) => s.talks.find((t) => t.id === talkId));
+  const updateTalkName = useTalksStore((s) => s.updateTalkName);
 
   return (
     <IonPage>
@@ -35,7 +36,15 @@ export const Talk: React.FC = () => {
       <IonContent fullscreen className="ion-padding">
         <IonHeader collapse="condense">
           <IonToolbar>
-            <EditableCondensedHeader />
+            <EditableCondensedHeader
+              value={talk?.name ?? "Talk"}
+              header="Rename Talk"
+              placeholder="Talk name"
+              onSave={(nextValue) => {
+                if (!talkId) return;
+                updateTalkName(talkId, nextValue);
+              }}
+            />
           </IonToolbar>
         </IonHeader>
 

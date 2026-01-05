@@ -3,9 +3,9 @@ import { CloseButton } from "@input/button/close-button/CloseButton";
 import { useTalksStore } from "@feature/talks/state/useTalksStore";
 import { ProgressBar } from "./components/progress-bar/ProgressBar";
 import { TimeText } from "./components/time-text/TimeText";
-import { useTalkPresentationCountdown } from "../../hooks/useTalkPresentationCountdown";
+import { useTalkPresentationCountdown } from "../../hooks/use-talk-presentation-countdown/useTalkPresentationCountdown";
 import { SizeButtons } from "@input/size/size-buttons/SizeButtons";
-import { useTalkPresentationModalStore } from "@feature/talks/components/page-contents/talk/presentation-modal/hooks/useTalkPresentationModalStore";
+import { useTalkPresentationModalStore } from "@feature/talks/components/page-contents/talk/presentation-modal/hooks/use-talk-presentation-modal-store/useTalkPresentationModalStore";
 import { useParams } from "react-router-dom";
 
 type Props = {

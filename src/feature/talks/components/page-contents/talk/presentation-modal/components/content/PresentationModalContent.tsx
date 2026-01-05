@@ -1,10 +1,10 @@
 import { PresentationTimePicker } from "./components/presentation-time-picker/PresentationTimePicker";
-import { useTalkPresentationModalStore } from "../../hooks/useTalkPresentationModalStore";
 import { Button } from "@ionic-input/button/Button";
 import { Space } from "@layout/space/Space";
 import { PresentationViewer } from "./components/presentation-view/PresentationView";
 import { IonList } from "@ionic/react";
 import { PresentationModalContentHelp } from "./components/PresentationModalContentHelp";
+import { useTalkPresentationModalStore } from "@feature/talks/components/page-contents/talk/presentation-modal/hooks/use-talk-presentation-modal-store/useTalkPresentationModalStore";
 
 export function PresentationModalContent() {
   const selectedTime = useTalkPresentationModalStore((s) => s.selectedTime);

@@ -1,8 +1,8 @@
 import { Text } from "@ionic-display/text/Text";
 import { Item } from "@ionic-layout/item/Item";
 import { IonCard, IonItemDivider, IonLabel, IonList } from "@ionic/react";
-import { useTalkPresentationModalStore } from "../../../../../../hooks/useTalkPresentationModalStore";
-import { useTalkPresentationSubsectionCountdown } from "../../../../../../hooks/useTalkPresentationSubsectionCountdown";
+import { useTalkPresentationModalStore } from "../../../../../../hooks/use-talk-presentation-modal-store/useTalkPresentationModalStore";
+import { useTalkPresentationSubsectionCountdown } from "../../../../../../hooks/use-talk-presentation-subsection-countdown/useTalkPresentationSubsectionCountdown";
 import { ProgressBar } from "../../../../../header/components/progress-bar/ProgressBar";
 import { RTFEditor } from "@services/vendor/tiptap/editor/RTFEditor";
 import { Grid } from "@ionic-layout/grid/Grid";

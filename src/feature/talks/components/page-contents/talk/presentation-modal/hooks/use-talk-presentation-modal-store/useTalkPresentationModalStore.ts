@@ -1,11 +1,8 @@
 import { create } from "zustand";
 import type { Outline } from "@feature/talks/state/useTalksStore";
-import { getTotalAllocatedSeconds } from "../utils/getTotalAllocatedSeconds";
-import { toLocalDatetimeValue } from "../utils/toLocalDatetimeValue";
-import {
-  getFlatSubsectionAllocationsSeconds,
-  recalculateTalkPresentationSubsectionTiming,
-} from "../utils/recalculateTalkPresentationSubsectionTiming";
+import { toLocalDatetimeValue } from "../../utils/toLocalDatetimeValue";
+import { recalculateTalkPresentationSubsectionTiming } from "../../utils/recalculateTalkPresentationSubsectionTiming";
+import { initializeTalkState } from "./utils/initializeTalkState";
 
 interface TalkPresentationModalState {
   talkId: string | null;
@@ -74,7 +71,9 @@ export const useTalkPresentationModalStore = create<TalkPresentationModalState>(
             ? recalculation.percentageDifference * 100
             : null,
         subsectionTimingAdjustmentMs:
-          recalculation !== null ? recalculation.subsectionTimingAdjustmentMs : null,
+          recalculation !== null
+            ? recalculation.subsectionTimingAdjustmentMs
+            : null,
       });
     },
     next: (maxIndex) => {
@@ -104,7 +103,9 @@ export const useTalkPresentationModalStore = create<TalkPresentationModalState>(
             ? recalculation.percentageDifference * 100
             : null,
         subsectionTimingAdjustmentMs:
-          recalculation !== null ? recalculation.subsectionTimingAdjustmentMs : null,
+          recalculation !== null
+            ? recalculation.subsectionTimingAdjustmentMs
+            : null,
       });
     },
     prev: () => {
@@ -133,28 +134,13 @@ export const useTalkPresentationModalStore = create<TalkPresentationModalState>(
             ? recalculation.percentageDifference * 100
             : null,
         subsectionTimingAdjustmentMs:
-          recalculation !== null ? recalculation.subsectionTimingAdjustmentMs : null,
+          recalculation !== null
+            ? recalculation.subsectionTimingAdjustmentMs
+            : null,
       });
     },
     initializeForTalk: (talk) => {
-      const totalSeconds = getTotalAllocatedSeconds(talk);
-      const nextDate = new Date();
-      nextDate.setSeconds(nextDate.getSeconds() + totalSeconds);
-      const allocationsSeconds = getFlatSubsectionAllocationsSeconds(talk);
-
-      set({
-        talkId: talk.id,
-        selectedTime: toLocalDatetimeValue(nextDate),
-        startMs: null,
-        endMs: null,
-        finishDeltaMs: null,
-        allocationsSeconds,
-        subsectionStartMs: null,
-        subsectionEndMs: null,
-        subsectionTimingAdjustmentPercent: null,
-        subsectionTimingAdjustmentMs: null,
-        currentIndex: 0,
-      });
+      set(initializeTalkState(talk));
     },
     reset: () => {
       set({
@@ -196,7 +182,9 @@ export const useTalkPresentationModalStore = create<TalkPresentationModalState>(
             ? recalculation.percentageDifference * 100
             : null,
         subsectionTimingAdjustmentMs:
-          recalculation !== null ? recalculation.subsectionTimingAdjustmentMs : null,
+          recalculation !== null
+            ? recalculation.subsectionTimingAdjustmentMs
+            : null,
         currentIndex: 0,
       });
     },

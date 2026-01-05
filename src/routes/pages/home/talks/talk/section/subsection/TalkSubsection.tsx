@@ -40,19 +40,11 @@ export const TalkSubsection: React.FC = () => {
       </IonHeader>
       <IonContent id="fullscreen" fullscreen className="ion-padding">
         <IonHeader collapse="condense">
-          <IonToolbar >
+          <IonToolbar>
             <EditableCondensedHeader
               value={subsection?.name ?? "Subsection"}
               header="Rename Subsection"
               placeholder="Subsection name"
-              disabled={
-                !talkId ||
-                !sectionId ||
-                !subsectionId ||
-                !talk ||
-                !section ||
-                !subsection
-              }
               onSave={(nextValue) => {
                 if (!talkId || !sectionId || !subsectionId) return;
                 updateSubsectionName(

@@ -3,10 +3,10 @@ import {
   type Outline,
 } from "@feature/talks/state/useTalksStore";
 import { useEffect } from "react";
-import { useTalkPresentationModalStore } from "../../../../hooks/useTalkPresentationModalStore";
 import { EmptyStateView } from "./components/empty-state-view/EmptyStateView";
 import { PresentationViewContent } from "./components/presentation-view-content/PresentationViewContent";
 import { useParams } from "react-router-dom";
+import { useTalkPresentationModalStore } from "@feature/talks/components/page-contents/talk/presentation-modal/hooks/use-talk-presentation-modal-store/useTalkPresentationModalStore";
 
 type PresentationItem = {
   sectionName: string;

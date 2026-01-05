@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { getTalkPresentationCountdownValues } from "../components/header/utils/getTalkPresentationCountdownValues";
+import { getTalkPresentationCountdownValues } from "../../components/header/utils/getTalkPresentationCountdownValues";
 
 // Public return type for the hook, derived from the countdown calculation helper.
 // This ensures the hook always stays in sync with the shape used by the UI.

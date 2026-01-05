@@ -4,8 +4,8 @@ import {
 } from "@feature/talks/state/useTalksStore";
 import { IonFooter, IonToolbar } from "@ionic/react";
 import { TimeText } from "../header/components/time-text/TimeText";
-import { useTalkPresentationSubsectionCountdown } from "../../hooks/useTalkPresentationSubsectionCountdown";
-import { useTalkPresentationModalStore } from "../../hooks/useTalkPresentationModalStore";
+import { useTalkPresentationSubsectionCountdown } from "../../hooks/use-talk-presentation-subsection-countdown/useTalkPresentationSubsectionCountdown";
+import { useTalkPresentationModalStore } from "../../hooks/use-talk-presentation-modal-store/useTalkPresentationModalStore";
 import { PresentationNavigation } from "./components/presentation-navigation/PresentationNavigation";
 import { useParams } from "react-router-dom";
 

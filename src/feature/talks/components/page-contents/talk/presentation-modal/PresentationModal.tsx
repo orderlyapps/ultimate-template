@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { PresentationModalFooter } from "./components/footer/PresentationModalFooter";
 import { PresentationModalContent } from "./components/content/PresentationModalContent";
 import { PresentationModalHeader } from "./components/header/PresentationModalHeader";
-import { useTalkPresentationModalStore } from "./hooks/useTalkPresentationModalStore";
+import { useTalkPresentationModalStore } from "./hooks/use-talk-presentation-modal-store/useTalkPresentationModalStore";
 import { useParams } from "react-router-dom";
 
 interface TalkPresentationModalProps {

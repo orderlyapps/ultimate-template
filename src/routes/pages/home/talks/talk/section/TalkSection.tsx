@@ -57,7 +57,6 @@ export const TalkSection: React.FC = () => {
               value={section?.name ?? "Section"}
               header="Rename Section"
               placeholder="Section name"
-              disabled={!talkId || !sectionId || !talk || !section}
               onSave={(nextValue) => {
                 if (!talkId || !sectionId) return;
                 updateSectionName(talkId, sectionId, nextValue);

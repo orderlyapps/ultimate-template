@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getTalkPresentationCountdownValues } from "../components/header/utils/getTalkPresentationCountdownValues";
+import { getTalkPresentationCountdownValues } from "../../components/header/utils/getTalkPresentationCountdownValues";
 
 export type TalkPresentationSubsectionCountdown = ReturnType<
   typeof getTalkPresentationCountdownValues
