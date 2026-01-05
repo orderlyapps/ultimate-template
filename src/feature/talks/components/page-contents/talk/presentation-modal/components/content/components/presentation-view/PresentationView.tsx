@@ -7,6 +7,16 @@ import { EmptyStateView } from "./components/empty-state-view/EmptyStateView";
 import { PresentationViewContent } from "./components/presentation-view-content/PresentationViewContent";
 import { useParams } from "react-router-dom";
 import { useTalkPresentationModalStore } from "@feature/talks/components/page-contents/talk/presentation-modal/hooks/use-talk-presentation-modal-store/useTalkPresentationModalStore";
+import { IonItemDivider } from "@ionic/react";
+import { Grid } from "@ionic-layout/grid/Grid";
+import { Row } from "@ionic-layout/row/Row";
+import { Col } from "@ionic-layout/col/Col";
+import { List } from "@ionic-layout/list/List";
+import { TimingAdjustment } from "@feature/talks/components/page-contents/talk/presentation-modal/components/content/components/presentation-view/components/timing-adjustment/TimingAdjustment";
+import { Item } from "@ionic-layout/item/Item";
+import { ProgressBar } from "@feature/talks/components/page-contents/talk/presentation-modal/components/header/components/progress-bar/ProgressBar";
+import { SectionName } from "@feature/talks/components/page-contents/talk/presentation-modal/components/content/components/presentation-view/components/section-name/SectionName";
+import { SubsectionName } from "@feature/talks/components/page-contents/talk/presentation-modal/components/content/components/presentation-view/components/subsection-name/SubsectionName";
 
 type PresentationItem = {
   sectionName: string;
@@ -64,6 +74,25 @@ export function PresentationViewer() {
 
   return (
     <>
+      <IonItemDivider sticky></IonItemDivider>
+      <Grid>
+        <Row>
+          <Col>
+            <List lines="none">
+              <TimingAdjustment />
+
+              <Item>
+                <ProgressBar />
+              </Item>
+
+              <SectionName sectionName={current.sectionName} />
+
+              <SubsectionName subsectionName={current.subsectionName} />
+            </List>
+          </Col>
+        </Row>
+      </Grid>
+
       <PresentationViewContent
         sectionName={current.sectionName}
         subsectionName={current.subsectionName}
