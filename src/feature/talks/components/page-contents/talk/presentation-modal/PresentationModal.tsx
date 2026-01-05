@@ -47,9 +47,11 @@ export const PresentationModal: React.FC<TalkPresentationModalProps> = ({
           modalRef.current?.dismiss();
         }}
       />
+
       <IonContent>
         <PresentationModalContent />
       </IonContent>
+
       <PresentationModalFooter />
     </IonModal>
   );
