@@ -3,7 +3,7 @@ import { Button } from "@ionic-input/button/Button";
 import { Space } from "@layout/space/Space";
 import { PresentationViewer } from "./components/presentation-view/PresentationView";
 import { IonList } from "@ionic/react";
-import { PresentationModalContentHelp } from "./components/PresentationModalContentHelp";
+import { PresentationModalContentHelp } from "./components/presentation-modal-content-help/PresentationModalContentHelp";
 import { useCurrentTalkPresentationCountdown } from "@feature/talks/components/page-contents/talk/presentation-modal/hooks/use-current-talk-presentation-countdown/useCurrentTalkPresentationCountdown";
 
 export function PresentationModalContent() {
@@ -24,7 +24,7 @@ export function PresentationModalContent() {
       <PresentationTimePicker />
 
       <Space />
-      
+
       <Button expand="block" onClick={start}>
         Start
       </Button>
