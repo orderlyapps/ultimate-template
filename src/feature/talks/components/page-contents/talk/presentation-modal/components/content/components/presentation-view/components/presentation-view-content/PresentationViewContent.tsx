@@ -1,17 +1,14 @@
 import { Text } from "@ionic-display/text/Text";
 import { Item } from "@ionic-layout/item/Item";
-import {
-  IonCard,
-  IonItemDivider,
-  IonLabel,
-  IonList,
-} from "@ionic/react";
+import { IonCard, IonItemDivider, IonLabel, IonList } from "@ionic/react";
 import { useTalkPresentationModalStore } from "../../../../../../hooks/useTalkPresentationModalStore";
 import { useTalkPresentationSubsectionCountdown } from "../../../../../../hooks/useTalkPresentationSubsectionCountdown";
 import { ProgressBar } from "../../../../../header/components/progress-bar/ProgressBar";
 import { RTFEditor } from "@services/vendor/tiptap/editor/RTFEditor";
 import { Grid } from "@ionic-layout/grid/Grid";
 import { useTalksStore } from "@feature/talks/state/useTalksStore";
+import { Row } from "@ionic-layout/row/Row";
+import { Col } from "@ionic-layout/col/Col";
 
 type Props = {
   sectionName: string;
@@ -34,7 +31,9 @@ export function PresentationViewContent({
   subsectionName,
   content,
 }: Props) {
-  const presentationTextSize = useTalksStore((state) => state.presentationTextSize);
+  const presentationTextSize = useTalksStore(
+    (state) => state.presentationTextSize
+  );
   const subsectionTimingAdjustmentPercent = useTalkPresentationModalStore(
     (s) => s.subsectionTimingAdjustmentPercent
   );
@@ -64,58 +63,64 @@ export function PresentationViewContent({
     <>
       <IonItemDivider sticky>
         <Grid>
-          <IonList lines="none">
-
-   
-          {subsectionTimingAdjustmentPercent !== null ? (
-            <>
-              <Item>
-                <IonLabel className="ion-text-center">
-                  <Text
-                    bold
-                    size="xl"
-                    color={
-                      subsectionTimingAdjustmentMs !== null &&
-                      subsectionTimingAdjustmentMs > 0
-                        ? "success"
-                        : "danger"
-                    }
-                  >
-                    {subsectionTimingAdjustmentMs !== null
-                      ? `${formatDeltaMinutesSeconds(
-                          subsectionTimingAdjustmentMs
-                        )}`
-                      : ""}
-                  </Text>
-                </IonLabel>
-              </Item>
-            </>
-          ) : null}
-          {countdown ? (
-            <Item>
-              <ProgressBar value={countdown.progress} />
-            </Item>
-          ) : null}
-          <Item>
-            <IonLabel className="ion-text-nowrap">
-              <Text bold size="sm" color="primary">
-                {sectionName}
-              </Text>
-            </IonLabel>
-          </Item>
-          <Item>
-            <IonLabel>
-              <Text bold size="xl">
-                {subsectionName}
-              </Text>
-            </IonLabel>
-          </Item>
-          </IonList>
+          <Row>
+            <Col>
+              <IonList lines="none">
+                {subsectionTimingAdjustmentPercent !== null ? (
+                  <>
+                    <Item>
+                      <IonLabel className="ion-text-center">
+                        <Text
+                          bold
+                          size="xl"
+                          color={
+                            subsectionTimingAdjustmentMs !== null &&
+                            subsectionTimingAdjustmentMs > 0
+                              ? "success"
+                              : "danger"
+                          }
+                        >
+                          {subsectionTimingAdjustmentMs !== null
+                            ? `${formatDeltaMinutesSeconds(
+                                subsectionTimingAdjustmentMs
+                              )}`
+                            : ""}
+                        </Text>
+                      </IonLabel>
+                    </Item>
+                  </>
+                ) : null}
+                {countdown ? (
+                  <Item>
+                    <ProgressBar value={countdown.progress} />
+                  </Item>
+                ) : null}
+                <Item>
+                  <IonLabel className="ion-text-nowrap">
+                    <Text bold size="sm" color="primary">
+                      {sectionName}
+                    </Text>
+                  </IonLabel>
+                </Item>
+                <Item>
+                  <IonLabel>
+                    <Text bold size="xl">
+                      {subsectionName}
+                    </Text>
+                  </IonLabel>
+                </Item>
+              </IonList>
+            </Col>
+          </Row>
         </Grid>
       </IonItemDivider>
       <IonList lines="none">
         <IonCard className="ion-margin">
-          <RTFEditor content={safeContent} canEdit={false} fontSize={presentationTextSize} />
+          <RTFEditor
+            content={safeContent}
+            canEdit={false}
+            fontSize={presentationTextSize}
+          />
         </IonCard>
       </IonList>
     </>
