@@ -25,24 +25,24 @@ export type TalkPresentationSubsectionTimingRecalculation = {
 };
 
 export function recalculateTalkPresentationSubsectionTiming(params: {
-  allocationsSeconds: number[];
+  allSubsectionTimes: number[];
   currentIndex: number;
   currentTimeMs: number;
   endTimeMs: number;
 }): TalkPresentationSubsectionTimingRecalculation | null {
-  const { allocationsSeconds, currentIndex, currentTimeMs, endTimeMs } = params;
+  const { allSubsectionTimes, currentIndex, currentTimeMs, endTimeMs } = params;
 
-  if (allocationsSeconds.length === 0) return null;
+  if (allSubsectionTimes.length === 0) return null;
 
   const safeIndex = Math.min(
     Math.max(0, Math.floor(currentIndex)),
-    Math.max(0, allocationsSeconds.length - 1)
+    Math.max(0, allSubsectionTimes.length - 1)
   );
 
-  const currentAllocationSeconds = allocationsSeconds[safeIndex] ?? 0;
+  const currentAllocationSeconds = allSubsectionTimes[safeIndex] ?? 0;
   if (currentAllocationSeconds <= 0) return null;
 
-  const allocatedTimeRemainingMs = allocationsSeconds
+  const allocatedTimeRemainingMs = allSubsectionTimes
     .slice(safeIndex)
     .reduce((totalMs, seconds) => totalMs + seconds * 1000, 0);
 
