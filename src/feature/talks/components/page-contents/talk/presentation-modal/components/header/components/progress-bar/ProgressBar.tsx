@@ -1,9 +1,12 @@
 import { IonProgressBar } from "@ionic/react";
+import { useCurrentTalkPresentationCountdown } from "../../../../hooks/use-current-talk-presentation-countdown/useCurrentTalkPresentationCountdown";
 
-type Props = {
-  value: number;
-};
+export function ProgressBar() {
+  const countdown = useCurrentTalkPresentationCountdown();
 
-export function ProgressBar({ value }: Props) {
-  return <IonProgressBar value={value} />;
+  if (!countdown) {
+    return null;
+  }
+
+  return <IonProgressBar value={countdown.progress} />;
 }

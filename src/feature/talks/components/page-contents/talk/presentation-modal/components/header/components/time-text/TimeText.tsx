@@ -1,8 +1,6 @@
 import { Text } from "@ionic-display/text/Text";
-
-type Props = {
-  remainingSeconds: number;
-};
+import { useCurrentTalkPresentationCountdown } from "../../../../hooks/use-current-talk-presentation-countdown/useCurrentTalkPresentationCountdown";
+import { IonTitle } from "@ionic/react";
 
 function formatMinutesSeconds(totalSeconds: number) {
   const safeSeconds = Math.max(0, Math.floor(totalSeconds));
@@ -11,10 +9,24 @@ function formatMinutesSeconds(totalSeconds: number) {
   return `${minutes}:${String(seconds).padStart(2, "0")}`;
 }
 
-export function TimeText({ remainingSeconds }: Props) {
+type Props = {
+  remainingSeconds?: number;
+};
+
+export function TimeText({ remainingSeconds }: Props = {}) {
+  const countdown = useCurrentTalkPresentationCountdown();
+
+  const seconds = remainingSeconds ?? countdown?.remainingSeconds;
+
+  if (seconds === undefined || seconds === null) {
+    return null;
+  }
+
   return (
-    <Text bold size="xl">
-      {formatMinutesSeconds(remainingSeconds)}
-    </Text>
+    <IonTitle>
+      <Text bold size="xl">
+        {formatMinutesSeconds(seconds)}
+      </Text>
+    </IonTitle>
   );
 }

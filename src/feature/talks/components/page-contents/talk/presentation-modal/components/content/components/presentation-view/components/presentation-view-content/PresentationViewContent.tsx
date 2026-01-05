@@ -2,7 +2,6 @@ import { Text } from "@ionic-display/text/Text";
 import { Item } from "@ionic-layout/item/Item";
 import { IonCard, IonItemDivider, IonLabel, IonList } from "@ionic/react";
 import { useTalkPresentationModalStore } from "../../../../../../hooks/use-talk-presentation-modal-store/useTalkPresentationModalStore";
-import { useTalkPresentationSubsectionCountdown } from "../../../../../../hooks/use-talk-presentation-subsection-countdown/useTalkPresentationSubsectionCountdown";
 import { ProgressBar } from "../../../../../header/components/progress-bar/ProgressBar";
 import { RTFEditor } from "@services/vendor/tiptap/editor/RTFEditor";
 import { Grid } from "@ionic-layout/grid/Grid";
@@ -40,12 +39,6 @@ export function PresentationViewContent({
   const subsectionTimingAdjustmentMs = useTalkPresentationModalStore(
     (s) => s.subsectionTimingAdjustmentMs
   );
-  const subsectionStartMs = useTalkPresentationModalStore(
-    (s) => s.subsectionStartMs
-  );
-  const subsectionEndMs = useTalkPresentationModalStore(
-    (s) => s.subsectionEndMs
-  );
 
   const safeContent = (() => {
     if (typeof content === "string") {
@@ -53,11 +46,6 @@ export function PresentationViewContent({
     }
     return content;
   })();
-
-  const countdown = useTalkPresentationSubsectionCountdown({
-    subsectionStartMs,
-    subsectionEndMs,
-  });
 
   return (
     <>
@@ -90,11 +78,9 @@ export function PresentationViewContent({
                     </Item>
                   </>
                 ) : null}
-                {countdown ? (
-                  <Item>
-                    <ProgressBar value={countdown.progress} />
-                  </Item>
-                ) : null}
+                <Item>
+                  <ProgressBar />
+                </Item>
                 <Item>
                   <IonLabel className="ion-text-nowrap">
                     <Text bold size="sm" color="primary">
