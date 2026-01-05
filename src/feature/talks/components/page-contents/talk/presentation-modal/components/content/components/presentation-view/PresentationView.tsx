@@ -1,8 +1,12 @@
-import type { Outline } from "@feature/talks/state/useTalksStore";
+import {
+  useTalksStore,
+  type Outline,
+} from "@feature/talks/state/useTalksStore";
 import { useEffect } from "react";
 import { useTalkPresentationModalStore } from "../../../../hooks/useTalkPresentationModalStore";
 import { EmptyStateView } from "./components/empty-state-view/EmptyStateView";
 import { PresentationViewContent } from "./components/presentation-view-content/PresentationViewContent";
+import { useParams } from "react-router-dom";
 
 type PresentationItem = {
   sectionName: string;
@@ -10,8 +14,10 @@ type PresentationItem = {
   content: string | Record<string, unknown>;
 };
 
-function getPresentationItems(talk: Outline): PresentationItem[] {
+function getPresentationItems(talk?: Outline): PresentationItem[] {
   const items: PresentationItem[] = [];
+
+  if (!talk) return items;
 
   for (const section of talk.sections) {
     for (const subsection of section.subsections) {
@@ -26,11 +32,10 @@ function getPresentationItems(talk: Outline): PresentationItem[] {
   return items;
 }
 
-type Props = {
-  talk: Outline;
-};
+export function PresentationViewer() {
+  const { talkId } = useParams<{ talkId: string }>();
+  const talk = useTalksStore((s) => s.talks.find((t) => t.id === talkId));
 
-export function PresentationViewer({ talk }: Props) {
   const items = getPresentationItems(talk);
   const maxIndex = Math.max(0, items.length - 1);
 

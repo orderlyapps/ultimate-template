@@ -12,21 +12,20 @@ import { List } from "@ionic-layout/list/List";
 import { ItemOptionDelete } from "@input/sliding-item-option/ItemOptionDelete";
 import { ItemOptionCopy } from "@input/sliding-item-option/ItemOptionCopy";
 import { useTalksStore } from "@feature/talks/state/useTalksStore";
-import type { Outline } from "@feature/talks/state/useTalksStore";
 import { formatTimeAllocation } from "@feature/talks/utils/format-time-allocation";
 import { SectionsListHelp } from "./components/SectionsListHelp";
+import { useParams } from "react-router-dom";
 
-type Props = {
-  talk: Outline;
-};
+export function SectionsList() {
+  const { talkId } = useParams<{ talkId: string }>();
+  const talk = useTalksStore((s) => s.talks.find((t) => t.id === talkId));
 
-export function SectionsList({ talk }: Props) {
-  const sections = talk.sections;
+  const sections = talk?.sections;
   const removeSection = useTalksStore((s) => s.removeSection);
   const reorderSections = useTalksStore((s) => s.reorderSections);
   const duplicateSection = useTalksStore((s) => s.duplicateSection);
 
-  if (sections.length === 0) {
+  if (sections?.length === 0) {
     return (
       <List>
         <Item lines="none">
@@ -46,17 +45,19 @@ export function SectionsList({ talk }: Props) {
         onIonReorderEnd={(e: ReorderEndCustomEvent) => {
           const fromIndex = e.detail.from;
           const toIndex = e.detail.to;
-          reorderSections(talk.id, fromIndex, toIndex);
+          if (talk) {
+            reorderSections(talk.id, fromIndex, toIndex);
+          }
           e.detail.complete();
         }}
       >
-        {sections.map((section, index) => (
+        {sections?.map((section, index) => (
           <IonItemSliding key={section.id}>
             <Item
               button
               detail
               lines="full"
-              routerLink={`/home/talks/${talk.id}/sections/${section.id}`}
+              routerLink={`/home/talks/${talk?.id}/sections/${section.id}`}
             >
               <IonReorder slot="start" />
               <IonLabel>
@@ -69,11 +70,11 @@ export function SectionsList({ talk }: Props) {
             <IonItemOptions side="end">
               <ItemOptionCopy
                 expandable
-                onClick={() => duplicateSection(talk.id, index)}
+                onClick={() => talk && duplicateSection(talk.id, index)}
               />
               <ItemOptionDelete
                 expandable
-                onClick={() => removeSection(talk.id, index)}
+                onClick={() => talk && removeSection(talk.id, index)}
               />
             </IonItemOptions>
           </IonItemSliding>

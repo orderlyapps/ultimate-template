@@ -1,20 +1,19 @@
 import { IonContent, IonModal } from "@ionic/react";
-import type { Outline } from "@feature/talks/state/useTalksStore";
+import { useTalksStore } from "@feature/talks/state/useTalksStore";
 import { useRef } from "react";
 import { PresentationModalFooter } from "./components/footer/PresentationModalFooter";
 import { PresentationModalContent } from "./components/content/PresentationModalContent";
 import { PresentationModalHeader } from "./components/header/PresentationModalHeader";
 import { useTalkPresentationModalStore } from "./hooks/useTalkPresentationModalStore";
+import { useParams } from "react-router-dom";
 
 interface TalkPresentationModalProps {
   isOpen: boolean;
-  talk: Outline;
   onDismiss: () => void;
 }
 
 export const PresentationModal: React.FC<TalkPresentationModalProps> = ({
   isOpen,
-  talk,
   onDismiss,
 }) => {
   const modalRef = useRef<HTMLIonModalElement | null>(null);
@@ -22,6 +21,13 @@ export const PresentationModal: React.FC<TalkPresentationModalProps> = ({
     (s) => s.initializeForTalk
   );
   const reset = useTalkPresentationModalStore((s) => s.reset);
+
+  const { talkId } = useParams<{ talkId: string }>();
+  const talk = useTalksStore((s) => s.talks.find((t) => t.id === talkId));
+
+  if (!talk) {
+    return null;
+  }
 
   return (
     <IonModal
@@ -37,15 +43,14 @@ export const PresentationModal: React.FC<TalkPresentationModalProps> = ({
       id="fullscreen"
     >
       <PresentationModalHeader
-        talk={talk}
         onClose={() => {
           modalRef.current?.dismiss();
         }}
       />
       <IonContent>
-        <PresentationModalContent talk={talk} />
+        <PresentationModalContent />
       </IonContent>
-      <PresentationModalFooter talk={talk} />
+      <PresentationModalFooter />
     </IonModal>
   );
 };

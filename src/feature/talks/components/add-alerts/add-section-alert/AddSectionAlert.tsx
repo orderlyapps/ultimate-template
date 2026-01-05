@@ -1,14 +1,16 @@
 import { IonAlert } from "@ionic/react";
 import { useTalksStore } from "@feature/talks/state/useTalksStore";
+import { useParams } from "react-router-dom";
 
 type Props = {
-  talkId: string;
   isOpen: boolean;
   onDismiss: () => void;
 };
 
-export function AddSectionAlert({ talkId, isOpen, onDismiss }: Props) {
+export function AddSectionAlert({ isOpen, onDismiss }: Props) {
   const addSection = useTalksStore((s) => s.addSection);
+
+  const { talkId } = useParams<{ talkId: string }>();
 
   return (
     <IonAlert

@@ -7,24 +7,16 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { Text } from "@ionic-display/text/Text";
 import { useTalksStore } from "@feature/talks/state/useTalksStore";
 import { useParams } from "react-router-dom";
-import { useState } from "react";
-import { AddSectionAlert } from "@feature/talks/components/add-alerts/add-section-alert/AddSectionAlert";
 import { Space } from "@layout/space/Space";
 import { SectionsList } from "../../../../../feature/talks/components/page-contents/talk/sections-list/SectionsList";
 import { EditableCondensedHeader } from "@feature/talks/components/edit-header/EditHeader";
-import { PresentationModal } from "../../../../../feature/talks/components/page-contents/talk/presentation-modal/PresentationModal";
 import { TalkPageHeaderButtons } from "../../../../../feature/talks/components/page-contents/talk/talk-page-header-buttons/TalkPageHeaderButtons";
 
 export const Talk: React.FC = () => {
   const { talkId } = useParams<{ talkId: string }>();
   const talk = useTalksStore((s) => s.talks.find((t) => t.id === talkId));
-  const updateTalkName = useTalksStore((s) => s.updateTalkName);
-  const [isAddSectionOpen, setIsAddSectionOpen] = useState(false);
-  const [addSectionAlertKey, setAddSectionAlertKey] = useState(0);
-  const [isPresentationOpen, setIsPresentationOpen] = useState(false);
 
   return (
     <IonPage>
@@ -33,50 +25,23 @@ export const Talk: React.FC = () => {
           <IonButtons slot="start">
             <IonBackButton defaultHref="/home/talks" text="Talks" />
           </IonButtons>
-          <TalkPageHeaderButtons
-            onOpenPresentation={() => setIsPresentationOpen(true)}
-            onOpenAddSection={() => {
-              setAddSectionAlertKey((k) => k + 1);
-              setIsAddSectionOpen(true);
-            }}
-          />
+
+          <TalkPageHeaderButtons />
+
           <IonTitle>{talk?.name ?? "Talk"}</IonTitle>
         </IonToolbar>
       </IonHeader>
+
       <IonContent fullscreen className="ion-padding">
         <IonHeader collapse="condense">
           <IonToolbar>
-            <EditableCondensedHeader
-              value={talk?.name ?? "Talk"}
-              header="Rename Talk"
-              placeholder="Talk name"
-              disabled={!talkId || !talk}
-              onSave={(nextValue) => {
-                if (!talkId) return;
-                updateTalkName(talkId, nextValue);
-              }}
-            />
+            <EditableCondensedHeader />
           </IonToolbar>
         </IonHeader>
-        {talk ? (
-          <>
-            <Space height="2" />
-            <SectionsList talk={talk} />
-            <AddSectionAlert
-              key={addSectionAlertKey}
-              talkId={talk.id}
-              isOpen={isAddSectionOpen}
-              onDismiss={() => setIsAddSectionOpen(false)}
-            />
-            <PresentationModal
-              isOpen={isPresentationOpen}
-              talk={talk}
-              onDismiss={() => setIsPresentationOpen(false)}
-            />
-          </>
-        ) : (
-          <Text>Talk not found</Text>
-        )}
+
+        <Space height="2" />
+
+        <SectionsList />
       </IonContent>
     </IonPage>
   );

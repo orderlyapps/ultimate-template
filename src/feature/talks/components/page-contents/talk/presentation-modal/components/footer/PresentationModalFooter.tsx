@@ -1,16 +1,18 @@
-import type { Outline } from "@feature/talks/state/useTalksStore";
+import {
+  useTalksStore,
+  type Outline,
+} from "@feature/talks/state/useTalksStore";
 import { IonFooter, IonToolbar } from "@ionic/react";
 import { TimeText } from "../header/components/time-text/TimeText";
 import { useTalkPresentationSubsectionCountdown } from "../../hooks/useTalkPresentationSubsectionCountdown";
 import { useTalkPresentationModalStore } from "../../hooks/useTalkPresentationModalStore";
 import { PresentationNavigation } from "./components/presentation-navigation/PresentationNavigation";
+import { useParams } from "react-router-dom";
 
-type Props = {
-  talk: Outline;
-};
-
-function getTotalItems(talk: Outline): number {
+function getTotalItems(talk?: Outline): number {
   let count = 0;
+
+  if (!talk) return count;
 
   for (const section of talk.sections) {
     count += section.subsections.length;
@@ -19,11 +21,18 @@ function getTotalItems(talk: Outline): number {
   return count;
 }
 
-export function PresentationModalFooter({ talk }: Props) {
+export function PresentationModalFooter() {
+  const { talkId } = useParams<{ talkId: string }>();
+  const talk = useTalksStore((s) => s.talks.find((t) => t.id === talkId));
+
   const startMs = useTalkPresentationModalStore((s) => s.startMs);
   const endMs = useTalkPresentationModalStore((s) => s.endMs);
-  const subsectionStartMs = useTalkPresentationModalStore((s) => s.subsectionStartMs);
-  const subsectionEndMs = useTalkPresentationModalStore((s) => s.subsectionEndMs);
+  const subsectionStartMs = useTalkPresentationModalStore(
+    (s) => s.subsectionStartMs
+  );
+  const subsectionEndMs = useTalkPresentationModalStore(
+    (s) => s.subsectionEndMs
+  );
   const currentIndex = useTalkPresentationModalStore((s) => s.currentIndex);
   const next = useTalkPresentationModalStore((s) => s.next);
   const prev = useTalkPresentationModalStore((s) => s.prev);
@@ -51,9 +60,7 @@ export function PresentationModalFooter({ talk }: Props) {
           onNext={() => next(maxIndex)}
           title={
             countdown ? (
-              <TimeText
-                remainingSeconds={countdown.remainingSeconds}
-              />
+              <TimeText remainingSeconds={countdown.remainingSeconds} />
             ) : (
               ""
             )
