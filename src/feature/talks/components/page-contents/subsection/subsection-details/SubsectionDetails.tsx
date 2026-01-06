@@ -2,7 +2,7 @@
 import { Space } from "@layout/space/Space";
 import { useTalksStore } from "@feature/talks/state/useTalksStore";
 import { IonLabel } from "@ionic/react";
-import type { Subsection } from "@feature/talks/state/useTalksStore";
+import type { Subsection } from "@feature/talks/types/Subsection";
 import { Card } from "@ionic-display/card/Card";
 import { Item } from "@ionic-layout/item/Item";
 import { TimeAllocationStepper } from "@feature/talks/components/page-contents/subsection/time-allocation-stepper/TimeAllocationStepper";

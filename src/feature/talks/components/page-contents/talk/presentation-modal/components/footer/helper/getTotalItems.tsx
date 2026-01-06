@@ -1,4 +1,4 @@
-import type { Outline } from "@feature/talks/state/useTalksStore";
+import type { Outline } from "@feature/talks/types/Outline";
 
 export function getTotalItems(talk?: Outline): number {
   let count = 0;

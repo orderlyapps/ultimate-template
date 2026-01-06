@@ -25,6 +25,8 @@ export const PresentationModal: React.FC<TalkPresentationModalProps> = ({
   const { talkId } = useParams<{ talkId: string }>();
   const talk = useTalksStore((s) => s.talks.find((t) => t.id === talkId));
 
+  
+
   if (!talk) {
     return null;
   }

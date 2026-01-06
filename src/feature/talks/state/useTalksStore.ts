@@ -1,27 +1,25 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { Size } from "@input/size/size-select/SizeSelect";
-
-export type Subsection = {
-  id: string;
-  name: string;
-  content: Record<string, unknown> | string;
-  timeAllocation: number;
-};
-
-export type Section = {
-  id: string;
-  name: string;
-  subsections: Subsection[];
-};
-
-export type Outline = {
-  id: string;
-  name: string;
-  sections: Section[];
-  createdAt: number;
-  updatedAt: number;
-};
+import { addTalk } from "./actions/addTalk";
+import { duplicateTalk } from "./actions/duplicateTalk";
+import { updateTalkName } from "./actions/updateTalkName";
+import { removeTalk } from "./actions/removeTalk";
+import { importTalk } from "./actions/importTalk";
+import { addSection } from "./actions/addSection";
+import { duplicateSection } from "./actions/duplicateSection";
+import { updateSectionName } from "./actions/updateSectionName";
+import { removeSection } from "./actions/removeSection";
+import { reorderSections } from "./actions/reorderSections";
+import { addSubsection } from "./actions/addSubsection";
+import { duplicateSubsection } from "./actions/duplicateSubsection";
+import { updateSubsectionName } from "./actions/updateSubsectionName";
+import { updateSubsection } from "./actions/updateSubsection";
+import { removeSubsection } from "./actions/removeSubsection";
+import { reorderSubsections } from "./actions/reorderSubsections";
+import type { Subsection } from "@feature/talks/types/Subsection";
+import type { Section } from "@feature/talks/types/Section";
+import type { Outline } from "@feature/talks/types/Outline";
 
 export type SortOption = "updated" | "created" | "alphabetical";
 
@@ -76,387 +74,59 @@ interface TalksState {
   importTalk: (talk: Outline) => void;
 }
 
-function createId() {
-  if ("crypto" in globalThis && "randomUUID" in globalThis.crypto) {
-    return globalThis.crypto.randomUUID();
-  }
-
-  return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
-}
-
 export const useTalksStore = create<TalksState>()(
   persist(
     (set) => ({
       talks: [],
       sortOption: "alphabetical",
       presentationTextSize: "lg",
+
       setSortOption: (sortOption) => set({ sortOption }),
-      setPresentationTextSize: (presentationTextSize) => set({ presentationTextSize }),
-      addTalk: (name) =>
-        set((state) => {
-          const now = Date.now();
-          const newTalk: Outline = {
-            id: createId(),
-            name,
-            sections: [],
-            createdAt: now,
-            updatedAt: now,
-          };
 
-          return {
-            talks: [newTalk, ...state.talks],
-          };
-        }),
-      duplicateTalk: (talkId) =>
-        set((state) => {
-          const now = Date.now();
-          const talkIndex = state.talks.findIndex((t) => t.id === talkId);
-          const talkToCopy = state.talks[talkIndex];
+      setPresentationTextSize: (presentationTextSize) =>
+        set({ presentationTextSize }),
 
-          if (!talkToCopy) {
-            return state;
-          }
+      addTalk: (name) => set(addTalk(name)),
 
-          const copiedTalk: Outline = {
-            ...talkToCopy,
-            id: createId(),
-            name: `${talkToCopy.name} copy`,
-            createdAt: now,
-            updatedAt: now,
-            sections: talkToCopy.sections.map((section) => {
-              return {
-                ...section,
-                id: createId(),
-                subsections: section.subsections.map((ss) => ({
-                  ...ss,
-                  id: createId(),
-                })),
-              };
-            }),
-          };
+      duplicateTalk: (talkId) => set(duplicateTalk(talkId)),
 
-          const nextTalks = [...state.talks];
-          nextTalks.splice(talkIndex + 1, 0, copiedTalk);
+      updateTalkName: (talkId, name) => set(updateTalkName(talkId, name)),
 
-          return {
-            talks: nextTalks,
-          };
-        }),
-      updateTalkName: (talkId, name) =>
-        set((state) => {
-          const now = Date.now();
+      addSection: (talkId, name) => set(addSection(talkId, name)),
 
-          return {
-            talks: state.talks.map((t) => {
-              if (t.id !== talkId) return t;
-              return { ...t, name, updatedAt: now };
-            }),
-          };
-        }),
-      addSection: (talkId, name) =>
-        set((state) => {
-          const now = Date.now();
-
-          return {
-            talks: state.talks.map((t) => {
-              if (t.id !== talkId) return t;
-
-              return {
-                ...t,
-                sections: [
-                  ...t.sections,
-                  { id: createId(), name, subsections: [] },
-                ],
-                updatedAt: now,
-              };
-            }),
-          };
-        }),
       duplicateSection: (talkId, sectionIndex) =>
-        set((state) => {
-          const now = Date.now();
+        set(duplicateSection(talkId, sectionIndex)),
 
-          return {
-            talks: state.talks.map((t) => {
-              if (t.id !== talkId) return t;
-
-              const sectionToCopy = t.sections[sectionIndex];
-              if (!sectionToCopy) return t;
-
-              const copiedSection: Section = {
-                ...sectionToCopy,
-                id: createId(),
-                name: `${sectionToCopy.name} copy`,
-                subsections: sectionToCopy.subsections.map((ss) => ({
-                  ...ss,
-                  id: createId(),
-                })),
-              };
-
-              const nextSections = [...t.sections];
-              nextSections.splice(sectionIndex + 1, 0, copiedSection);
-
-              return {
-                ...t,
-                sections: nextSections,
-                updatedAt: now,
-              };
-            }),
-          };
-        }),
       updateSectionName: (talkId, sectionId, name) =>
-        set((state) => {
-          const now = Date.now();
+        set(updateSectionName(talkId, sectionId, name)),
 
-          return {
-            talks: state.talks.map((t) => {
-              if (t.id !== talkId) return t;
-
-              return {
-                ...t,
-                sections: t.sections.map((section) => {
-                  if (section.id !== sectionId) return section;
-                  return { ...section, name };
-                }),
-                updatedAt: now,
-              };
-            }),
-          };
-        }),
       addSubsection: (talkId, sectionId, name) =>
-        set((state) => {
-          const now = Date.now();
+        set(addSubsection(talkId, sectionId, name)),
 
-          return {
-            talks: state.talks.map((t) => {
-              if (t.id !== talkId) return t;
-
-              return {
-                ...t,
-                sections: t.sections.map((section) => {
-                  if (section.id !== sectionId) return section;
-
-                  return {
-                    ...section,
-                    subsections: [
-                      ...section.subsections,
-                      {
-                        id: createId(),
-                        name,
-                        content: "",
-                        timeAllocation: 150,
-                      },
-                    ],
-                  };
-                }),
-                updatedAt: now,
-              };
-            }),
-          };
-        }),
       duplicateSubsection: (talkId, sectionId, subsectionIndex) =>
-        set((state) => {
-          const now = Date.now();
+        set(duplicateSubsection(talkId, sectionId, subsectionIndex)),
 
-          return {
-            talks: state.talks.map((t) => {
-              if (t.id !== talkId) return t;
-
-              return {
-                ...t,
-                sections: t.sections.map((section) => {
-                  if (section.id !== sectionId) return section;
-
-                  const subsectionToCopy = section.subsections[subsectionIndex];
-                  if (!subsectionToCopy) return section;
-
-                  const copiedSubsection: Subsection = {
-                    ...subsectionToCopy,
-                    id: createId(),
-                    name: `${subsectionToCopy.name} copy`,
-                  };
-
-                  const nextSubsections = [...section.subsections];
-                  nextSubsections.splice(
-                    subsectionIndex + 1,
-                    0,
-                    copiedSubsection
-                  );
-
-                  return {
-                    ...section,
-                    subsections: nextSubsections,
-                  };
-                }),
-                updatedAt: now,
-              };
-            }),
-          };
-        }),
       updateSubsectionName: (talkId, sectionId, subsectionId, name) =>
-        set((state) => {
-          const now = Date.now();
+        set(updateSubsectionName(talkId, sectionId, subsectionId, name)),
 
-          return {
-            talks: state.talks.map((t) => {
-              if (t.id !== talkId) return t;
-
-              return {
-                ...t,
-                sections: t.sections.map((section) => {
-                  if (section.id !== sectionId) return section;
-
-                  return {
-                    ...section,
-                    subsections: section.subsections.map((ss) => {
-                      if (ss.id !== subsectionId) return ss;
-                      return { ...ss, name };
-                    }),
-                  };
-                }),
-                updatedAt: now,
-              };
-            }),
-          };
-        }),
       updateSubsection: (talkId, sectionId, subsectionId, updates) =>
-        set((state) => {
-          const now = Date.now();
+        set(updateSubsection(talkId, sectionId, subsectionId, updates)),
 
-          return {
-            talks: state.talks.map((t) => {
-              if (t.id !== talkId) return t;
-
-              return {
-                ...t,
-                sections: t.sections.map((section) => {
-                  if (section.id !== sectionId) return section;
-
-                  return {
-                    ...section,
-                    subsections: section.subsections.map((ss) => {
-                      if (ss.id !== subsectionId) return ss;
-                      return { ...ss, ...updates };
-                    }),
-                  };
-                }),
-                updatedAt: now,
-              };
-            }),
-          };
-        }),
       removeSubsection: (talkId, sectionId, subsectionIndex) =>
-        set((state) => {
-          const now = Date.now();
+        set(removeSubsection(talkId, sectionId, subsectionIndex)),
 
-          return {
-            talks: state.talks.map((t) => {
-              if (t.id !== talkId) return t;
-
-              return {
-                ...t,
-                sections: t.sections.map((section) => {
-                  if (section.id !== sectionId) return section;
-
-                  return {
-                    ...section,
-                    subsections: section.subsections.filter(
-                      (_, i) => i !== subsectionIndex
-                    ),
-                  };
-                }),
-                updatedAt: now,
-              };
-            }),
-          };
-        }),
       reorderSubsections: (talkId, sectionId, fromIndex, toIndex) =>
-        set((state) => {
-          const now = Date.now();
+        set(reorderSubsections(talkId, sectionId, fromIndex, toIndex)),
 
-          return {
-            talks: state.talks.map((t) => {
-              if (t.id !== talkId) return t;
-
-              return {
-                ...t,
-                sections: t.sections.map((section) => {
-                  if (section.id !== sectionId) return section;
-
-                  const nextSubsections = [...section.subsections];
-                  const [moved] = nextSubsections.splice(fromIndex, 1);
-
-                  if (!moved) return section;
-
-                  nextSubsections.splice(toIndex, 0, moved);
-
-                  return {
-                    ...section,
-                    subsections: nextSubsections,
-                  };
-                }),
-                updatedAt: now,
-              };
-            }),
-          };
-        }),
       removeSection: (talkId, sectionIndex) =>
-        set((state) => {
-          const now = Date.now();
+        set(removeSection(talkId, sectionIndex)),
 
-          return {
-            talks: state.talks.map((t) => {
-              if (t.id !== talkId) return t;
-
-              return {
-                ...t,
-                sections: t.sections.filter((_, i) => i !== sectionIndex),
-                updatedAt: now,
-              };
-            }),
-          };
-        }),
       reorderSections: (talkId, fromIndex, toIndex) =>
-        set((state) => {
-          const now = Date.now();
+        set(reorderSections(talkId, fromIndex, toIndex)),
 
-          return {
-            talks: state.talks.map((t) => {
-              if (t.id !== talkId) return t;
+      removeTalk: (id) => set(removeTalk(id)),
 
-              const nextSections = [...t.sections];
-              const [moved] = nextSections.splice(fromIndex, 1);
-
-              if (!moved) return t;
-
-              nextSections.splice(toIndex, 0, moved);
-
-              return {
-                ...t,
-                sections: nextSections,
-                updatedAt: now,
-              };
-            }),
-          };
-        }),
-      removeTalk: (id) =>
-        set((state) => ({
-          talks: state.talks.filter((t) => t.id !== id),
-        })),
-      importTalk: (talk) =>
-        set((state) => {
-          const now = Date.now();
-          const newTalk: Outline = {
-            ...talk,
-            id: createId(),
-            createdAt: now,
-            updatedAt: now,
-          };
-
-          return {
-            talks: [newTalk, ...state.talks],
-          };
-        }),
+      importTalk: (talk) => set(importTalk(talk)),
     }),
     {
       name: "talks-store",
@@ -491,7 +161,7 @@ export const useTalksStore = create<TalksState>()(
                 .filter(isRecord)
                 .map((ss): Subsection => {
                   return {
-                    id: typeof ss.id === "string" ? ss.id : createId(),
+                    id: typeof ss.id === "string" ? ss.id : crypto.randomUUID(),
                     name: typeof ss.name === "string" ? ss.name : "",
                     content: typeof ss.content === "string" ? ss.content : "",
                     timeAllocation:
@@ -502,7 +172,7 @@ export const useTalksStore = create<TalksState>()(
                 });
 
               return {
-                id: typeof s.id === "string" ? s.id : createId(),
+                id: typeof s.id === "string" ? s.id : crypto.randomUUID(),
                 name: typeof s.name === "string" ? s.name : "",
                 subsections,
               };
@@ -512,7 +182,7 @@ export const useTalksStore = create<TalksState>()(
           const updatedAt = typeof t.updatedAt === "number" ? t.updatedAt : 0;
 
           return {
-            id: typeof t.id === "string" ? t.id : createId(),
+            id: typeof t.id === "string" ? t.id : crypto.randomUUID(),
             name: typeof t.name === "string" ? t.name : "",
             sections,
             createdAt,

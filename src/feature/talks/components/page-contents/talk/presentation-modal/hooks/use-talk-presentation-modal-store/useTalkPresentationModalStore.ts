@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { Outline } from "@feature/talks/state/useTalksStore";
+import type { Outline } from "@feature/talks/types/Outline";
 import { initializeTalkState } from "./utils/initializeTalkState";
 import { getDefaultSelectedTime } from "./utils/getDefaultSelectedTime";
 import { setEndTime as setEndTimeUtil } from "./utils/setEndTime";

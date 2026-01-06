@@ -1,7 +1,7 @@
 import {
   useTalksStore,
-  type Outline,
 } from "@feature/talks/state/useTalksStore";
+import { type Outline } from "@feature/talks/types/Outline";
 import { useEffect } from "react";
 import { EmptyStateView } from "./components/empty-state-view/EmptyStateView";
 import { PresentationViewContent } from "./components/presentation-view-content/PresentationViewContent";

@@ -1,4 +1,4 @@
-import { type Outline } from "@feature/talks/state/useTalksStore";
+import { type Outline } from "@feature/talks/types/Outline";
 import { getTotalAllocatedSeconds } from "../../../utils/getTotalAllocatedSeconds";
 import { toLocalDatetimeValue } from "../../../utils/toLocalDatetimeValue";
 import { getFlatSubsectionAllocationsSeconds } from "../../../utils/recalculateTalkPresentationSubsectionTiming";

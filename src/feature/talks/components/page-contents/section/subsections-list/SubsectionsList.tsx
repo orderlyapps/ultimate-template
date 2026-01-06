@@ -12,7 +12,7 @@ import { List } from "@ionic-layout/list/List";
 import { ItemOptionDelete } from "@input/sliding-item-option/ItemOptionDelete";
 import { ItemOptionCopy } from "@input/sliding-item-option/ItemOptionCopy";
 import { useTalksStore } from "@feature/talks/state/useTalksStore";
-import type { Section } from "@feature/talks/state/useTalksStore";
+import type { Section } from "@feature/talks/types/Section";
 import { formatTimeAllocation } from "@feature/talks/utils/format-time-allocation";
 import { SubsectionsListHelp } from "./components/SubsectionsListHelp";
 
