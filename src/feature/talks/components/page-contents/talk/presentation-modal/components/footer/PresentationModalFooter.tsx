@@ -1,6 +1,5 @@
 import {
   useTalksStore,
-  type Outline,
 } from "@feature/talks/state/useTalksStore";
 import { IonFooter, IonToolbar } from "@ionic/react";
 import { TimeText } from "../header/components/time-text/TimeText";
@@ -8,18 +7,7 @@ import { useTalkPresentationSubsectionCountdown } from "../../hooks/use-talk-pre
 import { useTalkPresentationModalStore } from "../../hooks/use-talk-presentation-modal-store/useTalkPresentationModalStore";
 import { PresentationNavigation } from "./components/presentation-navigation/PresentationNavigation";
 import { useParams } from "react-router-dom";
-
-function getTotalItems(talk?: Outline): number {
-  let count = 0;
-
-  if (!talk) return count;
-
-  for (const section of talk.sections) {
-    count += section.subsections.length;
-  }
-
-  return count;
-}
+import { getTotalItems } from "@feature/talks/components/page-contents/talk/presentation-modal/components/footer/helper/getTotalItems";
 
 export function PresentationModalFooter() {
   const { talkId } = useParams<{ talkId: string }>();
