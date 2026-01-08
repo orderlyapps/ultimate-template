@@ -6,11 +6,22 @@ import {
   IonModal,
 } from "@ionic/react";
 import { useId } from "react";
-import { useCurrentTalkPresentationCountdown } from "@feature/talks/components/page-contents/talk/presentation-modal/hooks/use-current-talk-presentation-countdown/useCurrentTalkPresentationCountdown";
+import { useTalkPresentationStore } from "@feature/talks/components/page-contents/talk/presentation-modal/hooks/use-talk-presentation-store/useTalkPresentationStore";
 
 export function PresentationTimePicker() {
   const datetimeId = useId();
-  const { endTime, setEndTime } = useCurrentTalkPresentationCountdown();
+
+  const presentationEndTime = useTalkPresentationStore(
+    (s) => s.presentationEndTime
+  );
+  const setPresentationEndTime = useTalkPresentationStore(
+    (s) => s.setPresentationEndTime
+  );
+
+  if (!presentationEndTime) {
+    return null;
+  }
+  console.log(presentationEndTime);
 
   return (
     <>
@@ -23,12 +34,13 @@ export function PresentationTimePicker() {
         <IonDatetime
           id={datetimeId}
           presentation="time"
-          value={endTime}
+          hourCycle="h12"
+          value={presentationEndTime}
           onIonChange={(e) => {
             const next = e.detail.value;
             const nextValue = Array.isArray(next) ? next[0] : next;
             if (typeof nextValue !== "string") return;
-            setEndTime(nextValue);
+            setPresentationEndTime(nextValue);
           }}
           showDefaultButtons={true}
         />

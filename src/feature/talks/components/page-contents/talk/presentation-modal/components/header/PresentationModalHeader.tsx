@@ -1,7 +1,7 @@
 import { IonButtons, IonHeader, IonToolbar } from "@ionic/react";
 import { CloseButton } from "@input/button/close-button/CloseButton";
-import { ProgressBar } from "./components/progress-bar/ProgressBar";
-import { TimeText } from "./components/time-text/TimeText";
+import { PresentationProgressBar } from "./components/presentation-progress-bar/PresentationProgressBar";
+import { PresentationTiming } from "./components/presentation-timing/PresentationTiming";
 import { TextSizeControl } from "./components/text-size-control/TextSizeControl";
 
 type Props = {
@@ -18,12 +18,12 @@ export function PresentationModalHeader({ onClose }: Props) {
           <CloseButton onClick={onClose} />
         </IonButtons>
 
-        <TimeText />
+        <PresentationTiming />
 
         <TextSizeControl />
       </IonToolbar>
 
-      <ProgressBar />
+      <PresentationProgressBar />
 
     </IonHeader>
   );

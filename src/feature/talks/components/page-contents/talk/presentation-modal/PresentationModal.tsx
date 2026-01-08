@@ -1,31 +1,32 @@
 import { IonContent, IonModal } from "@ionic/react";
 import { useTalksStore } from "@feature/talks/state/useTalksStore";
-import { useRef } from "react";
 import { PresentationModalFooter } from "./components/footer/PresentationModalFooter";
 import { PresentationModalContent } from "./components/content/PresentationModalContent";
 import { PresentationModalHeader } from "./components/header/PresentationModalHeader";
-import { useTalkPresentationModalStore } from "./hooks/use-talk-presentation-modal-store/useTalkPresentationModalStore";
 import { useParams } from "react-router-dom";
+import { useTalkPresentationStore } from "@feature/talks/components/page-contents/talk/presentation-modal/hooks/use-talk-presentation-store/useTalkPresentationStore";
+import { useTalkPresentation } from "./hooks/use-talk-presentation/useTalkPresentation";
 
 interface TalkPresentationModalProps {
   isOpen: boolean;
-  onDismiss: () => void;
+  setIsOpen: (isOpen: boolean) => void;
 }
 
 export const PresentationModal: React.FC<TalkPresentationModalProps> = ({
   isOpen,
-  onDismiss,
+  setIsOpen,
 }) => {
-  const modalRef = useRef<HTMLIonModalElement | null>(null);
-  const initializeForTalk = useTalkPresentationModalStore(
-    (s) => s.initializeForTalk
-  );
-  const reset = useTalkPresentationModalStore((s) => s.reset);
-
   const { talkId } = useParams<{ talkId: string }>();
   const talk = useTalksStore((s) => s.talks.find((t) => t.id === talkId));
 
-  
+  const initialisePresentation = useTalkPresentationStore(
+    (s) => s.initialisePresentation
+  );
+  const finishPresentation = useTalkPresentationStore(
+    (s) => s.finishPresentation
+  );
+
+  useTalkPresentation();
 
   if (!talk) {
     return null;
@@ -33,20 +34,20 @@ export const PresentationModal: React.FC<TalkPresentationModalProps> = ({
 
   return (
     <IonModal
-      ref={modalRef}
       isOpen={isOpen}
       onDidDismiss={() => {
-        reset();
-        onDismiss();
+        finishPresentation();
+        setIsOpen(false);
       }}
       onWillPresent={() => {
-        initializeForTalk(talk);
+        initialisePresentation(talk);
       }}
       id="fullscreen"
     >
       <PresentationModalHeader
         onClose={() => {
-          modalRef.current?.dismiss();
+          finishPresentation();
+          setIsOpen(false);
         }}
       />
 

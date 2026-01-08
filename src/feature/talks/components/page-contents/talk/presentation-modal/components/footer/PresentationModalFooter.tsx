@@ -1,59 +1,58 @@
-import {
-  useTalksStore,
-} from "@feature/talks/state/useTalksStore";
-import { IonFooter, IonToolbar } from "@ionic/react";
-import { TimeText } from "../header/components/time-text/TimeText";
-import { useTalkPresentationSubsectionCountdown } from "../../hooks/use-talk-presentation-subsection-countdown/useTalkPresentationSubsectionCountdown";
-import { useTalkPresentationModalStore } from "../../hooks/use-talk-presentation-modal-store/useTalkPresentationModalStore";
-import { PresentationNavigation } from "./components/presentation-navigation/PresentationNavigation";
-import { useParams } from "react-router-dom";
-import { getTotalItems } from "@feature/talks/components/page-contents/talk/presentation-modal/components/footer/helper/getTotalItems";
+import { IonButtons, IonFooter, IonTitle, IonToolbar } from "@ionic/react";
+import { Button } from "@ionic-input/button/Button";
+import { Text } from "@ionic-display/text/Text";
+import { formatMinutesSeconds } from "../../helper/formatMinutesSeconds";
+import { useTalkPresentationStore } from "../../hooks/use-talk-presentation-store/useTalkPresentationStore";
 
 export function PresentationModalFooter() {
-  const { talkId } = useParams<{ talkId: string }>();
-  const talk = useTalksStore((s) => s.talks.find((t) => t.id === talkId));
-
-  const startMs = useTalkPresentationModalStore((s) => s.startMs);
-  const endMs = useTalkPresentationModalStore((s) => s.endMs);
-  const subsectionStartMs = useTalkPresentationModalStore(
-    (s) => s.subsectionStartMs
+  const remainingSubsectionTime = useTalkPresentationStore(
+    (s) => s.remainingSubsectionTime
   );
-  const subsectionEndMs = useTalkPresentationModalStore(
-    (s) => s.subsectionEndMs
+  const currentSubsectionIndex = useTalkPresentationStore(
+    (s) => s.currentSubsectionIndex
   );
-  const currentIndex = useTalkPresentationModalStore((s) => s.currentIndex);
-  const next = useTalkPresentationModalStore((s) => s.next);
-  const prev = useTalkPresentationModalStore((s) => s.prev);
+  const subsectionTimes = useTalkPresentationStore((s) => s.subsectionTimes);
+  const prevSubsection = useTalkPresentationStore((s) => s.prevSubsection);
+  const nextSubsection = useTalkPresentationStore((s) => s.nextSubsection);
 
-  const isRunning = startMs !== null && endMs !== null;
-  const totalItems = getTotalItems(talk);
-  const maxIndex = Math.max(0, totalItems - 1);
-  const clampedIndex = Math.min(maxIndex, Math.max(0, currentIndex));
+  const subsectionTime = useTalkPresentationStore((s) => s.subsectionTime);
 
-  const countdown = useTalkPresentationSubsectionCountdown({
-    subsectionStartMs,
-    subsectionEndMs,
-  });
-
-  if (!isRunning) return null;
-  if (totalItems === 0) return null;
+  if (subsectionTime === 0) {
+    return null;
+  }
 
   return (
     <IonFooter>
       <IonToolbar>
-        <PresentationNavigation
-          canPrev={clampedIndex > 0}
-          canNext={clampedIndex < maxIndex}
-          onPrev={() => prev()}
-          onNext={() => next(maxIndex)}
-          title={
-            countdown ? (
-              <TimeText remainingSeconds={countdown.remainingSeconds} />
-            ) : (
-              ""
-            )
-          }
-        />
+        <IonButtons slot="start">
+          <Button
+            expand="block"
+            disabled={currentSubsectionIndex === 0}
+            onClick={prevSubsection}
+          >
+            Back
+          </Button>
+        </IonButtons>
+
+        <IonTitle>
+          <Text
+            bold
+            size="xl"
+            color={remainingSubsectionTime <= 0 ? "danger" : ""}
+          >
+            {formatMinutesSeconds(remainingSubsectionTime)}
+          </Text>
+        </IonTitle>
+
+        <IonButtons slot="end">
+          <Button
+            expand="block"
+            disabled={currentSubsectionIndex === subsectionTimes.length - 1}
+            onClick={nextSubsection}
+          >
+            Next
+          </Button>
+        </IonButtons>
       </IonToolbar>
     </IonFooter>
   );

@@ -4,17 +4,14 @@ import { useState } from "react";
 import { PresentationModal } from "@feature/talks/components/page-contents/talk/presentation-modal/PresentationModal";
 
 export const TalkPagePresentationButton: React.FC = () => {
-  const [isPresentationOpen, setIsPresentationOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
-      <IonButton onClick={() => setIsPresentationOpen(true)}>
+      <IonButton onClick={() => setIsOpen(true)}>
         <IonIcon src={play} slot="icon-only" />
       </IonButton>
-      <PresentationModal
-        isOpen={isPresentationOpen}
-        onDismiss={() => setIsPresentationOpen(false)}
-      />
+      <PresentationModal isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
   );
 };
