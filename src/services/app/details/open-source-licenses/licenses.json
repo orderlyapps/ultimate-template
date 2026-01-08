@@ -1,4 +1,16 @@
 {
+  "@floating-ui/react@0.27.16": {
+    "licenses": "MIT",
+    "repository": "https://github.com/floating-ui/floating-ui",
+    "publisher": "atomiks",
+    "version": "0.27.16",
+    "description": "Floating UI for React",
+    "copyright": "Copyright (c) 2021-present Floating UI contributors",
+    "licenseFile": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@floating-ui/react/LICENSE",
+    "licenseText": "MIT License\n\nCopyright (c) 2021-present Floating UI contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of\nthis software and associated documentation files (the \"Software\"), to deal in\nthe Software without restriction, including without limitation the rights to\nuse, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of\nthe Software, and to permit persons to whom the Software is furnished to do so,\nsubject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS\nFOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR\nCOPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER\nIN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN\nCONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.",
+    "licenseModified": "no",
+    "path": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@floating-ui/react"
+  },
   "@ionic/react-router@8.7.11": {
     "licenses": "MIT",
     "repository": "https://github.com/ionic-team/ionic-framework",
@@ -32,6 +44,28 @@
     "licenseText": "Copyright (c) Mapbox\n\nAll rights reserved.\n\nPermission to use, copy, modify, and/or distribute this software for any\npurpose with or without fee is hereby granted, provided that the above\ncopyright notice and this permission notice appear in all copies.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH\nREGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY\nAND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,\nINDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM\nLOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE\nOR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR\nPERFORMANCE OF THIS SOFTWARE.",
     "licenseModified": "no",
     "path": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@mapbox/mapbox-gl-draw"
+  },
+  "@radix-ui/react-dropdown-menu@2.1.16": {
+    "licenses": "MIT",
+    "repository": "https://github.com/radix-ui/primitives",
+    "version": "2.1.16",
+    "description": "View docs [here](https://radix-ui.com/primitives/docs/components/dropdown-menu).",
+    "copyright": "Copyright (c) 2022 WorkOS",
+    "licenseFile": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@radix-ui/react-dropdown-menu/LICENSE",
+    "licenseText": "MIT License\n\nCopyright (c) 2022 WorkOS\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.",
+    "licenseModified": "no",
+    "path": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@radix-ui/react-dropdown-menu"
+  },
+  "@radix-ui/react-popover@1.1.15": {
+    "licenses": "MIT",
+    "repository": "https://github.com/radix-ui/primitives",
+    "version": "1.1.15",
+    "description": "View docs [here](https://radix-ui.com/primitives/docs/components/popover).",
+    "copyright": "Copyright (c) 2022 WorkOS",
+    "licenseFile": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@radix-ui/react-popover/LICENSE",
+    "licenseText": "MIT License\n\nCopyright (c) 2022 WorkOS\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.",
+    "licenseModified": "no",
+    "path": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@radix-ui/react-popover"
   },
   "@react-pdf/renderer@4.3.1": {
     "licenses": "MIT",
@@ -94,6 +128,149 @@
     "licenseModified": "no",
     "path": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@tanstack/react-query"
   },
+  "@tiptap/core@3.14.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/ueberdosis/tiptap",
+    "version": "3.14.0",
+    "description": "headless rich text editor",
+    "copyright": "Copyright (c) 2025, Tiptap GmbH",
+    "licenseFile": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@tiptap/core/LICENSE.md",
+    "licenseText": "MIT License\n\nCopyright (c) 2025, Tiptap GmbH\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.",
+    "licenseModified": "no",
+    "path": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@tiptap/core"
+  },
+  "@tiptap/extension-highlight@3.14.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/ueberdosis/tiptap",
+    "version": "3.14.0",
+    "description": "highlight extension for tiptap",
+    "copyright": "Copyright (c) 2025, Tiptap GmbH",
+    "licenseFile": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@tiptap/extension-highlight/LICENSE.md",
+    "licenseText": "MIT License\n\nCopyright (c) 2025, Tiptap GmbH\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.",
+    "licenseModified": "no",
+    "path": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@tiptap/extension-highlight"
+  },
+  "@tiptap/extension-horizontal-rule@3.14.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/ueberdosis/tiptap",
+    "version": "3.14.0",
+    "description": "horizontal rule extension for tiptap",
+    "copyright": "Copyright (c) 2025, Tiptap GmbH",
+    "licenseFile": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@tiptap/extension-horizontal-rule/LICENSE.md",
+    "licenseText": "MIT License\n\nCopyright (c) 2025, Tiptap GmbH\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.",
+    "licenseModified": "no",
+    "path": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@tiptap/extension-horizontal-rule"
+  },
+  "@tiptap/extension-image@3.14.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/ueberdosis/tiptap",
+    "version": "3.14.0",
+    "description": "image extension for tiptap",
+    "copyright": "Copyright (c) 2025, Tiptap GmbH",
+    "licenseFile": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@tiptap/extension-image/LICENSE.md",
+    "licenseText": "MIT License\n\nCopyright (c) 2025, Tiptap GmbH\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.",
+    "licenseModified": "no",
+    "path": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@tiptap/extension-image"
+  },
+  "@tiptap/extension-list@3.14.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/ueberdosis/tiptap",
+    "version": "3.14.0",
+    "description": "List extension for tiptap",
+    "copyright": "Copyright (c) 2025, Tiptap GmbH",
+    "licenseFile": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@tiptap/extension-list/LICENSE.md",
+    "licenseText": "MIT License\n\nCopyright (c) 2025, Tiptap GmbH\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.",
+    "licenseModified": "no",
+    "path": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@tiptap/extension-list"
+  },
+  "@tiptap/extension-subscript@3.14.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/ueberdosis/tiptap",
+    "version": "3.14.0",
+    "description": "subscript extension for tiptap",
+    "copyright": "Copyright (c) 2025, Tiptap GmbH",
+    "licenseFile": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@tiptap/extension-subscript/LICENSE.md",
+    "licenseText": "MIT License\n\nCopyright (c) 2025, Tiptap GmbH\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.",
+    "licenseModified": "no",
+    "path": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@tiptap/extension-subscript"
+  },
+  "@tiptap/extension-superscript@3.14.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/ueberdosis/tiptap",
+    "version": "3.14.0",
+    "description": "superscript extension for tiptap",
+    "copyright": "Copyright (c) 2025, Tiptap GmbH",
+    "licenseFile": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@tiptap/extension-superscript/LICENSE.md",
+    "licenseText": "MIT License\n\nCopyright (c) 2025, Tiptap GmbH\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.",
+    "licenseModified": "no",
+    "path": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@tiptap/extension-superscript"
+  },
+  "@tiptap/extension-text-align@3.14.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/ueberdosis/tiptap",
+    "version": "3.14.0",
+    "description": "text align extension for tiptap",
+    "copyright": "Copyright (c) 2025, Tiptap GmbH",
+    "licenseFile": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@tiptap/extension-text-align/LICENSE.md",
+    "licenseText": "MIT License\n\nCopyright (c) 2025, Tiptap GmbH\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.",
+    "licenseModified": "no",
+    "path": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@tiptap/extension-text-align"
+  },
+  "@tiptap/extension-typography@3.14.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/ueberdosis/tiptap",
+    "version": "3.14.0",
+    "description": "typography extension for tiptap",
+    "copyright": "Copyright (c) 2025, Tiptap GmbH",
+    "licenseFile": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@tiptap/extension-typography/LICENSE.md",
+    "licenseText": "MIT License\n\nCopyright (c) 2025, Tiptap GmbH\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.",
+    "licenseModified": "no",
+    "path": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@tiptap/extension-typography"
+  },
+  "@tiptap/extensions@3.14.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/ueberdosis/tiptap",
+    "version": "3.14.0",
+    "description": "various extensions for tiptap",
+    "copyright": "Copyright (c) 2025, Tiptap GmbH",
+    "licenseFile": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@tiptap/extensions/LICENSE.md",
+    "licenseText": "MIT License\n\nCopyright (c) 2025, Tiptap GmbH\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.",
+    "licenseModified": "no",
+    "path": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@tiptap/extensions"
+  },
+  "@tiptap/pm@3.14.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/ueberdosis/tiptap",
+    "version": "3.14.0",
+    "description": "prosemirror wrapper package for tiptap",
+    "copyright": "Copyright (c) 2025, Tiptap GmbH",
+    "licenseFile": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@tiptap/pm/LICENSE.md",
+    "licenseText": "MIT License\n\nCopyright (c) 2025, Tiptap GmbH\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.",
+    "licenseModified": "no",
+    "path": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@tiptap/pm"
+  },
+  "@tiptap/react@3.14.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/ueberdosis/tiptap",
+    "version": "3.14.0",
+    "description": "React components for tiptap",
+    "copyright": "Copyright (c) 2025, Tiptap GmbH",
+    "licenseFile": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@tiptap/react/LICENSE.md",
+    "licenseText": "MIT License\n\nCopyright (c) 2025, Tiptap GmbH\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.",
+    "licenseModified": "no",
+    "path": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@tiptap/react"
+  },
+  "@tiptap/starter-kit@3.14.0": {
+    "licenses": "MIT",
+    "repository": "https://github.com/ueberdosis/tiptap",
+    "version": "3.14.0",
+    "description": "starter kit for tiptap",
+    "copyright": "Copyright (c) 2025, Tiptap GmbH",
+    "licenseFile": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@tiptap/starter-kit/LICENSE.md",
+    "licenseText": "MIT License\n\nCopyright (c) 2025, Tiptap GmbH\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.",
+    "licenseModified": "no",
+    "path": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/@tiptap/starter-kit"
+  },
   "date-fns@4.1.0": {
     "licenses": "MIT",
     "repository": "https://github.com/date-fns/date-fns",
@@ -130,6 +307,20 @@
     "licenseModified": "no",
     "path": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/ionicons"
   },
+  "lodash.throttle@4.1.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/lodash/lodash",
+    "publisher": "John-David Dalton",
+    "email": "john.david.dalton@gmail.com",
+    "url": "http://allyoucanleet.com/",
+    "version": "4.1.1",
+    "description": "The lodash method `_.throttle` exported as a module.",
+    "copyright": "Copyright jQuery Foundation and other contributors <https://jquery.org/>",
+    "licenseFile": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/lodash.throttle/LICENSE",
+    "licenseText": "Copyright jQuery Foundation and other contributors <https://jquery.org/>\n\nBased on Underscore.js, copyright Jeremy Ashkenas,\nDocumentCloud and Investigative Reporters & Editors <http://underscorejs.org/>\n\nThis software consists of voluntary contributions made by many\nindividuals. For exact contribution history, see the revision history\navailable at https://github.com/lodash/lodash\n\nThe following license applies to all parts of this software except as\ndocumented below:\n\n====\n\nPermission is hereby granted, free of charge, to any person obtaining\na copy of this software and associated documentation files (the\n\"Software\"), to deal in the Software without restriction, including\nwithout limitation the rights to use, copy, modify, merge, publish,\ndistribute, sublicense, and/or sell copies of the Software, and to\npermit persons to whom the Software is furnished to do so, subject to\nthe following conditions:\n\nThe above copyright notice and this permission notice shall be\nincluded in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,\nEXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\nMERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND\nNONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE\nLIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION\nOF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION\nWITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n\n====\n\nCopyright and related rights for sample code are waived via CC0. Sample\ncode is defined as all source code displayed within the prose of the\ndocumentation.\n\nCC0: http://creativecommons.org/publicdomain/zero/1.0/\n\n====\n\nFiles located in the node_modules and vendor directories are externally\nmaintained libraries used by this software which have their own\nlicenses; we recommend you read them, as their terms may differ from the\nterms above.",
+    "licenseModified": "no",
+    "path": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/lodash.throttle"
+  },
   "mapbox-gl@3.16.0": {
     "licenses": "MIT*",
     "repository": "https://github.com/mapbox/mapbox-gl-js",
@@ -154,6 +345,17 @@
     "licenseModified": "no",
     "path": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/meeting-schedules-parser"
   },
+  "proclaimer@0.0.0": {
+    "licenses": "UNLICENSED",
+    "private": true,
+    "version": "0.0.0",
+    "description": "",
+    "copyright": "",
+    "licenseFile": "none",
+    "licenseText": "none",
+    "licenseModified": "no",
+    "path": "/Users/damianamodeo/Documents/Code/ultimate-template"
+  },
   "react-dom@19.2.0": {
     "licenses": "MIT",
     "repository": "https://github.com/facebook/react",
@@ -164,6 +366,18 @@
     "licenseText": "MIT License\n\nCopyright (c) Meta Platforms, Inc. and affiliates.\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.",
     "licenseModified": "no",
     "path": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/react-dom"
+  },
+  "react-hotkeys-hook@5.2.1": {
+    "licenses": "MIT",
+    "repository": "https://github.com/JohannesKlauss/react-keymap-hook",
+    "publisher": "Johannes Klauss",
+    "version": "5.2.1",
+    "description": "React hook for handling keyboard shortcuts",
+    "copyright": "Copyright (c) 2018 Johannes Klauss",
+    "licenseFile": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/react-hotkeys-hook/LICENSE",
+    "licenseText": "MIT License\n\nCopyright (c) 2018 Johannes Klauss\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.",
+    "licenseModified": "no",
+    "path": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/react-hotkeys-hook"
   },
   "react-map-gl@8.1.0": {
     "licenses": "MIT",
@@ -202,6 +416,20 @@
     "licenseModified": "no",
     "path": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/react-router"
   },
+  "react-textarea-autosize@8.5.9": {
+    "licenses": "MIT",
+    "repository": "https://github.com/Andarist/react-textarea-autosize",
+    "publisher": "Andrey Popp",
+    "email": "8mayday@gmail.com",
+    "url": "httsps://andreypopp.com/",
+    "version": "8.5.9",
+    "description": "textarea component for React which grows with content",
+    "copyright": "Copyright (c) 2013 Andrey Popp",
+    "licenseFile": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/react-textarea-autosize/LICENSE",
+    "licenseText": "The MIT License (MIT)\n\nCopyright (c) 2013 Andrey Popp\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of\nthis software and associated documentation files (the \"Software\"), to deal in\nthe Software without restriction, including without limitation the rights to\nuse, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of\nthe Software, and to permit persons to whom the Software is furnished to do so,\nsubject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS\nFOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR\nCOPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER\nIN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN\nCONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.",
+    "licenseModified": "no",
+    "path": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/react-textarea-autosize"
+  },
   "react@19.2.0": {
     "licenses": "MIT",
     "repository": "https://github.com/facebook/react",
@@ -212,17 +440,6 @@
     "licenseText": "MIT License\n\nCopyright (c) Meta Platforms, Inc. and affiliates.\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.",
     "licenseModified": "no",
     "path": "/Users/damianamodeo/Documents/Code/ultimate-template/node_modules/react"
-  },
-  "ultimate-template@0.0.0": {
-    "licenses": "UNLICENSED",
-    "private": true,
-    "version": "0.0.0",
-    "description": "",
-    "copyright": "",
-    "licenseFile": "none",
-    "licenseText": "none",
-    "licenseModified": "no",
-    "path": "/Users/damianamodeo/Documents/Code/ultimate-template"
   },
   "workbox-window@7.4.0": {
     "licenses": "MIT",
