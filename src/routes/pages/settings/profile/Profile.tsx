@@ -1,3 +1,4 @@
+import { SelectUserCongregationModal } from "@feature/db/congregation/user-congregation/select-user-congregation-modal/SelectUserCongregationModal";
 import {
   IonBackButton,
   IonButtons,
@@ -21,7 +22,7 @@ export const Profile: React.FC = () => {
           <IonTitle>Profile</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen className="ion-padding">
+      <IonContent>
         <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">Profile</IonTitle>
@@ -29,6 +30,7 @@ export const Profile: React.FC = () => {
         </IonHeader>
         <Space height="2" />
         <AuthSection />
+        <SelectUserCongregationModal />
       </IonContent>
     </IonPage>
   );
