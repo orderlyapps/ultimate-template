@@ -10,7 +10,7 @@ export const NavItem = ({
   routerLink: string;
 }) => {
   return (
-    <Item routerLink={routerLink}>
+    <Item routerLink={routerLink} detail={true}>
       <IonLabel color="primary" className="ion-margin">
         <Text size="xl">{children}</Text>
       </IonLabel>

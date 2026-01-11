@@ -1,3 +1,4 @@
+import { DoorToDoor as Content } from "@feature/maps/door-to-door/DoorToDoor";
 import {
   IonPage,
   IonHeader,
@@ -7,7 +8,6 @@ import {
   IonButtons,
   IonBackButton,
 } from "@ionic/react";
-import { Space } from "@layout/space/Space";
 
 export const DoorToDoor: React.FC = () => {
   return (
@@ -20,13 +20,8 @@ export const DoorToDoor: React.FC = () => {
           <IonTitle>Door to Door</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen className="ion-padding">
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Door to Door</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <Space height="2" />
+      <IonContent>
+        <Content />
       </IonContent>
     </IonPage>
   );
