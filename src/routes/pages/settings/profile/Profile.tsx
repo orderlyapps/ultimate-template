@@ -30,6 +30,7 @@ export const Profile: React.FC = () => {
         </IonHeader>
         <Space height="2" />
         <AuthSection />
+        <Space height="2" />
         <SelectUserCongregationModal />
       </IonContent>
     </IonPage>

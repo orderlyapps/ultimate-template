@@ -21,7 +21,7 @@ export const SignInButton: React.FC<SignInButtonProps> = ({
   };
 
   return (
-    <Button onClick={handleSignIn} size={size}>
+    <Button onClick={handleSignIn} size={size} fill="clear">
       <IonIcon slot="start" icon={logoGoogle} />
       Sign in with Google
     </Button>

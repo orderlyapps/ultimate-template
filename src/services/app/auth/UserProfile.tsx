@@ -1,18 +1,12 @@
-import { IonItem, IonLabel, IonAvatar } from "@ionic/react";
+import { IonLabel, IonAvatar } from "@ionic/react";
 import { useAuth } from "./useAuth";
+import { Item } from "@ionic-layout/item/Item";
 
 export const UserProfile: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
 
   if (!isAuthenticated || !user) {
-    return (
-      <IonItem>
-        <IonLabel>
-          <h2>Account</h2>
-          <p>Not signed in</p>
-        </IonLabel>
-      </IonItem>
-    );
+    return null;
   }
 
   const avatarUrl = user.user_metadata?.avatar_url;
@@ -20,7 +14,7 @@ export const UserProfile: React.FC = () => {
   const email = user.email;
 
   return (
-    <IonItem>
+    <Item lines="none">
       {avatarUrl && (
         <IonAvatar slot="start">
           <img src={avatarUrl} alt={fullName || "User avatar"} />
@@ -30,6 +24,6 @@ export const UserProfile: React.FC = () => {
         {fullName && <h2>{fullName}</h2>}
         <p>{email}</p>
       </IonLabel>
-    </IonItem>
+    </Item>
   );
 };
