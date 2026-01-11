@@ -6,6 +6,7 @@ import { Talk } from "@pages/home/talks/talk/Talk";
 import { TalkSection } from "@pages/home/talks/talk/section/TalkSection";
 import { TalkSubsection } from "@pages/home/talks/talk/section/subsection/TalkSubsection";
 import { Ministry } from "@pages/ministry/Ministry";
+import { DoorToDoor } from "@pages/ministry/door-to-door/DoorToDoor";
 import { Schedules } from "@pages/schedules/Schedules";
 import { Publishers } from "@pages/publishers/Publishers";
 import { Settings } from "@pages/settings/Settings";
@@ -33,6 +34,7 @@ export const pages = (
       render={() => <TalkSubsection />}
     />
     <Route exact path="/ministry" render={() => <Ministry />} />
+    <Route exact path="/ministry/door-to-door" render={() => <DoorToDoor />} />
     <Route exact path="/schedules" render={() => <Schedules />} />
     <Route exact path="/publishers" render={() => <Publishers />} />
     <Route exact path="/settings" render={() => <Settings />} />

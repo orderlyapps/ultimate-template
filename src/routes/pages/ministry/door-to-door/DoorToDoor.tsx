@@ -3,28 +3,30 @@ import {
   IonHeader,
   IonToolbar,
   IonTitle,
-  IonContent
+  IonContent,
+  IonButtons,
+  IonBackButton,
 } from "@ionic/react";
 import { Space } from "@layout/space/Space";
-import { NavItem } from "@navigation/nav-item/NavItem";
 
-export const Ministry: React.FC = () => {
-
+export const DoorToDoor: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Ministry</IonTitle>
+          <IonButtons slot="start">
+            <IonBackButton defaultHref="/ministry" />
+          </IonButtons>
+          <IonTitle>Door to Door</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen className="ion-padding">
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Ministry</IonTitle>
+            <IonTitle size="large">Door to Door</IonTitle>
           </IonToolbar>
         </IonHeader>
         <Space height="2" />
-        <NavItem routerLink="/ministry/door-to-door">Door to Door</NavItem>
       </IonContent>
     </IonPage>
   );
