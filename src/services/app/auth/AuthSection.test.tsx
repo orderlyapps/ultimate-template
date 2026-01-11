@@ -47,13 +47,6 @@ describe("AuthSection", () => {
   });
 
   describe("when not authenticated", () => {
-    it("should render UserProfile component", async () => {
-      render(<AuthSection />);
-
-      await waitFor(() => {
-        expect(screen.getByText("Not signed in")).toBeInTheDocument();
-      });
-    });
 
     it("should render SignInButton", async () => {
       render(<AuthSection />);

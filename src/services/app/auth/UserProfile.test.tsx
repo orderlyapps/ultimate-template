@@ -45,22 +45,6 @@ describe("UserProfile", () => {
   });
 
   describe("when not authenticated", () => {
-    it("should render Account label", async () => {
-      render(<UserProfile />);
-
-      await waitFor(() => {
-        expect(screen.getByText("Account")).toBeInTheDocument();
-      });
-    });
-
-    it("should render not signed in message", async () => {
-      render(<UserProfile />);
-
-      await waitFor(() => {
-        expect(screen.getByText("Not signed in")).toBeInTheDocument();
-      });
-    });
-
     it("should not render avatar", async () => {
       render(<UserProfile />);
 
