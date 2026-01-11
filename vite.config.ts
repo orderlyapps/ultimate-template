@@ -157,8 +157,8 @@ export default defineConfig({
         "assets/pwa/logo.svg",
       ],
       manifest: {
-        name: "Ultimate Template",
-        short_name: "Ultimate",
+        name: "Proclaimer",
+        short_name: "Proclaimer",
         background_color: "#4a6da7",
         theme_color: "#4a6da7",
         display: "standalone",
