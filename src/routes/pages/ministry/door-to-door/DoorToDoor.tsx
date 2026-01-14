@@ -20,7 +20,7 @@ export const DoorToDoor: React.FC = () => {
           <IonTitle>Door to Door</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
+      <IonContent id="fullscreen">
         <Content />
       </IonContent>
     </IonPage>

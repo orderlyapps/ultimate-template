@@ -89,6 +89,9 @@ dependencies:
   docx:
     specifier: ^9.5.1
     version: 9.5.1
+  immutable:
+    specifier: ^5.1.4
+    version: 5.1.4
   ionicons:
     specifier: ^8.0.13
     version: 8.0.13
@@ -5972,7 +5975,6 @@ packages:
 
   /immutable@5.1.4:
     resolution: {integrity: sha512-p6u1bG3YSnINT5RQmx/yRZBpenIl30kVxkTLDyHLIMk0gict704Q9n+thfDI7lTRm9vXdDYutVzXhzcThxTnXA==}
-    dev: true
 
   /import-fresh@3.3.1:
     resolution: {integrity: sha512-TR3KfrTZTYLPB6jUjfx6MF9WcWrHL9su5TObK4ZkYgBdWKPOFoSoQIdEuTuR82pmtxH2spWG9h6etwfr1pLBqQ==}
