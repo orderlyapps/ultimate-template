@@ -26,8 +26,13 @@ export const SelectedMap: React.FC = () => {
       <IonListHeader>
         <Label>Selected Map</Label>
       </IonListHeader>
-      <Item onClick={() => handleZoomToMap(selectedMap)}>
-        <Text className="ion-padding-end">{selectedMap?.name}</Text>
+      <Item>
+        <div
+          style={{ width: "100%" }}
+          onClick={() => handleZoomToMap(selectedMap)}
+        >
+          <Text className="ion-padding-end">{selectedMap?.name}</Text>
+        </div>
         <Icon slot="end" src={crossIcon} onClick={handleClear} />
       </Item>
     </List>
