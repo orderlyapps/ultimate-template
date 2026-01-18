@@ -2,8 +2,8 @@ import { mapCollection } from "@tanstack-db/map/mapCollection";
 import { useLiveQuery } from "@tanstack/react-db";
 import { Layer, Source } from "react-map-gl/mapbox";
 import type { FeatureCollection } from "geojson";
-import { label } from "@feature/maps/door-to-door/sources/maps/layers/label";
-import { border } from "@feature/maps/door-to-door/sources/maps/layers/border";
+import { label } from "@feature/maps/door-to-door/components/sources/maps/layers/label";
+import { border } from "@feature/maps/door-to-door/components/sources/maps/layers/border";
 
 export const SOURCE_ID = "maps";
 
