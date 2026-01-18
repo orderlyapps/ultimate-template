@@ -1,3 +1,4 @@
+import { MapListModal } from "@feature/maps/door-to-door/components/map-list-modal/MapListModal";
 import { DoorToDoor as Content } from "@feature/maps/door-to-door/DoorToDoor";
 import { MapSettingsModal } from "@feature/maps/map-settings-modal/MapSettingsModal";
 import {
@@ -20,6 +21,7 @@ export const DoorToDoor: React.FC = () => {
           </IonButtons>
           <IonTitle>Door to Door</IonTitle>
           <IonButtons slot="end">
+            <MapListModal />
             <MapSettingsModal id="door-to-door" />
           </IonButtons>
         </IonToolbar>
