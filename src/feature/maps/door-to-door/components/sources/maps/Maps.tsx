@@ -2,12 +2,16 @@ import { mapCollection } from "@tanstack-db/map/mapCollection";
 import { useLiveQuery } from "@tanstack/react-db";
 import { Layer, Source } from "react-map-gl/mapbox";
 import type { FeatureCollection } from "geojson";
-import { label } from "@feature/maps/door-to-door/components/sources/maps/layers/label";
-import { border } from "@feature/maps/door-to-door/components/sources/maps/layers/border";
+import { getLabelLayer } from "@feature/maps/door-to-door/components/sources/maps/layers/label";
+import { getBorderLayer } from "@feature/maps/door-to-door/components/sources/maps/layers/border";
+import { getFillLayer } from "@feature/maps/door-to-door/components/sources/maps/layers/fill";
+import { useDoorToDoorStore } from "@feature/maps/door-to-door/store/useDoorToDoorStore";
 
 export const SOURCE_ID = "maps";
 
 export const Maps: React.FC = () => {
+  const selectedMapName = useDoorToDoorStore((state) => state.selectedMapName);
+
   const { data } = useLiveQuery((q) =>
     q.from({
       c: mapCollection,
@@ -20,8 +24,8 @@ export const Maps: React.FC = () => {
     type: "FeatureCollection",
     features: data
       .filter(
-        (map) =>
-          map.boundary &&
+        (map): map is typeof map & { boundary: [number, number][] } =>
+          map.boundary !== null &&
           Array.isArray(map.boundary) &&
           map.boundary.length > 0,
       )
@@ -42,8 +46,9 @@ export const Maps: React.FC = () => {
 
   return (
     <Source id={SOURCE_ID} type="geojson" data={geojson}>
-      <Layer {...label} />
-      <Layer {...border} />
+      <Layer {...getFillLayer(selectedMapName)} />
+      <Layer {...getBorderLayer(selectedMapName)} />
+      <Layer {...getLabelLayer(selectedMapName)} />
     </Source>
   );
 };

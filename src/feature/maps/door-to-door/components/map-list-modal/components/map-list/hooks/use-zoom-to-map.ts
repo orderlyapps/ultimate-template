@@ -1,23 +1,24 @@
 import { useDoorToDoorStore } from "@feature/maps/door-to-door/store/useDoorToDoorStore";
+import type { Map } from "@tanstack-db/map/mapSchema";
 import { LngLatBounds } from "mapbox-gl";
 
 export const useZoomToMap = () => {
   const mapRef = useDoorToDoorStore((state) => state.mapRef);
-  const setSelectedMapId = useDoorToDoorStore(
-    (state) => state.setSelectedMapId,
+  const setSelectedMapName = useDoorToDoorStore(
+    (state) => state.setSelectedMapName,
   );
   const closeMapListModal = useDoorToDoorStore(
     (state) => state.closeMapListModal,
   );
 
-  const handleZoomToMap = (mapId: string, boundary: number[][]) => {
-    if (!mapRef || !boundary || boundary.length === 0) return;
+  const handleZoomToMap = (map: Map) => {
+    if (!mapRef || !map.boundary || map.boundary.length === 0) return;
 
     closeMapListModal();
 
     setTimeout(() => {
       const bounds = new LngLatBounds();
-      boundary.forEach(([lng, lat]) => {
+      map.boundary?.forEach(([lng, lat]) => {
         bounds.extend([lng, lat]);
       });
 
@@ -25,7 +26,7 @@ export const useZoomToMap = () => {
         duration: 3000,
       });
 
-      setSelectedMapId(mapId);
+      setSelectedMapName(map.name);
     }, 300);
   };
 

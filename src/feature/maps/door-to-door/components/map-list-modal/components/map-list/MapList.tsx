@@ -20,10 +20,7 @@ export const MapList: React.FC = () => {
   return (
     <List>
       {data.map((map) => (
-        <Item
-          key={map.id}
-          onClick={() => handleZoomToMap(map.id, map.boundary)}
-        >
+        <Item key={map.id} onClick={() => handleZoomToMap(map)}>
           <Text>{map.name}</Text>
         </Item>
       ))}

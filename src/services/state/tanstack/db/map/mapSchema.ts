@@ -5,7 +5,7 @@ export const mapSchema = z.object({
   congregation_id: z.string().uuid(),
   name: z.string(),
   details: z.string().nullable(),
-  boundary: z.any().nullable(), // jsonb
+  boundary: z.array(z.tuple([z.number(), z.number()])).nullable(),
   blocks: z.any().nullable(), // jsonb
 });
 

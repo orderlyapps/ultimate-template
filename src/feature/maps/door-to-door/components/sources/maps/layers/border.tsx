@@ -1,14 +1,32 @@
-// import { SOURCE_ID } from "@feature/maps/door-to-door/sources/maps/Maps";
 import type { LayerProps } from "react-map-gl/mapbox";
 
-export const border: LayerProps = {
+export const getBorderLayer = (selectedMapName: string | null): LayerProps => ({
   id: "maps-borders",
   type: "line",
   source: "maps",
   minzoom: 14,
   paint: {
-    "line-color": "#f00",
-    "line-width": ["interpolate", ["linear"], ["zoom"], 14, 2, 23, 12],
+    "line-color": [
+      "case",
+      ["==", ["get", "name"], ["literal", selectedMapName]],
+      "#f00",
+      "#f00",
+    ],
+    "line-width": [
+      "interpolate",
+      ["linear"],
+      ["zoom"],
+      14,
+      2,
+      23,
+      ["case", ["==", ["get", "name"], ["literal", selectedMapName]], 12, 2],
+    ],
+    "line-opacity": [
+      "case",
+      ["==", ["get", "name"], ["literal", selectedMapName]],
+      1,
+      0.3,
+    ],
   },
   beforeId: "road-label",
-};
+});
