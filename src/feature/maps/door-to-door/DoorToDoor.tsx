@@ -1,4 +1,5 @@
 import { Maps } from "@feature/maps/door-to-door/components/sources/maps/Maps";
+import { DoNotCalls } from "@feature/maps/door-to-door/components/sources/do-not-calls/DoNotCalls";
 import { Map } from "@services/vendor/mapbox/components/map/Map";
 import { useDoorToDoorStore } from "@feature/maps/door-to-door/store/useDoorToDoorStore";
 import { MapLocationAlert } from "@feature/maps/door-to-door/components/map-location-alert/MapLocationAlert";
@@ -15,8 +16,15 @@ export const DoorToDoor: React.FC = () => {
 
   return (
     <>
-      <Map id="door-to-door" ref={setMapRef} onLongPress={handleLongPress}>
+      <Map
+        id="door-to-door"
+        ref={setMapRef}
+        onLongPress={handleLongPress}
+        interactiveLayerIds={["do-not-call-points"]}
+        onClick={(e) => console.log(e.features)}
+      >
         <Maps />
+        <DoNotCalls />
       </Map>
       <MapLocationAlert />
     </>

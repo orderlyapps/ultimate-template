@@ -6,12 +6,9 @@ import { doNotCallSchema } from "@tanstack-db/do_not_call/doNotCallSchema";
 
 export const doNotCallCollection = createCollection(
   queryCollectionOptions({
-    queryKey: ["do_no_call"],
+    queryKey: ["do_not_call"],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("do_no_call")
-        .select("*")
-        .eq("congregation_id", localStorage.getItem("congregationId"));
+      const { data, error } = await supabase.from("do_not_call").select("*");
 
       if (error) {
         throw new Error(`Failed to fetch todos: ${error.message}`);
@@ -22,14 +19,17 @@ export const doNotCallCollection = createCollection(
     queryClient,
     getKey: (item) => item.id,
     schema: doNotCallSchema,
+    
     onInsert: async ({ transaction }) => {
       const { changes } = transaction.mutations[0];
       await supabase.from("do_no_call").insert(changes);
     },
+
     onUpdate: async ({ transaction }) => {
       const { changes, original } = transaction.mutations[0];
       await supabase.from("do_no_call").update(changes).eq("id", original.id);
     },
+    
     onDelete: async ({ transaction }) => {
       const { original } = transaction.mutations[0];
       await supabase.from("do_no_call").delete().eq("id", original.id);
