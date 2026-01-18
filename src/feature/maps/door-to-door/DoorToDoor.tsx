@@ -3,11 +3,14 @@ import { DoNotCalls } from "@feature/maps/door-to-door/components/sources/do-not
 import { Map } from "@services/vendor/mapbox/components/map/Map";
 import { useDoorToDoorStore } from "@feature/maps/door-to-door/store/useDoorToDoorStore";
 import { MapLocationAlert } from "@feature/maps/door-to-door/components/map-location-alert/MapLocationAlert";
+import { DoNotCallAlert } from "@feature/maps/door-to-door/components/do-not-call-alert/DoNotCallAlert";
+import { useMapClickHandler } from "@feature/maps/door-to-door/handlers/useMapClickHandler";
 import type { MapTouchEvent } from "react-map-gl/mapbox";
 
 export const DoorToDoor: React.FC = () => {
   const setMapRef = useDoorToDoorStore((state) => state.setMapRef);
   const setInlineAlert = useDoorToDoorStore((state) => state.setInlineAlert);
+  const handleMapClick = useMapClickHandler();
 
   const handleLongPress = (event: MapTouchEvent) => {
     const { lat, lng } = event.lngLat;
@@ -21,12 +24,13 @@ export const DoorToDoor: React.FC = () => {
         ref={setMapRef}
         onLongPress={handleLongPress}
         interactiveLayerIds={["do-not-call-points"]}
-        onClick={(e) => console.log(e.features)}
+        onClick={handleMapClick}
       >
         <Maps />
         <DoNotCalls />
       </Map>
       <MapLocationAlert />
+      <DoNotCallAlert />
     </>
   );
 };
