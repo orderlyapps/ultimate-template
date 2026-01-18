@@ -12,6 +12,9 @@ interface DoorToDoorStore {
 
   selectedMapName: string | null;
   setSelectedMapName: (id: string | null) => void;
+
+  inlineAlert: { lat: number; lng: number } | null;
+  setInlineAlert: (coords: { lat: number; lng: number } | null) => void;
 }
 
 export const useDoorToDoorStore = create<DoorToDoorStore>()(
@@ -26,6 +29,9 @@ export const useDoorToDoorStore = create<DoorToDoorStore>()(
 
       selectedMapName: null,
       setSelectedMapName: (id) => set({ selectedMapName: id }),
+
+      inlineAlert: null,
+      setInlineAlert: (coords) => set({ inlineAlert: coords }),
     }),
     {
       name: "door-to-door-storage",
