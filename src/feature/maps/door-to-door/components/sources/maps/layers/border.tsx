@@ -8,7 +8,7 @@ export const border: LayerProps = {
   minzoom: 14,
   paint: {
     "line-color": "#f00",
-    "line-width": ["interpolate", ["linear"], ["zoom"], 14, 2, 23, 25],
+    "line-width": ["interpolate", ["linear"], ["zoom"], 14, 2, 23, 12],
   },
   beforeId: "road-label",
 };

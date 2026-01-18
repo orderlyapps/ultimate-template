@@ -40,7 +40,6 @@ export const Maps: React.FC = () => {
       })),
   };
 
-  console.log(geojson);
   return (
     <Source id={SOURCE_ID} type="geojson" data={geojson}>
       <Layer {...label} />
