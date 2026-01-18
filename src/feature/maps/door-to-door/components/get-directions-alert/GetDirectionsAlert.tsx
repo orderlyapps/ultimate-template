@@ -2,7 +2,7 @@ import { IonAlert } from "@ionic/react";
 import { useDoorToDoorStore } from "@feature/maps/door-to-door/store/useDoorToDoorStore";
 import { openInMapApp } from "@services/vendor/mapbox/helper/openInMapApp";
 
-export const MapLocationAlert: React.FC = () => {
+export const GetDirectionsAlert: React.FC = () => {
   const inlineAlert = useDoorToDoorStore((state) => state.inlineAlert);
   const setInlineAlert = useDoorToDoorStore((state) => state.setInlineAlert);
 

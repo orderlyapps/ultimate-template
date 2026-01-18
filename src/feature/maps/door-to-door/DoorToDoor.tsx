@@ -2,7 +2,7 @@ import { Maps } from "@feature/maps/door-to-door/sources/maps/Maps";
 import { DoNotCalls } from "@feature/maps/door-to-door/sources/do-not-calls/DoNotCalls";
 import { Map } from "@services/vendor/mapbox/components/map/Map";
 import { useDoorToDoorStore } from "@feature/maps/door-to-door/store/useDoorToDoorStore";
-import { MapLocationAlert } from "@feature/maps/door-to-door/components/map-location-alert/MapLocationAlert";
+import { GetDirectionsAlert } from "@feature/maps/door-to-door/components/get-directions-alert/GetDirectionsAlert";
 import { DoNotCallAlert } from "@feature/maps/door-to-door/components/do-not-call-alert/DoNotCallAlert";
 import { useMapClickHandler } from "@feature/maps/door-to-door/handlers/useMapClickHandler";
 import type { MapTouchEvent } from "react-map-gl/mapbox";
@@ -29,7 +29,7 @@ export const DoorToDoor: React.FC = () => {
         <Maps />
         <DoNotCalls />
       </Map>
-      <MapLocationAlert />
+      <GetDirectionsAlert />
       <DoNotCallAlert />
     </>
   );
