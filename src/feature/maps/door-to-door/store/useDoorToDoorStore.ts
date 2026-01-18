@@ -35,11 +35,13 @@ export const useDoorToDoorStore = create<DoorToDoorStore>()(
       setSelectedMap: (map) => set({ selectedMap: map }),
 
       recentMaps: [],
-      addToRecentMaps: (map) =>
+      addToRecentMaps: (newMap) =>
         set((state) => {
-          const filtered = state.recentMaps.filter((map) => map.id !== map.id);
+          const filtered = state.recentMaps.filter(
+            (map) => map.id !== newMap.id,
+          );
           return {
-            recentMaps: [map, ...filtered].slice(0, 5),
+            recentMaps: [newMap, ...filtered].slice(0, 5),
           };
         }),
 
