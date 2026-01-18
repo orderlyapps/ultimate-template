@@ -6,6 +6,7 @@ import { GetDirectionsAlert } from "@feature/maps/door-to-door/components/get-di
 import { DoNotCallAlert } from "@feature/maps/door-to-door/components/do-not-call-alert/DoNotCallAlert";
 import { useMapClickHandler } from "@feature/maps/door-to-door/handlers/useMapClickHandler";
 import type { MapTouchEvent } from "react-map-gl/mapbox";
+import { NotAtHome } from "@feature/maps/door-to-door/sources/not-at-home/NotAtHome";
 
 export const DoorToDoor: React.FC = () => {
   const setMapRef = useDoorToDoorStore((state) => state.setMapRef);
@@ -28,6 +29,7 @@ export const DoorToDoor: React.FC = () => {
       >
         <Maps />
         <DoNotCalls />
+        <NotAtHome />
       </Map>
       <GetDirectionsAlert />
       <DoNotCallAlert />
