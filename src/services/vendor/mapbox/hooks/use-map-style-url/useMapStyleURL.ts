@@ -12,14 +12,20 @@ const mapStyles: Record<MapStyle, string | { light: string; dark: string }> = {
   rural: "mapbox://styles/damianamodeo/cmdrwoc0r003c01re3npfcu9z",
 };
 
-export const useMapStyleURL = (id?: string) => {
+export const useMapStyleURL = (id?: string): string => {
   const [mapStyle] = useMapStyle(id);
 
   const theme = useThemeStore((state) => state.preference);
 
-  if (mapStyle === "rural") return mapStyles.rural;
+  const ruralStyle = mapStyles.rural;
+  if (mapStyle === "rural") {
+    return typeof ruralStyle === "string" ? ruralStyle : ruralStyle.light;
+  }
 
-  if (mapStyle === "satellite") return mapStyles.satellite;
+  const satelliteStyle = mapStyles.satellite;
+  if (mapStyle === "satellite") {
+    return typeof satelliteStyle === "string" ? satelliteStyle : satelliteStyle.light;
+  }
 
   const standardStyle = mapStyles.standard;
   if (typeof standardStyle === "string") return standardStyle;
