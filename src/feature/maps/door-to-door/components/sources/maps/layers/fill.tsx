@@ -1,7 +1,9 @@
+import type { Map } from "@tanstack-db/map/mapSchema";
 import type { LayerProps } from "react-map-gl/mapbox";
 
-export const getFillLayer = (selectedMapName: string | null): LayerProps => {
-  const opacity = selectedMapName ? 0.05 : 0;
+export const getFillLayer = (selectedMap: Map | null): LayerProps => {
+  const opacity = selectedMap ? 0.05 : 0;
+  const selectedMapID = selectedMap?.id || "";
 
   return {
     id: "maps-fill",
@@ -12,7 +14,7 @@ export const getFillLayer = (selectedMapName: string | null): LayerProps => {
       "fill-color": "#f00",
       "fill-opacity": [
         "case",
-        ["==", ["get", "name"], ["literal", selectedMapName]],
+        ["==", ["get", "id"], ["literal", selectedMapID]],
         0,
         opacity,
       ],

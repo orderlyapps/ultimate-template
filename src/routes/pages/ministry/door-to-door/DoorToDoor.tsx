@@ -11,9 +11,12 @@ import {
   IonButtons,
   IonBackButton,
 } from "@ionic/react";
+import { useZoomToMap } from "@feature/maps/door-to-door/components/map-list-modal/components/map-list/hooks/use-zoom-to-map";
 
 export const DoorToDoor: React.FC = () => {
-  const selectedMapName = useDoorToDoorStore((state) => state.selectedMapName);
+  const selectedMap = useDoorToDoorStore((state) => state.selectedMap);
+
+  const { handleZoomToMap } = useZoomToMap();
 
   return (
     <IonPage>
@@ -22,7 +25,9 @@ export const DoorToDoor: React.FC = () => {
           <IonButtons slot="start">
             <IonBackButton defaultHref="/ministry" text="Ministry" />
           </IonButtons>
-          <IonTitle>{selectedMapName || "Door to Door"}</IonTitle>
+          <IonTitle onClick={() => handleZoomToMap(selectedMap)}>
+            {selectedMap?.name}
+          </IonTitle>
           <IonButtons slot="end">
             <MapListModal />
             <MapSettingsModal id="door-to-door" />

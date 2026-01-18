@@ -6,19 +6,19 @@ import { Text } from "@ionic-display/text/Text";
 import { Label } from "@ionic-display/label/Label";
 import { List } from "@ionic-layout/list/List";
 import { IonListHeader } from "@ionic/react";
+import { useZoomToMap } from "@feature/maps/door-to-door/components/map-list-modal/components/map-list/hooks/use-zoom-to-map";
 
 export const SelectedMap: React.FC = () => {
-  const selectedMapName = useDoorToDoorStore((state) => state.selectedMapName);
-  const setSelectedMapName = useDoorToDoorStore(
-    (state) => state.setSelectedMapName,
-  );
+  const selectedMap = useDoorToDoorStore((state) => state.selectedMap);
+  const setSelectedMap = useDoorToDoorStore((state) => state.setSelectedMap);
   const addToRecentMaps = useDoorToDoorStore((state) => state.addToRecentMaps);
+  const { handleZoomToMap } = useZoomToMap();
 
-  if (!selectedMapName) return null;
+  if (!selectedMap) return null;
 
   const handleClear = () => {
-    addToRecentMaps(selectedMapName);
-    setSelectedMapName(null);
+    addToRecentMaps(selectedMap);
+    setSelectedMap(null);
   };
 
   return (
@@ -26,8 +26,8 @@ export const SelectedMap: React.FC = () => {
       <IonListHeader>
         <Label>Selected Map</Label>
       </IonListHeader>
-      <Item>
-        <Text className="ion-padding-end">{selectedMapName}</Text>
+      <Item onClick={() => handleZoomToMap(selectedMap)}>
+        <Text className="ion-padding-end">{selectedMap?.name}</Text>
         <Icon slot="end" src={crossIcon} onClick={handleClear} />
       </Item>
     </List>

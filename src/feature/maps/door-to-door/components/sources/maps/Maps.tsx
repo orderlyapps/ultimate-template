@@ -10,7 +10,7 @@ import { useDoorToDoorStore } from "@feature/maps/door-to-door/store/useDoorToDo
 export const SOURCE_ID = "maps";
 
 export const Maps: React.FC = () => {
-  const selectedMapName = useDoorToDoorStore((state) => state.selectedMapName);
+  const selectedMap = useDoorToDoorStore((state) => state.selectedMap);
 
   const { data } = useLiveQuery((q) =>
     q.from({
@@ -33,6 +33,7 @@ export const Maps: React.FC = () => {
         type: "Feature" as const,
         id: map.id,
         properties: {
+          id: map.id,
           name: map.name,
           details: map.details,
           congregation_id: map.congregation_id,
@@ -46,9 +47,9 @@ export const Maps: React.FC = () => {
 
   return (
     <Source id={SOURCE_ID} type="geojson" data={geojson}>
-      <Layer {...getFillLayer(selectedMapName)} />
-      <Layer {...getBorderLayer(selectedMapName)} />
-      <Layer {...getLabelLayer(selectedMapName)} />
+      <Layer {...getFillLayer(selectedMap)} />
+      <Layer {...getBorderLayer(selectedMap)} />
+      <Layer {...getLabelLayer(selectedMap)} />
     </Source>
   );
 };

@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { MapRef } from "react-map-gl/mapbox";
+import type { Map } from "@tanstack-db/map/mapSchema";
 
 interface DoorToDoorStore {
   mapRef: MapRef | null;
@@ -10,11 +11,11 @@ interface DoorToDoorStore {
   openMapListModal: () => void;
   closeMapListModal: () => void;
 
-  selectedMapName: string | null;
-  setSelectedMapName: (id: string | null) => void;
+  selectedMap: Map | null;
+  setSelectedMap: (map: Map | null) => void;
 
-  recentMaps: string[];
-  addToRecentMaps: (mapName: string) => void;
+  recentMaps: Map[];
+  addToRecentMaps: (map: Map) => void;
 
   inlineAlert: { lat: number; lng: number } | null;
   setInlineAlert: (coords: { lat: number; lng: number } | null) => void;
@@ -30,15 +31,15 @@ export const useDoorToDoorStore = create<DoorToDoorStore>()(
       openMapListModal: () => set({ isMapListModalOpen: true }),
       closeMapListModal: () => set({ isMapListModalOpen: false }),
 
-      selectedMapName: null,
-      setSelectedMapName: (id) => set({ selectedMapName: id }),
+      selectedMap: null,
+      setSelectedMap: (map) => set({ selectedMap: map }),
 
       recentMaps: [],
-      addToRecentMaps: (mapName) =>
+      addToRecentMaps: (map) =>
         set((state) => {
-          const filtered = state.recentMaps.filter((name) => name !== mapName);
+          const filtered = state.recentMaps.filter((map) => map.id !== map.id);
           return {
-            recentMaps: [mapName, ...filtered].slice(0, 5),
+            recentMaps: [map, ...filtered].slice(0, 5),
           };
         }),
 
@@ -48,7 +49,7 @@ export const useDoorToDoorStore = create<DoorToDoorStore>()(
     {
       name: "door-to-door-storage",
       partialize: (state) => ({
-        selectedMapName: state.selectedMapName,
+        selectedMapName: state.selectedMap,
         recentMaps: state.recentMaps,
       }),
     },

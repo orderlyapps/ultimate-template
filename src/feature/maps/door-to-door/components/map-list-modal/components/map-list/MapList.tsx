@@ -20,18 +20,18 @@ export const MapList: React.FC = () => {
 
   const { handleZoomToMap } = useZoomToMap();
 
-  const selectedMapName = useDoorToDoorStore((state) => state.selectedMapName);
-  const setSelectedMapName = useDoorToDoorStore(
-    (state) => state.setSelectedMapName,
+  const selectedMap = useDoorToDoorStore((state) => state.selectedMap);
+  const setSelectedMap = useDoorToDoorStore(
+    (state) => state.setSelectedMap,
   );
   const addToRecentMaps = useDoorToDoorStore((state) => state.addToRecentMaps);
 
   const handleSelectMap = (map: Map) => {
-    if (selectedMapName) {
-      addToRecentMaps(selectedMapName);
+    if (selectedMap) {
+      addToRecentMaps(selectedMap);
     }
     handleZoomToMap(map);
-    setSelectedMapName(map.name);
+    setSelectedMap(map);
   };
 
   if (!data) return null;
@@ -45,9 +45,9 @@ export const MapList: React.FC = () => {
         <Item
           key={map.id}
           onClick={() => handleSelectMap(map)}
-          color={map.name === selectedMapName ? "medium" : ""}
+          color={map.id === selectedMap?.id ? "medium" : ""}
         >
-          <Text bold={map.name === selectedMapName}>{map.name}</Text>
+          <Text bold={map.id === selectedMap?.id}>{map.name}</Text>
         </Item>
       ))}
     </List>

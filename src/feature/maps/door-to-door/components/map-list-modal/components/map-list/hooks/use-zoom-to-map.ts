@@ -4,15 +4,13 @@ import { LngLatBounds } from "mapbox-gl";
 
 export const useZoomToMap = () => {
   const mapRef = useDoorToDoorStore((state) => state.mapRef);
-  const setSelectedMapName = useDoorToDoorStore(
-    (state) => state.setSelectedMapName,
-  );
+  const setSelectedMap = useDoorToDoorStore((state) => state.setSelectedMap);
   const closeMapListModal = useDoorToDoorStore(
     (state) => state.closeMapListModal,
   );
 
-  const handleZoomToMap = (map: Map) => {
-    if (!mapRef || !map.boundary || map.boundary.length === 0) return;
+  const handleZoomToMap = (map: Map | null) => {
+    if (!mapRef || !map?.boundary || map.boundary.length === 0) return;
 
     closeMapListModal();
 
@@ -26,7 +24,7 @@ export const useZoomToMap = () => {
         duration: 3000,
       });
 
-      setSelectedMapName(map.name);
+      setSelectedMap(map);
     }, 300);
   };
 

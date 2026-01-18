@@ -1,7 +1,9 @@
+import type { Map } from "@tanstack-db/map/mapSchema";
 import type { LayerProps } from "react-map-gl/mapbox";
 
-export const getLabelLayer = (selectedMapName: string | null): LayerProps => {
-  const opacity = selectedMapName ? 50 : 75;
+export const getLabelLayer = (selectedMap: Map | null): LayerProps => {
+  const opacity = selectedMap ? 50 : 75;
+  const selectedMapID = selectedMap?.id || "";
 
   return {
     id: "maps-labels",
@@ -19,7 +21,7 @@ export const getLabelLayer = (selectedMapName: string | null): LayerProps => {
         23,
         [
           "case",
-          ["==", ["get", "name"], ["literal", selectedMapName]],
+          ["==", ["get", "id"], ["literal", selectedMapID]],
           100,
           opacity,
         ],

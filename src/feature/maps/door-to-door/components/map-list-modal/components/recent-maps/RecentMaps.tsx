@@ -10,7 +10,7 @@ import { Label } from "@ionic-display/label/Label";
 
 export const RecentMaps: React.FC = () => {
   const recentMaps = useDoorToDoorStore((state) => state.recentMaps);
-  const selectedMapName = useDoorToDoorStore((state) => state.selectedMapName);
+  const selectedMap = useDoorToDoorStore((state) => state.selectedMap);
   const { handleZoomToMap } = useZoomToMap();
 
   const { data: allMaps } = useLiveQuery((q) =>
@@ -20,13 +20,13 @@ export const RecentMaps: React.FC = () => {
   );
 
   const filteredRecentMaps = recentMaps.filter(
-    (mapName) => mapName !== selectedMapName,
+    (map) => map.id !== selectedMap?.id,
   );
 
   if (filteredRecentMaps.length === 0 || !allMaps) return null;
 
   const recentMapObjects = filteredRecentMaps
-    .map((mapName) => allMaps.find((map) => map.name === mapName))
+    .map((recentMap) => allMaps.find((map) => map.id === recentMap.id))
     .filter((map) => map !== undefined);
 
   if (recentMapObjects.length === 0) return null;
