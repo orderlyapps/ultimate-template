@@ -2,7 +2,7 @@ import { createCollection } from "@tanstack/react-db";
 import { queryCollectionOptions } from "@tanstack/query-db-collection";
 import { supabase } from "@supabase-db/client";
 import { queryClient } from "@tanstack-query/client";
-import { doNotCallSchema } from "@tanstack-db/do_not_call/schemas/doNotCallSchema";
+import { doNotCallSchema } from "@tanstack-db/do_not_call/doNotCallSchema";
 
 export const doNotCallCollection = createCollection(
   queryCollectionOptions({
