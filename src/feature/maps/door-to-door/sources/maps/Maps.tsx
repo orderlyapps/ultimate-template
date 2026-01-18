@@ -2,9 +2,9 @@ import { mapCollection } from "@tanstack-db/map/mapCollection";
 import { useLiveQuery } from "@tanstack/react-db";
 import { Layer, Source } from "react-map-gl/mapbox";
 import type { FeatureCollection } from "geojson";
-import { getLabelLayer } from "@feature/maps/door-to-door/components/sources/maps/layers/label";
-import { getBorderLayer } from "@feature/maps/door-to-door/components/sources/maps/layers/border";
-import { getFillLayer } from "@feature/maps/door-to-door/components/sources/maps/layers/fill";
+import { getLabelLayer } from "@feature/maps/door-to-door/sources/maps/layers/label";
+import { getBorderLayer } from "@feature/maps/door-to-door/sources/maps/layers/border";
+import { getFillLayer } from "@feature/maps/door-to-door/sources/maps/layers/fill";
 import { useDoorToDoorStore } from "@feature/maps/door-to-door/store/useDoorToDoorStore";
 
 export const SOURCE_ID = "maps";

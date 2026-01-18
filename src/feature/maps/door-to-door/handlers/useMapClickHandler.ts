@@ -1,6 +1,6 @@
 import type { MapMouseEvent } from "react-map-gl/mapbox";
 import { useDoorToDoorStore } from "@feature/maps/door-to-door/store/useDoorToDoorStore";
-import type { DoNotCall } from "@feature/maps/door-to-door/components/sources/do-not-calls/DoNotCalls";
+import type { DoNotCall } from "@feature/maps/door-to-door/sources/do-not-calls/DoNotCalls";
 
 export const useMapClickHandler = () => {
   const setSelectedDoNotCall = useDoorToDoorStore(

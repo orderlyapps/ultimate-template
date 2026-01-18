@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { MapRef } from "react-map-gl/mapbox";
 import type { Map } from "@tanstack-db/map/mapSchema";
-import type { DoNotCall } from "@feature/maps/door-to-door/components/sources/do-not-calls/DoNotCalls";
+import type { DoNotCall } from "@feature/maps/door-to-door/sources/do-not-calls/DoNotCalls";
 
 interface DoorToDoorStore {
   mapRef: MapRef | null;

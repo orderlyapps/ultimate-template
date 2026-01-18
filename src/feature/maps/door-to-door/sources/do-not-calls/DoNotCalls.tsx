@@ -2,7 +2,7 @@ import { doNotCallCollection } from "@tanstack-db/do_not_call/doNotCallCollectio
 import { eq, useLiveQuery } from "@tanstack/react-db";
 import { Layer, Source } from "react-map-gl/mapbox";
 import type { FeatureCollection } from "geojson";
-import { getPointLayer } from "@feature/maps/door-to-door/components/sources/do-not-calls/layers/point";
+import { getPointLayer } from "@feature/maps/door-to-door/sources/do-not-calls/layers/point";
 import { streetCollection } from "@tanstack-db/street/streetCollection";
 import { suburbCollection } from "@tanstack-db/suburb/suburbCollection";
 import type { DoNotCall as DoNotCallBase } from "@tanstack-db/do_not_call/doNotCallSchema";

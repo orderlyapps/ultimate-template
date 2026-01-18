@@ -1,5 +1,5 @@
-import { Maps } from "@feature/maps/door-to-door/components/sources/maps/Maps";
-import { DoNotCalls } from "@feature/maps/door-to-door/components/sources/do-not-calls/DoNotCalls";
+import { Maps } from "@feature/maps/door-to-door/sources/maps/Maps";
+import { DoNotCalls } from "@feature/maps/door-to-door/sources/do-not-calls/DoNotCalls";
 import { Map } from "@services/vendor/mapbox/components/map/Map";
 import { useDoorToDoorStore } from "@feature/maps/door-to-door/store/useDoorToDoorStore";
 import { MapLocationAlert } from "@feature/maps/door-to-door/components/map-location-alert/MapLocationAlert";
