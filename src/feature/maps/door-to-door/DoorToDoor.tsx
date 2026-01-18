@@ -1,5 +1,5 @@
-import { Map } from "@services/vendor/mapbox/map/Map";
+import { Map } from "@services/vendor/mapbox/components/map/Map";
 
 export const DoorToDoor: React.FC = () => {
-  return <Map />;
+  return <Map id="door-to-door" />;
 };

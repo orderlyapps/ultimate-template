@@ -5,7 +5,7 @@ import MapComponent, {
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useMapStyleURL } from "@services/vendor/mapbox/hooks/use-map-style-url/useMapStyleURL";
 import { useMapViewState } from "@services/vendor/mapbox/hooks/use-map-view-state/useMapViewState";
-import { useLongPress } from "../hooks/use-long-press/useLongPress";
+import { useLongPress } from "../../hooks/use-long-press/useLongPress";
 import { type ComponentProps } from "react";
 
 const MAPBOX_ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;

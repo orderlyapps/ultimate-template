@@ -1,4 +1,5 @@
 import { DoorToDoor as Content } from "@feature/maps/door-to-door/DoorToDoor";
+import { MapSettingsModal } from "@feature/maps/map-settings-modal/MapSettingsModal";
 import {
   IonPage,
   IonHeader,
@@ -15,9 +16,12 @@ export const DoorToDoor: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/ministry" />
+            <IonBackButton defaultHref="/ministry" text="Ministry" />
           </IonButtons>
           <IonTitle>Door to Door</IonTitle>
+          <IonButtons slot="end">
+            <MapSettingsModal id="door-to-door" />
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent id="fullscreen">
