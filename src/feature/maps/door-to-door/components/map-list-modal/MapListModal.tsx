@@ -47,6 +47,7 @@ import {
 import { CloseButton } from "@input/button/close-button/CloseButton";
 import { MapList } from "@feature/maps/door-to-door/components/map-list-modal/components/map-list/MapList";
 import { useDoorToDoorStore } from "@feature/maps/door-to-door/store/useDoorToDoorStore";
+import { SelectedMap } from "@feature/maps/door-to-door/components/map-list-modal/components/selected-map/SelectedMap";
 
 export const MapListModal: React.FC = () => {
   const isOpen = useDoorToDoorStore((state) => state.isMapListModalOpen);
@@ -61,13 +62,14 @@ export const MapListModal: React.FC = () => {
       <IonModal isOpen={isOpen} onDidDismiss={closeModal}>
         <IonHeader>
           <IonToolbar>
-            <IonTitle>MapListModal</IonTitle>
+            <IonTitle>Map List</IonTitle>
             <IonButtons slot="end">
               <CloseButton onClick={closeModal} />
             </IonButtons>
           </IonToolbar>
         </IonHeader>
         <IonContent>
+          <SelectedMap />
           <MapList />
         </IonContent>
       </IonModal>
