@@ -3,6 +3,7 @@ import { persist } from "zustand/middleware";
 import type { MapRef } from "react-map-gl/mapbox";
 import type { Map } from "@tanstack-db/map/mapSchema";
 import type { DoNotCall } from "@feature/maps/door-to-door/sources/do-not-calls/DoNotCalls";
+import type { NotAtHome } from "@feature/maps/door-to-door/sources/not-at-home/NotAtHome";
 
 interface DoorToDoorStore {
   mapRef: MapRef | null;
@@ -23,6 +24,9 @@ interface DoorToDoorStore {
 
   selectedDoNotCall: DoNotCall | null;
   setSelectedDoNotCall: (doNotCall: DoNotCall | null) => void;
+
+  selectedNotAtHome: NotAtHome | null;
+  setSelectedNotAtHome: (notAtHome: NotAtHome | null) => void;
 }
 
 export const useDoorToDoorStore = create<DoorToDoorStore>()(
@@ -50,11 +54,16 @@ export const useDoorToDoorStore = create<DoorToDoorStore>()(
         }),
 
       inlineAlert: null,
-      setInlineAlert: (coords: { lat: number; lng: number } | null) => set({ inlineAlert: coords }),
+      setInlineAlert: (coords: { lat: number; lng: number } | null) =>
+        set({ inlineAlert: coords }),
 
       selectedDoNotCall: null,
       setSelectedDoNotCall: (doNotCall: DoNotCall | null) =>
         set({ selectedDoNotCall: doNotCall }),
+
+      selectedNotAtHome: null,
+      setSelectedNotAtHome: (notAtHome: NotAtHome | null) =>
+        set({ selectedNotAtHome: notAtHome }),
     }),
     {
       name: "door-to-door-storage",

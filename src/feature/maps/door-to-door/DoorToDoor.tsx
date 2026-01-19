@@ -4,6 +4,7 @@ import { Map } from "@services/vendor/mapbox/components/map/Map";
 import { useDoorToDoorStore } from "@feature/maps/door-to-door/store/useDoorToDoorStore";
 import { GetDirectionsAlert } from "@feature/maps/door-to-door/components/get-directions-alert/GetDirectionsAlert";
 import { DoNotCallAlert } from "@feature/maps/door-to-door/components/do-not-call-alert/DoNotCallAlert";
+import { NotAtHomeAlert } from "@feature/maps/door-to-door/components/not-at-home-alert/NotAtHomeAlert";
 import { useMapClickHandler } from "@feature/maps/door-to-door/handlers/useMapClickHandler";
 import type { MapTouchEvent } from "react-map-gl/mapbox";
 import { NotAtHome } from "@feature/maps/door-to-door/sources/not-at-home/NotAtHome";
@@ -11,6 +12,7 @@ import { NotAtHome } from "@feature/maps/door-to-door/sources/not-at-home/NotAtH
 export const DoorToDoor: React.FC = () => {
   const setMapRef = useDoorToDoorStore((state) => state.setMapRef);
   const setInlineAlert = useDoorToDoorStore((state) => state.setInlineAlert);
+  
   const handleMapClick = useMapClickHandler();
 
   const handleLongPress = (event: MapTouchEvent) => {
@@ -24,7 +26,7 @@ export const DoorToDoor: React.FC = () => {
         id="door-to-door"
         ref={setMapRef}
         onLongPress={handleLongPress}
-        interactiveLayerIds={["do-not-call-points"]}
+        interactiveLayerIds={["do-not-call-points", "not-at-home-points"]}
         onClick={handleMapClick}
       >
         <Maps />
@@ -33,6 +35,7 @@ export const DoorToDoor: React.FC = () => {
       </Map>
       <GetDirectionsAlert />
       <DoNotCallAlert />
+      <NotAtHomeAlert />
     </>
   );
 };

@@ -3,6 +3,7 @@ import { eq, useLiveQuery } from "@tanstack/react-db";
 import { Layer, Source } from "react-map-gl/mapbox";
 import type { FeatureCollection } from "geojson";
 import { getPointLayer } from "@feature/maps/door-to-door/sources/not-at-home/layers/point";
+import { getLabelLayer } from "@feature/maps/door-to-door/sources/not-at-home/layers/label";
 import { streetCollection } from "@tanstack-db/street/streetCollection";
 import { suburbCollection } from "@tanstack-db/suburb/suburbCollection";
 import type { NotAtHome as NotAtHomeBase } from "@tanstack-db/not_at_home/notAtHomeSchema";
@@ -66,6 +67,7 @@ export const NotAtHome: React.FC = () => {
   return (
     <Source id={SOURCE_ID} type="geojson" data={geojson}>
       <Layer {...getPointLayer()} />
+      <Layer {...getLabelLayer()} />
     </Source>
   );
 };
