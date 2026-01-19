@@ -7,6 +7,8 @@ import { getLabelLayer } from "@feature/maps/door-to-door/sources/not-at-home/la
 import { streetCollection } from "@tanstack-db/street/streetCollection";
 import { suburbCollection } from "@tanstack-db/suburb/suburbCollection";
 import type { NotAtHome as NotAtHomeBase } from "@tanstack-db/not_at_home/notAtHomeSchema";
+import { getClusterPointLayer } from "@feature/maps/door-to-door/sources/not-at-home/cluster-layers/clusterPoint";
+import { getClusterLabelLayer } from "@feature/maps/door-to-door/sources/not-at-home/cluster-layers/clusterLabel";
 
 export const SOURCE_ID = "not-at-home";
 
@@ -45,29 +47,31 @@ export const NotAtHome: React.FC = () => {
       .map((nah) => ({
         type: "Feature" as const,
         id: nah.id,
-        properties: {
-          id: nah.id,
-          house_number: nah.house_number,
-          unit_number: nah.unit_number,
-          visit_log: nah.visit_log,
-          suburb: nah.suburb,
-          street: nah.street,
-          congregation_id: nah.congregation_id,
-          write: nah.write,
-          match_data: nah.match_data,
-          created_at: nah.created_at,
-        },
+        properties: nah,
         geometry: {
           type: "Point",
           coordinates: nah.coordinates,
         },
       })),
   };
-
+  console.log();
   return (
-    <Source id={SOURCE_ID} type="geojson" data={geojson}>
+    <Source
+      id={SOURCE_ID}
+      type="geojson"
+      data={geojson}
+      cluster
+      clusterMaxZoom={13}
+      clusterRadius={50}
+      clusterProperties={{
+        return_count: ["+", ["case", ["==", ["get", "write"], false], 0, 1]],
+        write_count: ["+", ["case", ["==", ["get", "write"], true], 0, 1]],
+      }}
+    >
       <Layer {...getPointLayer()} />
       <Layer {...getLabelLayer()} />
+      <Layer {...getClusterPointLayer()} />
+      <Layer {...getClusterLabelLayer()} />
     </Source>
   );
 };

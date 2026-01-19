@@ -24,7 +24,12 @@ export const getLabelLayer = (): LayerProps => {
     },
     paint: {
       "text-color": "#ffffff",
-      "text-halo-color": "#ff0000",
+      "text-halo-color": [
+        "case",
+        ["==", ["get", "write"], true],
+        "#F00",
+        "#090",
+      ],
       "text-halo-width": 5,
     },
   };
