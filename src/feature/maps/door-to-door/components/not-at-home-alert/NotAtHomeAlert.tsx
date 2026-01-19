@@ -33,7 +33,36 @@ export const NotAtHomeAlert: React.FC = () => {
       onDidDismiss={handleDismiss}
       header={address}
       subHeader={"Added " + created}
-      buttons={["Close"]}
+      buttons={[
+        {
+          text: "Delete",
+          role: "destructive",
+          handler: () => {
+            console.log("Alert confirmed");
+          },
+        },
+        {
+          text: "Move to Location",
+          role: "cancel",
+          handler: () => {
+            console.log("Alert canceled");
+          },
+        },
+        {
+          text: "Move to Letter List",
+          role: "cancel",
+          handler: () => {
+            console.log("Alert canceled");
+          },
+        },
+        {
+          text: "Cancel",
+          role: "cancel",
+          handler: () => {
+            console.log("Alert canceled");
+          },
+        },
+      ]}
     />
   );
 };
