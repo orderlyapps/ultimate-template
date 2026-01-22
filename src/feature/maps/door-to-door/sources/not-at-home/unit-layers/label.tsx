@@ -18,7 +18,7 @@ export const getUnitLabelLayer = (): LayerProps => {
       ],
       "text-font": ["Open Sans Bold", "Arial Unicode MS Bold"],
       "text-size": ["interpolate", ["linear"], ["zoom"], 16.5, 5, 18, 27],
-      "text-offset": [0, 0],
+      "text-offset": [0, -0.25],
       "text-anchor": "center",
     },
     paint: {
