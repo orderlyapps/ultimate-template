@@ -10,16 +10,22 @@ import {
   IonFabButton,
   IonIcon,
 } from "@ionic/react";
-import { useDoorToDoorStore } from "@feature/maps/door-to-door/store/useDoorToDoorStore";
+import { useAddAddressStore } from "@feature/maps/door-to-door/components/add-address-modal/store/useAddAddressStore";
 import addIcon from "@icons/add.svg";
+import { SuburbSelectModal } from "@feature/maps/door-to-door/components/add-address-modal/components/suburb-select-modal/SuburbSelectModal";
+import { StreetSelectModal } from "@feature/maps/door-to-door/components/add-address-modal/components/street-select-modal/StreetSelectModal";
+import { List } from "@ionic-layout/list/List";
+import { HouseNumberInput } from "@feature/maps/door-to-door/components/add-address-modal/components/house-number-input/HouseNumberInput";
+import { UnitNumberInput } from "@feature/maps/door-to-door/components/add-address-modal/components/unit-number-input/UnitNumberInput";
+import { ListSelectInput } from "@feature/maps/door-to-door/components/add-address-modal/components/list-select-input/ListSelectInput";
 
 export const AddAddressModal: React.FC = () => {
-  const isOpen = useDoorToDoorStore((state) => state.isAddAddressModalOpen);
-  const closeAddAddressModal = useDoorToDoorStore(
+  const isOpen = useAddAddressStore((state) => state.isAddAddressModalOpen);
+  const closeAddAddressModal = useAddAddressStore(
     (state) => state.closeAddAddressModal,
   );
 
-  const openAddAddressModal = useDoorToDoorStore(
+  const openAddAddressModal = useAddAddressStore(
     (state) => state.openAddAddressModal,
   );
 
@@ -40,7 +46,13 @@ export const AddAddressModal: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <IonContent>
-          <p>Placeholder text for Add Address modal</p>
+          <List>
+            <SuburbSelectModal />
+            <StreetSelectModal />
+            <HouseNumberInput />
+            <UnitNumberInput />
+            <ListSelectInput />
+          </List>
         </IonContent>
       </IonModal>
     </>

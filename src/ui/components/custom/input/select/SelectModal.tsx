@@ -3,10 +3,13 @@ import { Label } from "@ionic-display/label/Label";
 import { Searchbar } from "@ionic-input/searchbar/Searchbar";
 import { Item } from "@ionic-layout/item/Item";
 import { List } from "@ionic-layout/list/List";
+import { Text } from "@ionic-display/text/Text";
+
 import {
   IonButtons,
   IonContent,
   IonHeader,
+  IonListHeader,
   IonModal,
   IonTitle,
   IonToolbar,
@@ -26,6 +29,10 @@ type SelectItemProps = {
   modalTitle?: string;
   onValueChange?: (value: string | null) => void;
   disabled?: boolean;
+  recentlySelected?:
+    | readonly SelectOption[]
+    | { value: string; label: string }[];
+  listHeader?: string;
 };
 
 export const SelectModal: React.FC<SelectItemProps> = ({
@@ -36,6 +43,8 @@ export const SelectModal: React.FC<SelectItemProps> = ({
   modalTitle = "Select an option",
   onValueChange,
   disabled = false,
+  recentlySelected = [],
+  listHeader = "All Options",
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -84,10 +93,32 @@ export const SelectModal: React.FC<SelectItemProps> = ({
           </IonToolbar>
         </IonHeader>
         <IonContent>
+          {recentlySelected.length > 0 && (
+            <>
+              <IonListHeader>
+                <Label>Recent</Label>
+              </IonListHeader>
+              <List>
+                {recentlySelected.map((option) => (
+                  <Item
+                    key={option.value ?? "null"}
+                    button
+                    onClick={() => handleSelect(option.value)}
+                    detail={false}
+                  >
+                    <Text>{option.label}</Text>
+                  </Item>
+                ))}
+              </List>
+            </>
+          )}
           <List>
+            <IonListHeader>
+              <Label>{listHeader}</Label>
+            </IonListHeader>
             {options
               .filter((option) =>
-                option.label.toLowerCase().includes(searchQuery.toLowerCase())
+                option.label.toLowerCase().includes(searchQuery.toLowerCase()),
               )
               .map((option) => (
                 <Item
@@ -95,9 +126,9 @@ export const SelectModal: React.FC<SelectItemProps> = ({
                   button
                   onClick={() => handleSelect(option.value)}
                   detail={false}
-                  color={option.value === value ? "primary" : undefined}
+                  color={option.value === value ? "medium" : undefined}
                 >
-                  {option.label}
+                  <Text bold={option.value === value}>{option.label}</Text>
                 </Item>
               ))}
           </List>
