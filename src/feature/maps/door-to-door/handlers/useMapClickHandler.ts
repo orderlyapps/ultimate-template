@@ -22,7 +22,11 @@ export const useMapClickHandler = () => {
   const handleMapClick = ({ features }: MapMouseEvent) => {
     if (!features?.[0]) return;
 
-    if (features?.[0].source === "do-not-calls") {
+    if (features?.[0].layer?.id === "do-not-call-house-points") {
+      setSelectedDoNotCall(features[0].properties as DoNotCall);
+    }
+
+    if (features?.[0].layer?.id === "do-not-call-unit-points") {
       setSelectedDoNotCall(features[0].properties as DoNotCall);
     }
 
