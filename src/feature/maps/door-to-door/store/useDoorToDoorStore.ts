@@ -33,6 +33,10 @@ interface DoorToDoorStore {
 
   selectedDoNotCallUnits: DoNotCall[] | null;
   setSelectedDoNotCallUnits: (units: DoNotCall[] | null) => void;
+
+  isAddAddressModalOpen: boolean;
+  openAddAddressModal: () => void;
+  closeAddAddressModal: () => void;
 }
 
 export const useDoorToDoorStore = create<DoorToDoorStore>()(
@@ -78,6 +82,10 @@ export const useDoorToDoorStore = create<DoorToDoorStore>()(
       selectedDoNotCallUnits: null,
       setSelectedDoNotCallUnits: (units: DoNotCall[] | null) =>
         set({ selectedDoNotCallUnits: units }),
+
+      isAddAddressModalOpen: false,
+      openAddAddressModal: () => set({ isAddAddressModalOpen: true }),
+      closeAddAddressModal: () => set({ isAddAddressModalOpen: false }),
     }),
     {
       name: "door-to-door-storage",
