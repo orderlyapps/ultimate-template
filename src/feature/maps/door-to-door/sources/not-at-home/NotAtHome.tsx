@@ -64,8 +64,8 @@ export const NotAtHome: React.FC = () => {
       clusterMaxZoom={13}
       clusterRadius={50}
       clusterProperties={{
-        return_count: ["+", ["case", ["==", ["get", "write"], false], 0, 1]],
-        write_count: ["+", ["case", ["==", ["get", "write"], true], 0, 1]],
+        return_count: ["+", ["case", ["==", ["get", "write"], false], 1, 0]],
+        write_count: ["+", ["case", ["==", ["get", "write"], true], 1, 0]],
       }}
     >
       <Layer {...getPointLayer()} />

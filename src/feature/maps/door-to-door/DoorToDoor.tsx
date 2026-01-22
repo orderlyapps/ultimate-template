@@ -12,7 +12,7 @@ import { NotAtHome } from "@feature/maps/door-to-door/sources/not-at-home/NotAtH
 export const DoorToDoor: React.FC = () => {
   const setMapRef = useDoorToDoorStore((state) => state.setMapRef);
   const setInlineAlert = useDoorToDoorStore((state) => state.setInlineAlert);
-  
+
   const handleMapClick = useMapClickHandler();
 
   const handleLongPress = (event: MapTouchEvent) => {
@@ -26,7 +26,11 @@ export const DoorToDoor: React.FC = () => {
         id="door-to-door"
         ref={setMapRef}
         onLongPress={handleLongPress}
-        interactiveLayerIds={["do-not-call-points", "not-at-home-points"]}
+        interactiveLayerIds={[
+          "do-not-call-points",
+          "not-at-home-points",
+          "not-at-home-cluster-points",
+        ]}
         onClick={handleMapClick}
       >
         <Maps />

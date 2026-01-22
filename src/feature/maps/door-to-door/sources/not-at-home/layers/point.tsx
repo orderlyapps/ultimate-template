@@ -8,8 +8,8 @@ export const getPointLayer = (): LayerProps => {
     minzoom: 14,
     filter: ["!", ["has", "point_count"]],
     paint: {
-      "circle-radius": ["interpolate", ["linear"], ["zoom"], 14, 1, 23, 50],
-      "circle-color": ["case", ["==", ["get", "write"], true], "#F00", "#090"],
+      "circle-radius": ["interpolate", ["linear"], ["zoom"], 14, 3, 16.5, 8, 18, 32],
+      "circle-color": ["case", ["==", ["get", "write"], false], "#F00", "#090"],
     },
   };
 };

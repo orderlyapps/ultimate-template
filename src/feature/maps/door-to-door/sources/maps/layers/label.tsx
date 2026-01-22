@@ -17,7 +17,7 @@ export const getLabelLayer = (selectedMap: Map | null): LayerProps => {
         ["linear"],
         ["zoom"],
         14,
-        8,
+        11,
         23,
         [
           "case",

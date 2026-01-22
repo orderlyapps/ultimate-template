@@ -7,9 +7,9 @@ export const getClusterLabelLayer = (): LayerProps => {
     source: "not-at-home",
     filter: [
       "case",
-      ["all", ["!", ["has", "point_count"]], ["==", ["get", "write"], false]],
-      false,
-      true,
+      ["has", "point_count"],
+      ["case", [">=", ["get", "return_count"], 1], true, false],
+      ["case", ["==", ["get", "write"], false], true, false],
     ],
     maxzoom: 14,
     layout: {
@@ -20,7 +20,12 @@ export const getClusterLabelLayer = (): LayerProps => {
         "1",
       ],
       "text-font": ["Open Sans Bold", "Arial Unicode MS Bold"],
-      "text-size": 20,
+      "text-size": [
+        "case",
+        ["has", "point_count"],
+        ["interpolate", ["linear"], ["get", "return_count"], 0, 13, 500, 90],
+        12,
+      ],
       "text-offset": [0, 0],
       "text-anchor": "center",
     },

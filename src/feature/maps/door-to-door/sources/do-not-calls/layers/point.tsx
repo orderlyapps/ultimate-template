@@ -7,7 +7,7 @@ export const getPointLayer = (): LayerProps => {
     source: "do-not-calls",
     minzoom: 14,
     paint: {
-      "circle-radius": ["interpolate", ["linear"], ["zoom"], 14, 1, 23, 40],
+      "circle-radius": ["interpolate", ["linear"], ["zoom"], 14, 3, 16.5, 8, 18, 30],
       "circle-color": "#000",
     },
   };

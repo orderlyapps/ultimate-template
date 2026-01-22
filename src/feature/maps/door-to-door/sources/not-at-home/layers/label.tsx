@@ -18,7 +18,7 @@ export const getLabelLayer = (): LayerProps => {
         ["get", "house_number"],
       ],
       "text-font": ["Open Sans Bold", "Arial Unicode MS Bold"],
-      "text-size": ["interpolate", ["linear"], ["zoom"], 16, 8, 23, 40],
+      "text-size": ["interpolate", ["linear"], ["zoom"], 16.5, 6, 18, 30],
       "text-offset": [0, 0],
       "text-anchor": "center",
     },
@@ -26,7 +26,7 @@ export const getLabelLayer = (): LayerProps => {
       "text-color": "#ffffff",
       "text-halo-color": [
         "case",
-        ["==", ["get", "write"], true],
+        ["==", ["get", "write"], false],
         "#F00",
         "#090",
       ],

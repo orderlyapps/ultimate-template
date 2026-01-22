@@ -9,7 +9,7 @@
     "test:lint:build": "eslint . && tsc -b && vitest run && vite build",
     "deploy:beta": "pnpm run test:lint:build && npx wrangler pages deploy dist --project-name=orderly --branch=beta",
     "lint": "eslint .",
-    "preview": "vite preview",
+    "preview": "vite preview --host",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage",
