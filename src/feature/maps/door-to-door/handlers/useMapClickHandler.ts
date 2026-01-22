@@ -15,6 +15,10 @@ export const useMapClickHandler = () => {
     (state) => state.setSelectedNotAtHome,
   );
 
+  const setSelectedUnits = useDoorToDoorStore(
+    (state) => state.setSelectedUnits,
+  );
+
   const handleMapClick = ({ features }: MapMouseEvent) => {
     if (!features?.[0]) return;
 
@@ -25,6 +29,14 @@ export const useMapClickHandler = () => {
     if (features?.[0].layer?.id === "not-at-home-house-points") {
       console.log(features[0]);
       setSelectedNotAtHome(features[0].properties as NotAtHome);
+    }
+
+    if (features?.[0].layer?.id === "not-at-home-unit-points") {
+      console.log(features[0]);
+      const unitData = JSON.parse(features[0].properties?.unit_data);
+      if (unitData && Array.isArray(unitData)) {
+        setSelectedUnits(unitData as NotAtHome[]);
+      }
     }
 
     if (features?.[0].layer?.id === "not-at-home-cluster-points") {

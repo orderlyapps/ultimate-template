@@ -27,6 +27,9 @@ interface DoorToDoorStore {
 
   selectedNotAtHome: NotAtHome | null;
   setSelectedNotAtHome: (notAtHome: NotAtHome | null) => void;
+
+  selectedUnits: NotAtHome[] | null;
+  setSelectedUnits: (units: NotAtHome[] | null) => void;
 }
 
 export const useDoorToDoorStore = create<DoorToDoorStore>()(
@@ -64,6 +67,10 @@ export const useDoorToDoorStore = create<DoorToDoorStore>()(
       selectedNotAtHome: null,
       setSelectedNotAtHome: (notAtHome: NotAtHome | null) =>
         set({ selectedNotAtHome: notAtHome }),
+
+      selectedUnits: null,
+      setSelectedUnits: (units: NotAtHome[] | null) =>
+        set({ selectedUnits: units }),
     }),
     {
       name: "door-to-door-storage",
