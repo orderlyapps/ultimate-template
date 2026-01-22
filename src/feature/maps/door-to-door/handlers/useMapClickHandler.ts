@@ -22,7 +22,7 @@ export const useMapClickHandler = () => {
       setSelectedDoNotCall(features[0].properties as DoNotCall);
     }
 
-    if (features?.[0].layer?.id === "not-at-home-points") {
+    if (features?.[0].layer?.id === "not-at-home-house-points") {
       console.log(features[0]);
       setSelectedNotAtHome(features[0].properties as NotAtHome);
     }

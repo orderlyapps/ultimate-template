@@ -30,7 +30,7 @@ export const Map = ({ children, id, onLongPress, ...props }: MapProps) => {
     reuseMaps: true,
     style: { width: "100%", height: "100%" },
     maxPitch: 60,
-    maxZoom: 18992,
+    maxZoom: 18,
     onClick: (e) => {
       console.log(e);
     },

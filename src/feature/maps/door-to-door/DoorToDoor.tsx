@@ -28,7 +28,8 @@ export const DoorToDoor: React.FC = () => {
         onLongPress={handleLongPress}
         interactiveLayerIds={[
           "do-not-call-points",
-          "not-at-home-points",
+          "not-at-home-house-points",
+          "not-at-home-unit-points",
           "not-at-home-cluster-points",
         ]}
         onClick={handleMapClick}

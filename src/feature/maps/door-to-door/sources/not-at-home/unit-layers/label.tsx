@@ -1,21 +1,20 @@
 import type { LayerProps } from "react-map-gl/mapbox";
 
-export const getLabelLayer = (): LayerProps => {
+export const getUnitLabelLayer = (): LayerProps => {
   return {
-    id: "not-at-home-labels",
+    id: "not-at-home-unit-labels",
     type: "symbol",
     source: "not-at-home",
     minzoom: 16,
+    filter: ["case", [">", ["get", "unit_count"], 1], true, false],
     layout: {
       "text-field": [
         "concat",
-        [
-          "case",
-          ["!=", ["get", "unit_number"], ""],
-          ["concat", ["get", "unit_number"], "/"],
-          "",
-        ],
         ["get", "house_number"],
+        "\n",
+        ["get", "return_count"],
+        " unit",
+        ["case", ["==", ["get", "unit_count"], 1], "", "s"],
       ],
       "text-font": ["Open Sans Bold", "Arial Unicode MS Bold"],
       "text-size": ["interpolate", ["linear"], ["zoom"], 16.5, 6, 18, 30],
@@ -26,7 +25,7 @@ export const getLabelLayer = (): LayerProps => {
       "text-color": "#ffffff",
       "text-halo-color": [
         "case",
-        ["==", ["get", "write"], false],
+        [">=", ["get", "return_count"], 1],
         "#F00",
         "#090",
       ],
