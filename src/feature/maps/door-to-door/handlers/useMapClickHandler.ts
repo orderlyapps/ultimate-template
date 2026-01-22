@@ -19,6 +19,10 @@ export const useMapClickHandler = () => {
     (state) => state.setSelectedUnits,
   );
 
+  const setSelectedDoNotCallUnits = useDoorToDoorStore(
+    (state) => state.setSelectedDoNotCallUnits,
+  );
+
   const handleMapClick = ({ features }: MapMouseEvent) => {
     if (!features?.[0]) return;
 
@@ -27,7 +31,10 @@ export const useMapClickHandler = () => {
     }
 
     if (features?.[0].layer?.id === "do-not-call-unit-points") {
-      setSelectedDoNotCall(features[0].properties as DoNotCall);
+      const unitData = JSON.parse(features[0].properties?.unit_data);
+      if (unitData && Array.isArray(unitData)) {
+        setSelectedDoNotCallUnits(unitData as DoNotCall[]);
+      }
     }
 
     if (features?.[0].layer?.id === "not-at-home-house-points") {

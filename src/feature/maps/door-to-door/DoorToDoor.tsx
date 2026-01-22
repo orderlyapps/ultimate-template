@@ -6,6 +6,7 @@ import { GetDirectionsAlert } from "@feature/maps/door-to-door/components/get-di
 import { DoNotCallAlert } from "@feature/maps/door-to-door/components/do-not-call-alert/DoNotCallAlert";
 import { NotAtHomeAlert } from "@feature/maps/door-to-door/components/not-at-home-alert/NotAtHomeAlert";
 import { UnitModal } from "@feature/maps/door-to-door/components/unit-modal/UnitModal";
+import { DoNotCallUnitModal } from "@feature/maps/door-to-door/components/do-not-call-unit-modal/DoNotCallUnitModal";
 import { useMapClickHandler } from "@feature/maps/door-to-door/handlers/useMapClickHandler";
 import type { MapTouchEvent } from "react-map-gl/mapbox";
 import { NotAtHome } from "@feature/maps/door-to-door/sources/not-at-home/NotAtHome";
@@ -44,6 +45,7 @@ export const DoorToDoor: React.FC = () => {
       <DoNotCallAlert />
       <NotAtHomeAlert />
       <UnitModal />
+      <DoNotCallUnitModal />
     </>
   );
 };
