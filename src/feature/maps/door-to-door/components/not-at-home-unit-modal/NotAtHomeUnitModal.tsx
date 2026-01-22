@@ -2,7 +2,7 @@ import { IonModal, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem
 import { useDoorToDoorStore } from "@feature/maps/door-to-door/store/useDoorToDoorStore";
 import { formatDistanceToNow } from "date-fns";
 
-export const UnitModal: React.FC = () => {
+export const NotAtHomeUnitModal: React.FC = () => {
   const selectedUnits = useDoorToDoorStore((state) => state.selectedUnits);
   const setSelectedUnits = useDoorToDoorStore((state) => state.setSelectedUnits);
 
