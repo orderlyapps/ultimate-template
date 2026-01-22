@@ -17,7 +17,7 @@ export const getUnitPointLayer = (): LayerProps => {
         16.5,
         10,
         18,
-        50,
+        55,
       ],
       "circle-color": [
         "case",
