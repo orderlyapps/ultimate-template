@@ -48,13 +48,31 @@ export const useAddAddressStore = create<AddAddressStore>()(
       closeAddAddressModal: () => set({ isAddAddressModalOpen: false }),
 
       suburbId: null,
-      setSuburbId: (suburbId: string | null) => set({ suburbId }),
+      setSuburbId: (suburbId: string | null) =>
+        set({
+          suburbId,
+          streetId: null,
+          houseNumber: "",
+          unitNumber: "",
+          listType: "return",
+        }),
 
       streetId: null,
-      setStreetId: (streetId: string | null) => set({ streetId }),
+      setStreetId: (streetId: string | null) =>
+        set({
+          streetId,
+          houseNumber: "",
+          unitNumber: "",
+          listType: "return",
+        }),
 
       houseNumber: "",
-      setHouseNumber: (houseNumber: string) => set({ houseNumber }),
+      setHouseNumber: (houseNumber: string) =>
+        set({
+          houseNumber,
+          unitNumber: "",
+          listType: "return",
+        }),
 
       unitNumber: "",
       setUnitNumber: (unitNumber: string) => set({ unitNumber }),

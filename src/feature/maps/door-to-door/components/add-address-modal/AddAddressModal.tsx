@@ -29,6 +29,10 @@ export const AddAddressModal: React.FC = () => {
     (state) => state.openAddAddressModal,
   );
 
+  const suburbId = useAddAddressStore((state) => state.suburbId);
+  const streetId = useAddAddressStore((state) => state.streetId);
+  const houseNumber = useAddAddressStore((state) => state.houseNumber);
+
   return (
     <>
       <IonFab slot="fixed" vertical="bottom" horizontal="end">
@@ -48,10 +52,14 @@ export const AddAddressModal: React.FC = () => {
         <IonContent>
           <List inset>
             <SuburbSelectModal />
-            <StreetSelectModal />
-            <HouseNumberInput />
-            <UnitNumberInput />
-            <ListSelectInput />
+            {suburbId !== null && <StreetSelectModal />}
+            {streetId !== null && <HouseNumberInput />}
+            {houseNumber !== null && houseNumber !== "" && (
+              <>
+                <UnitNumberInput />
+                <ListSelectInput />
+              </>
+            )}
           </List>
         </IonContent>
       </IonModal>
