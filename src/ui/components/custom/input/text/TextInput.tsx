@@ -8,12 +8,14 @@ type TextInputProps = ComponentProps<typeof IonInput>;
 export const TextInput = ({ label, ...props }: TextInputProps) => {
   const defaultProps: TextInputProps = {
     className: "ion-text-right",
+    clearInput: !!props.value,
     ...props,
   };
   return (
     <Item>
-      <Label>{label}</Label>
-      <IonInput slot="end" {...defaultProps} />
+      <IonInput {...defaultProps}>
+        <Label slot="label">{label}</Label>
+      </IonInput>
     </Item>
   );
 };

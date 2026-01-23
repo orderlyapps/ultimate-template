@@ -46,7 +46,7 @@ export const AddAddressModal: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <IonContent>
-          <List>
+          <List inset>
             <SuburbSelectModal />
             <StreetSelectModal />
             <HouseNumberInput />

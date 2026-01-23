@@ -7,8 +7,8 @@ export const HouseNumberInput: React.FC = () => {
 
   return (
     <TextInput
-      label="House Number"
-      placeholder="Enter house number"
+      label="House"
+      placeholder="e.g. 12 or 12A"
       value={houseNumber}
       onIonInput={(e) => setHouseNumber(e.detail.value ?? "")}
     />

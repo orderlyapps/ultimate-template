@@ -4,17 +4,18 @@ import { Searchbar } from "@ionic-input/searchbar/Searchbar";
 import { Item } from "@ionic-layout/item/Item";
 import { List } from "@ionic-layout/list/List";
 import { Text } from "@ionic-display/text/Text";
-
 import {
   IonButtons,
   IonContent,
   IonHeader,
+  IonIcon,
   IonListHeader,
   IonModal,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
 import { useState } from "react";
+import { chevronExpand } from "ionicons/icons";
 
 type SelectOption = {
   readonly value: string | null;
@@ -59,11 +60,7 @@ export const SelectModal: React.FC<SelectItemProps> = ({
 
   return (
     <>
-      <Item
-        button
-        onClick={() => !disabled && setIsOpen(true)}
-        disabled={disabled}
-      >
+      <Item onClick={() => !disabled && setIsOpen(true)} disabled={disabled}>
         {label && <Label>{label}</Label>}
         <div
           slot="end"
@@ -71,7 +68,8 @@ export const SelectModal: React.FC<SelectItemProps> = ({
             color: selectedOption ? undefined : "var(--ion-color-medium)",
           }}
         >
-          {displayText}
+          {displayText}{" "}
+          <IonIcon icon={chevronExpand} color="medium" size="small"></IonIcon>
         </div>
       </Item>
 

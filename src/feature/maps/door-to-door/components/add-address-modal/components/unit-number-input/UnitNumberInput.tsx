@@ -7,8 +7,8 @@ export const UnitNumberInput: React.FC = () => {
 
   return (
     <TextInput
-      label="Unit Number"
-      placeholder="Enter unit number"
+      label="Unit"
+      placeholder="Optional (e.g. 2, 3B)"
       value={unitNumber}
       onIonInput={(e) => setUnitNumber(e.detail.value ?? "")}
     />
