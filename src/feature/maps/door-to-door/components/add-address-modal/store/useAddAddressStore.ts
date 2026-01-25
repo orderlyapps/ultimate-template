@@ -1,5 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import type { Suburb } from "@tanstack-db/suburb/suburbSchema";
+import type { Street } from "@tanstack-db/street/streetSchema";
 
 interface RecentSuburb {
   value: string;
@@ -16,11 +18,11 @@ interface AddAddressStore {
   openAddAddressModal: () => void;
   closeAddAddressModal: () => void;
 
-  suburbId: string | null;
-  setSuburbId: (suburbId: string | null) => void;
+  suburb: Suburb | null;
+  setSuburb: (suburb: Suburb | null) => void;
 
-  streetId: string | null;
-  setStreetId: (streetId: string | null) => void;
+  street: Street | null;
+  setStreet: (street: Street | null) => void;
 
   houseNumber: string;
   setHouseNumber: (houseNumber: string) => void;
@@ -35,7 +37,7 @@ interface AddAddressStore {
   addRecentSuburb: (suburb: RecentSuburb) => void;
 
   recentStreetsBySuburb: Record<string, RecentStreet[]>;
-  addRecentStreet: (suburbId: string, street: RecentStreet) => void;
+  addRecentStreet: (suburb: Suburb, street: RecentStreet) => void;
 
   resetAddressData: () => void;
 }
@@ -47,20 +49,20 @@ export const useAddAddressStore = create<AddAddressStore>()(
       openAddAddressModal: () => set({ isAddAddressModalOpen: true }),
       closeAddAddressModal: () => set({ isAddAddressModalOpen: false }),
 
-      suburbId: null,
-      setSuburbId: (suburbId: string | null) =>
+      suburb: null,
+      setSuburb: (suburb: Suburb | null) =>
         set({
-          suburbId,
-          streetId: null,
+          suburb,
+          street: null,
           houseNumber: "",
           unitNumber: "",
           listType: "return",
         }),
 
-      streetId: null,
-      setStreetId: (streetId: string | null) =>
+      street: null,
+      setStreet: (street: Street | null) =>
         set({
-          streetId,
+          street,
           houseNumber: "",
           unitNumber: "",
           listType: "return",
@@ -92,22 +94,22 @@ export const useAddAddressStore = create<AddAddressStore>()(
         }),
 
       recentStreetsBySuburb: {},
-      addRecentStreet: (suburbId: string, street: RecentStreet) =>
+      addRecentStreet: (suburb: Suburb, street: RecentStreet) =>
         set((state) => {
-          const currentStreets = state.recentStreetsBySuburb[suburbId] || [];
+          const currentStreets = state.recentStreetsBySuburb[suburb.id] || [];
           const filtered = currentStreets.filter((s) => s.value !== street.value);
           return {
             recentStreetsBySuburb: {
               ...state.recentStreetsBySuburb,
-              [suburbId]: [street, ...filtered].slice(0, 5),
+              [suburb.id]: [street, ...filtered].slice(0, 5),
             },
           };
         }),
 
       resetAddressData: () =>
         set({
-          suburbId: null,
-          streetId: null,
+          suburb: null,
+          street: null,
           houseNumber: "",
           unitNumber: "",
           listType: "return",
@@ -116,8 +118,8 @@ export const useAddAddressStore = create<AddAddressStore>()(
     {
       name: "add-address-storage",
       partialize: (state) => ({
-        suburbId: state.suburbId,
-        streetId: state.streetId,
+        suburb: state.suburb,
+        street: state.street,
         houseNumber: state.houseNumber,
         unitNumber: state.unitNumber,
         listType: state.listType,

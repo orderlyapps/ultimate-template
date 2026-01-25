@@ -29,8 +29,8 @@ export const AddAddressModal: React.FC = () => {
     (state) => state.openAddAddressModal,
   );
 
-  const suburbId = useAddAddressStore((state) => state.suburbId);
-  const streetId = useAddAddressStore((state) => state.streetId);
+  const suburbId = useAddAddressStore((state) => state.suburb);
+  const streetId = useAddAddressStore((state) => state.street);
   const houseNumber = useAddAddressStore((state) => state.houseNumber);
 
   return (

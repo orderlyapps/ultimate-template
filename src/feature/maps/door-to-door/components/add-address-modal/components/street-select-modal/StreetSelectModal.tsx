@@ -4,9 +4,9 @@ import { streetCollection } from "@tanstack-db/street/streetCollection";
 import { eq, useLiveQuery } from "@tanstack/react-db";
 
 export const StreetSelectModal: React.FC = () => {
-  const streetId = useAddAddressStore((state) => state.streetId);
-  const setStreetId = useAddAddressStore((state) => state.setStreetId);
-  const suburbId = useAddAddressStore((state) => state.suburbId);
+  const street = useAddAddressStore((state) => state.street);
+  const setStreet = useAddAddressStore((state) => state.setStreet);
+  const suburb = useAddAddressStore((state) => state.suburb);
   const recentStreetsBySuburb = useAddAddressStore(
     (state) => state.recentStreetsBySuburb,
   );
@@ -18,10 +18,10 @@ export const StreetSelectModal: React.FC = () => {
         .from({
           s: streetCollection,
         })
-        .where(({ s }) => eq(s.suburb_id, suburbId))
+        .where(({ s }) => eq(s.suburb_id, suburb?.id))
         .orderBy(({ s }) => s.name);
     },
-    [suburbId],
+    [suburb?.id],
   );
 
   const options = (streets ?? []).map((street) => ({
@@ -29,18 +29,16 @@ export const StreetSelectModal: React.FC = () => {
     label: street.name,
   }));
 
-  const recentStreets = suburbId ? recentStreetsBySuburb[suburbId] || [] : [];
+  const recentStreets = suburb ? recentStreetsBySuburb[suburb.id] || [] : [];
 
   const handleValueChange = (value: string | null) => {
-    setStreetId(value);
-    if (value && suburbId) {
-      const selectedStreet = streets?.find((s) => s.id === value);
-      if (selectedStreet) {
-        addRecentStreet(suburbId, {
-          value: selectedStreet.id,
-          label: selectedStreet.name,
-        });
-      }
+    const selectedStreet = value ? streets?.find((s) => s.id === value) : null;
+    setStreet(selectedStreet ?? null);
+    if (selectedStreet && suburb) {
+      addRecentStreet(suburb, {
+        value: selectedStreet.id,
+        label: selectedStreet.name,
+      });
     }
   };
 
@@ -52,7 +50,7 @@ export const StreetSelectModal: React.FC = () => {
     <SelectModal
       options={options}
       label="Street"
-      value={streetId}
+      value={street?.id ?? null}
       placeholder="Select a street"
       modalTitle="Select a street"
       onValueChange={handleValueChange}

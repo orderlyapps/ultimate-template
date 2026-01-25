@@ -4,8 +4,8 @@ import { suburbCollection } from "@tanstack-db/suburb/suburbCollection";
 import { useLiveQuery } from "@tanstack/react-db";
 
 export const SuburbSelectModal: React.FC = () => {
-  const suburbId = useAddAddressStore((state) => state.suburbId);
-  const setSuburbId = useAddAddressStore((state) => state.setSuburbId);
+  const suburb = useAddAddressStore((state) => state.suburb);
+  const setSuburb = useAddAddressStore((state) => state.setSuburb);
   const recentSuburbs = useAddAddressStore((state) => state.recentSuburbs);
   const addRecentSuburb = useAddAddressStore((state) => state.addRecentSuburb);
 
@@ -23,15 +23,13 @@ export const SuburbSelectModal: React.FC = () => {
   }));
 
   const handleValueChange = (value: string | null) => {
-    setSuburbId(value);
-    if (value) {
-      const selectedSuburb = suburbs?.find((s) => s.id === value);
-      if (selectedSuburb) {
-        addRecentSuburb({
-          value: selectedSuburb.id,
-          label: selectedSuburb.name,
-        });
-      }
+    const selectedSuburb = value ? suburbs?.find((s) => s.id === value) : null;
+    setSuburb(selectedSuburb ?? null);
+    if (selectedSuburb) {
+      addRecentSuburb({
+        value: selectedSuburb.id,
+        label: selectedSuburb.name,
+      });
     }
   };
 
@@ -43,7 +41,7 @@ export const SuburbSelectModal: React.FC = () => {
     <SelectModal
       options={options}
       label="Suburb"
-      value={suburbId}
+      value={suburb?.id ?? null}
       placeholder="Select a suburb"
       modalTitle="Select a suburb"
       onValueChange={handleValueChange}
