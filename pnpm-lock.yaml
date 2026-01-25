@@ -80,9 +80,6 @@ dependencies:
   '@tiptap/starter-kit':
     specifier: ^3.14.0
     version: 3.14.0
-  '@types/mapbox-gl':
-    specifier: ^3.4.1
-    version: 3.4.1
   date-fns:
     specifier: ^4.1.0
     version: 4.1.0
@@ -151,6 +148,9 @@ devDependencies:
   '@types/lodash.throttle':
     specifier: ^4.1.9
     version: 4.1.9
+  '@types/mapbox-gl':
+    specifier: ^3.4.1
+    version: 3.4.1
   '@types/mapbox__mapbox-gl-draw':
     specifier: ^1.4.9
     version: 1.4.9
@@ -4081,7 +4081,7 @@ packages:
     resolution: {integrity: sha512-NsGKKtgW93B+UaLPti6B7NwlxYlES5DpV5Gzj9F75rK5ALKsqSk15CiEHbOnTr09RGbr6ZYiCdI+59NNNcAImg==}
     dependencies:
       '@types/geojson': 7946.0.16
-    dev: false
+    dev: true
 
   /@types/mapbox__mapbox-gl-draw@1.4.9:
     resolution: {integrity: sha512-8OtRdlSFbF/NDKg3CYQZPbI41JUwRPHIOB1f3fc3AG0Wb7CecSuuUG5EG+IsCmTHyzF6cyKpcjR/jcv62U3w6w==}

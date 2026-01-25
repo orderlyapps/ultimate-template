@@ -1,0 +1,55 @@
+export type MapboxGeocodingResponse = {
+  attribution: string;
+  type: string;
+  features: MapboxGeocodingStreetResponse[];
+};
+
+export type MapboxGeocodingStreetResponse = {
+  geometry: {
+    coordinates: [number, number]; // [longitude, latitude]
+    type: "Point";
+  };
+  id: string;
+  properties: {
+    context: {
+      country?: {
+        country_code: string;
+        country_code_alpha_3: string;
+        mapbox_id: string;
+        name: string;
+        wikidata_id: string;
+      };
+      place?: {
+        mapbox_id: string;
+        name: string;
+        wikidata_id: string;
+      };
+      postcode?: {
+        mapbox_id: string;
+        name: string;
+      };
+      region?: {
+        mapbox_id: string;
+        name: string;
+        region_code: string;
+        region_code_full: string;
+        wikidata_id: string;
+      };
+      street?: {
+        mapbox_id: string;
+        name: string;
+      };
+    };
+    coordinates: {
+      longitude: number;
+      latitude: number;
+    };
+    feature_type: string;
+    full_address: string;
+    mapbox_id: string;
+    name: string;
+    name_preferred: string;
+    place_formatted: string;
+  };
+  type: "Feature";
+};

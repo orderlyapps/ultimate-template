@@ -24,8 +24,8 @@ export const handleConfirmAddStreet = async (
       id: crypto.randomUUID(),
       congregation_id: congregationId,
       suburb_id: suburb.id,
-      name: selectedStreet.name,
-      coordinates: selectedStreet.coordinates,
+      name: selectedStreet.properties.name,
+      coordinates: selectedStreet.geometry.coordinates,
     };
 
     const tx = streetCollection.insert(newStreet);

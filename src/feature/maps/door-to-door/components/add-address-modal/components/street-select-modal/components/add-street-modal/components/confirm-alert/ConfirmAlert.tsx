@@ -8,9 +8,16 @@ interface ConfirmAlertProps {
   onClose: () => void;
 }
 
-export const ConfirmAlert: React.FC<ConfirmAlertProps> = ({ suburb, onClose }) => {
-  const selectedStreet = useAddStreetModalStore((state) => state.selectedStreet);
-  const setSelectedStreet = useAddStreetModalStore((state) => state.setSelectedStreet);
+export const ConfirmAlert: React.FC<ConfirmAlertProps> = ({
+  suburb,
+  onClose,
+}) => {
+  const selectedStreet = useAddStreetModalStore(
+    (state) => state.selectedStreet,
+  );
+  const setSelectedStreet = useAddStreetModalStore(
+    (state) => state.setSelectedStreet,
+  );
 
   return (
     <IonAlert
@@ -18,7 +25,7 @@ export const ConfirmAlert: React.FC<ConfirmAlertProps> = ({ suburb, onClose }) =
       header="Add New Street"
       message={
         selectedStreet && suburb
-          ? `Add "${selectedStreet.name}" to ${suburb.name}?`
+          ? `Add "${selectedStreet.properties.name}" to ${suburb.name}?`
           : ""
       }
       buttons={[

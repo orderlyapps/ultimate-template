@@ -12,7 +12,6 @@ export const SuburbSelectModal: React.FC = () => {
   const recentSuburbs = useAddAddressStore((state) => state.recentSuburbs);
   const addRecentSuburb = useAddAddressStore((state) => state.addRecentSuburb);
 
-  console.log(recentSuburbs);
   const { data: suburbs } = useLiveQuery((q) =>
     q
       .from({

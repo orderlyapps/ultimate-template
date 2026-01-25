@@ -9,7 +9,6 @@ import {
   IonList,
   IonSpinner,
 } from "@ionic/react";
-import type { StreetSearchResult } from "@services/vendor/mapbox/helper/getStreets";
 import { mapMasterCollection } from "@tanstack-db/map_master/mapMasterCollection";
 import { useLiveQuery } from "@tanstack/react-db";
 import { Searchbar } from "@ionic-input/searchbar/Searchbar";
@@ -20,6 +19,7 @@ import { useAddStreetModalStore } from "./store/useAddStreetModalStore";
 import { handleSearch } from "./handlers/handleSearch";
 import { ConfirmAlert } from "./components/confirm-alert/ConfirmAlert";
 import { ErrorToast } from "./components/error-toast/ErrorToast";
+import type { MapboxGeocodingStreetResponse } from "@services/vendor/mapbox/types/MapboxGeocodingStreetResponse";
 
 interface AddStreetModalProps {
   isOpen: boolean;
@@ -33,8 +33,10 @@ export const AddStreetModal: React.FC<AddStreetModalProps> = ({
   const searchQuery = useAddStreetModalStore((state) => state.searchQuery);
   const searchResults = useAddStreetModalStore((state) => state.searchResults);
   const isSearching = useAddStreetModalStore((state) => state.isSearching);
-  const setSelectedStreet = useAddStreetModalStore((state) => state.setSelectedStreet);
-  const setErrorMessage = useAddStreetModalStore((state) => state.setErrorMessage);
+  const setSelectedStreet = useAddStreetModalStore(
+    (state) => state.setSelectedStreet,
+  );
+
   const reset = useAddStreetModalStore((state) => state.reset);
   const suburb = useAddAddressStore((state) => state.suburb);
 
@@ -44,11 +46,7 @@ export const AddStreetModal: React.FC<AddStreetModalProps> = ({
     }),
   );
 
-  const handleSelectStreet = (streetResult: StreetSearchResult) => {
-    if (!suburb) {
-      setErrorMessage("Please select a suburb first");
-      return;
-    }
+  const handleSelectStreet = (streetResult: MapboxGeocodingStreetResponse) => {
     setSelectedStreet(streetResult);
   };
 
@@ -69,7 +67,9 @@ export const AddStreetModal: React.FC<AddStreetModalProps> = ({
         <IonToolbar>
           <Searchbar
             value={searchQuery}
-            onIonInput={(e) => handleSearch(e.detail.value ?? "", suburb, mapMaster)}
+            onIonInput={(e) =>
+              handleSearch(e.detail.value ?? "", suburb, mapMaster)
+            }
             placeholder="Search for a street..."
             debounce={500}
           />
@@ -88,21 +88,19 @@ export const AddStreetModal: React.FC<AddStreetModalProps> = ({
         )}
         {suburb && !isSearching && searchResults.length > 0 && (
           <IonList>
-            {searchResults.map((street) => (
-              <Item
-                key={street.id}
-                button
-                onClick={() => handleSelectStreet(street)}
-                detail={false}
-              >
-                <div>
-                  <Text>{street.name}</Text>
-                  <Text color="medium" style={{ fontSize: "0.875rem" }}>
-                    {street.place_name}
-                  </Text>
-                </div>
-              </Item>
-            ))}
+            {searchResults.map((street) => {
+              if (street.properties.context.place?.name !== suburb.name)
+                return null;
+
+              return (
+                <Item
+                  key={street.id}
+                  onClick={() => handleSelectStreet(street)}
+                >
+                  <Text>{street.properties.name}</Text>
+                </Item>
+              );
+            })}
           </IonList>
         )}
         {suburb &&
