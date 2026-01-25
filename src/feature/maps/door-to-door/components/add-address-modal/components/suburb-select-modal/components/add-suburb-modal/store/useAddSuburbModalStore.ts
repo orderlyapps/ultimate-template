@@ -1,16 +1,16 @@
+import type { MapboxGeocodingFeature } from "@services/vendor/mapbox/types/MapboxGeocodingResponse";
 import { create } from "zustand";
-import type { SuburbSearchResult } from "@services/vendor/mapbox/helper/searchSuburbs";
 
 interface AddSuburbModalState {
   searchQuery: string;
-  searchResults: SuburbSearchResult[];
+  searchResults: MapboxGeocodingFeature[];
   isSearching: boolean;
-  selectedSuburb: SuburbSearchResult | null;
+  selectedSuburb: MapboxGeocodingFeature | null;
   errorMessage: string | null;
   setSearchQuery: (query: string) => void;
-  setSearchResults: (results: SuburbSearchResult[]) => void;
+  setSearchResults: (results: MapboxGeocodingFeature[]) => void;
   setIsSearching: (isSearching: boolean) => void;
-  setSelectedSuburb: (suburb: SuburbSearchResult | null) => void;
+  setSelectedSuburb: (suburb: MapboxGeocodingFeature | null) => void;
   setErrorMessage: (message: string | null) => void;
   reset: () => void;
 }

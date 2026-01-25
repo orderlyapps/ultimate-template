@@ -9,7 +9,6 @@ import {
   IonList,
   IonSpinner,
 } from "@ionic/react";
-import type { SuburbSearchResult } from "@services/vendor/mapbox/helper/searchSuburbs";
 import { mapMasterCollection } from "@tanstack-db/map_master/mapMasterCollection";
 import { useLiveQuery } from "@tanstack/react-db";
 import { Searchbar } from "@ionic-input/searchbar/Searchbar";
@@ -19,6 +18,7 @@ import { useAddSuburbModalStore } from "./store/useAddSuburbModalStore";
 import { handleSearch } from "./handlers/handleSearch";
 import { ConfirmAlert } from "./components/confirm-alert/ConfirmAlert";
 import { ErrorToast } from "./components/error-toast/ErrorToast";
+import type { MapboxGeocodingFeature } from "@services/vendor/mapbox/types/MapboxGeocodingResponse";
 
 interface AddSuburbModalProps {
   isOpen: boolean;
@@ -32,7 +32,9 @@ export const AddSuburbModal: React.FC<AddSuburbModalProps> = ({
   const searchQuery = useAddSuburbModalStore((state) => state.searchQuery);
   const searchResults = useAddSuburbModalStore((state) => state.searchResults);
   const isSearching = useAddSuburbModalStore((state) => state.isSearching);
-  const setSelectedSuburb = useAddSuburbModalStore((state) => state.setSelectedSuburb);
+  const setSelectedSuburb = useAddSuburbModalStore(
+    (state) => state.setSelectedSuburb,
+  );
   const reset = useAddSuburbModalStore((state) => state.reset);
 
   const { data: mapMaster } = useLiveQuery((q) =>
@@ -41,7 +43,7 @@ export const AddSuburbModal: React.FC<AddSuburbModalProps> = ({
     }),
   );
 
-  const handleSelectSuburb = (suburbResult: SuburbSearchResult) => {
+  const handleSelectSuburb = (suburbResult: MapboxGeocodingFeature) => {
     setSelectedSuburb(suburbResult);
   };
 
@@ -77,18 +79,8 @@ export const AddSuburbModal: React.FC<AddSuburbModalProps> = ({
         {!isSearching && searchResults.length > 0 && (
           <IonList>
             {searchResults.map((suburb) => (
-              <Item
-                key={suburb.id}
-                button
-                onClick={() => handleSelectSuburb(suburb)}
-                detail={false}
-              >
-                <div>
-                  <Text>{suburb.name}</Text>
-                  <Text color="medium" style={{ fontSize: "0.875rem" }}>
-                    {suburb.place_name}
-                  </Text>
-                </div>
+              <Item key={suburb.id} onClick={() => handleSelectSuburb(suburb)}>
+                <Text>{suburb.properties.name}</Text>
               </Item>
             ))}
           </IonList>

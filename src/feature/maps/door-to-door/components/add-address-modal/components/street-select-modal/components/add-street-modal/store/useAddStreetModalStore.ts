@@ -1,16 +1,16 @@
 import { create } from "zustand";
-import type { MapboxGeocodingStreetResponse } from "@services/vendor/mapbox/types/MapboxGeocodingStreetResponse";
+import type { MapboxGeocodingFeature } from "@services/vendor/mapbox/types/MapboxGeocodingResponse";
 
 interface AddStreetModalState {
   searchQuery: string;
-  searchResults: MapboxGeocodingStreetResponse[];
+  searchResults: MapboxGeocodingFeature[];
   isSearching: boolean;
-  selectedStreet: MapboxGeocodingStreetResponse | null;
+  selectedStreet: MapboxGeocodingFeature | null;
   errorMessage: string | null;
   setSearchQuery: (query: string) => void;
-  setSearchResults: (results: MapboxGeocodingStreetResponse[]) => void;
+  setSearchResults: (results: MapboxGeocodingFeature[]) => void;
   setIsSearching: (isSearching: boolean) => void;
-  setSelectedStreet: (street: MapboxGeocodingStreetResponse | null) => void;
+  setSelectedStreet: (street: MapboxGeocodingFeature | null) => void;
   setErrorMessage: (message: string | null) => void;
   reset: () => void;
 }

@@ -7,15 +7,21 @@ interface ConfirmAlertProps {
 }
 
 export const ConfirmAlert: React.FC<ConfirmAlertProps> = ({ onClose }) => {
-  const selectedSuburb = useAddSuburbModalStore((state) => state.selectedSuburb);
-  const setSelectedSuburb = useAddSuburbModalStore((state) => state.setSelectedSuburb);
+  const selectedSuburb = useAddSuburbModalStore(
+    (state) => state.selectedSuburb,
+  );
+  const setSelectedSuburb = useAddSuburbModalStore(
+    (state) => state.setSelectedSuburb,
+  );
 
   return (
     <IonAlert
       isOpen={!!selectedSuburb}
       header="Add New Suburb"
       message={
-        selectedSuburb ? `Add "${selectedSuburb.name}" to the database?` : ""
+        selectedSuburb
+          ? `Add "${selectedSuburb.properties.name}" to the database?`
+          : ""
       }
       buttons={[
         {

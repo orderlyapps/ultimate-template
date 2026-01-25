@@ -1,16 +1,17 @@
 export type MapboxGeocodingResponse = {
   attribution: string;
   type: string;
-  features: MapboxGeocodingStreetResponse[];
+  features: MapboxGeocodingFeature[];
 };
 
-export type MapboxGeocodingStreetResponse = {
+export type MapboxGeocodingFeature = {
   geometry: {
     coordinates: [number, number]; // [longitude, latitude]
     type: "Point";
   };
   id: string;
   properties: {
+    bbox?: [number, number, number, number];
     context: {
       country?: {
         country_code: string;

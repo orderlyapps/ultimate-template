@@ -1,13 +1,13 @@
 import type {
   MapboxGeocodingResponse,
-  MapboxGeocodingStreetResponse,
-} from "@services/vendor/mapbox/types/MapboxGeocodingStreetResponse";
+  MapboxGeocodingFeature,
+} from "@services/vendor/mapbox/types/MapboxGeocodingResponse";
 
 export async function searchStreets(
   query: string,
   bbox: [number, number, number, number],
   padding: number = 0.01,
-): Promise<MapboxGeocodingStreetResponse[]> {
+): Promise<MapboxGeocodingFeature[]> {
   const accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
   if (!accessToken) {
     throw new Error(

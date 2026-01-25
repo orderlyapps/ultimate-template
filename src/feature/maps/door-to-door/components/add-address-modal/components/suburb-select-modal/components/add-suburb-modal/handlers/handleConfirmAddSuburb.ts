@@ -16,11 +16,15 @@ export const handleConfirmAddSuburb = async (onClose: () => void) => {
       throw new Error("No congregation selected");
     }
 
+    if (!selectedSuburb.properties.bbox) {
+      throw new Error("Suburb does not have a bounding box");
+    }
+
     const newSuburb = {
       id: crypto.randomUUID(),
       congregation_id: congregationId,
-      name: selectedSuburb.name,
-      bbox: selectedSuburb.bbox,
+      name: selectedSuburb.properties.name,
+      bbox: selectedSuburb.properties.bbox,
     };
 
     const tx = suburbCollection.insert(newSuburb);
@@ -36,8 +40,7 @@ export const handleConfirmAddSuburb = async (onClose: () => void) => {
     setSelectedSuburb(null);
     onClose();
   } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : String(error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
 
     if (errorMessage.includes("suburb_congregation_id_name_key")) {
       console.log("This suburb is has already been added");

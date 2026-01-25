@@ -19,7 +19,7 @@ import { useAddStreetModalStore } from "./store/useAddStreetModalStore";
 import { handleSearch } from "./handlers/handleSearch";
 import { ConfirmAlert } from "./components/confirm-alert/ConfirmAlert";
 import { ErrorToast } from "./components/error-toast/ErrorToast";
-import type { MapboxGeocodingStreetResponse } from "@services/vendor/mapbox/types/MapboxGeocodingStreetResponse";
+import type { MapboxGeocodingFeature } from "@services/vendor/mapbox/types/MapboxGeocodingResponse";
 
 interface AddStreetModalProps {
   isOpen: boolean;
@@ -46,7 +46,7 @@ export const AddStreetModal: React.FC<AddStreetModalProps> = ({
     }),
   );
 
-  const handleSelectStreet = (streetResult: MapboxGeocodingStreetResponse) => {
+  const handleSelectStreet = (streetResult: MapboxGeocodingFeature) => {
     setSelectedStreet(streetResult);
   };
 
