@@ -1,4 +1,5 @@
 import { Maps } from "@feature/maps/door-to-door/sources/maps/Maps";
+import { MapMaster } from "@feature/maps/door-to-door/sources/map-master/MapMaster";
 import { DoNotCalls } from "@feature/maps/door-to-door/sources/do-not-calls/DoNotCalls";
 import { Map } from "@services/vendor/mapbox/components/map/Map";
 import { useDoorToDoorStore } from "@feature/maps/door-to-door/store/useDoorToDoorStore";
@@ -38,6 +39,7 @@ export const DoorToDoor: React.FC = () => {
         ]}
         onClick={handleMapClick}
       >
+        <MapMaster />
         <Maps />
         <DoNotCalls />
         <NotAtHome />
