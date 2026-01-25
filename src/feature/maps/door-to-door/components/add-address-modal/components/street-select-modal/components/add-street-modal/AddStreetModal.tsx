@@ -9,8 +9,6 @@ import {
   IonList,
   IonSpinner,
 } from "@ionic/react";
-import { mapMasterCollection } from "@tanstack-db/map_master/mapMasterCollection";
-import { useLiveQuery } from "@tanstack/react-db";
 import { Searchbar } from "@ionic-input/searchbar/Searchbar";
 import { Item } from "@ionic-layout/item/Item";
 import { Text } from "@ionic-display/text/Text";
@@ -40,12 +38,6 @@ export const AddStreetModal: React.FC<AddStreetModalProps> = ({
   const reset = useAddStreetModalStore((state) => state.reset);
   const suburb = useAddAddressStore((state) => state.suburb);
 
-  const { data: mapMaster } = useLiveQuery((q) =>
-    q.from({
-      m: mapMasterCollection,
-    }),
-  );
-
   const handleSelectStreet = (streetResult: MapboxGeocodingFeature) => {
     setSelectedStreet(streetResult);
   };
@@ -67,9 +59,7 @@ export const AddStreetModal: React.FC<AddStreetModalProps> = ({
         <IonToolbar>
           <Searchbar
             value={searchQuery}
-            onIonInput={(e) =>
-              handleSearch(e.detail.value ?? "", suburb, mapMaster)
-            }
+            onIonInput={(e) => handleSearch(e.detail.value ?? "", suburb)}
             placeholder="Search for a street..."
             debounce={500}
           />

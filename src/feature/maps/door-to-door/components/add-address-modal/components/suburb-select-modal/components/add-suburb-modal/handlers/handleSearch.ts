@@ -1,5 +1,5 @@
 import { searchSuburbs } from "@services/vendor/mapbox/helper/searchSuburbs";
-import { getBboxFromBoundary } from "@feature/maps/door-to-door/components/add-address-modal/helper/getBboxFromBoundary";
+import { getBboxFromBoundary } from "@feature/maps/door-to-door/components/add-address-modal/components/suburb-select-modal/components/add-suburb-modal/handlers/getBboxFromBoundary";
 import { useAddSuburbModalStore } from "../store/useAddSuburbModalStore";
 import type { MapMaster } from "@tanstack-db/map_master/mapMasterSchema";
 
