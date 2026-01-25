@@ -1,4 +1,4 @@
-import { getSuburbs } from "@services/vendor/mapbox/helper/getSuburbs";
+import { searchSuburbs } from "@services/vendor/mapbox/helper/searchSuburbs";
 import { getBboxFromBoundary } from "@feature/maps/door-to-door/components/add-address-modal/helper/getBboxFromBoundary";
 import { useAddSuburbModalStore } from "../store/useAddSuburbModalStore";
 import type { MapMaster } from "@tanstack-db/map_master/mapMasterSchema";
@@ -20,7 +20,7 @@ export const handleSearch = async (
   setIsSearching(true);
   try {
     const bbox = getBboxFromBoundary(mapMaster?.[0]?.boundary);
-    const results = await getSuburbs(query, bbox);
+    const results = await searchSuburbs(query, bbox);
     setSearchResults(results);
   } catch (error) {
     console.error("Error searching suburbs:", error);

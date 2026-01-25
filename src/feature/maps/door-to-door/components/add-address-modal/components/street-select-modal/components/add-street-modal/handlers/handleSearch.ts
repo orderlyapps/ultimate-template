@@ -1,4 +1,4 @@
-import { searchStreets } from "@services/vendor/mapbox/helper/getStreets";
+import { searchStreets } from "@services/vendor/mapbox/helper/searchStreets";
 import { getBboxFromBoundary } from "@feature/maps/door-to-door/components/add-address-modal/helper/getBboxFromBoundary";
 import { useAddStreetModalStore } from "../store/useAddStreetModalStore";
 import type { MapMaster } from "@tanstack-db/map_master/mapMasterSchema";

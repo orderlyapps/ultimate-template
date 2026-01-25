@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { SuburbSearchResult } from "@services/vendor/mapbox/helper/getSuburbs";
+import type { SuburbSearchResult } from "@services/vendor/mapbox/helper/searchSuburbs";
 
 interface AddSuburbModalState {
   searchQuery: string;

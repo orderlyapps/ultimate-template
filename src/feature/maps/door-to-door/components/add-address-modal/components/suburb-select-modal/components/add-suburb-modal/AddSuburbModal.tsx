@@ -9,7 +9,7 @@ import {
   IonList,
   IonSpinner,
 } from "@ionic/react";
-import type { SuburbSearchResult } from "@services/vendor/mapbox/helper/getSuburbs";
+import type { SuburbSearchResult } from "@services/vendor/mapbox/helper/searchSuburbs";
 import { mapMasterCollection } from "@tanstack-db/map_master/mapMasterCollection";
 import { useLiveQuery } from "@tanstack/react-db";
 import { Searchbar } from "@ionic-input/searchbar/Searchbar";

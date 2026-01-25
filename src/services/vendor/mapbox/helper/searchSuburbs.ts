@@ -18,7 +18,7 @@ interface MapboxFeature {
   };
 }
 
-export async function getSuburbs(
+export async function searchSuburbs(
   query: string,
   bbox?: [number, number, number, number],
 ): Promise<SuburbSearchResult[]> {
