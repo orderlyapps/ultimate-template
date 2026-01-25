@@ -1,0 +1,31 @@
+import { getSuburbs } from "@services/vendor/mapbox/helper/getSuburbs";
+import { getBboxFromBoundary } from "@feature/maps/door-to-door/components/add-address-modal/helper/getBboxFromBoundary";
+import { useAddSuburbModalStore } from "../store/useAddSuburbModalStore";
+import type { MapMaster } from "@tanstack-db/map_master/mapMasterSchema";
+
+export const handleSearch = async (
+  query: string,
+  mapMaster: MapMaster[] | undefined
+) => {
+  const { setSearchQuery, setSearchResults, setIsSearching } =
+    useAddSuburbModalStore.getState();
+
+  setSearchQuery(query);
+
+  if (!query.trim()) {
+    setSearchResults([]);
+    return;
+  }
+
+  setIsSearching(true);
+  try {
+    const bbox = getBboxFromBoundary(mapMaster?.[0]?.boundary);
+    const results = await getSuburbs(query, bbox);
+    setSearchResults(results);
+  } catch (error) {
+    console.error("Error searching suburbs:", error);
+    setSearchResults([]);
+  } finally {
+    setIsSearching(false);
+  }
+};

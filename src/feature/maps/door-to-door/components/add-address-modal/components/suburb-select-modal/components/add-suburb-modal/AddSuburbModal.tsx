@@ -8,23 +8,17 @@ import {
   IonContent,
   IonList,
   IonSpinner,
-  IonAlert,
-  IonToast,
 } from "@ionic/react";
-import { useState } from "react";
-import {
-  getSuburbs,
-  type SuburbSearchResult,
-} from "@services/vendor/mapbox/helper/getSuburbs";
+import type { SuburbSearchResult } from "@services/vendor/mapbox/helper/getSuburbs";
 import { mapMasterCollection } from "@tanstack-db/map_master/mapMasterCollection";
 import { useLiveQuery } from "@tanstack/react-db";
 import { Searchbar } from "@ionic-input/searchbar/Searchbar";
 import { Item } from "@ionic-layout/item/Item";
 import { Text } from "@ionic-display/text/Text";
-import { getBboxFromBoundary } from "@feature/maps/door-to-door/components/add-address-modal/helper/getBboxFromBoundary";
-import { suburbCollection } from "@tanstack-db/suburb/suburbCollection";
-import { useAddAddressStore } from "@feature/maps/door-to-door/components/add-address-modal/store/useAddAddressStore";
-import { getUserCongregation } from "@feature/db/congregation/user-congregation/get-user-congregation/getUserCongregation";
+import { useAddSuburbModalStore } from "./store/useAddSuburbModalStore";
+import { handleSearch } from "./handlers/handleSearch";
+import { ConfirmAlert } from "./components/confirm-alert/ConfirmAlert";
+import { ErrorToast } from "./components/error-toast/ErrorToast";
 
 interface AddSuburbModalProps {
   isOpen: boolean;
@@ -35,14 +29,11 @@ export const AddSuburbModal: React.FC<AddSuburbModalProps> = ({
   isOpen,
   onClose,
 }) => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState<SuburbSearchResult[]>([]);
-  const [isSearching, setIsSearching] = useState(false);
-  const [selectedSuburb, setSelectedSuburb] =
-    useState<SuburbSearchResult | null>(null);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const setSuburb = useAddAddressStore((state) => state.setSuburb);
-  const addRecentSuburb = useAddAddressStore((state) => state.addRecentSuburb);
+  const searchQuery = useAddSuburbModalStore((state) => state.searchQuery);
+  const searchResults = useAddSuburbModalStore((state) => state.searchResults);
+  const isSearching = useAddSuburbModalStore((state) => state.isSearching);
+  const setSelectedSuburb = useAddSuburbModalStore((state) => state.setSelectedSuburb);
+  const reset = useAddSuburbModalStore((state) => state.reset);
 
   const { data: mapMaster } = useLiveQuery((q) =>
     q.from({
@@ -50,88 +41,28 @@ export const AddSuburbModal: React.FC<AddSuburbModalProps> = ({
     }),
   );
 
-  const handleSearch = async (query: string) => {
-    setSearchQuery(query);
-
-    if (!query.trim()) {
-      setSearchResults([]);
-      return;
-    }
-
-    setIsSearching(true);
-    try {
-      const bbox = getBboxFromBoundary(mapMaster?.[0]?.boundary);
-      const results = await getSuburbs(query, bbox);
-      setSearchResults(results);
-    } catch (error) {
-      console.error("Error searching suburbs:", error);
-      setSearchResults([]);
-    } finally {
-      setIsSearching(false);
-    }
-  };
-
   const handleSelectSuburb = (suburbResult: SuburbSearchResult) => {
     setSelectedSuburb(suburbResult);
   };
 
-  const handleConfirmAddSuburb = async () => {
-    if (!selectedSuburb) return;
-
-    try {
-      const congregationId = getUserCongregation()?.id;
-      if (!congregationId) {
-        throw new Error("No congregation selected");
-      }
-
-      const newSuburb = {
-        id: crypto.randomUUID(),
-        congregation_id: congregationId,
-        name: selectedSuburb.name,
-        bbox: selectedSuburb.bbox,
-      };
-
-      const tx = suburbCollection.insert(newSuburb);
-
-      await tx.isPersisted.promise;
-
-      setSuburb(newSuburb);
-      addRecentSuburb({
-        value: newSuburb.id,
-        label: newSuburb.name,
-      });
-
-      setSelectedSuburb(null);
-      onClose();
-    } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : String(error);
-
-      if (errorMessage.includes("suburb_congregation_id_name_key")) {
-        console.log("This suburb is has already been added");
-        setErrorMessage(`This suburb is has already been added`);
-      } else {
-        setErrorMessage(errorMessage);
-        console.error(`Failed to add todo: ${error}`);
-      }
-
-      setSelectedSuburb(null);
-    }
+  const handleClose = () => {
+    reset();
+    onClose();
   };
 
   return (
-    <IonModal isOpen={isOpen} onDidDismiss={onClose}>
+    <IonModal isOpen={isOpen} onDidDismiss={handleClose}>
       <IonHeader>
         <IonToolbar>
           <IonTitle>Add New Suburb</IonTitle>
           <IonButtons slot="end">
-            <CloseButton onClick={onClose} />
+            <CloseButton onClick={handleClose} />
           </IonButtons>
         </IonToolbar>
         <IonToolbar>
           <Searchbar
             value={searchQuery}
-            onIonInput={(e) => handleSearch(e.detail.value ?? "")}
+            onIonInput={(e) => handleSearch(e.detail.value ?? "", mapMaster)}
             placeholder="Search for a suburb..."
             debounce={500}
           />
@@ -174,35 +105,8 @@ export const AddSuburbModal: React.FC<AddSuburbModalProps> = ({
         )}
       </IonContent>
 
-      <IonAlert
-        isOpen={!!selectedSuburb}
-        header="Add New Suburb"
-        message={
-          selectedSuburb ? `Add "${selectedSuburb.name}" to the database?` : ""
-        }
-        buttons={[
-          {
-            text: "Cancel",
-            role: "cancel",
-            handler: () => setSelectedSuburb(null),
-          },
-          {
-            text: "Add",
-            role: "confirm",
-            handler: handleConfirmAddSuburb,
-          },
-        ]}
-        onDidDismiss={() => setSelectedSuburb(null)}
-      />
-
-      <IonToast
-        isOpen={!!errorMessage}
-        message={errorMessage ?? ""}
-        duration={3000}
-        color="danger"
-        position="top"
-        onDidDismiss={() => setErrorMessage(null)}
-      />
+      <ConfirmAlert onClose={handleClose} />
+      <ErrorToast />
     </IonModal>
   );
 };
