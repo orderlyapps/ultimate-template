@@ -19,17 +19,38 @@ export const suburbCollection = createCollection(
     queryClient,
     getKey: (item) => item.id,
     schema: suburbSchema,
+
     onInsert: async ({ transaction }) => {
       const { changes } = transaction.mutations[0];
-      await supabase.from("suburb").insert(changes);
+      const { data, error } = await supabase.from("suburb").insert(changes);
+      if (error) {
+        throw new Error(`Failed to insert todo: ${error.message}`);
+      }
+      return data;
     },
+
     onUpdate: async ({ transaction }) => {
       const { changes, original } = transaction.mutations[0];
-      await supabase.from("suburb").update(changes).eq("id", original.id);
+      const { data, error } = await supabase
+        .from("suburb")
+        .update(changes)
+        .eq("id", original.id);
+      if (error) {
+        throw new Error(`Failed to insert todo: ${error.message}`);
+      }
+      return data;
     },
+
     onDelete: async ({ transaction }) => {
       const { original } = transaction.mutations[0];
-      await supabase.from("suburb").delete().eq("id", original.id);
+      const { data, error } = await supabase
+        .from("suburb")
+        .delete()
+        .eq("id", original.id);
+      if (error) {
+        throw new Error(`Failed to insert todo: ${error.message}`);
+      }
+      return data;
     },
   }),
 );

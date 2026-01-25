@@ -28,7 +28,7 @@ export async function searchStreets(
   bbox: [number, number, number, number],
   padding: number = 0.01
 ): Promise<StreetSearchResult[]> {
-  const accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
+  const accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
   if (!accessToken) {
     throw new Error("Mapbox access token not found. Please set VITE_MAPBOX_TOKEN environment variable.");
   }

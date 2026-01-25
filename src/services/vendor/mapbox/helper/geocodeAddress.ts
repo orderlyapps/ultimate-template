@@ -25,7 +25,7 @@ export async function geocodeAddress(
   const { suburb, padding = 0.01 } = options;
 
   // Get Mapbox access token from environment
-  const accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
+  const accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
   if (!accessToken) {
     throw new Error(
       "Mapbox access token not found. Please set VITE_MAPBOX_TOKEN environment variable.",
