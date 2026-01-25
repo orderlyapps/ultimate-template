@@ -33,7 +33,12 @@ export const StreetSelectModal: React.FC = () => {
   }));
 
   const options = [
-    { value: "add-new", label: "＋ Add New Street" },
+    {
+      value: "add-new",
+      label: "＋ Add New Street",
+      color: "primary",
+      bold: true,
+    },
     ...streetOptions,
   ];
 

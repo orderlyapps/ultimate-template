@@ -20,19 +20,19 @@ import { chevronExpand } from "ionicons/icons";
 type SelectOption = {
   readonly value: string | null;
   readonly label: string;
-};
+  readonly color?: string;
+  readonly bold?: boolean;
+} & { value: string; label: string; color?: string; bold?: boolean };
 
 type SelectItemProps = {
-  options: readonly SelectOption[] | { value: string; label: string }[];
+  options: readonly SelectOption[];
   label?: string;
   value?: string | null;
   placeholder?: string;
   modalTitle?: string;
   onValueChange?: (value: string | null) => void;
   disabled?: boolean;
-  recentlySelected?:
-    | readonly SelectOption[]
-    | { value: string; label: string }[];
+  recentlySelected?: readonly SelectOption[];
   listHeader?: string;
 };
 
@@ -68,7 +68,7 @@ export const SelectModal: React.FC<SelectItemProps> = ({
             color: selectedOption ? undefined : "var(--ion-color-medium)",
           }}
         >
-          {displayText}{" "}
+          {displayText}
           <IonIcon icon={chevronExpand} color="medium" size="small"></IonIcon>
         </div>
       </Item>
@@ -94,15 +94,13 @@ export const SelectModal: React.FC<SelectItemProps> = ({
           {recentlySelected.length > 0 && (
             <>
               <IonListHeader>
-                <Label>Recent</Label>
+                <Label color={"medium"}>Recent</Label>
               </IonListHeader>
               <List>
                 {recentlySelected.map((option) => (
                   <Item
                     key={option.value ?? "null"}
-                    button
                     onClick={() => handleSelect(option.value)}
-                    detail={false}
                   >
                     <Text>{option.label}</Text>
                   </Item>
@@ -112,7 +110,7 @@ export const SelectModal: React.FC<SelectItemProps> = ({
           )}
           <List>
             <IonListHeader>
-              <Label>{listHeader}</Label>
+              <Label color={"medium"}>{listHeader}</Label>
             </IonListHeader>
             {options
               .filter((option) =>
@@ -121,12 +119,15 @@ export const SelectModal: React.FC<SelectItemProps> = ({
               .map((option) => (
                 <Item
                   key={option.value ?? "null"}
-                  button
                   onClick={() => handleSelect(option.value)}
-                  detail={false}
                   color={option.value === value ? "medium" : undefined}
                 >
-                  <Text bold={option.value === value}>{option.label}</Text>
+                  <Text
+                    bold={option.value === value || option.bold}
+                    color={option.color}
+                  >
+                    {option.label}
+                  </Text>
                 </Item>
               ))}
           </List>
