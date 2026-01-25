@@ -26,7 +26,7 @@ export const SuburbSelectModal: React.FC = () => {
   }));
 
   const options = [
-    { value: "add-new", label: "+ Add New Suburb" },
+    { value: "add-new", label: "＋ Add New Suburb" },
     ...suburbOptions,
   ];
 
