@@ -1,4 +1,4 @@
-import { useThemeStore } from "@services/app/theme/themeStore";
+import { useTheme } from "@services/app/theme/useTheme";
 import { useMapStyle } from "@services/vendor/mapbox/hooks/use-map-style/useMapStyle";
 
 export type MapStyle = "standard" | "satellite" | "rural";
@@ -14,8 +14,7 @@ const mapStyles: Record<MapStyle, string | { light: string; dark: string }> = {
 
 export const useMapStyleURL = (id?: string): string => {
   const [mapStyle] = useMapStyle(id);
-
-  const theme = useThemeStore((state) => state.preference);
+  const isDark = useTheme();
 
   const ruralStyle = mapStyles.rural;
   if (mapStyle === "rural") {
@@ -24,13 +23,15 @@ export const useMapStyleURL = (id?: string): string => {
 
   const satelliteStyle = mapStyles.satellite;
   if (mapStyle === "satellite") {
-    return typeof satelliteStyle === "string" ? satelliteStyle : satelliteStyle.light;
+    return typeof satelliteStyle === "string"
+      ? satelliteStyle
+      : satelliteStyle.light;
   }
 
   const standardStyle = mapStyles.standard;
   if (typeof standardStyle === "string") return standardStyle;
 
-  if (theme === "dark") return standardStyle.dark;
+  if (isDark) return standardStyle.dark;
 
   return standardStyle.light;
 };
