@@ -15,7 +15,7 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import { useState } from "react";
-import { chevronExpand } from "ionicons/icons";
+import { caretDownSharp, chevronExpand } from "ionicons/icons";
 
 type SelectOption = {
   readonly value: string | null;
@@ -62,15 +62,15 @@ export const SelectModal: React.FC<SelectItemProps> = ({
     <>
       <Item onClick={() => !disabled && setIsOpen(true)} disabled={disabled}>
         {label && <Label>{label}</Label>}
-        <div
-          slot="end"
-          style={{
-            color: selectedOption ? undefined : "var(--ion-color-medium)",
-          }}
-        >
-          {displayText}
-          <IonIcon icon={chevronExpand} color="medium" size="small"></IonIcon>
-        </div>
+        <Text>{displayText}</Text>
+        <div style={{ width: "0.2rem" }}></div>
+        <IonIcon
+          id="select-icon"
+          ios={chevronExpand}
+          md={caretDownSharp}
+          color="medium"
+          size="small"
+        />
       </Item>
 
       <IonModal isOpen={isOpen} onDidDismiss={() => setIsOpen(false)}>

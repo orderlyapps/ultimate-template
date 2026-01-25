@@ -1,0 +1,9 @@
+/* ion-select::part(icon) {
+    width: 2rem;
+    height: 2rem;
+} */
+
+#select-icon.md {
+    width: 0.8rem;
+    height: 0.8rem;
+}
