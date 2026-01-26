@@ -4,10 +4,10 @@ import { DoNotCalls } from "@feature/maps/door-to-door/sources/do-not-calls/DoNo
 import { Map } from "@services/vendor/mapbox/components/map/Map";
 import { useDoorToDoorStore } from "@feature/maps/door-to-door/store/useDoorToDoorStore";
 import { GetDirectionsAlert } from "@feature/maps/door-to-door/components/get-directions-alert/GetDirectionsAlert";
-import { DoNotCallAlert } from "@feature/maps/door-to-door/components/do-not-call-alert/DoNotCallAlert";
+import { DoNotCallAlert } from "@feature/maps/door-to-door/components/do-not-calls/do-not-call-alert/DoNotCallAlert";
 import { NotAtHomeAlert } from "@feature/maps/door-to-door/components/not-at-homes/not-at-home-alert/NotAtHomeAlert";
 import { NotAtHomeUnitModal } from "@feature/maps/door-to-door/components/not-at-homes/not-at-home-unit-modal/NotAtHomeUnitModal";
-import { DoNotCallUnitModal } from "@feature/maps/door-to-door/components/do-not-call-unit-modal/DoNotCallUnitModal";
+import { DoNotCallUnitModal } from "@feature/maps/door-to-door/components/do-not-calls/do-not-call-unit-modal/DoNotCallUnitModal";
 import { AddAddressModal } from "@feature/maps/door-to-door/components/add-address-modal/AddAddressModal";
 import { useMapClickHandler } from "@feature/maps/door-to-door/handlers/useMapClickHandler";
 import type { MapTouchEvent } from "react-map-gl/mapbox";
