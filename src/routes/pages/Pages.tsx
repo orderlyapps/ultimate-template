@@ -8,6 +8,11 @@ import { TalkSubsection } from "@pages/home/talks/talk/section/subsection/TalkSu
 import { Ministry } from "@pages/ministry/Ministry";
 import { DoorToDoor } from "@pages/ministry/door-to-door/DoorToDoor";
 import { Schedules } from "@pages/schedules/Schedules";
+import { MidweekMeeting } from "@pages/schedules/midweek-meeting/MidweekMeeting";
+import { WeekendMeeting } from "@pages/schedules/weekend-meeting/WeekendMeeting";
+import { AudioAndVideo } from "@pages/schedules/audio-and-video/AudioAndVideo";
+import { Cleaning } from "@pages/schedules/cleaning/Cleaning";
+import { Events } from "@pages/schedules/events/Events";
 import { Publishers } from "@pages/publishers/Publishers";
 import { Settings } from "@pages/settings/Settings";
 import { Profile } from "@pages/settings/profile/Profile";
@@ -36,6 +41,23 @@ export const pages = (
     <Route exact path="/ministry" render={() => <Ministry />} />
     <Route exact path="/ministry/door-to-door" render={() => <DoorToDoor />} />
     <Route exact path="/schedules" render={() => <Schedules />} />
+    <Route
+      exact
+      path="/schedules/midweek-meeting"
+      render={() => <MidweekMeeting />}
+    />
+    <Route
+      exact
+      path="/schedules/weekend-meeting"
+      render={() => <WeekendMeeting />}
+    />
+    <Route
+      exact
+      path="/schedules/audio-and-video"
+      render={() => <AudioAndVideo />}
+    />
+    <Route exact path="/schedules/cleaning" render={() => <Cleaning />} />
+    <Route exact path="/schedules/events" render={() => <Events />} />
     <Route exact path="/publishers" render={() => <Publishers />} />
     <Route exact path="/settings" render={() => <Settings />} />
     <Route exact path="/settings/profile" render={() => <Profile />} />

@@ -6,6 +6,8 @@ import {
   IonContent,
 } from "@ionic/react";
 import { Space } from "@layout/space/Space";
+import { List } from "@ionic-layout/list/List";
+import { NavItem } from "@navigation/nav-item/NavItem";
 
 export const Schedules: React.FC = () => {
   return (
@@ -22,6 +24,13 @@ export const Schedules: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <Space height="2" />
+        <List>
+          <NavItem routerLink="/schedules/midweek-meeting">Midweek Meeting</NavItem>
+          <NavItem routerLink="/schedules/weekend-meeting">Weekend Meeting</NavItem>
+          <NavItem routerLink="/schedules/audio-and-video">Audio & Video</NavItem>
+          <NavItem routerLink="/schedules/cleaning">Cleaning</NavItem>
+          <NavItem routerLink="/schedules/events">Events</NavItem>
+        </List>
       </IonContent>
     </IonPage>
   );
