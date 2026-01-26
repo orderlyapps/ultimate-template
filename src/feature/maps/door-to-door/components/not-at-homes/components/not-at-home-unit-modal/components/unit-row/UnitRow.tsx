@@ -27,7 +27,7 @@ export const UnitRow = ({
     <IonItemSliding>
       <IonItem className="ion-margin">
         <IonLabel>Unit {unit.unit_number || "N/A"}</IonLabel>
-        <IonNote>Added {created}</IonNote>
+        <IonNote slot="end">Added {created}</IonNote>
       </IonItem>
       <IonItemOptions side="end">
         <ItemOptionMove onClick={onMove} />
