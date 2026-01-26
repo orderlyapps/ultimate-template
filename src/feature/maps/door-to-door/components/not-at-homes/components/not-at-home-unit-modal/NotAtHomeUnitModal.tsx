@@ -9,9 +9,11 @@ import {
 import { useDoorToDoorStore } from "@feature/maps/door-to-door/store/useDoorToDoorStore";
 import { CloseButton } from "@input/button/close-button/CloseButton";
 import { ErrorToast } from "@feature/maps/door-to-door/components/not-at-homes/components/error-toast/ErrorToast";
+import { HelpText } from "@services/app/help-text/HelpText";
 import { handleDeleteNotAtHomeById } from "@feature/maps/door-to-door/components/not-at-homes/handlers/handleDeleteNotAtHomeById";
 import { handleToggleNotAtHomeWriteById } from "@feature/maps/door-to-door/components/not-at-homes/handlers/handleToggleNotAtHomeWriteById";
 import { UnitList } from "@feature/maps/door-to-door/components/not-at-homes/components/not-at-home-unit-modal/components/unit-list/UnitList";
+import { List } from "@ionic-layout/list/List";
 
 export const NotAtHomeUnitModal: React.FC = () => {
   const selectedUnits = useDoorToDoorStore((state) => state.selectedUnits);
@@ -44,6 +46,12 @@ export const NotAtHomeUnitModal: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
+        <List inset>
+          <HelpText id="door-to-door:not-at-home-unit-modal-swipe">
+            <strong>Instructions:</strong> Swipe a unit row to reveal actions
+            (move or delete).
+          </HelpText>
+        </List>
         <UnitList
           title="Return List"
           units={returnUnits}
@@ -69,4 +77,4 @@ export const NotAtHomeUnitModal: React.FC = () => {
       </IonContent>
     </IonModal>
   );
- };
+};

@@ -22,6 +22,11 @@ export const HelpTextSettings: React.FC = () => {
 
   const helpTextGroups = [
     {
+      id: "door-to-door",
+      title: "Door To Door",
+      description: "Reset all help text for the door to door feature",
+    },
+    {
       id: "talks",
       title: "Talks",
       description: "Reset all help text for the talks feature",
