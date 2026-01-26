@@ -1,14 +1,18 @@
 type Suburb = {
-  id: string;
   name: string;
   bbox: number[];
 };
 
-export interface GeocodeResult {
-  coordinates: [number, number]; // [longitude, latitude]
-  place_name: string;
-  relevance: number;
-}
+import type {
+  MapboxGeocodingFeature,
+  MapboxGeocodingResponse,
+} from "@services/vendor/mapbox/types/MapboxGeocodingResponse";
+
+// export interface GeocodeResult {
+//   coordinates: [number, number]; // [longitude, latitude]
+//   place_name: string;
+//   relevance: number;
+// }
 
 export interface GeocodeOptions {
   suburb: Suburb;
@@ -21,7 +25,7 @@ export interface GeocodeOptions {
 export async function geocodeAddress(
   address: string,
   options: GeocodeOptions,
-): Promise<GeocodeResult | null> {
+): Promise<MapboxGeocodingFeature | null> {
   const { suburb, padding = 0.01 } = options;
 
   // Get Mapbox access token from environment
@@ -44,7 +48,7 @@ export async function geocodeAddress(
   // Helper function to try geocoding with a specific address string
   const tryGeocode = async (
     addressString: string,
-  ): Promise<GeocodeResult | null> => {
+  ): Promise<MapboxGeocodingFeature | null> => {
     try {
       const encodedAddress = encodeURIComponent(addressString);
       const bboxParam = paddedBbox.join(",");
@@ -66,20 +70,13 @@ export async function geocodeAddress(
         );
       }
 
-      const data = await response.json();
+      const { features }: MapboxGeocodingResponse = await response.json();
 
-      if (!data.features || data.features.length === 0) {
+      if (!features) {
         return null; // No results found
       }
 
-      const feature = data.features[0];
-      const [longitude, latitude] = feature.geometry.coordinates;
-
-      return {
-        coordinates: [longitude, latitude],
-        place_name: feature.properties.full_address || feature.properties.name,
-        relevance: feature.properties.match_code?.confidence || 1,
-      };
+      return features[0];
     } catch (error) {
       console.error(`Geocoding error for "${addressString}":`, error);
       return null;

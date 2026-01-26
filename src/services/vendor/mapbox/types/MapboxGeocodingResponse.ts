@@ -42,12 +42,28 @@ export type MapboxGeocodingFeature = {
       };
     };
     coordinates: {
+      accuracy?: string;
       longitude: number;
       latitude: number;
+      routable_points?: {
+        latitude: number;
+        longitude: number;
+        name: string;
+      }[];
     };
     feature_type: string;
     full_address: string;
     mapbox_id: string;
+    match_code: {
+      address_number: string;
+      confidence: string;
+      country: string;
+      locality: string;
+      place: string;
+      postcode: string;
+      region: string;
+      street: string;
+    };
     name: string;
     name_preferred: string;
     place_formatted: string;

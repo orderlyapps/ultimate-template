@@ -18,6 +18,7 @@ import { List } from "@ionic-layout/list/List";
 import { HouseNumberInput } from "@feature/maps/door-to-door/components/add-address-modal/components/house-number-input/HouseNumberInput";
 import { UnitNumberInput } from "@feature/maps/door-to-door/components/add-address-modal/components/unit-number-input/UnitNumberInput";
 import { ListSelectInput } from "@feature/maps/door-to-door/components/add-address-modal/components/list-select-input/ListSelectInput";
+import { SaveAddressButton } from "@feature/maps/door-to-door/components/add-address-modal/components/save-address-button/SaveAddressButton";
 
 export const AddAddressModal: React.FC = () => {
   const isOpen = useAddAddressStore((state) => state.isAddAddressModalOpen);
@@ -29,8 +30,8 @@ export const AddAddressModal: React.FC = () => {
     (state) => state.openAddAddressModal,
   );
 
-  const suburbId = useAddAddressStore((state) => state.suburb);
-  const streetId = useAddAddressStore((state) => state.street);
+  const suburb = useAddAddressStore((state) => state.suburb);
+  const street = useAddAddressStore((state) => state.street);
   const houseNumber = useAddAddressStore((state) => state.houseNumber);
 
   return (
@@ -52,8 +53,8 @@ export const AddAddressModal: React.FC = () => {
         <IonContent>
           <List inset>
             <SuburbSelectModal />
-            {suburbId !== null && <StreetSelectModal />}
-            {streetId !== null && <HouseNumberInput />}
+            {suburb !== null && <StreetSelectModal />}
+            {street !== null && <HouseNumberInput />}
             {houseNumber !== null && houseNumber !== "" && (
               <>
                 <UnitNumberInput />
@@ -61,6 +62,7 @@ export const AddAddressModal: React.FC = () => {
               </>
             )}
           </List>
+          <SaveAddressButton onSuccess={closeAddAddressModal} />
         </IonContent>
       </IonModal>
     </>

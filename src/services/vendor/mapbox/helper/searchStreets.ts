@@ -43,7 +43,6 @@ export async function searchStreets(
 
     const { features }: MapboxGeocodingResponse = await response.json();
 
-    console.log(features);
     return features;
   } catch (error) {
     console.error("Street search error:", error);

@@ -33,7 +33,6 @@ export async function searchSuburbs(
 
     const { features }: MapboxGeocodingResponse = await response.json();
 
-    console.log(features);
     return features;
   } catch (error) {
     console.error("Suburb search error:", error);
