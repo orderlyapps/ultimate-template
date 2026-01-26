@@ -5,16 +5,13 @@ import {
   IonTitle,
   IonContent,
   IonButtons,
-  IonListHeader,
-  IonNote,
 } from "@ionic/react";
 import { useDoorToDoorStore } from "@feature/maps/door-to-door/store/useDoorToDoorStore";
-import { formatDistanceToNow } from "date-fns";
-import { List } from "@ionic-layout/list/List";
-import { Item } from "@ionic-layout/item/Item";
-import { Label } from "@ionic-display/label/Label";
-import { Space } from "@layout/space/Space";
 import { CloseButton } from "@input/button/close-button/CloseButton";
+import { ErrorToast } from "@feature/maps/door-to-door/components/not-at-homes/components/error-toast/ErrorToast";
+import { handleDeleteNotAtHomeById } from "@feature/maps/door-to-door/components/not-at-homes/handlers/handleDeleteNotAtHomeById";
+import { handleToggleNotAtHomeWriteById } from "@feature/maps/door-to-door/components/not-at-homes/handlers/handleToggleNotAtHomeWriteById";
+import { UnitList } from "@feature/maps/door-to-door/components/not-at-homes/components/not-at-home-unit-modal/components/unit-list/UnitList";
 
 export const NotAtHomeUnitModal: React.FC = () => {
   const selectedUnits = useDoorToDoorStore((state) => state.selectedUnits);
@@ -47,48 +44,29 @@ export const NotAtHomeUnitModal: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        {returnUnits.length > 0 && (
-          <List>
-            <IonListHeader>Return List</IonListHeader>
-            {returnUnits.map((unit) => {
-              const created = unit.created_at
-                ? formatDistanceToNow(new Date(unit.created_at), {
-                    addSuffix: true,
-                  })
-                : "Unknown";
+        <UnitList
+          title="Return List"
+          units={returnUnits}
+          onMove={(id) => {
+            void handleToggleNotAtHomeWriteById(id);
+          }}
+          onDelete={(id) => {
+            void handleDeleteNotAtHomeById(id);
+          }}
+        />
 
-              return (
-                <Item key={unit.id} className="ion-margin">
-                  <Label>Unit {unit.unit_number || "N/A"}</Label>
-                  <IonNote>Added {created}</IonNote>
-                </Item>
-              );
-            })}
-          </List>
-        )}
-
-        <Space height="2" />
-
-        {writeUnits.length > 0 && (
-          <List>
-            <IonListHeader>Write List</IonListHeader>
-            {writeUnits.map((unit) => {
-              const created = unit.created_at
-                ? formatDistanceToNow(new Date(unit.created_at), {
-                    addSuffix: true,
-                  })
-                : "Unknown";
-
-              return (
-                <Item key={unit.id} className="ion-margin">
-                  <Label>Unit {unit.unit_number || "N/A"}</Label>
-                  <IonNote>Added {created}</IonNote>
-                </Item>
-              );
-            })}
-          </List>
-        )}
+        <UnitList
+          title="Write List"
+          units={writeUnits}
+          onMove={(id) => {
+            void handleToggleNotAtHomeWriteById(id);
+          }}
+          onDelete={(id) => {
+            void handleDeleteNotAtHomeById(id);
+          }}
+        />
+        <ErrorToast />
       </IonContent>
     </IonModal>
   );
-};
+ };
