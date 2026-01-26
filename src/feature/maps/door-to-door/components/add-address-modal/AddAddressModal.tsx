@@ -9,6 +9,7 @@ import {
   IonFab,
   IonFabButton,
   IonIcon,
+  IonToast,
 } from "@ionic/react";
 import { useAddAddressStore } from "@feature/maps/door-to-door/components/add-address-modal/store/useAddAddressStore";
 import addIcon from "@icons/add.svg";
@@ -19,12 +20,16 @@ import { HouseNumberInput } from "@feature/maps/door-to-door/components/add-addr
 import { UnitNumberInput } from "@feature/maps/door-to-door/components/add-address-modal/components/unit-number-input/UnitNumberInput";
 import { ListSelectInput } from "@feature/maps/door-to-door/components/add-address-modal/components/list-select-input/ListSelectInput";
 import { SaveAddressButton } from "@feature/maps/door-to-door/components/add-address-modal/components/save-address-button/SaveAddressButton";
+import { Space } from "@layout/space/Space";
 
 export const AddAddressModal: React.FC = () => {
   const isOpen = useAddAddressStore((state) => state.isAddAddressModalOpen);
   const closeAddAddressModal = useAddAddressStore(
     (state) => state.closeAddAddressModal,
   );
+
+  const errorMessage = useAddAddressStore((state) => state.errorMessage);
+  const setErrorMessage = useAddAddressStore((state) => state.setErrorMessage);
 
   const openAddAddressModal = useAddAddressStore(
     (state) => state.openAddAddressModal,
@@ -59,12 +64,21 @@ export const AddAddressModal: React.FC = () => {
               <>
                 <UnitNumberInput />
                 <ListSelectInput />
+                <Space height="2" />
+                <SaveAddressButton />
               </>
             )}
           </List>
-          <SaveAddressButton onSuccess={closeAddAddressModal} />
         </IonContent>
       </IonModal>
+      <IonToast
+        isOpen={!!errorMessage}
+        message={errorMessage ?? ""}
+        duration={3000}
+        color="danger"
+        position="bottom"
+        onDidDismiss={() => setErrorMessage(null)}
+      />
     </>
   );
 };

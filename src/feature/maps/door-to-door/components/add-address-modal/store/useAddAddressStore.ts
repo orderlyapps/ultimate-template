@@ -18,6 +18,9 @@ interface AddAddressStore {
   openAddAddressModal: () => void;
   closeAddAddressModal: () => void;
 
+  errorMessage: string | null;
+  setErrorMessage: (message: string | null) => void;
+
   suburb: Suburb | null;
   setSuburb: (suburb: Suburb | null) => void;
 
@@ -48,6 +51,9 @@ export const useAddAddressStore = create<AddAddressStore>()(
       isAddAddressModalOpen: false,
       openAddAddressModal: () => set({ isAddAddressModalOpen: true }),
       closeAddAddressModal: () => set({ isAddAddressModalOpen: false }),
+
+      errorMessage: null,
+      setErrorMessage: (message: string | null) => set({ errorMessage: message }),
 
       suburb: null,
       setSuburb: (suburb: Suburb | null) =>
