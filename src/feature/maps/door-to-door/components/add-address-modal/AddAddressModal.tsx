@@ -4,7 +4,6 @@ import {
   IonToolbar,
   IonTitle,
   IonContent,
-  IonButton,
   IonButtons,
   IonFab,
   IonFabButton,
@@ -21,6 +20,7 @@ import { UnitNumberInput } from "@feature/maps/door-to-door/components/add-addre
 import { ListSelectInput } from "@feature/maps/door-to-door/components/add-address-modal/components/list-select-input/ListSelectInput";
 import { SaveAddressButton } from "@feature/maps/door-to-door/components/add-address-modal/components/save-address-button/SaveAddressButton";
 import { Space } from "@layout/space/Space";
+import { CloseButton } from "@input/button/close-button/CloseButton";
 
 export const AddAddressModal: React.FC = () => {
   const isOpen = useAddAddressStore((state) => state.isAddAddressModalOpen);
@@ -51,7 +51,7 @@ export const AddAddressModal: React.FC = () => {
           <IonToolbar>
             <IonTitle>Add Address</IonTitle>
             <IonButtons slot="end">
-              <IonButton onClick={closeAddAddressModal}>Close</IonButton>
+              <CloseButton onClick={closeAddAddressModal} />
             </IonButtons>
           </IonToolbar>
         </IonHeader>
