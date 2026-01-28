@@ -1,3 +1,4 @@
+import { UpcomingMeetings } from "@feature/db/midweek-meeting/upcoming-meetings/UpcomingMeetings";
 import {
   IonBackButton,
   IonButtons,
@@ -7,7 +8,6 @@ import {
   IonTitle,
   IonContent,
 } from "@ionic/react";
-import { Space } from "@layout/space/Space";
 
 export const MidweekMeeting: React.FC = () => {
   return (
@@ -20,13 +20,13 @@ export const MidweekMeeting: React.FC = () => {
           <IonTitle>Midweek Meeting</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen className="ion-padding">
+      <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">Midweek Meeting</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <Space height="2" />
+        <UpcomingMeetings />
       </IonContent>
     </IonPage>
   );
