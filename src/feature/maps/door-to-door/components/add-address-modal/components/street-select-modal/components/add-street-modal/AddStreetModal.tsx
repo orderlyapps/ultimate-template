@@ -8,6 +8,7 @@ import {
   IonContent,
   IonList,
   IonSpinner,
+  IonLabel,
 } from "@ionic/react";
 import { Searchbar } from "@ionic-input/searchbar/Searchbar";
 import { Item } from "@ionic-layout/item/Item";
@@ -18,6 +19,7 @@ import { handleSearch } from "./handlers/handleSearch";
 import { ConfirmAlert } from "./components/confirm-alert/ConfirmAlert";
 import { ErrorToast } from "./components/error-toast/ErrorToast";
 import type { MapboxGeocodingFeature } from "@services/vendor/mapbox/types/MapboxGeocodingResponse";
+import { Space } from "@layout/space/Space";
 
 interface AddStreetModalProps {
   isOpen: boolean;
@@ -47,6 +49,12 @@ export const AddStreetModal: React.FC<AddStreetModalProps> = ({
     onClose();
   };
 
+  const unmatched = searchResults.filter((street) => {
+    return street.properties.context.place?.name !== suburb?.name;
+  });
+
+  console.log(searchResults);
+
   return (
     <IonModal isOpen={isOpen} onDidDismiss={handleClose}>
       <IonHeader>
@@ -71,13 +79,16 @@ export const AddStreetModal: React.FC<AddStreetModalProps> = ({
             <Text color="medium">Please select a suburb first</Text>
           </div>
         )}
+
         {suburb && isSearching && (
           <div className="ion-padding ion-text-center">
             <IonSpinner />
           </div>
         )}
+
         {suburb && !isSearching && searchResults.length > 0 && (
           <IonList>
+            <Space height="2" />
             {searchResults.map((street) => {
               if (street.properties.context.place?.name !== suburb.name)
                 return null;
@@ -93,14 +104,47 @@ export const AddStreetModal: React.FC<AddStreetModalProps> = ({
             })}
           </IonList>
         )}
+
         {suburb &&
           !isSearching &&
           searchQuery &&
           searchResults.length === 0 && (
             <div className="ion-padding ion-text-center">
-              <Text color="medium">No streets found</Text>
+              <Text color="medium">No matches found</Text>
             </div>
           )}
+
+        {suburb && !isSearching && unmatched.length > 0 && (
+          <IonList>
+            <Space height="2" />
+
+            <Item lines="none">
+              <Text color="medium">If you are looking for...</Text>
+            </Item>
+
+            {unmatched.map((street) => {
+              return (
+                <Item
+                  key={street.id}
+                  className="ion-text-center ion-no-margin ion-no-padding"
+                  lines="none"
+                >
+                  <IonLabel>
+                    <Text>{street.properties.name}, </Text>
+                    <Text>{street.properties.context.place?.name}</Text>
+                  </IonLabel>
+                </Item>
+              );
+            })}
+
+            <Item lines="none">
+              <Text color="medium" slot="end">
+                try selecting another suburb
+              </Text>
+            </Item>
+          </IonList>
+        )}
+
         {suburb && !searchQuery && (
           <div className="ion-padding ion-text-center">
             <Text color="medium">Search for a street to add</Text>

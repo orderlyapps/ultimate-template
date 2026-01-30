@@ -35,7 +35,7 @@ export async function searchStreets(
       `q=${encodedQuery}&` +
       `access_token=${accessToken}&` +
       `country=AU&` +
-      `limit=20&` +
+      `limit=10&` +
       `types=address,street&` +
       `bbox=${bboxParam}`;
 
