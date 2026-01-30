@@ -11,6 +11,7 @@ import { getClusterPointLayer } from "@feature/maps/door-to-door/sources/not-at-
 import { getClusterLabelLayer } from "@feature/maps/door-to-door/sources/not-at-home/cluster-layers/label";
 import { getUnitPointLayer } from "@feature/maps/door-to-door/sources/not-at-home/unit-layers/point";
 import { getUnitLabelLayer } from "@feature/maps/door-to-door/sources/not-at-home/unit-layers/label";
+import { buildNotAtHomeFeatures } from "@feature/maps/door-to-door/sources/not-at-home/helpers/build-not-at-home-features";
 
 export const SOURCE_ID = "not-at-home";
 
@@ -58,27 +59,9 @@ export const NotAtHome: React.FC = () => {
     {} as Record<string, typeof validData>,
   );
 
-  // Create features with unit_count and unit_data
-  const features = Object.values(groupedByAddress).map((group) => {
-    const firstItem = group[0];
-    const write_count = group.filter((item) => item.write === true).length;
-    const return_count = group.filter((item) => item.write === false).length;
-
-    return {
-      type: "Feature" as const,
-      id: firstItem.id,
-      properties: {
-        ...firstItem,
-        unit_count: group.length,
-        unit_data: group,
-        write_count,
-        return_count,
-      },
-      geometry: {
-        type: "Point" as const,
-        coordinates: firstItem.coordinates,
-      },
-    };
+  const features = buildNotAtHomeFeatures(groupedByAddress, {
+    min: 15,
+    max: 25,
   });
 
   const geojson: FeatureCollection = {
