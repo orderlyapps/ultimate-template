@@ -1,21 +1,16 @@
-type Suburb = {
-  name: string;
-  bbox: number[];
-};
-
 import type {
   MapboxGeocodingFeature,
   MapboxGeocodingResponse,
 } from "@services/vendor/mapbox/types/MapboxGeocodingResponse";
 
-// export interface GeocodeResult {
-//   coordinates: [number, number]; // [longitude, latitude]
-//   place_name: string;
-//   relevance: number;
-// }
+export type MapboxStructuredInput = {
+  address_number: string;
+  street: string;
+  place: string;
+};
 
 export interface GeocodeOptions {
-  suburb: Suburb;
+  bbox: [number, number, number, number];
   padding?: number; // padding in degrees, default 0.01
 }
 
@@ -23,10 +18,10 @@ export interface GeocodeOptions {
  * Geocode an address using Mapbox Geocoding API with suburb bbox constraints
  */
 export async function geocodeAddress(
-  address: string,
+  searchData: MapboxStructuredInput,
   options: GeocodeOptions,
 ): Promise<MapboxGeocodingFeature | null> {
-  const { suburb, padding = 0.01 } = options;
+  const { bbox, padding = 0.01 } = options;
 
   // Get Mapbox access token from environment
   const accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
@@ -37,7 +32,7 @@ export async function geocodeAddress(
   }
 
   // Apply padding to bbox
-  const [minLng, minLat, maxLng, maxLat] = suburb.bbox;
+  const [minLng, minLat, maxLng, maxLat] = bbox;
   const paddedBbox = [
     minLng - padding,
     minLat - padding,
@@ -47,15 +42,20 @@ export async function geocodeAddress(
 
   // Helper function to try geocoding with a specific address string
   const tryGeocode = async (
-    addressString: string,
+    searchData: MapboxStructuredInput,
   ): Promise<MapboxGeocodingFeature | null> => {
+    const address_number = encodeURIComponent(searchData.address_number);
+    const street = encodeURIComponent(searchData.street);
+    const place = encodeURIComponent(searchData.place);
+
     try {
-      const encodedAddress = encodeURIComponent(addressString);
       const bboxParam = paddedBbox.join(",");
 
       const url =
         `https://api.mapbox.com/search/geocode/v6/forward?` +
-        `q=${encodedAddress}&` +
+        `address_number=${address_number}&` +
+        `street=${street}&` +
+        `place=${place}&` +
         `access_token=${accessToken}&` +
         `bbox=${bboxParam}&` +
         `country=AU&` +
@@ -78,57 +78,16 @@ export async function geocodeAddress(
 
       return features[0];
     } catch (error) {
-      console.error(`Geocoding error for "${addressString}":`, error);
+      console.error(`Geocoding error for "${"encodedAddress"}":`, error);
       return null;
     }
   };
 
   // Try the original address first
-  let result = await tryGeocode(address);
+  const result = await tryGeocode(searchData);
+
   if (result) {
     return result;
-  }
-
-  // If original failed and address contains a unit (has "/" character), try fallback strategies
-  if (address.includes("/")) {
-    const parts = address.split(" ");
-    const unitHousePart = parts[0]; // e.g., "2/123"
-    const restOfAddress = parts.slice(1).join(" "); // e.g., "Main Street Suburb"
-
-    if (unitHousePart.includes("/")) {
-      const [, houseNumber] = unitHousePart.split("/");
-
-      // Fallback 1: Try without unit number
-      const addressWithoutUnit = `${houseNumber} ${restOfAddress}`;
-      result = await tryGeocode(addressWithoutUnit);
-      if (result) {
-        console.log(
-          `Geocoded using fallback (without unit): ${addressWithoutUnit}`,
-        );
-        return result;
-      }
-
-      // Fallback 2: Try with "Unit X" format
-      const [unitNumber] = unitHousePart.split("/");
-      const addressWithUnitPrefix = `Unit ${unitNumber} ${houseNumber} ${restOfAddress}`;
-      result = await tryGeocode(addressWithUnitPrefix);
-      if (result) {
-        console.log(
-          `Geocoded using fallback (Unit prefix): ${addressWithUnitPrefix}`,
-        );
-        return result;
-      }
-
-      // Fallback 3: Try with comma separation
-      const addressWithComma = `${unitNumber}/${houseNumber}, ${restOfAddress}`;
-      result = await tryGeocode(addressWithComma);
-      if (result) {
-        console.log(
-          `Geocoded using fallback (comma separation): ${addressWithComma}`,
-        );
-        return result;
-      }
-    }
   }
 
   return null; // All attempts failed

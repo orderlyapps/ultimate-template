@@ -2,10 +2,7 @@ import { notAtHomeCollection } from "@tanstack-db/not_at_home/notAtHomeCollectio
 import { getUserCongregation } from "@feature/db/congregation/user-congregation/get-user-congregation/getUserCongregation";
 import { useAddAddressStore } from "@feature/maps/door-to-door/components/add-address-modal/store/useAddAddressStore";
 import { useDoorToDoorStore } from "@feature/maps/door-to-door/store/useDoorToDoorStore";
-import {
-  buildAddressString,
-  geocodeAddress,
-} from "@services/vendor/mapbox/helper/geocodeAddress";
+import { geocodeAddress } from "@services/vendor/mapbox/helper/geocodeAddress";
 import type { NotAtHome } from "@tanstack-db/not_at_home/notAtHomeSchema";
 
 export const handleSubmitNotAtHome = async () => {
@@ -38,15 +35,11 @@ export const handleSubmitNotAtHome = async () => {
       ? [street.coordinates[0], street.coordinates[1]]
       : [0, 0];
 
-  const addressString = buildAddressString(
-    houseNumber,
-    unitNumber,
-    street.name,
-    suburb.name,
-  );
-
   try {
-    const geocodeResult = await geocodeAddress(addressString, { suburb });
+    const geocodeResult = await geocodeAddress(
+      { address_number: houseNumber, street: street.name, place: suburb.name },
+      { bbox: suburb.bbox },
+    );
     const lng = geocodeResult?.properties.coordinates.longitude;
     const lat = geocodeResult?.properties.coordinates.latitude;
     const coordinates: [number, number] =
