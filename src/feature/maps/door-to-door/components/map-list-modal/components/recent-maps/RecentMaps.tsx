@@ -7,11 +7,14 @@ import { mapCollection } from "@tanstack-db/map/mapCollection";
 import { useLiveQuery } from "@tanstack/react-db";
 import { IonListHeader } from "@ionic/react";
 import { Label } from "@ionic-display/label/Label";
+import type { Map } from "@tanstack-db/map/mapSchema";
 
 export const RecentMaps: React.FC = () => {
   const recentMaps = useDoorToDoorStore((state) => state.recentMaps);
-  const selectedMap = useDoorToDoorStore((state) => state.selectedMap);
   const { handleZoomToMap } = useZoomToMap();
+  const selectedMap = useDoorToDoorStore((state) => state.selectedMap);
+  const setSelectedMap = useDoorToDoorStore((state) => state.setSelectedMap);
+  const addToRecentMaps = useDoorToDoorStore((state) => state.addToRecentMaps);
 
   const { data: allMaps } = useLiveQuery((q) =>
     q.from({
@@ -31,13 +34,21 @@ export const RecentMaps: React.FC = () => {
 
   if (recentMapObjects.length === 0) return null;
 
+  const handleSelectMap = (map: Map) => {
+    if (selectedMap) {
+      addToRecentMaps(selectedMap);
+    }
+    handleZoomToMap(map);
+    setSelectedMap(map);
+  };
+
   return (
     <List>
       <IonListHeader>
         <Label>Recent Maps</Label>
       </IonListHeader>
       {recentMapObjects.map((map) => (
-        <Item key={map.id} onClick={() => handleZoomToMap(map)}>
+        <Item key={map.id} onClick={() => handleSelectMap(map)}>
           <Text>{map.name}</Text>
         </Item>
       ))}
