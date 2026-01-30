@@ -1,4 +1,5 @@
 import { SelectUserCongregationModal } from "@feature/db/congregation/user-congregation/select-user-congregation-modal/SelectUserCongregationModal";
+import { SelectUserPublisherModal } from "@feature/db/publisher/user-publisher/select-user-publisher-modal/SelectUserPublisherModal";
 import {
   IonBackButton,
   IonButtons,
@@ -32,6 +33,8 @@ export const Profile: React.FC = () => {
         <AuthSection />
         <Space height="2" />
         <SelectUserCongregationModal />
+        <Space height="2" />
+        <SelectUserPublisherModal />
       </IonContent>
     </IonPage>
   );
