@@ -9,15 +9,9 @@ import { List } from "@ionic-layout/list/List";
 import { NavItem } from "@navigation/nav-item/NavItem";
 import { Space } from "@layout/space/Space";
 import { FeatureGuard } from "@services/app/features/FeatureGuard";
-import { Text } from "@ionic-display/text/Text";
-import { useUserPublisher } from "@feature/db/publisher/user-publisher/use-user-publisher/useUserPublisher";
-import { formatPublisherName } from "@format/formatPublisherName";
+import { PublisherHomeView } from "@feature/db/publisher/publisher-home-view/PublisherHomeView";
 
 export const Home: React.FC = () => {
-  const [publisher] = useUserPublisher();
-
-  const name = publisher ? formatPublisherName(publisher, "display last") : null;
-
   return (
     <IonPage>
       <IonHeader>
@@ -32,12 +26,7 @@ export const Home: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <Space height="2" />
-        {name && (
-          <>
-            <Text size="lg">{name}</Text>
-            <Space height="2" />
-          </>
-        )}
+        <PublisherHomeView />
         <List>
           <FeatureGuard id="talks">
             <NavItem routerLink="/home/talks">Talks</NavItem>
