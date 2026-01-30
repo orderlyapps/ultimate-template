@@ -1,8 +1,8 @@
-import { eq, useLiveQuery } from "@tanstack/react-db";
+import { and, eq, gte, lt, or, useLiveQuery } from "@tanstack/react-db";
 import { midweekMeetingDataCollection } from "@tanstack-db/midweek_meeting_data/midweekMeetingDataCollection";
 import type { FC } from "react";
 import { List } from "@ionic-layout/list/List";
-import { IonItemDivider } from "@ionic/react";
+import { IonItemDivider, IonLabel, IonNote } from "@ionic/react";
 import { Text } from "@ionic-display/text/Text";
 import { Space } from "@layout/space/Space";
 import { Button } from "@ionic-input/button/Button";
@@ -11,6 +11,9 @@ import { Grid } from "@ionic-layout/grid/Grid";
 import { Row } from "@ionic-layout/row/Row";
 import { Col } from "@ionic-layout/col/Col";
 import { useUpcomingMeetingsStore } from "../../state/useUpcomingMeetingsStore";
+import { eventCollection } from "@tanstack-db/event/eventCollection";
+import { addDays, formatDate } from "date-fns";
+import { Item } from "@ionic-layout/item/Item";
 
 type Props = {
   weekId: string;
@@ -19,9 +22,13 @@ type Props = {
 
 export const UpcomingMeetingRow: FC<Props> = ({ weekId, index }) => {
   const weeksToShow = useUpcomingMeetingsStore((s) => s.weeksToShow);
+
+  const lastDayOfWeek = formatDate(addDays(weekId, 7), "yyyy-MM-dd");
+
   const incrementWeeksToShow = useUpcomingMeetingsStore(
     (s) => s.incrementWeeksToShow,
   );
+
   const { data } = useLiveQuery((q) =>
     q
       .from({
@@ -29,6 +36,23 @@ export const UpcomingMeetingRow: FC<Props> = ({ weekId, index }) => {
       })
       .where(({ m }) => eq(m.week_id, weekId)),
   );
+
+  const { data: events } = useLiveQuery((q) =>
+    q
+      .from({
+        e: eventCollection,
+      })
+      .where(({ e }) =>
+        or(
+          and(gte(e.start_date, weekId), lt(e.start_date, lastDayOfWeek)),
+          and(gte(e.end_date, weekId), lt(e.end_date, lastDayOfWeek)),
+        ),
+      ),
+  );
+
+  console.log(lastDayOfWeek, events);
+
+  const circuit_assembly = events.find((e) => e.type === "circuit_assembly");
 
   const meeting = data?.[0];
 
@@ -38,21 +62,38 @@ export const UpcomingMeetingRow: FC<Props> = ({ weekId, index }) => {
 
   return (
     <List>
-      <IonItemDivider sticky>
+      <IonItemDivider sticky className="ion-padding-bottom">
         <Grid>
           <Row>
-            <Col>
-              <Text color="primary" size="xl">
+            <Col size="auto">
+              <Text color="primary" size="lg">
                 {meeting?.mwb_week_date_locale}
               </Text>
-              {index === 0 && <Text size="sm"> This Week</Text>}
-              {index === 1 && <Text size="sm"> Next Week</Text>}
+            </Col>
+            <Col className="ion-text-right">
+              {index === 0 && <Text> This Week</Text>}
+              {index === 1 && <Text> Next Week</Text>}
             </Col>
           </Row>
         </Grid>
       </IonItemDivider>
 
-      <MeetingAgendaItems meeting={meeting} weekId={weekId} />
+      {circuit_assembly ? (
+        <List>
+          <Item className="ion-text-center-xx">
+            <IonLabel>
+              <Text bold size="xl">
+                Circuit Assembly
+              </Text>
+              <Text> ({formatDate(circuit_assembly.start_date, "EEEE")})</Text>
+              <br />
+              <IonNote>{circuit_assembly.name}</IonNote>
+            </IonLabel>
+          </Item>
+        </List>
+      ) : (
+        <MeetingAgendaItems meeting={meeting} weekId={weekId} />
+      )}
 
       {index === weeksToShow - 1 && weeksToShow < 9 && (
         <Button fill="clear" onClick={incrementWeeksToShow}>

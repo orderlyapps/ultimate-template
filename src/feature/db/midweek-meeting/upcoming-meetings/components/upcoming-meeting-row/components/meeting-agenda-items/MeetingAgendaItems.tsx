@@ -212,7 +212,7 @@ export const MeetingAgendaItems: FC<Props> = ({ meeting, weekId }) => {
                 </>
               )}
               <Item>
-                <Grid className="ion-text-nowrap">
+                <Grid className="ion-text-nowrap ion-no-padding">
                   <Row>
                     <Col>
                       <Text bold color={color}>
@@ -221,7 +221,7 @@ export const MeetingAgendaItems: FC<Props> = ({ meeting, weekId }) => {
                     </Col>
                   </Row>
 
-                  <Row>
+                  <Row className="ion-padding-start ion-padding-bottom">
                     <Col>
                       {participant && (
                         <Text>
