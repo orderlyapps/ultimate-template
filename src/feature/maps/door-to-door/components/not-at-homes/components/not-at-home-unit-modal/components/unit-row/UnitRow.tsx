@@ -24,15 +24,17 @@ export const UnitRow = ({
     : "Unknown";
 
   return (
-    <IonItemSliding>
-      <IonItem className="ion-margin">
-        <IonLabel>Unit {unit.unit_number || "N/A"}</IonLabel>
-        <IonNote slot="end">Added {created}</IonNote>
-      </IonItem>
-      <IonItemOptions side="end">
-        <ItemOptionMove onClick={onMove} />
-        <ItemOptionDelete onClick={onDelete} />
-      </IonItemOptions>
-    </IonItemSliding>
+    <>
+      <IonItemSliding>
+        <IonItem>
+          <IonLabel>Unit {unit.unit_number || "N/A"}</IonLabel>
+          <IonNote slot="end">Added {created}</IonNote>
+        </IonItem>
+        <IonItemOptions side="end">
+          <ItemOptionMove onClick={onMove} />
+          <ItemOptionDelete onClick={onDelete} />
+        </IonItemOptions>
+      </IonItemSliding>
+    </>
   );
 };
