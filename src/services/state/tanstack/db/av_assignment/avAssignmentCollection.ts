@@ -11,7 +11,6 @@ export const avAssignmentCollection = createCollection(
       const { data, error } = await supabase
         .from("av_assignment")
         .select("*")
-        .eq("congregation_id", localStorage.getItem("congregationId"))
         .order("week_id", { ascending: true });
 
       if (error) {

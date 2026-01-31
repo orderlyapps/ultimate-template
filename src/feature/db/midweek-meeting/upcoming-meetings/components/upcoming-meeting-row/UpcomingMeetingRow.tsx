@@ -12,7 +12,7 @@ import { Row } from "@ionic-layout/row/Row";
 import { Col } from "@ionic-layout/col/Col";
 import { useUpcomingMeetingsStore } from "../../state/useUpcomingMeetingsStore";
 import { eventCollection } from "@tanstack-db/event/eventCollection";
-import { addDays, formatDate } from "date-fns";
+import { addDays, format } from "date-fns";
 import { Item } from "@ionic-layout/item/Item";
 
 type Props = {
@@ -23,7 +23,7 @@ type Props = {
 export const UpcomingMeetingRow: FC<Props> = ({ weekId, index }) => {
   const weeksToShow = useUpcomingMeetingsStore((s) => s.weeksToShow);
 
-  const lastDayOfWeek = formatDate(addDays(weekId, 7), "yyyy-MM-dd");
+  const lastDayOfWeek = format(addDays(weekId, 7), "yyyy-MM-dd");
 
   const incrementWeeksToShow = useUpcomingMeetingsStore(
     (s) => s.incrementWeeksToShow,
@@ -85,7 +85,7 @@ export const UpcomingMeetingRow: FC<Props> = ({ weekId, index }) => {
               <Text bold size="xl">
                 Circuit Assembly
               </Text>
-              <Text> ({formatDate(circuit_assembly.start_date, "EEEE")})</Text>
+              <Text> ({format(circuit_assembly.start_date, "EEEE")})</Text>
               <br />
               <IonNote>{circuit_assembly.name}</IonNote>
             </IonLabel>

@@ -8,12 +8,9 @@ export const weekendAssignmentCollection = createCollection(
   queryCollectionOptions({
     queryKey: ["weekend_assignment"],
     queryFn: async () => {
-      const congregation_id = localStorage.getItem("congregationId");
-
       const { data, error } = await supabase
         .from("weekend_assignment")
-        .select("*")
-        .eq("congregation_id", congregation_id);
+        .select("*");
 
       if (error) {
         throw new Error(`Failed to fetch todos: ${error.message}`);
@@ -47,5 +44,5 @@ export const weekendAssignmentCollection = createCollection(
         .eq("congregation_id", original.congregation_id)
         .eq("week_id", original.week_id);
     },
-  })
+  }),
 );
