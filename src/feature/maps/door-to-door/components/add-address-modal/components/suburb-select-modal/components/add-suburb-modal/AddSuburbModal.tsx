@@ -77,7 +77,7 @@ export const AddSuburbModal: React.FC<AddSuburbModalProps> = ({
           </div>
         )}
         {!isSearching && searchResults.length > 0 && (
-          <IonList>
+          <IonList inset>
             {searchResults.map((suburb) => (
               <Item key={suburb.id} onClick={() => handleSelectSuburb(suburb)}>
                 <Text>{suburb.properties.name}</Text>

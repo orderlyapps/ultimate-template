@@ -93,10 +93,10 @@ export const SelectModal: React.FC<SelectItemProps> = ({
         <IonContent>
           {recentlySelected.length > 0 && (
             <>
-              <IonListHeader>
-                <Label color={"medium"}>Recent</Label>
-              </IonListHeader>
-              <List>
+              <List inset>
+                <IonListHeader>
+                  <Label color={"medium"}>Recent</Label>
+                </IonListHeader>
                 {recentlySelected.map((option) => (
                   <Item
                     key={option.value ?? "null"}
@@ -108,7 +108,7 @@ export const SelectModal: React.FC<SelectItemProps> = ({
               </List>
             </>
           )}
-          <List>
+          <List inset>
             <IonListHeader>
               <Label color={"medium"}>{listHeader}</Label>
             </IonListHeader>

@@ -9,6 +9,7 @@ import {
   IonList,
   IonSpinner,
   IonLabel,
+  IonIcon,
 } from "@ionic/react";
 import { Searchbar } from "@ionic-input/searchbar/Searchbar";
 import { Item } from "@ionic-layout/item/Item";
@@ -20,6 +21,7 @@ import { ConfirmAlert } from "./components/confirm-alert/ConfirmAlert";
 import { ErrorToast } from "./components/error-toast/ErrorToast";
 import type { MapboxGeocodingFeature } from "@services/vendor/mapbox/types/MapboxGeocodingResponse";
 import { Space } from "@layout/space/Space";
+import addIcon from "@icons/add.svg";
 
 interface AddStreetModalProps {
   isOpen: boolean;
@@ -99,6 +101,12 @@ export const AddStreetModal: React.FC<AddStreetModalProps> = ({
                   onClick={() => handleSelectStreet(street)}
                 >
                   <Text>{street.properties.name}</Text>
+                  <IonIcon
+                    src={addIcon}
+                    slot="end"
+                    color="primary"
+                    size="large"
+                  />
                 </Item>
               );
             })}
@@ -130,8 +138,8 @@ export const AddStreetModal: React.FC<AddStreetModalProps> = ({
                   lines="none"
                 >
                   <IonLabel>
-                    <Text>{street.properties.name}, </Text>
-                    <Text>{street.properties.context.place?.name}</Text>
+                    <Text bold>{street.properties.name}, </Text>
+                    <Text bold>{street.properties.context.place?.name}</Text>
                   </IonLabel>
                 </Item>
               );
@@ -139,7 +147,7 @@ export const AddStreetModal: React.FC<AddStreetModalProps> = ({
 
             <Item lines="none">
               <Text color="medium" slot="end">
-                try selecting another suburb
+                ...try selecting another suburb
               </Text>
             </Item>
           </IonList>
