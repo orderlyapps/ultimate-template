@@ -5,7 +5,6 @@ import {
   IonIcon,
   IonItemDivider,
   IonRow,
-  IonText,
   useIonRouter,
 } from "@ionic/react";
 import { parseISO } from "date-fns/parseISO";
@@ -13,6 +12,7 @@ import { format } from "date-fns/format";
 import { getTheocraticWeekLabel } from "@date/getTheocraticWeekLabel";
 import backIcon from "@icons/chevronBackJW.svg";
 import forwardIcon from "@icons/chevronForwardJW.svg";
+import { Text } from "@ionic-display/text/Text";
 
 type WeekNavigationProps = {
   week_id: string;
@@ -40,12 +40,10 @@ export const WeekNavigation = ({ week_id }: WeekNavigationProps) => {
               <IonIcon src={backIcon} slot="icon-only" size="large" />
             </IonButton>
           </IonCol>
-          <IonCol>
-            <div className="ion-text-center full centered">
-              <IonText>
-                <strong>{weekLabel}</strong>
-              </IonText>
-            </div>
+          <IonCol className="ion-text-center ion-align-self-center">
+            <Text color="primary" size="sm" bold>
+              {weekLabel}
+            </Text>
           </IonCol>
           <IonCol size="auto">
             <IonButton
