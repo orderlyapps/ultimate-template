@@ -13,6 +13,7 @@ import { WeekendAssignments } from "./components/weekend-assignments/WeekendAssi
 import { WeekendAVAssignments } from "./components/weekend-av-assignments/WeekendAVAssignments";
 import { WeekendAttendantAssignments } from "./components/weekend-attendant-assignments/WeekendAttendantAssignments";
 import { OutgoingSpeakers } from "./components/outgoing-speakers/OutgoingSpeakers";
+import { WeekEvents } from "./components/week-events/WeekEvents";
 import { getTheocraticWeekLabel } from "@date/getTheocraticWeekLabel";
 
 type Props = {
@@ -45,6 +46,7 @@ export const UpcomingWeekendMeetingRow: FC<Props> = ({ weekId, index }) => {
         </Grid>
       </IonItemDivider>
 
+      <WeekEvents weekId={weekId} />
       <IncomingTalk weekId={weekId} />
       <WeekendAssignments weekId={weekId} />
       <WeekendAVAssignments weekId={weekId} />
