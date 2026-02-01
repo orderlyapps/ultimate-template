@@ -43,12 +43,12 @@ export const pages = (
     <Route exact path="/schedules" render={() => <Schedules />} />
     <Route
       exact
-      path="/schedules/midweek-meeting"
+      path="/schedules/midweek-meeting/:week_id"
       render={() => <MidweekMeeting />}
     />
     <Route
       exact
-      path="/schedules/weekend-meeting"
+      path="/schedules/weekend-meeting/:week_id"
       render={() => <WeekendMeeting />}
     />
     <Route

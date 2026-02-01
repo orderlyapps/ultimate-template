@@ -8,8 +8,12 @@ import {
   IonTitle,
   IonContent,
 } from "@ionic/react";
+import { useParams } from "react-router-dom";
+import { WeekNavigation } from "@ui/components/custom/navigation/week-navigation/WeekNavigation";
 
 export const MidweekMeeting: React.FC = () => {
+  const { week_id } = useParams<{ week_id: string }>();
+
   return (
     <IonPage>
       <IonHeader>
@@ -21,12 +25,8 @@ export const MidweekMeeting: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Midweek Meeting</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <UpcomingMeetings />
+        <WeekNavigation week_id={week_id} />
+        <UpcomingMeetings weekId={week_id} />
       </IonContent>
     </IonPage>
   );

@@ -204,14 +204,14 @@ export const MeetingAgendaItems: FC<Props> = ({ meeting, weekId }) => {
               {hasSecondSchool && schoolHeading && (
                 <>
                   <Space height="1.5" />
-                  <Item>
+                  <Item lines="none">
                     <Text bold size="xl">
                       {schoolHeading}
                     </Text>
                   </Item>
                 </>
               )}
-              <Item>
+              <Item lines="none">
                 <Grid className="ion-text-nowrap ion-no-padding">
                   <Row>
                     <Col>

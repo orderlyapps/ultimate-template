@@ -5,11 +5,14 @@ import {
   IonTitle,
   IonContent,
 } from "@ionic/react";
+import { format, startOfWeek } from "date-fns";
 import { Space } from "@layout/space/Space";
 import { List } from "@ionic-layout/list/List";
 import { NavItem } from "@navigation/nav-item/NavItem";
 
 export const Schedules: React.FC = () => {
+  const currentWeekId = format(startOfWeek(new Date(), { weekStartsOn: 1 }), "yyyy-MM-dd");
+
   return (
     <IonPage>
       <IonHeader>
@@ -25,8 +28,8 @@ export const Schedules: React.FC = () => {
         </IonHeader>
         <Space height="2" />
         <List>
-          <NavItem routerLink="/schedules/midweek-meeting">Midweek Meeting</NavItem>
-          <NavItem routerLink="/schedules/weekend-meeting">Weekend Meeting</NavItem>
+          <NavItem routerLink={`/schedules/midweek-meeting/${currentWeekId}`}>Midweek Meeting</NavItem>
+          <NavItem routerLink={`/schedules/weekend-meeting/${currentWeekId}`}>Weekend Meeting</NavItem>
           <NavItem routerLink="/schedules/audio-and-video">Audio & Video</NavItem>
           <NavItem routerLink="/schedules/cleaning">Cleaning</NavItem>
           <NavItem routerLink="/schedules/events">Events</NavItem>
