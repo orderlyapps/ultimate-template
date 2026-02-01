@@ -1,12 +1,17 @@
+import { useState } from "react";
 import {
   IonButton,
   IonCol,
   IonGrid,
   IonIcon,
+  IonItem,
   IonItemDivider,
+  IonList,
+  IonPopover,
   IonRow,
   useIonRouter,
 } from "@ionic/react";
+import { addWeeks } from "date-fns/addWeeks";
 import { parseISO } from "date-fns/parseISO";
 import { format } from "date-fns/format";
 import { getTheocraticWeekLabel } from "@date/getTheocraticWeekLabel";
@@ -21,6 +26,18 @@ type WeekNavigationProps = {
 export const WeekNavigation = ({ week_id }: WeekNavigationProps) => {
   const router = useIonRouter();
   const weekLabel = getTheocraticWeekLabel(week_id);
+  const [popoverOpen, setPopoverOpen] = useState(false);
+
+  const currentDate = parseISO(week_id);
+  const weekOptions = Array.from({ length: 14 }, (_, i) => {
+    const offset = i - 4;
+    const weekDate = addWeeks(currentDate, offset);
+    return {
+      weekId: format(weekDate, "yyyy-MM-dd"),
+      label: getTheocraticWeekLabel(format(weekDate, "yyyy-MM-dd")),
+      isCurrent: offset === 0,
+    };
+  });
 
   return (
     <IonItemDivider sticky style={{ zIndex: 1000 }}>
@@ -30,29 +47,56 @@ export const WeekNavigation = ({ week_id }: WeekNavigationProps) => {
             <IonButton
               fill="clear"
               onClick={() => {
-                const currentDate = parseISO(week_id);
-                const previousWeek = new Date(currentDate);
-                previousWeek.setDate(previousWeek.getDate() - 7);
-                const previousWeekId = format(previousWeek, "yyyy-MM-dd");
+                const previousWeekId = format(addWeeks(currentDate, -1), "yyyy-MM-dd");
                 router.push(`${previousWeekId}`, "back", "replace");
               }}
             >
               <IonIcon src={backIcon} slot="icon-only" size="large" />
             </IonButton>
           </IonCol>
-          <IonCol className="ion-text-center ion-align-self-center">
+          <IonCol
+            id="week-popover-trigger"
+            className="ion-text-center ion-align-self-center"
+            onClick={() => setPopoverOpen(true)}
+          >
             <Text color="primary" size="sm" bold>
               {weekLabel}
             </Text>
           </IonCol>
+          <IonPopover
+            id="week-nav"
+            trigger="week-popover-trigger"
+            isOpen={popoverOpen}
+            onDidDismiss={() => setPopoverOpen(false)}
+          >
+            <IonList>
+              {weekOptions.map((option) => (
+                <IonItem
+                  key={option.weekId}
+                  onClick={() => {
+                    setPopoverOpen(false);
+                    if (!option.isCurrent) {
+                      router.push(`${option.weekId}`, "none", "replace");
+                    }
+                  }}
+                  lines="none"
+                >
+                  <Text
+                    size={option.isCurrent ? "md" : "sm"}
+                    color={option.isCurrent ? "primary" : undefined}
+                    bold={option.isCurrent}
+                  >
+                    {option.label}
+                  </Text>
+                </IonItem>
+              ))}
+            </IonList>
+          </IonPopover>
           <IonCol size="auto">
             <IonButton
               fill="clear"
               onClick={() => {
-                const currentDate = parseISO(week_id);
-                const nextWeek = new Date(currentDate);
-                nextWeek.setDate(nextWeek.getDate() + 7);
-                const nextWeekId = format(nextWeek, "yyyy-MM-dd");
+                const nextWeekId = format(addWeeks(currentDate, 1), "yyyy-MM-dd");
                 router.push(`${nextWeekId}`, "forward", "replace");
               }}
             >
