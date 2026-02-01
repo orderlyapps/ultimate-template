@@ -9,12 +9,23 @@ import { getDayName } from "@date/getDayName";
 
 type Props = {
   event: Event;
+  meetingType: "midweek" | "weekend";
 };
 
-export const MemorialEvent: FC<Props> = ({ event }) => {
+export const MemorialEvent: FC<Props> = ({ event, meetingType }) => {
   const startDate = new Date(event.start_date);
   const dayOfWeek = startDate.getDay();
-  if (dayOfWeek > 0 && dayOfWeek < 6) {
+
+  // For weekend meetings, only show if memorial is on weekend (Sat=6, Sun=0)
+  // For midweek meetings, only show if memorial is on weekday (Mon-Fri: 1-5)
+  const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+  const isMidweek = dayOfWeek >= 1 && dayOfWeek <= 5;
+
+  if (meetingType === "weekend" && !isWeekend) {
+    return null;
+  }
+
+  if (meetingType === "midweek" && !isMidweek) {
     return null;
   }
 
@@ -28,7 +39,14 @@ export const MemorialEvent: FC<Props> = ({ event }) => {
             </Text>
             <br />
             <Text color="medium">
-              {event.start_time} {getDayName(event.start_date)}
+              {new Date(
+                `${event.start_date}T${event.start_time}`,
+              ).toLocaleTimeString("en-US", {
+                hour: "numeric",
+                minute: "2-digit",
+                hour12: true,
+              })}{" "}
+              {getDayName(event.start_date)}
             </Text>
           </Col>
         </Row>

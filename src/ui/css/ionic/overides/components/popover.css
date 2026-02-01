@@ -1,3 +1,14 @@
 ion-popover#week-nav {
     --width: 75%;
+
+}
+
+.ion-palette-dark {
+    ion-popover#week-nav ion-list ion-item {
+        --background: #1d1d1d;
+    }
+
+    ion-popover {
+        --backdrop-opacity: 0.65;
+    }
 }

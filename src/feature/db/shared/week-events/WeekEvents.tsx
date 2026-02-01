@@ -11,18 +11,24 @@ import { SpecialMeetingEvent } from "./components/special-meeting-event/SpecialM
 import { SpecialTalkEvent } from "./components/special-talk-event/SpecialTalkEvent";
 import type { Event } from "@tanstack-db/event/eventSchema";
 
+type MeetingType = "midweek" | "weekend";
+
 type Props = {
   weekId: string;
+  meetingType: MeetingType;
 };
 
-const EventComponent: FC<{ event: Event }> = ({ event }) => {
+const EventComponent: FC<{ event: Event; meetingType: MeetingType }> = ({
+  event,
+  meetingType,
+}) => {
   switch (event.type) {
     case "circuit_assembly":
       return <CircuitAssemblyEvent event={event} />;
     case "convention":
       return <ConventionEvent event={event} />;
     case "memorial":
-      return <MemorialEvent event={event} />;
+      return <MemorialEvent event={event} meetingType={meetingType} />;
     case "circuit_visit":
       return <CircuitVisitEvent />;
     case "special_meeting":
@@ -32,7 +38,7 @@ const EventComponent: FC<{ event: Event }> = ({ event }) => {
   }
 };
 
-export const WeekEvents: FC<Props> = ({ weekId }) => {
+export const WeekEvents: FC<Props> = ({ weekId, meetingType }) => {
   const [userCongregation] = useUserCongregation();
   const weekEnd = format(addDays(new Date(weekId), 7), "yyyy-MM-dd");
 
@@ -70,7 +76,7 @@ export const WeekEvents: FC<Props> = ({ weekId }) => {
   return (
     <>
       {events.map((event) => (
-        <EventComponent key={event.id} event={event} />
+        <EventComponent key={event.id} event={event} meetingType={meetingType} />
       ))}
     </>
   );

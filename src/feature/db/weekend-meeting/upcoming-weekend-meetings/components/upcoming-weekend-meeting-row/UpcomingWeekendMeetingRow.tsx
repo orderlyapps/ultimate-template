@@ -5,21 +5,28 @@ import { WeekendAssignments } from "./components/weekend-assignments/WeekendAssi
 import { WeekendAVAssignments } from "./components/weekend-av-assignments/WeekendAVAssignments";
 import { WeekendAttendantAssignments } from "./components/weekend-attendant-assignments/WeekendAttendantAssignments";
 import { OutgoingSpeakers } from "./components/outgoing-speakers/OutgoingSpeakers";
-import { WeekEvents } from "./components/week-events/WeekEvents";
+import { WeekEvents } from "@feature/db/shared/week-events/WeekEvents";
+import { useBlockingEvents } from "@feature/db/shared/week-events/useBlockingEvents";
 
 type Props = {
   weekId: string;
 };
 
 export const UpcomingWeekendMeetingRow: FC<Props> = ({ weekId }) => {
+  const hasBlockingEvent = useBlockingEvents(weekId, "weekend");
+
   return (
     <List lines="none">
-      <WeekEvents weekId={weekId} />
-      <IncomingTalk weekId={weekId} />
-      <WeekendAssignments weekId={weekId} />
-      <WeekendAVAssignments weekId={weekId} />
-      <WeekendAttendantAssignments weekId={weekId} />
-      <OutgoingSpeakers weekId={weekId} />
+      <WeekEvents weekId={weekId} meetingType="weekend" />
+      {!hasBlockingEvent && (
+        <>
+          <IncomingTalk weekId={weekId} />
+          <WeekendAssignments weekId={weekId} />
+          <WeekendAVAssignments weekId={weekId} />
+          <WeekendAttendantAssignments weekId={weekId} />
+          <OutgoingSpeakers weekId={weekId} />
+        </>
+      )}
     </List>
   );
 };
