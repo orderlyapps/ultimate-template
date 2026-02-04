@@ -1,9 +1,7 @@
 import { Text } from "@ionic-display/text/Text";
 import { Space } from "@layout/space/Space";
-import { formatPublisherName } from "@format/formatPublisherName";
 import { useUserPublisher } from "../user-publisher/use-user-publisher/useUserPublisher";
 import { SelectUserPublisherModal } from "../user-publisher/select-user-publisher-modal/SelectUserPublisherModal";
-import { ThisWeek } from "@feature/db/publisher/publisher-home-view/components/this-week/ThisWeek";
 
 export const PublisherHomeView: React.FC = () => {
   const [publisher] = useUserPublisher();
@@ -19,10 +17,11 @@ export const PublisherHomeView: React.FC = () => {
 
   return (
     <>
-      <Text size="lg">{formatPublisherName(publisher, "display last")}</Text>
-      <Space height="2" />
-      <ThisWeek />
-      <Space height="2" />
+      {publisher && (
+        <Text size="lg">
+          Welcome {publisher.display_name || publisher.first_name}
+        </Text>
+      )}
     </>
   );
 };
