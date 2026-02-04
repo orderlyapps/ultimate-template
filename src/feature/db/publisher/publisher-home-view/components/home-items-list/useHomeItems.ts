@@ -13,7 +13,8 @@ export type AssignmentItem = {
 export type WeekGroup = {
   type: "week";
   weekId: string;
-  assignments: AssignmentItem[];
+  midweekAssignments: AssignmentItem[];
+  weekendAssignments: AssignmentItem[];
 };
 
 export type EventItem = {
@@ -38,46 +39,63 @@ export const useHomeItems = ({
   avAssignments,
   events,
 }: UseHomeItemsParams) => {
-  const allAssignments: (AssignmentItem & { weekId: string })[] = [
+  const allAssignments: (AssignmentItem & { weekId: string; meetingType: "midweek" | "weekend" })[] = [
     ...(weekendAssignments ?? []).map((a) => ({
       kind: "Weekend Assignment" as const,
       weekId: a.week_id,
       key: `weekend-${a.congregation_id}-${a.week_id}-${a.assignment_id}`,
       title: a.assignment_id,
+      meetingType: "weekend" as const,
     })),
     ...(speakerAssignments ?? []).map((a) => ({
       kind: "Speaker Assignment" as const,
       weekId: a.week_id,
       key: `speaker-${a.congregation_id}-${a.week_id}-${a.speaker_id}`,
       title: a.outline_id ?? "",
+      meetingType: "weekend" as const,
     })),
     ...(midweekAssignments ?? []).map((a) => ({
       kind: "Midweek Assignment" as const,
       weekId: a.week_id,
       key: `midweek-${a.congregation_id}-${a.week_id}-${a.assignment_id}`,
       title: a.assignment_id,
+      meetingType: "midweek" as const,
     })),
     ...(avAssignments ?? []).map((a) => ({
       kind: "AV Assignment" as const,
       weekId: a.week_id,
       key: `av-${a.congregation_id}-${a.week_id}-${a.assignment_id}`,
       title: a.assignment_id,
+      meetingType: a.assignment_id.endsWith("_midweek") ? "midweek" as const : "weekend" as const,
     })),
   ];
 
-  const weekMap = new Map<string, AssignmentItem[]>();
+  const weekMap = new Map<string, { midweek: AssignmentItem[]; weekend: AssignmentItem[] }>();
   for (const assignment of allAssignments) {
-    const existing = weekMap.get(assignment.weekId) ?? [];
-    existing.push({
-      kind: assignment.kind,
-      key: assignment.key,
-      title: assignment.title,
-    });
+    const existing = weekMap.get(assignment.weekId) ?? { midweek: [], weekend: [] };
+    if (assignment.meetingType === "midweek") {
+      existing.midweek.push({
+        kind: assignment.kind,
+        key: assignment.key,
+        title: assignment.title,
+      });
+    } else {
+      existing.weekend.push({
+        kind: assignment.kind,
+        key: assignment.key,
+        title: assignment.title,
+      });
+    }
     weekMap.set(assignment.weekId, existing);
   }
 
   const weekGroups: WeekGroup[] = Array.from(weekMap.entries()).map(
-    ([weekId, assignments]) => ({ type: "week" as const, weekId, assignments }),
+    ([weekId, { midweek, weekend }]) => ({
+      type: "week" as const,
+      weekId,
+      midweekAssignments: midweek,
+      weekendAssignments: weekend,
+    }),
   );
 
   const eventItems: EventItem[] = (events ?? []).map((event) => ({
