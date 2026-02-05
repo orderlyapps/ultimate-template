@@ -1,21 +1,15 @@
 import { Text } from "@ionic-display/text/Text";
 import type { Event } from "@tanstack-db/event/eventSchema";
 import { formatEventDate } from "@date/formatEventDate";
+import { Row } from "@ionic-layout/row/Row";
 
 type Props = {
   event: Event;
 };
 
-export const SpecialMeetingCard: React.FC<Props> = ({ event }) => {
-  return (
-    <div>
-      <Text size="md" bold>
-        {formatEventDate(event.start_date)}
-      </Text>
-      <br />
-      <Text size="md">Special Meeting</Text>
-      <Text size="sm">{event.name}</Text>
-      {event.address && <Text size="sm">{event.address}</Text>}
-    </div>
-  );
-};
+export const SpecialMeetingCard: React.FC<Props> = ({ event }) => (
+  <Row>
+    <Text color="primary" bold>Special Meeting</Text>
+    <Text size="sm"> - {formatEventDate(event.start_date)}</Text>
+  </Row>
+);

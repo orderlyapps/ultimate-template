@@ -1,6 +1,5 @@
 import { Text } from "@ionic-display/text/Text";
 import { Col } from "@ionic-layout/col/Col";
-import { Grid } from "@ionic-layout/grid/Grid";
 import { Row } from "@ionic-layout/row/Row";
 import type { Event } from "@tanstack-db/event/eventSchema";
 import { formatEventDate } from "@date/formatEventDate";
@@ -11,14 +10,11 @@ type Props = {
 
 export const OtherEventCard: React.FC<Props> = ({ event }) => {
   return (
-    <Grid className="ion-text-center">
-      <Row>
-        <Col>
-          <Text bold>{event.name}</Text>
-          <br />
-          <Text size="sm">{formatEventDate(event.start_date)}</Text>
-        </Col>
-      </Row>
-    </Grid>
+    <Row>
+      <Col>
+        <Text color="primary" bold>{event.name}</Text>
+        <Text size="sm"> - {formatEventDate(event.start_date)}</Text>
+      </Col>
+    </Row>
   );
 };

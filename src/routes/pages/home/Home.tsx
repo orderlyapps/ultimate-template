@@ -1,34 +1,13 @@
-import {
-  IonPage,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-} from "@ionic/react";
+import { IonPage, IonContent } from "@ionic/react";
 import { List } from "@ionic-layout/list/List";
 import { NavItem } from "@navigation/nav-item/NavItem";
 import { FeatureGuard } from "@services/app/features/FeatureGuard";
 import { PublisherHomeView } from "@feature/db/publisher/publisher-home-view/PublisherHomeView";
-import { useUserPublisher } from "@feature/db/publisher/user-publisher/use-user-publisher/useUserPublisher";
-import { formatPublisherName } from "@format/formatPublisherName";
 
 export const Home: React.FC = () => {
-  const [publisher] = useUserPublisher();
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Home</IonTitle>
-        </IonToolbar>
-      </IonHeader>
       <IonContent fullscreen className="ion-padding">
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle>
-              Welcome {formatPublisherName(publisher, "display last")}
-            </IonTitle>
-          </IonToolbar>
-        </IonHeader>
         <PublisherHomeView />
         <List>
           <FeatureGuard id="talks">
