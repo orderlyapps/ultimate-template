@@ -12,7 +12,7 @@ type Props = {
 
 export const ConventionEvent: FC<Props> = ({ event }) => {
   return (
-    <Item>
+    <Item color="primary" className="ion-padding-vertical">
       <Grid className="ion-text-nowrap ion-text-center">
         <Row>
           <Col>

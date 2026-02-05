@@ -30,7 +30,7 @@ export const MemorialEvent: FC<Props> = ({ event, meetingType }) => {
   }
 
   return (
-    <Item>
+    <Item color="primary" className="ion-padding-vertical">
       <Grid className="ion-text-nowrap ion-text-center">
         <Row>
           <Col>
@@ -38,7 +38,7 @@ export const MemorialEvent: FC<Props> = ({ event, meetingType }) => {
               {"Memorial"}
             </Text>
             <br />
-            <Text color="medium">
+            <Text>
               {new Date(
                 `${event.start_date}T${event.start_time}`,
               ).toLocaleTimeString("en-US", {

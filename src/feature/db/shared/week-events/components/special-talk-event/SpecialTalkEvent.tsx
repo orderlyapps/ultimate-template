@@ -7,7 +7,7 @@ import { Col } from "@ionic-layout/col/Col";
 
 export const SpecialTalkEvent: FC = () => {
   return (
-    <Item>
+    <Item color="primary" className="ion-padding-vertical">
       <Grid className="ion-text-nowrap ion-text-center">
         <Row>
           <Col>
