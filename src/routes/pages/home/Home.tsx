@@ -7,11 +7,13 @@ import {
 } from "@ionic/react";
 import { List } from "@ionic-layout/list/List";
 import { NavItem } from "@navigation/nav-item/NavItem";
-import { Space } from "@layout/space/Space";
 import { FeatureGuard } from "@services/app/features/FeatureGuard";
 import { PublisherHomeView } from "@feature/db/publisher/publisher-home-view/PublisherHomeView";
+import { useUserPublisher } from "@feature/db/publisher/user-publisher/use-user-publisher/useUserPublisher";
+import { formatPublisherName } from "@format/formatPublisherName";
 
 export const Home: React.FC = () => {
+  const [publisher] = useUserPublisher();
   return (
     <IonPage>
       <IonHeader>
@@ -21,11 +23,12 @@ export const Home: React.FC = () => {
       </IonHeader>
       <IonContent fullscreen className="ion-padding">
         <IonHeader collapse="condense">
-          <IonToolbar >
-            <IonTitle size="large">Home</IonTitle>
+          <IonToolbar>
+            <IonTitle>
+              Welcome {formatPublisherName(publisher, "display last")}
+            </IonTitle>
           </IonToolbar>
         </IonHeader>
-        <Space height="2" />
         <PublisherHomeView />
         <List>
           <FeatureGuard id="talks">

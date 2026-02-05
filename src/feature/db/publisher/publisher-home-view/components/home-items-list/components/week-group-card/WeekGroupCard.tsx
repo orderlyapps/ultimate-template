@@ -5,7 +5,6 @@ import { Grid } from "@ionic-layout/grid/Grid";
 import { Row } from "@ionic-layout/row/Row";
 import { Col } from "@ionic-layout/col/Col";
 import { EventCard } from "../event-cards/EventCard";
-import { Space } from "@layout/space/Space";
 import { assignmentLabels } from "./assignmentLabels";
 
 type Props = {
@@ -32,7 +31,6 @@ export const WeekGroupCard: React.FC<Props> = ({ weekGroup }) => {
       <Row>
         {weekGroup.midweekAssignments.length > 0 && (
           <Col className="ion-text-center">
-            <Space height="1" />
             {weekGroup.midweekAssignments.map((assignment) => (
               <Text key={assignment.key} bold color="primary">
                 {assignment.title ? assignmentLabels[assignment.title] : ""}
@@ -44,7 +42,6 @@ export const WeekGroupCard: React.FC<Props> = ({ weekGroup }) => {
       <Row>
         {weekGroup.weekendAssignments.length > 0 && (
           <Col className="ion-text-center">
-            <Space height="1" />
             {weekGroup.weekendAssignments.map((assignment) => (
               <Text key={assignment.key} bold color="primary">
                 {assignment.title ? assignmentLabels[assignment.title] : ""}
@@ -53,7 +50,6 @@ export const WeekGroupCard: React.FC<Props> = ({ weekGroup }) => {
           </Col>
         )}
       </Row>
-      <Space height="2" />
     </Grid>
   );
 };
