@@ -4,6 +4,9 @@ import { getTheocraticWeekLabel } from "@date/getTheocraticWeekLabel";
 import { Grid } from "@ionic-layout/grid/Grid";
 import { Row } from "@ionic-layout/row/Row";
 import { Col } from "@ionic-layout/col/Col";
+import { EventCard } from "../event-cards/EventCard";
+import { Space } from "@layout/space/Space";
+import { assignmentLabels } from "./assignmentLabels";
 
 type Props = {
   weekGroup: WeekGroup;
@@ -11,54 +14,46 @@ type Props = {
 
 export const WeekGroupCard: React.FC<Props> = ({ weekGroup }) => {
   return (
-    <Grid>
+    <Grid className="ion-no-padding">
       <Row>
         <Col>
-          <Text size="lg" bold color="primary">
-            {getTheocraticWeekLabel(weekGroup.weekId)}
-          </Text>
+          <Text size="lg">{getTheocraticWeekLabel(weekGroup.weekId)}</Text>
         </Col>
       </Row>
+      {weekGroup.events.length > 0 && (
+        <Row>
+          <Col>
+            {weekGroup.events.map((event) => (
+              <EventCard key={event.id} event={event} />
+            ))}
+          </Col>
+        </Row>
+      )}
       <Row>
         {weekGroup.midweekAssignments.length > 0 && (
-          <>
-            <Col size="3">
-              <Text size="sm" bold>
-                Midweek
+          <Col className="ion-text-center">
+            <Space height="1" />
+            {weekGroup.midweekAssignments.map((assignment) => (
+              <Text key={assignment.key} bold color="primary">
+                {assignment.title ? assignmentLabels[assignment.title] : ""}
               </Text>
-            </Col>
-            <Col>
-              {weekGroup.midweekAssignments.map((assignment) => (
-                <div key={assignment.key}>
-                  <Text size="sm">
-                    {assignment.title ? `${assignment.title}` : ""}
-                  </Text>
-                </div>
-              ))}
-            </Col>
-          </>
+            ))}
+          </Col>
         )}
       </Row>
       <Row>
         {weekGroup.weekendAssignments.length > 0 && (
-          <>
-            <Col size="3">
-              <Text size="sm" bold>
-                Weekend
+          <Col className="ion-text-center">
+            <Space height="1" />
+            {weekGroup.weekendAssignments.map((assignment) => (
+              <Text key={assignment.key} bold color="primary">
+                {assignment.title ? assignmentLabels[assignment.title] : ""}
               </Text>
-            </Col>
-            <Col>
-              {weekGroup.weekendAssignments.map((assignment) => (
-                <div key={assignment.key}>
-                  <Text size="sm">
-                    {assignment.title ? `${assignment.title}` : ""}
-                  </Text>
-                </div>
-              ))}
-            </Col>
-          </>
+            ))}
+          </Col>
         )}
       </Row>
+      <Space height="2" />
     </Grid>
   );
 };

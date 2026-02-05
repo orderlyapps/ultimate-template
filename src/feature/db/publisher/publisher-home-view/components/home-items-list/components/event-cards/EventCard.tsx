@@ -21,7 +21,7 @@ export const EventCard: React.FC<Props> = ({ event }) => {
     case "memorial":
       return <MemorialCard event={event} />;
     case "circuit_visit":
-      return <CircuitVisitCard event={event} />;
+      return <CircuitVisitCard />;
     case "special_meeting":
       return <SpecialMeetingCard event={event} />;
     case "campaign":

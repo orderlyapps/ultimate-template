@@ -3,7 +3,7 @@ import { Col } from "@ionic-layout/col/Col";
 import { Grid } from "@ionic-layout/grid/Grid";
 import { Row } from "@ionic-layout/row/Row";
 import type { Event } from "@tanstack-db/event/eventSchema";
-import { format } from "date-fns";
+import { formatEventDate } from "@date/formatEventDate";
 
 type Props = {
   event: Event;
@@ -11,14 +11,12 @@ type Props = {
 
 export const CircuitAssemblyCard: React.FC<Props> = ({ event }) => {
   return (
-    <Grid>
+    <Grid className="ion-text-center">
       <Row>
         <Col>
-          <Text size="md" bold>
-            {format(new Date(event.start_date), "MMMM d (eeee)").toUpperCase()}
-          </Text>
+          <Text bold>Circuit Assembly</Text>
           <br />
-          <Text>Circuit Assembly</Text>
+          <Text size="sm">{formatEventDate(event.start_date)}</Text>
           <br />
           <Text size="sm">{event.name}</Text>
           {event.address && <Text size="sm">{event.address}</Text>}

@@ -4,8 +4,7 @@ import type { MidweekAssignment } from "@tanstack-db/midweek_assignment/midweekA
 import type { SpeakerAssignment } from "@tanstack-db/speaker_assignment/speakerAssignmentSchema";
 import type { WeekendAssignment } from "@tanstack-db/weekend_assignment/weekendAssignmentSchema";
 import { useHomeItems } from "./useHomeItems";
-import { WeekGroupCard } from "./components/week-group-card/WeekGroupCard";
-import { EventCard } from "./components/event-cards/EventCard";
+import { MonthGroupCard } from "./components/month-group-card/MonthGroupCard";
 
 type Props = {
   weekendAssignments: WeekendAssignment[] | undefined;
@@ -32,20 +31,11 @@ export const HomeItemsList: React.FC<Props> = ({
 
   return (
     <>
-      {items.map((item) => {
-        if (item.type === "week") {
-          return (
-            <div key={item.weekId}>
-              <WeekGroupCard weekGroup={item} />
-            </div>
-          );
-        }
-        return (
-          <div key={item.event.id}>
-            <EventCard event={item.event} />
-          </div>
-        );
-      })}
+      {items.map((item) => (
+        <div key={item.monthId}>
+          <MonthGroupCard monthGroup={item} />
+        </div>
+      ))}
     </>
   );
 };

@@ -1,13 +1,14 @@
-import type { AVAssignment } from "@tanstack-db/av_assignment/avAssignmentSchema";
+import type { AVAssignment, AVAssignmentID } from "@tanstack-db/av_assignment/avAssignmentSchema";
 import type { Event } from "@tanstack-db/event/eventSchema";
-import type { MidweekAssignment } from "@tanstack-db/midweek_assignment/midweekAssignmentSchema";
+import type { MidweekAssignment, MidweekAssignmentID } from "@tanstack-db/midweek_assignment/midweekAssignmentSchema";
 import type { SpeakerAssignment } from "@tanstack-db/speaker_assignment/speakerAssignmentSchema";
-import type { WeekendAssignment } from "@tanstack-db/weekend_assignment/weekendAssignmentSchema";
+import type { WeekendAssignment, WeekendAssignmentID } from "@tanstack-db/weekend_assignment/weekendAssignmentSchema";
+import { getWeekIdFromDate } from "@date/getWeekIdFromDate";
 
 export type AssignmentItem = {
   kind: "Weekend Assignment" | "Speaker Assignment" | "Midweek Assignment" | "AV Assignment";
   key: string;
-  title: string;
+  title: MidweekAssignmentID | WeekendAssignmentID | AVAssignmentID | "speaker";
 };
 
 export type WeekGroup = {
@@ -15,14 +16,17 @@ export type WeekGroup = {
   weekId: string;
   midweekAssignments: AssignmentItem[];
   weekendAssignments: AssignmentItem[];
+  events: Event[];
 };
 
-export type EventItem = {
-  type: "event";
-  event: Event;
+export type MonthGroup = {
+  type: "month";
+  monthId: string;
+  monthLabel: string;
+  weeks: WeekGroup[];
 };
 
-export type HomeItem = WeekGroup | EventItem;
+export type HomeItem = MonthGroup;
 
 type UseHomeItemsParams = {
   weekendAssignments: WeekendAssignment[] | undefined;
@@ -51,7 +55,7 @@ export const useHomeItems = ({
       kind: "Speaker Assignment" as const,
       weekId: a.week_id,
       key: `speaker-${a.congregation_id}-${a.week_id}-${a.speaker_id}`,
-      title: a.outline_id ?? "",
+      title: "speaker" as const,
       meetingType: "weekend" as const,
     })),
     ...(midweekAssignments ?? []).map((a) => ({
@@ -70,9 +74,10 @@ export const useHomeItems = ({
     })),
   ];
 
-  const weekMap = new Map<string, { midweek: AssignmentItem[]; weekend: AssignmentItem[] }>();
+  const weekMap = new Map<string, { midweek: AssignmentItem[]; weekend: AssignmentItem[]; events: Event[] }>();
+  
   for (const assignment of allAssignments) {
-    const existing = weekMap.get(assignment.weekId) ?? { midweek: [], weekend: [] };
+    const existing = weekMap.get(assignment.weekId) ?? { midweek: [], weekend: [], events: [] };
     if (assignment.meetingType === "midweek") {
       existing.midweek.push({
         kind: assignment.kind,
@@ -89,25 +94,65 @@ export const useHomeItems = ({
     weekMap.set(assignment.weekId, existing);
   }
 
-  const weekGroups: WeekGroup[] = Array.from(weekMap.entries()).map(
-    ([weekId, { midweek, weekend }]) => ({
+  for (const event of events ?? []) {
+    const weekId = getWeekIdFromDate(event.start_date);
+    const existing = weekMap.get(weekId) ?? { midweek: [], weekend: [], events: [] };
+    existing.events.push(event);
+    weekMap.set(weekId, existing);
+  }
+
+  const weekGroups: WeekGroup[] = Array.from(weekMap.entries())
+    .map(([weekId, { midweek, weekend, events: weekEvents }]) => ({
       type: "week" as const,
       weekId,
       midweekAssignments: midweek,
       weekendAssignments: weekend,
-    }),
-  );
+      events: weekEvents,
+    }))
+    .sort((a, b) => a.weekId.localeCompare(b.weekId));
 
-  const eventItems: EventItem[] = (events ?? []).map((event) => ({
-    type: "event" as const,
-    event,
-  }));
+  const monthMap = new Map<string, WeekGroup[]>();
+  for (const week of weekGroups) {
+    const [year, month] = week.weekId.split("-");
+    const monthId = `${year}-${month}`;
+    const existing = monthMap.get(monthId) ?? [];
+    existing.push(week);
+    monthMap.set(monthId, existing);
+  }
 
-  const items: HomeItem[] = [...weekGroups, ...eventItems].sort((a, b) => {
-    const dateA = a.type === "week" ? a.weekId : a.event.start_date;
-    const dateB = b.type === "week" ? b.weekId : b.event.start_date;
-    return dateA.localeCompare(dateB);
+  const now = new Date();
+  const currentMonthId = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+  const nextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+  const nextMonthId = `${nextMonth.getFullYear()}-${String(nextMonth.getMonth() + 1).padStart(2, "0")}`;
+
+  const sortedMonthEntries = Array.from(monthMap.entries()).sort((a, b) => a[0].localeCompare(b[0]));
+
+  const monthGroups: MonthGroup[] = sortedMonthEntries.map(([monthId, weeks]) => {
+    const [year, month] = monthId.split("-");
+    const date = new Date(Number(year), Number(month) - 1, 1);
+
+    let monthLabel: string;
+    const currentYear = now.getFullYear();
+    const monthYear = Number(year);
+    if (monthId === currentMonthId) {
+      monthLabel = "This Month";
+    } else if (monthId === nextMonthId) {
+      monthLabel = "Next Month";
+    } else if (monthYear !== currentYear) {
+      monthLabel = date.toLocaleDateString(undefined, { month: "long", year: "numeric" });
+    } else {
+      monthLabel = date.toLocaleDateString(undefined, { month: "long" });
+    }
+
+    return {
+      type: "month" as const,
+      monthId,
+      monthLabel,
+      weeks,
+    };
   });
+
+  const items: HomeItem[] = monthGroups;
 
   return { items };
 };

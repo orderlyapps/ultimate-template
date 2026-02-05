@@ -3,7 +3,7 @@ import { Col } from "@ionic-layout/col/Col";
 import { Grid } from "@ionic-layout/grid/Grid";
 import { Row } from "@ionic-layout/row/Row";
 import type { Event } from "@tanstack-db/event/eventSchema";
-import { format } from "date-fns";
+import { formatEventDate } from "@date/formatEventDate";
 
 type Props = {
   event: Event;
@@ -11,17 +11,12 @@ type Props = {
 
 export const CampaignCard: React.FC<Props> = ({ event }) => {
   return (
-    <Grid>
+    <Grid className="ion-text-center">
       <Row>
         <Col>
-          <Text size="md" bold>
-            {format(new Date(event.start_date), "MMMM d (eeee)").toUpperCase()}
-          </Text>
+          <Text bold>{event.name}</Text>
           <br />
-          <Text size="md">Campaign</Text>
-          <Text size="sm">{event.name}</Text>
-          <Text size="sm">{event.start_date}</Text>
-          {event.address && <Text size="sm">{event.address}</Text>}
+          <Text size="sm">Starts on {formatEventDate(event.start_date)}</Text>
         </Col>
       </Row>
     </Grid>
