@@ -5,7 +5,12 @@ import { Grid } from "@ionic-layout/grid/Grid";
 import { Row } from "@ionic-layout/row/Row";
 import { Col } from "@ionic-layout/col/Col";
 
-export const SpecialTalkEvent: FC = () => {
+export const SpecialTalkEvent: FC<{ meetingType: "midweek" | "weekend" }> = ({
+  meetingType,
+}) => {
+  if (meetingType === "midweek") {
+    return null;
+  }
   return (
     <Item color="primary" className="ion-padding-vertical">
       <Grid className="ion-text-nowrap ion-text-center">

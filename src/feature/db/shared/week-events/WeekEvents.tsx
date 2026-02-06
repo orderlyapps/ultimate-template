@@ -34,7 +34,7 @@ const EventComponent: FC<{ event: Event; meetingType: MeetingType }> = ({
     case "special_meeting":
       return <SpecialMeetingEvent />;
     case "special_talk":
-      return <SpecialTalkEvent />;
+      return <SpecialTalkEvent meetingType={meetingType}/>;
   }
 };
 
