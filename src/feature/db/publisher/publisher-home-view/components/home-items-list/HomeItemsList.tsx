@@ -5,7 +5,7 @@ import type { Event } from "@tanstack-db/event/eventSchema";
 import type { MidweekAssignment } from "@tanstack-db/midweek_assignment/midweekAssignmentSchema";
 import type { SpeakerAssignment } from "@tanstack-db/speaker_assignment/speakerAssignmentSchema";
 import type { WeekendAssignment } from "@tanstack-db/weekend_assignment/weekendAssignmentSchema";
-import { useHomeItems } from "./useHomeItems";
+import { useHomeItems, type MonthGroup, type WeekGroup } from "./useHomeItems";
 import { MonthGroupCard } from "./components/month-group-card/MonthGroupCard";
 
 type DisplayMode = "initial" | "more" | "all";
@@ -35,10 +35,44 @@ export const HomeItemsList: React.FC<Props> = ({
     events,
   });
 
-  const getVisibleItems = () => {
+  const countItemsInWeek = (week: WeekGroup) =>
+    week.midweekAssignments.length + week.weekendAssignments.length + week.events.length;
+
+  const countItemsInMonth = (month: MonthGroup) =>
+    month.weeks.reduce((sum, week) => sum + countItemsInWeek(week), 0);
+
+  const totalItems = items.reduce((sum, month) => sum + countItemsInMonth(month), 0);
+
+  const getVisibleItems = (): MonthGroup[] => {
     if (displayMode === "all") return items;
-    const limit = displayMode === "initial" ? 2 : 4;
-    return items.slice(0, limit);
+    const limit = displayMode === "initial" ? 6 : 12;
+
+    let count = 0;
+    const result: MonthGroup[] = [];
+
+    for (const month of items) {
+      if (count >= limit) break;
+
+      const filteredWeeks: WeekGroup[] = [];
+      for (const week of month.weeks) {
+        if (count >= limit) break;
+
+        const weekItemCount = countItemsInWeek(week);
+        if (count + weekItemCount <= limit) {
+          filteredWeeks.push(week);
+          count += weekItemCount;
+        } else {
+          filteredWeeks.push(week);
+          count += weekItemCount;
+        }
+      }
+
+      if (filteredWeeks.length > 0) {
+        result.push({ ...month, weeks: filteredWeeks });
+      }
+    }
+
+    return result;
   };
 
   const visibleItems = getVisibleItems();
@@ -59,7 +93,7 @@ export const HomeItemsList: React.FC<Props> = ({
     return "Show Less";
   };
 
-  const showButton = items.length > 2 || displayMode !== "initial";
+  const showButton = totalItems > 6 || displayMode !== "initial";
 
   return (
     <>

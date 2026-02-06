@@ -29,7 +29,8 @@ export const PublisherHomeView: React.FC = () => {
 
   return (
     <>
-      <Item>
+    <Space height="3"/>
+      <Item lines="none">
         <Text bold size="xxl">
           Welcome {formatPublisherName(publisher, "display last")}
         </Text>
