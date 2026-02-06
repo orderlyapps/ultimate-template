@@ -30,7 +30,7 @@ export const Schedules: React.FC = () => {
         <List>
           <NavItem routerLink={`/schedules/midweek-meeting/${currentWeekId}`}>Midweek Meeting</NavItem>
           <NavItem routerLink={`/schedules/weekend-meeting/${currentWeekId}`}>Weekend Meeting</NavItem>
-          <NavItem routerLink="/schedules/audio-and-video">Audio & Video</NavItem>
+          {/* <NavItem routerLink="/schedules/audio-and-video">Audio & Video</NavItem> */}
           <NavItem routerLink="/schedules/cleaning">Cleaning</NavItem>
           <NavItem routerLink="/schedules/events">Events</NavItem>
         </List>
