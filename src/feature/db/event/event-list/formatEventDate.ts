@@ -1,19 +1,21 @@
 import { getDayName } from "@date/getDayName";
 
-export function formatEventDate(
+export const formatEventDate = (
   startDateStr: string,
   endDateStr?: string | null,
-): string {
+): string => {
   const [sYear, sMonth, sDay] = startDateStr.split("-").map(Number);
   const startDate = new Date(sYear, sMonth - 1, sDay);
 
   if (!endDateStr || endDateStr === startDateStr) {
     const dayName = getDayName(startDateStr);
-    const formatted = startDate.toLocaleDateString(undefined, {
+    const month = startDate.toLocaleDateString(undefined, {
       month: "long",
+    });
+    const date = startDate.toLocaleDateString(undefined, {
       day: "numeric",
     });
-    return `${formatted} (${dayName})`;
+    return `${month} ${date} (${dayName})`;
   }
 
   const [eYear, eMonth, eDay] = endDateStr.split("-").map(Number);
@@ -26,4 +28,4 @@ export function formatEventDate(
     return `${startMonth} ${sDay}–${eDay}`;
   }
   return `${startMonth} ${sDay}–${endMonth} ${eDay}`;
-}
+};

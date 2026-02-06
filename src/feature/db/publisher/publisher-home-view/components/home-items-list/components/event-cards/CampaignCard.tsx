@@ -13,7 +13,7 @@ export const CampaignCard: React.FC<Props> = ({ event }) => {
     <Row>
       <Col>
         <Text bold color="primary">{event.name}</Text>
-        <Text size="sm"> - Starts on {formatEventDate(event.start_date)}</Text>
+        <Text size="sm"> - Starts on {formatEventDate(event.start_date, event.end_date)}</Text>
       </Col>
     </Row>
   );

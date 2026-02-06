@@ -7,7 +7,7 @@ import {
   IonTitle,
   IonContent,
 } from "@ionic/react";
-import { Space } from "@layout/space/Space";
+import { EventList } from "@feature/db/event/event-list/EventList";
 
 export const Events: React.FC = () => {
   return (
@@ -26,7 +26,7 @@ export const Events: React.FC = () => {
             <IonTitle size="large">Events</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <Space height="2" />
+        <EventList />
       </IonContent>
     </IonPage>
   );

@@ -27,7 +27,7 @@ export const MemorialCard: React.FC<Props> = ({ event }) => {
               })}{" "}
             </>
           )}
-          {formatEventDate(event.start_date)}
+          {formatEventDate(event.start_date, event.end_date)}
         </Text>
       </Col>
     </Row>

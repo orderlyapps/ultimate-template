@@ -13,7 +13,7 @@ export const SpecialTalkCard: React.FC<Props> = ({ event }) => {
     <Row >
       <Col>
         <Text color="primary" bold>Special Talk</Text>
-        <Text size="sm"> - {formatEventDate(event.start_date)}</Text>
+        <Text size="sm"> - {formatEventDate(event.start_date, event.end_date)}</Text>
       </Col>
     </Row>
   );

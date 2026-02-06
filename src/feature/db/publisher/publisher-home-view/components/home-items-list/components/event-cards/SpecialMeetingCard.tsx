@@ -10,6 +10,6 @@ type Props = {
 export const SpecialMeetingCard: React.FC<Props> = ({ event }) => (
   <Row>
     <Text color="primary" bold>Special Meeting</Text>
-    <Text size="sm"> - {formatEventDate(event.start_date)}</Text>
+    <Text size="sm"> - {formatEventDate(event.start_date, event.end_date)}</Text>
   </Row>
 );
