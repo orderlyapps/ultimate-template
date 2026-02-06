@@ -8,11 +8,7 @@ export const groupCollection = createCollection(
   queryCollectionOptions({
     queryKey: ["group"],
     queryFn: async () => {
-      const congregation_id = localStorage.getItem("congregationId");
-      const { data, error } = await supabase
-        .from("group")
-        .select("*")
-        .eq("congregation_id", congregation_id);
+      const { data, error } = await supabase.from("group").select("*");
 
       if (error) {
         throw new Error(`Failed to fetch group: ${error.message}`);
@@ -26,17 +22,41 @@ export const groupCollection = createCollection(
 
     onInsert: async ({ transaction }) => {
       const { changes } = transaction.mutations[0];
-      await supabase.from("group").insert(changes);
+      const { data, error } = await supabase.from("group").insert(changes);
+
+      if (error) {
+        return error;
+      }
+
+      return data;
     },
 
     onUpdate: async ({ transaction }) => {
       const { changes, original } = transaction.mutations[0];
-      await supabase.from("group").update(changes).eq("id", original.id);
+      const { data, error } = await supabase
+        .from("group")
+        .update(changes)
+        .eq("id", original.id);
+
+      if (error) {
+        return error;
+      }
+
+      return data;
     },
 
     onDelete: async ({ transaction }) => {
       const { original } = transaction.mutations[0];
-      await supabase.from("group").delete().eq("id", original.id);
+      const { data, error } = await supabase
+        .from("group")
+        .delete()
+        .eq("id", original.id);
+
+      if (error) {
+        return error;
+      }
+
+      return data;
     },
-  })
+  }),
 );

@@ -11,7 +11,6 @@ export const cleanMajorCollection = createCollection(
       const { data, error } = await supabase
         .from("clean_major")
         .select("*")
-        .eq("congregation_id", localStorage.getItem("congregationId"))
         .order("week_id", { ascending: true });
 
       if (error) {
@@ -26,25 +25,45 @@ export const cleanMajorCollection = createCollection(
 
     onInsert: async ({ transaction }) => {
       const { changes } = transaction.mutations[0];
-      await supabase.from("clean_major").insert(changes);
+      const { data, error } = await supabase
+        .from("clean_major")
+        .insert(changes);
+
+      if (error) {
+        return error;
+      }
+
+      return data;
     },
 
     onUpdate: async ({ transaction }) => {
       const { changes, original } = transaction.mutations[0];
-      await supabase
+      const { data, error } = await supabase
         .from("clean_major")
         .update(changes)
         .eq("week_id", original.week_id)
         .eq("congregation_id", original.congregation_id);
+
+      if (error) {
+        return error;
+      }
+
+      return data;
     },
 
     onDelete: async ({ transaction }) => {
       const { original } = transaction.mutations[0];
-      await supabase
+      const { data, error } = await supabase
         .from("clean_major")
         .delete()
         .eq("week_id", original.week_id)
         .eq("congregation_id", original.congregation_id);
+
+      if (error) {
+        return error;
+      }
+
+      return data;
     },
-  })
+  }),
 );

@@ -8,6 +8,7 @@ import {
   IonContent,
 } from "@ionic/react";
 import { Space } from "@layout/space/Space";
+import { CleaningList } from "@feature/db/cleaning/cleaning-list/CleaningList";
 
 export const Cleaning: React.FC = () => {
   return (
@@ -27,6 +28,7 @@ export const Cleaning: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <Space height="2" />
+        <CleaningList />
       </IonContent>
     </IonPage>
   );
