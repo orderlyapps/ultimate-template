@@ -8,6 +8,9 @@ import { TalkSubsection } from "@pages/home/talks/talk/section/subsection/TalkSu
 import { Ministry } from "@pages/ministry/Ministry";
 import { DoorToDoor } from "@pages/ministry/door-to-door/DoorToDoor";
 import { LetterWriting } from "@pages/ministry/letter-writing/LetterWriting";
+import { Maps } from "@pages/ministry/maps/Maps";
+import { MapDetail } from "@pages/ministry/maps/map-detail/MapDetail";
+import { Schedule } from "@pages/ministry/schedule/Schedule";
 import { Schedules } from "@pages/schedules/Schedules";
 import { MidweekMeeting } from "@pages/schedules/midweek-meeting/MidweekMeeting";
 import { WeekendMeeting } from "@pages/schedules/weekend-meeting/WeekendMeeting";
@@ -42,6 +45,9 @@ export const pages = (
     <Route exact path="/ministry" render={() => <Ministry />} />
     <Route exact path="/ministry/door-to-door" render={() => <DoorToDoor />} />
     <Route exact path="/ministry/letter-writing" render={() => <LetterWriting />} />
+    <Route exact path="/ministry/maps" render={() => <Maps />} />
+    <Route exact path="/ministry/maps/detail/:mapID/:fileType" render={() => <MapDetail />} />
+    <Route exact path="/ministry/schedule" render={() => <Schedule />} />
     <Route exact path="/schedules" render={() => <Schedules />} />
     <Route
       exact

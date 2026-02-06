@@ -26,6 +26,8 @@ export const Ministry: React.FC = () => {
         <Space height="2" />
         <NavItem routerLink="/ministry/door-to-door">Door to Door</NavItem>
         <NavItem routerLink="/ministry/letter-writing">Letter Writing</NavItem>
+        <NavItem routerLink="/ministry/maps">Maps</NavItem>
+        <NavItem routerLink="/ministry/schedule">Schedule</NavItem>
       </IonContent>
     </IonPage>
   );
