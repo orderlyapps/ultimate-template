@@ -1,31 +1,34 @@
 import {
+  IonBackButton,
+  IonButtons,
   IonPage,
   IonHeader,
   IonToolbar,
   IonTitle,
-  IonContent
+  IonContent,
 } from "@ionic/react";
 import { Space } from "@layout/space/Space";
-import { NavItem } from "@navigation/nav-item/NavItem";
+import { LetterWritingList } from "@feature/db/not-at-home/letter-writing-list/LetterWritingList";
 
-export const Ministry: React.FC = () => {
-
+export const LetterWriting: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Ministry</IonTitle>
+          <IonButtons slot="start">
+            <IonBackButton defaultHref="/ministry" text="Ministry" />
+          </IonButtons>
+          <IonTitle>Letter Writing</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen className="ion-padding">
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Ministry</IonTitle>
+            <IonTitle size="large">Letter Writing</IonTitle>
           </IonToolbar>
         </IonHeader>
         <Space height="2" />
-        <NavItem routerLink="/ministry/door-to-door">Door to Door</NavItem>
-        <NavItem routerLink="/ministry/letter-writing">Letter Writing</NavItem>
+        <LetterWritingList />
       </IonContent>
     </IonPage>
   );
