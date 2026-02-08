@@ -6,6 +6,7 @@ import { eventCollection } from "@tanstack-db/event/eventCollection";
 import { avAssignmentCollection } from "@tanstack-db/av_assignment/avAssignmentCollection";
 import type { Publisher } from "@tanstack-db/publisher/publisherSchema";
 import { getThisWeekID } from "@util/date/getThisWeekID";
+import { getUserCongregation } from "@feature/db/congregation/user-congregation/get-user-congregation/getUserCongregation";
 
 const emptyResult = {
   weekendAssignments: [] as never[],
@@ -19,7 +20,7 @@ export const usePublisherHomeQueries = (
   publisher: Publisher | null | undefined,
 ) => {
   const publisherId = publisher?.id ?? "";
-  const congregationId = publisher?.congregation_id ?? "";
+  const congregationId = getUserCongregation()?.id;
   const thisWeekId = getThisWeekID();
   const enabled = !!publisher;
 
@@ -92,8 +93,10 @@ export const usePublisherHomeQueries = (
     [publisherId, congregationId, thisWeekId],
   );
 
+  console.log("events", events);
+
   if (!enabled) {
-    return emptyResult;
+    return { ...emptyResult, events };
   }
 
   return {

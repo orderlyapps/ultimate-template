@@ -1,6 +1,5 @@
 import { Space } from "@layout/space/Space";
 import { useUserPublisher } from "../user-publisher/use-user-publisher/useUserPublisher";
-import { SelectUserPublisherModal } from "../user-publisher/select-user-publisher-modal/SelectUserPublisherModal";
 import { usePublisherHomeQueries } from "./usePublisherHomeQueries";
 import { HomeItemsList } from "./components/home-items-list/HomeItemsList";
 import { formatPublisherName } from "@format/formatPublisherName";
@@ -18,18 +17,9 @@ export const PublisherHomeView: React.FC = () => {
     avAssignments,
   } = usePublisherHomeQueries(publisher);
 
-  if (!publisher) {
-    return (
-      <>
-        <SelectUserPublisherModal />
-        <Space height="2" />
-      </>
-    );
-  }
-
   return (
     <>
-    <Space height="3"/>
+      <Space height="3" />
       <Item lines="none">
         <Text bold size="xxl">
           Welcome {formatPublisherName(publisher, "display last")}
