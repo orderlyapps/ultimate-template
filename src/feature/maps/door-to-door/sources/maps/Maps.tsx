@@ -4,8 +4,10 @@ import { Layer, Source } from "react-map-gl/mapbox";
 import type { FeatureCollection } from "geojson";
 import { getLabelLayer } from "@feature/maps/door-to-door/sources/maps/layers/label";
 import { getBorderLayer } from "@feature/maps/door-to-door/sources/maps/layers/border";
-import { getFillLayer } from "@feature/maps/door-to-door/sources/maps/layers/fill";
+// import { getFillLayer } from "@feature/maps/door-to-door/sources/maps/layers/fill";
+import { getMaskLayer } from "@feature/maps/door-to-door/sources/maps/layers/mask";
 import { useDoorToDoorStore } from "@feature/maps/door-to-door/store/useDoorToDoorStore";
+import { getMaskGeoJson } from "@feature/maps/door-to-door/sources/maps/get-mask-geojson";
 
 export const SOURCE_ID = "maps";
 
@@ -45,11 +47,20 @@ export const Maps: React.FC = () => {
       })),
   };
 
+  const maskGeoJson = getMaskGeoJson(selectedMap, data);
+
   return (
-    <Source id={SOURCE_ID} type="geojson" data={geojson}>
-      <Layer {...getFillLayer(selectedMap)} />
-      <Layer {...getBorderLayer(selectedMap)} />
-      <Layer {...getLabelLayer(selectedMap)} />
-    </Source>
+    <>
+      {maskGeoJson && (
+        <Source id="maps-mask" type="geojson" data={maskGeoJson}>
+          <Layer {...getMaskLayer()} />
+        </Source>
+      )}
+      <Source id={SOURCE_ID} type="geojson" data={geojson}>
+        {/* <Layer {...getFillLayer(selectedMap)} /> */}
+        <Layer {...getBorderLayer(selectedMap)} />
+        <Layer {...getLabelLayer(selectedMap)} />
+      </Source>
+    </>
   );
 };
