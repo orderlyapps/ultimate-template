@@ -11,7 +11,7 @@ export const MapDetails = () => {
         contentStyle={{ height: "100%", width: "100%" }}
       >
         <img
-          src={`https://qwshevjczcvmibztktuc.supabase.co/storage/v1/object/public/maps/${mapID}.${fileType}`}
+          src={`https://xeagzahtpjviiklooglo.supabase.co/storage/v1/object/public/maps/${mapID}.${fileType}`}
           alt=""
           style={{ height: "100%", width: "100%", objectFit: "contain" }}
         />
