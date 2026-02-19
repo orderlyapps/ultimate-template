@@ -1,6 +1,6 @@
 import type { Feature } from "geojson";
 
-import { hashStringToSeed, mulberry32 } from "./seeded-random";
+// import { hashStringToSeed, mulberry32 } from "./seeded-random";
 
 type NotAtHomeWithCoordinates = {
   id: string;
@@ -11,7 +11,7 @@ type NotAtHomeWithCoordinates = {
 
 export const buildNotAtHomeFeatures = (
   groupedByAddress: Record<string, NotAtHomeWithCoordinates[]>,
-  offsetMeters: { min: number; max: number },
+  // offsetMeters: { min: number; max: number },
 ): Array<
   Feature<
     import("geojson").Point,
@@ -28,26 +28,27 @@ export const buildNotAtHomeFeatures = (
     const write_count = group.filter((item) => item.write === true).length;
     const return_count = group.filter((item) => item.write === false).length;
 
-    const seed = hashStringToSeed(`${firstItem.id}`);
-    const random = mulberry32(seed);
+    // const seed = hashStringToSeed(`${firstItem.id}`);
+    // const random = mulberry32(seed);
 
-    const distanceMeters = offsetMeters.min + random() * (offsetMeters.max - offsetMeters.min);
-    const angleRadians = random() * 2 * Math.PI;
+    // const distanceMeters =
+    //   offsetMeters.min + random() * (offsetMeters.max - offsetMeters.min);
+    // const angleRadians = random() * 2 * Math.PI;
 
-    const deltaLatMeters = Math.cos(angleRadians) * distanceMeters;
-    const deltaLngMeters = Math.sin(angleRadians) * distanceMeters;
+    // const deltaLatMeters = Math.cos(angleRadians) * distanceMeters;
+    // const deltaLngMeters = Math.sin(angleRadians) * distanceMeters;
 
-    const latRadians = (firstItem.coordinates[1] * Math.PI) / 180;
-    const metersPerDegreeLat = 111320;
-    const metersPerDegreeLng = 111320 * Math.cos(latRadians);
+    // const latRadians = (firstItem.coordinates[1] * Math.PI) / 180;
+    // const metersPerDegreeLat = 111320;
+    // const metersPerDegreeLng = 111320 * Math.cos(latRadians);
 
-    const randomOffsetLat = deltaLatMeters / metersPerDegreeLat;
-    const randomOffsetLng = deltaLngMeters / metersPerDegreeLng;
+    // const randomOffsetLat = deltaLatMeters / metersPerDegreeLat;
+    // const randomOffsetLng = deltaLngMeters / metersPerDegreeLng;
 
-    const offsetCoordinates: [number, number] = [
-      firstItem.coordinates[0] + randomOffsetLng,
-      firstItem.coordinates[1] + randomOffsetLat,
-    ];
+    // const offsetCoordinates: [number, number] = [
+    //   firstItem.coordinates[0] + randomOffsetLng,
+    //   firstItem.coordinates[1] + randomOffsetLat,
+    // ];
 
     return {
       type: "Feature" as const,
@@ -61,7 +62,7 @@ export const buildNotAtHomeFeatures = (
       },
       geometry: {
         type: "Point" as const,
-        coordinates: offsetCoordinates,
+        coordinates: group[0].coordinates// offsetCoordinates,
       },
     };
   });

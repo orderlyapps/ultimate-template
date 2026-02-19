@@ -59,10 +59,12 @@ export const NotAtHome: React.FC = () => {
     {} as Record<string, typeof validData>,
   );
 
-  const features = buildNotAtHomeFeatures(groupedByAddress, {
-    min: 15,
-    max: 25,
-  });
+  const features = buildNotAtHomeFeatures(groupedByAddress, 
+    // {
+    // min: 15,
+    // max: 25,
+  // }
+);
 
   const geojson: FeatureCollection = {
     type: "FeatureCollection",
