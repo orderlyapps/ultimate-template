@@ -8,7 +8,7 @@ import settings from "@icons/settings.svg";
 
 const useOrientation = () => {
   const [isPortrait, setIsPortrait] = useState(
-    window.matchMedia("(orientation: portrait)").matches
+    window.matchMedia("(orientation: portrait)").matches,
   );
 
   useEffect(() => {
@@ -26,6 +26,8 @@ export const Tabs: React.FC = () => {
   const layout = isPortrait ? "icon-top" : "icon-start";
   const className = isPortrait ? "" : "ion-padding-end";
 
+  const show = false;
+
   return (
     <IonTabBar slot="bottom">
       <IonTabButton tab="home" href="/home" layout={layout}>
@@ -40,10 +42,12 @@ export const Tabs: React.FC = () => {
         <IonIcon src={schedules} className={className} />
         <IonLabel>Schedules</IonLabel>
       </IonTabButton>
-      <IonTabButton tab="publishers" href="/publishers" layout={layout}>
-        <IonIcon src={publishers} className={className} />
-        <IonLabel>Publishers</IonLabel>
-      </IonTabButton>
+      {show && (
+        <IonTabButton tab="publishers" href="/publishers" layout={layout}>
+          <IonIcon src={publishers} className={className} />
+          <IonLabel>Publishers</IonLabel>
+        </IonTabButton>
+      )}
       <IonTabButton tab="settings" href="/settings" layout={layout}>
         <IonIcon src={settings} className={className} />
         <IonLabel>Settings</IonLabel>

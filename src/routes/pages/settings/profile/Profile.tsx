@@ -2,17 +2,69 @@ import { SelectUserCongregationModal } from "@feature/db/congregation/user-congr
 import { SelectUserPublisherModal } from "@feature/db/publisher/user-publisher/select-user-publisher-modal/SelectUserPublisherModal";
 import {
   IonBackButton,
+  IonButton,
   IonButtons,
   IonContent,
   IonHeader,
   IonPage,
   IonTitle,
   IonToolbar,
+  useIonAlert,
 } from "@ionic/react";
+import { useUserCongregation } from "@feature/db/congregation/user-congregation/use-user-congregation/useUserCongregation";
 import { Space } from "@layout/space/Space";
 import { AuthSection } from "@services/app/auth/AuthSection";
+import { List } from "@ionic-layout/list/List";
 
 export const Profile: React.FC = () => {
+  const show = false;
+  const [presentAlert] = useIonAlert();
+  const [, setUserCongregation] = useUserCongregation();
+
+  const handleResetApp = () => {
+    presentAlert({
+      header: "Enter the Zoom password to reset app",
+      inputs: [
+        {
+          name: "password",
+          type: "password",
+          placeholder: "Password",
+        },
+      ],
+      buttons: [
+        { text: "Cancel", role: "cancel" },
+        {
+          text: "Reset",
+          handler: (data) => {
+            if (data.password === "kingdom") {
+              setUserCongregation({
+                id: "7b15d4e5-d4fa-4eb4-a276-3790b7c4897b",
+                name: "Maitland",
+                congregation_id: null,
+              });
+              setTimeout(() => {
+                presentAlert({
+                  header: "App Reset",
+                  message:
+                    "Please close and restart the app for changes to take effect.",
+                  buttons: ["OK"],
+                });
+              }, 300);
+            } else {
+              setTimeout(() => {
+                presentAlert({
+                  header: "Incorrect Password",
+                  message: "The password you entered is incorrect.",
+                  buttons: ["OK"],
+                });
+              }, 300);
+            }
+          },
+        },
+      ],
+    });
+  };
+
   return (
     <IonPage>
       <IonHeader>
@@ -30,11 +82,20 @@ export const Profile: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <Space height="2" />
-        <AuthSection />
-        <Space height="2" />
-        <SelectUserCongregationModal />
-        <Space height="2" />
-        <SelectUserPublisherModal />
+        <List inset>
+          {show && (
+            <>
+              <AuthSection />
+              <Space height="2" />
+              <SelectUserCongregationModal />
+              <Space height="2" />
+              <SelectUserPublisherModal />
+            </>
+          )}
+          <IonButton expand="block" color="danger" onClick={handleResetApp}>
+            Reset App
+          </IonButton>
+        </List>
       </IonContent>
     </IonPage>
   );
