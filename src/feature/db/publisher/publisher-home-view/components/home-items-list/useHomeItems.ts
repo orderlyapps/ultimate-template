@@ -11,12 +11,23 @@ export type AssignmentItem = {
   title: MidweekAssignmentID | WeekendAssignmentID | AVAssignmentID | "speaker";
 };
 
+export type PublicTalkInfo = {
+  week_id: string;
+  outline_theme: string;
+  speaker_first_name: string;
+  speaker_last_name: string;
+  speaker_display_name: string | null | undefined;
+  speaker_congregation_id: string;
+  congregation_name: string | null;
+};
+
 export type WeekGroup = {
   type: "week";
   weekId: string;
   midweekAssignments: AssignmentItem[];
   weekendAssignments: AssignmentItem[];
   events: Event[];
+  publicTalk: PublicTalkInfo | null;
 };
 
 export type MonthGroup = {
@@ -34,6 +45,7 @@ type UseHomeItemsParams = {
   midweekAssignments: MidweekAssignment[] | undefined;
   avAssignments: AVAssignment[] | undefined;
   events: Event[] | undefined;
+  publicTalks: PublicTalkInfo[] | undefined;
 };
 
 export const useHomeItems = ({
@@ -42,6 +54,7 @@ export const useHomeItems = ({
   midweekAssignments,
   avAssignments,
   events,
+  publicTalks,
 }: UseHomeItemsParams) => {
   const allAssignments: (AssignmentItem & { weekId: string; meetingType: "midweek" | "weekend" })[] = [
     ...(weekendAssignments ?? []).map((a) => ({
@@ -74,6 +87,11 @@ export const useHomeItems = ({
     })),
   ];
 
+  const publicTalkMap = new Map<string, PublicTalkInfo>();
+  for (const talk of publicTalks ?? []) {
+    publicTalkMap.set(talk.week_id, talk);
+  }
+
   const weekMap = new Map<string, { midweek: AssignmentItem[]; weekend: AssignmentItem[]; events: Event[] }>();
   
   for (const assignment of allAssignments) {
@@ -101,6 +119,12 @@ export const useHomeItems = ({
     weekMap.set(weekId, existing);
   }
 
+  for (const talk of publicTalks ?? []) {
+    if (!weekMap.has(talk.week_id)) {
+      weekMap.set(talk.week_id, { midweek: [], weekend: [], events: [] });
+    }
+  }
+
   const weekGroups: WeekGroup[] = Array.from(weekMap.entries())
     .map(([weekId, { midweek, weekend, events: weekEvents }]) => ({
       type: "week" as const,
@@ -108,6 +132,7 @@ export const useHomeItems = ({
       midweekAssignments: midweek,
       weekendAssignments: weekend,
       events: weekEvents,
+      publicTalk: publicTalkMap.get(weekId) ?? null,
     }))
     .sort((a, b) => a.weekId.localeCompare(b.weekId));
 

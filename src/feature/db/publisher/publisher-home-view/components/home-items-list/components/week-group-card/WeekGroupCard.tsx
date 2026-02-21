@@ -8,8 +8,7 @@ import { EventCard } from "../event-cards/EventCard";
 import { assignmentLabels } from "./assignmentLabels";
 import { Space } from "@layout/space/Space";
 import { Fragment } from "react";
-import { IonIcon } from "@ionic/react";
-import assignmentIcon from "@icons/bookmark-filled.svg";
+import { PublicTalkInfo } from "./components/public-talk-info/PublicTalkInfo";
 
 type Props = {
   weekGroup: WeekGroup;
@@ -34,19 +33,22 @@ export const WeekGroupCard: React.FC<Props> = ({ weekGroup }) => {
           </Col>
         </Row>
       )}
+      {weekGroup.publicTalk && (
+        <PublicTalkInfo publicTalk={weekGroup.publicTalk} />
+      )}
       <Row>
         {weekGroup.midweekAssignments.length > 0 && (
           <Col>
             {weekGroup.midweekAssignments.map((assignment) => (
               <Row key={assignment.key} className="ion-align-items-end">
-                <Col size="auto">
-                  <IonIcon src={assignmentIcon} color="primary" />
-                </Col>
                 <Col>
                   <Text bold color="primary">
+                    Assignment:{" "}
+                  </Text>
+                  <Text>
                     {assignment.title ? assignmentLabels[assignment.title] : ""}
                   </Text>
-                  <Space height="0.2" />
+                  {/* <Space height="0.2" /> */}
                 </Col>
               </Row>
             ))}
@@ -58,14 +60,13 @@ export const WeekGroupCard: React.FC<Props> = ({ weekGroup }) => {
           <Col>
             {weekGroup.weekendAssignments.map((assignment) => (
               <Row key={assignment.key} className="ion-align-items-end">
-                <Col size="auto">
-                  <IonIcon src={assignmentIcon} color="primary" />
-                </Col>
                 <Col>
+                  <Text bold color="primary">
+                    Assignment:{" "}
+                  </Text>
                   <Text bold color="primary">
                     {assignment.title ? assignmentLabels[assignment.title] : ""}
                   </Text>
-                  <Space height="0.2" />
                 </Col>
               </Row>
             ))}

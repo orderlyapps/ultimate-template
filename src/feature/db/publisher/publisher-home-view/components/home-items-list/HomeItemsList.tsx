@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { IonButton } from "@ionic/react";
 import type { AVAssignment } from "@tanstack-db/av_assignment/avAssignmentSchema";
 import type { Event } from "@tanstack-db/event/eventSchema";
 import type { MidweekAssignment } from "@tanstack-db/midweek_assignment/midweekAssignmentSchema";
 import type { SpeakerAssignment } from "@tanstack-db/speaker_assignment/speakerAssignmentSchema";
 import type { WeekendAssignment } from "@tanstack-db/weekend_assignment/weekendAssignmentSchema";
-import { useHomeItems, type MonthGroup, type WeekGroup } from "./useHomeItems";
+import { useHomeItems, type MonthGroup, type WeekGroup, type PublicTalkInfo } from "./useHomeItems";
 import { MonthGroupCard } from "./components/month-group-card/MonthGroupCard";
 
 type DisplayMode = "initial" | "more" | "all";
@@ -16,6 +16,7 @@ type Props = {
   midweekAssignments: MidweekAssignment[] | undefined;
   events: Event[] | undefined;
   avAssignments: AVAssignment[] | undefined;
+  publicTalks: PublicTalkInfo[] | undefined;
 };
 
 export const HomeItemsList: React.FC<Props> = ({
@@ -24,6 +25,7 @@ export const HomeItemsList: React.FC<Props> = ({
   midweekAssignments,
   events,
   avAssignments,
+  publicTalks,
 }) => {
   const [displayMode, setDisplayMode] = useState<DisplayMode>("initial");
 
@@ -33,6 +35,7 @@ export const HomeItemsList: React.FC<Props> = ({
     midweekAssignments,
     avAssignments,
     events,
+    publicTalks,
   });
 
   const countItemsInWeek = (week: WeekGroup) =>
@@ -98,9 +101,9 @@ export const HomeItemsList: React.FC<Props> = ({
   return (
     <>
       {visibleItems.map((item) => (
-        <div key={item.monthId}>
+        <Fragment key={item.monthId}>
           <MonthGroupCard monthGroup={item} />
-        </div>
+        </Fragment>
       ))}
       {showButton && (
         <IonButton expand="block" fill="clear" onClick={handleToggle}>

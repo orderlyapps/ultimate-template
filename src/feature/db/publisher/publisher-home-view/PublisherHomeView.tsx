@@ -15,6 +15,7 @@ export const PublisherHomeView: React.FC = () => {
     midweekAssignments,
     events,
     avAssignments,
+    publicTalks,
   } = usePublisherHomeQueries(publisher);
 
   return (
@@ -31,6 +32,7 @@ export const PublisherHomeView: React.FC = () => {
         midweekAssignments={midweekAssignments}
         events={events}
         avAssignments={avAssignments}
+        publicTalks={publicTalks}
       />
     </>
   );

@@ -4,6 +4,9 @@ import { speakerAssignmentCollection } from "@tanstack-db/speaker_assignment/spe
 import { midweekAssignmentCollection } from "@tanstack-db/midweek_assignment/midweekAssignemtCollection";
 import { eventCollection } from "@tanstack-db/event/eventCollection";
 import { avAssignmentCollection } from "@tanstack-db/av_assignment/avAssignmentCollection";
+import { outlineCollection } from "@tanstack-db/outline/outlineCollection";
+import { publisherCollection } from "@tanstack-db/publisher/publisherCollection";
+import { congregationCollection } from "@tanstack-db/congregation/congregationCollection";
 import type { Publisher } from "@tanstack-db/publisher/publisherSchema";
 import { getThisWeekID } from "@util/date/getThisWeekID";
 import { getUserCongregation } from "@feature/db/congregation/user-congregation/get-user-congregation/getUserCongregation";
@@ -14,6 +17,7 @@ const emptyResult = {
   midweekAssignments: [] as never[],
   events: [] as never[],
   avAssignments: [] as never[],
+  publicTalks: [] as never[],
 };
 
 export const usePublisherHomeQueries = (
@@ -93,10 +97,33 @@ export const usePublisherHomeQueries = (
     [publisherId, congregationId, thisWeekId],
   );
 
-  console.log("events", events);
+  const { data: publicTalks } = useLiveQuery(
+    (q) =>
+      q
+        .from({ sa: speakerAssignmentCollection })
+        .join({ o: outlineCollection }, ({ sa, o }) => eq(sa.outline_id, o.id))
+        .join({ p: publisherCollection }, ({ sa, p }) => eq(sa.speaker_id, p.id))
+        .leftJoin({ c: congregationCollection }, ({ p, c }) => eq(p!.congregation_id, c.id))
+        .where(({ sa }) =>
+          and(
+            eq(sa.congregation_id, congregationId),
+            eq(sa.week_id, thisWeekId),
+          ),
+        )
+        .select(({ sa, o, p, c }) => ({
+          week_id: sa.week_id,
+          outline_theme: o!.theme,
+          speaker_first_name: p!.first_name,
+          speaker_last_name: p!.last_name,
+          speaker_display_name: p!.display_name,
+          speaker_congregation_id: p!.congregation_id,
+          congregation_name: c?.name ?? null,
+        })),
+    [congregationId, thisWeekId],
+  );
 
   if (!enabled) {
-    return { ...emptyResult, events };
+    return { ...emptyResult, events, publicTalks };
   }
 
   return {
@@ -105,5 +132,6 @@ export const usePublisherHomeQueries = (
     midweekAssignments,
     events,
     avAssignments,
+    publicTalks,
   };
 };
