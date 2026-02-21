@@ -47,7 +47,12 @@ export const Map = ({ children, id, onLongPress, ...props }: MapProps) => {
       onMove={(evt) => setViewState(evt.viewState)}
       mapStyle={mapStyle}
     >
-      <GeolocateControl position="top-right" />
+      <GeolocateControl
+        position="top-right"
+        trackUserLocation={true}
+        showUserHeading={true}
+        showAccuracyCircle={true}
+      />
       {children}
     </MapComponent>
   );
