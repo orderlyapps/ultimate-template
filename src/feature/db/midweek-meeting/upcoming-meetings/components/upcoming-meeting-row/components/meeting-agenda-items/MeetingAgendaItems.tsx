@@ -158,6 +158,7 @@ export const MeetingAgendaItems: FC<Props> = ({ meeting, weekId }) => {
       color: "jw_red",
       participant: data?.find((d) => d.assignment_id === "living_1")
         ?.participant,
+      schoolHeading: "living",
     },
     {
       label: meeting.mwb_lc_part2_title,
@@ -204,11 +205,13 @@ export const MeetingAgendaItems: FC<Props> = ({ meeting, weekId }) => {
               {hasSecondSchool && schoolHeading && (
                 <>
                   <Space height="1.5" />
-                  <Item lines="none">
-                    <Text bold size="xl">
-                      {schoolHeading}
-                    </Text>
-                  </Item>
+                  {schoolHeading !== "living" && (
+                    <Item lines="none">
+                      <Text bold size="xl">
+                        {schoolHeading}
+                      </Text>
+                    </Item>
+                  )}
                 </>
               )}
               <Item lines="none">
@@ -221,7 +224,7 @@ export const MeetingAgendaItems: FC<Props> = ({ meeting, weekId }) => {
                     </Col>
                   </Row>
 
-                  <Row className="ion-padding-start ion-padding-bottom">
+                  <Row className="ion-padding-start ion-padding-start ion-margin-start ion-padding-bottom">
                     <Col>
                       {participant && (
                         <Text>
@@ -231,13 +234,13 @@ export const MeetingAgendaItems: FC<Props> = ({ meeting, weekId }) => {
                       )}
 
                       {reader && (
-                        <Text>
+                        <Text color="medium">
                           Reader: {formatPublisherName(reader, "display last")}
                         </Text>
                       )}
 
                       {assistant && (
-                        <Text>
+                        <Text color="medium">
                           Assistant:{" "}
                           {formatPublisherName(assistant, "display last")}
                         </Text>

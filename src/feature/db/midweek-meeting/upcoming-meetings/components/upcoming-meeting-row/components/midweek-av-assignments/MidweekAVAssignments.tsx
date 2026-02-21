@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import { Fragment, type FC } from "react";
 import { and, eq, or, useLiveQuery } from "@tanstack/react-db";
 import { avAssignmentCollection } from "@tanstack-db/av_assignment/avAssignmentCollection";
 import { publisherCollection } from "@tanstack-db/publisher/publisherCollection";
@@ -9,6 +9,7 @@ import { Grid } from "@ionic-layout/grid/Grid";
 import { Row } from "@ionic-layout/row/Row";
 import { Col } from "@ionic-layout/col/Col";
 import { formatPublisherName } from "@format/formatPublisherName";
+import { Space } from "@layout/space/Space";
 
 type Props = {
   weekId: string;
@@ -25,8 +26,8 @@ const avAssignmentIDs = [
 const assignmentLabels: Record<string, string> = {
   microphone_1_midweek: "Microphone",
   microphone_2_midweek: "Microphone",
-  video_midweek: "Video",
-  audio_midweek: "Audio",
+  video_midweek: "Video Operator",
+  audio_midweek: "Audio Operator",
   platform_midweek: "Platform",
 };
 
@@ -63,32 +64,42 @@ export const MidweekAVAssignments: FC<Props> = ({ weekId }) => {
   }
 
   return (
-    <Item>
-      <Grid className="ion-text-nowrap ion-no-padding">
-        <Row>
-          <Col className="ion-text-center ion-padding-top">
-            <Text bold color="medium">
-              Audio & Video
-            </Text>
-          </Col>
-        </Row>
-        {avAssignmentIDs.map((id) => {
-          const assignment = data.find((d) => d.assignmentId === id);
-          if (!assignment?.participant) return null;
-          return (
-            <Row key={id}>
-              <Col>
-                <Text bold>{assignmentLabels[id]}</Text>
-              </Col>
-              <Col className="ion-text-right">
-                <Text>
-                  {formatPublisherName(assignment.participant, "display last")}
-                </Text>
-              </Col>
-            </Row>
-          );
-        })}
-      </Grid>
-    </Item>
+    <>
+      <Space height="1.5" />
+      <Item lines="none">
+        <Text bold size="xl">
+          Audio & Video
+        </Text>
+      </Item>
+      <Item>
+        <Grid className="ion-text-nowrap ion-no-padding">
+          {avAssignmentIDs.map((id) => {
+            const assignment = data.find((d) => d.assignmentId === id);
+            if (!assignment?.participant) return null;
+            return (
+              <Fragment key={id}>
+                <Row>
+                  <Col>
+                    <Text color="primary" bold>
+                      {assignmentLabels[id]}
+                    </Text>
+                  </Col>
+                </Row>
+                <Row className="ion-padding-start ion-padding-start ion-margin-start ion-padding-bottom">
+                  <Col>
+                    <Text>
+                      {formatPublisherName(
+                        assignment.participant,
+                        "display last",
+                      )}
+                    </Text>
+                  </Col>
+                </Row>
+              </Fragment>
+            );
+          })}
+        </Grid>
+      </Item>
+    </>
   );
 };
