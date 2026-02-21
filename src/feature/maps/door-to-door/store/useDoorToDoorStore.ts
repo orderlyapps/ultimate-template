@@ -82,7 +82,7 @@ export const useDoorToDoorStore = create<DoorToDoorStore>()(
     {
       name: "door-to-door-storage",
       partialize: (state) => ({
-        selectedMapName: state.selectedMap,
+        selectedMap: state.selectedMap,
         recentMaps: state.recentMaps,
       }),
     },
