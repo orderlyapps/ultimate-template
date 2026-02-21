@@ -75,6 +75,7 @@ export const StreetSelectModal: React.FC = () => {
         onValueChange={handleValueChange}
         recentlySelected={recentlySelected}
         listHeader="Streets"
+        persistantOptions={["add-new"]}
       />
 
       <AddStreetModal

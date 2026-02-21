@@ -66,6 +66,7 @@ export const SuburbSelectModal: React.FC = () => {
         onValueChange={handleValueChange}
         recentlySelected={recentlySelected}
         listHeader="Suburbs"
+        persistantOptions={["add-new"]}
       />
 
       <AddSuburbModal

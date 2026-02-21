@@ -34,6 +34,7 @@ type SelectItemProps = {
   disabled?: boolean;
   recentlySelected?: readonly SelectOption[];
   listHeader?: string;
+  persistantOptions?: string[];
 };
 
 export const SelectModal: React.FC<SelectItemProps> = ({
@@ -46,6 +47,7 @@ export const SelectModal: React.FC<SelectItemProps> = ({
   disabled = false,
   recentlySelected = [],
   listHeader = "All Options",
+  persistantOptions,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -113,8 +115,12 @@ export const SelectModal: React.FC<SelectItemProps> = ({
               <Label color={"medium"}>{listHeader}</Label>
             </IonListHeader>
             {options
-              .filter((option) =>
-                option.label.toLowerCase().includes(searchQuery.toLowerCase()),
+              .filter(
+                (option) =>
+                  option.label
+                    .toLowerCase()
+                    .includes(searchQuery.toLowerCase()) ||
+                  persistantOptions?.includes(option.value),
               )
               .map((option) => (
                 <Item
