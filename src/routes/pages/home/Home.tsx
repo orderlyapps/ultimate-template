@@ -3,11 +3,11 @@ import { List } from "@ionic-layout/list/List";
 import { NavItem } from "@navigation/nav-item/NavItem";
 import { FeatureGuard } from "@services/app/features/FeatureGuard";
 import { PublisherHomeView } from "@feature/db/publisher/publisher-home-view/PublisherHomeView";
-import { useUserCongregation } from "@feature/db/congregation/user-congregation/use-user-congregation/useUserCongregation";
 import { Item } from "@ionic-layout/item/Item";
 import { Text } from "@ionic-display/text/Text";
 import { Space } from "@layout/space/Space";
 import { Label } from "@ionic-display/label/Label";
+import { useUserCongregation } from "@feature/db/congregation/user-congregation/use-user-congregation/useUserCongregation";
 
 export const Home: React.FC = () => {
   const [congregation] = useUserCongregation();

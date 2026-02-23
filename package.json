@@ -9,6 +9,8 @@
     "build": "tsc -b && vite build",
     "test:lint:build": "eslint . && tsc -b && vitest run && vite build",
     "deploy:beta": "pnpm run test:lint:build && npx wrangler pages deploy dist --project-name=orderly --branch=beta",
+    "deploy:orderly": "pnpm run test:lint:build && npx wrangler pages deploy dist --project-name=orderly --branch=main",
+    "deploy:proclaimer": "pnpm run test:lint:build && npx wrangler pages deploy dist --project-name=proclaimer --branch=main",
     "lint": "eslint .",
     "preview": "vite preview --host",
     "test": "vitest",
