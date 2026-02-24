@@ -12,7 +12,7 @@ const getBlocksBorderLayer = (): LayerProps => ({
   paint: {
     "line-color": "#3b82f6",
     "line-width": 3,
-    "line-opacity": 0.8,
+    "line-opacity": 0.3,
   },
   beforeId: "road-label",
 });
@@ -23,14 +23,14 @@ const getBlocksLabelLayer = (): LayerProps => ({
   source: SOURCE_ID,
   layout: {
     "text-field": ["get", "name"],
-    "text-size": 12,
+    "text-size": 20,
     "text-anchor": "center",
     "text-allow-overlap": false,
   },
   paint: {
     "text-color": "#1e40af",
-    "text-halo-color": "#ffffff",
-    "text-halo-width": 2,
+    // "text-halo-color": "#ffffff",
+    // "text-halo-width": 2,
   },
 });
 

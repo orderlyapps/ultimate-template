@@ -31,6 +31,10 @@ export const MapEditForm: React.FC<{
   const [showBlockNameAlert, setShowBlockNameAlert] = useState(false);
   const [showFaceNameAlert, setShowFaceNameAlert] = useState(false);
   const [blockFaceName, setBlockFaceName] = useState("");
+  const [showRenameBlockAlert, setShowRenameBlockAlert] = useState(false);
+  const [showDeleteBlockAlert, setShowDeleteBlockAlert] = useState(false);
+  const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null);
+  const [renameBlockValue, setRenameBlockValue] = useState("");
 
   const hasUnsavedChanges = useMemo(() => {
     if (!editingMap) return false;
@@ -119,6 +123,44 @@ export const MapEditForm: React.FC<{
     closeMapEditModal();
   };
 
+  const handleRenameBlock = (blockId: string, currentName: string) => {
+    setSelectedBlockId(blockId);
+    setRenameBlockValue(currentName);
+    setShowRenameBlockAlert(true);
+  };
+
+  const handleConfirmRename = (newName: string) => {
+    if (!newName || !newName.trim() || !selectedBlockId) return;
+    
+    const currentBlocks = editedBlocks || editingMap.blocks || [];
+    const updatedBlocks = currentBlocks.map(block => 
+      block.id === selectedBlockId 
+        ? { ...block, name: newName.trim() }
+        : block
+    );
+    
+    setEditedBlocks(updatedBlocks);
+    setShowRenameBlockAlert(false);
+    setSelectedBlockId(null);
+    setRenameBlockValue("");
+  };
+
+  const handleDeleteBlock = (blockId: string) => {
+    setSelectedBlockId(blockId);
+    setShowDeleteBlockAlert(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (!selectedBlockId) return;
+    
+    const currentBlocks = editedBlocks || editingMap.blocks || [];
+    const updatedBlocks = currentBlocks.filter(block => block.id !== selectedBlockId);
+    
+    setEditedBlocks(updatedBlocks);
+    setShowDeleteBlockAlert(false);
+    setSelectedBlockId(null);
+  };
+
   const handleSave = () => {
     setShowSaveAlert(true);
   };
@@ -180,12 +222,25 @@ export const MapEditForm: React.FC<{
       <Button onClick={() => setShowFaceNameAlert(true)}>Add Face</Button>
       
       {(editedBlocks || editingMap.blocks)?.map((block) => (
-        <Button
-          key={block.id}
-          onClick={() => handleEditBlock(block.id)}
-        >
-          Edit {block.name}
-        </Button>
+        <div key={block.id} style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
+          <Button
+            onClick={() => handleEditBlock(block.id)}
+            style={{ flex: 1 }}
+          >
+            Edit {block.name}
+          </Button>
+          <Button
+            onClick={() => handleRenameBlock(block.id, block.name)}
+          >
+            Rename
+          </Button>
+          <Button
+            onClick={() => handleDeleteBlock(block.id)}
+            color="danger"
+          >
+            Delete
+          </Button>
+        </div>
       ))}
       
       <Button onClick={handleSave}>Save</Button>
@@ -271,6 +326,53 @@ export const MapEditForm: React.FC<{
           {
             text: "Add",
             handler: (data) => handleAddFace(data.faceName),
+          },
+        ]}
+      />
+      <IonAlert
+        isOpen={showRenameBlockAlert}
+        onDidDismiss={() => {
+          setShowRenameBlockAlert(false);
+          setSelectedBlockId(null);
+          setRenameBlockValue("");
+        }}
+        header="Rename Block/Face"
+        inputs={[
+          {
+            name: "newName",
+            type: "text",
+            placeholder: "New name",
+            value: renameBlockValue,
+          },
+        ]}
+        buttons={[
+          {
+            text: "Cancel",
+            role: "cancel",
+          },
+          {
+            text: "Rename",
+            handler: (data) => handleConfirmRename(data.newName),
+          },
+        ]}
+      />
+      <IonAlert
+        isOpen={showDeleteBlockAlert}
+        onDidDismiss={() => {
+          setShowDeleteBlockAlert(false);
+          setSelectedBlockId(null);
+        }}
+        header="Delete Block/Face"
+        message="Are you sure you want to delete this block/face? This action cannot be undone."
+        buttons={[
+          {
+            text: "Cancel",
+            role: "cancel",
+          },
+          {
+            text: "Delete",
+            role: "destructive",
+            handler: handleConfirmDelete,
           },
         ]}
       />
