@@ -9,8 +9,8 @@ import { NotAtHomeAlert } from "@feature/maps/door-to-door/components/not-at-hom
 import { NotAtHomeUnitModal } from "@feature/maps/door-to-door/components/not-at-homes/components/not-at-home-unit-modal/NotAtHomeUnitModal";
 import { DoNotCallUnitModal } from "@feature/maps/door-to-door/components/do-not-calls/do-not-call-unit-modal/DoNotCallUnitModal";
 import { AddAddressModal } from "@feature/maps/door-to-door/components/add-address-modal/AddAddressModal";
-import { MapEditFab } from "@feature/maps/door-to-door/components/map-edit-fab/MapEditFab";
-import { MapEditModal } from "@feature/maps/door-to-door/components/map-edit-modal/MapEditModal";
+import { MapEditFab } from "@feature/maps/door-to-door/components/map-edit/MapEditFab";
+import { MapEditModal } from "@feature/maps/door-to-door/components/map-edit/map-edit-modal/MapEditModal";
 import { useMapClickHandler } from "@feature/maps/door-to-door/handlers/useMapClickHandler";
 import type { MapTouchEvent } from "react-map-gl/mapbox";
 import { NotAtHome } from "@feature/maps/door-to-door/sources/not-at-home/NotAtHome";
