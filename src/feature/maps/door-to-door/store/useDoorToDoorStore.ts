@@ -47,6 +47,11 @@ interface DoorToDoorStore {
   setIsEditingBoundary: (isEditing: boolean) => void;
   editedBoundary: [number, number][] | null;
   setEditedBoundary: (boundary: [number, number][] | null) => void;
+
+  editingBlockId: string | null;
+  setEditingBlockId: (id: string | null) => void;
+  editedBlocks: Array<{ id: string; name: string; type: "face" | "block"; coordinates: [number, number][] }> | null;
+  setEditedBlocks: (blocks: Array<{ id: string; name: string; type: "face" | "block"; coordinates: [number, number][] }> | null) => void;
 }
 
 export const useDoorToDoorStore = create<DoorToDoorStore>()(
@@ -106,6 +111,11 @@ export const useDoorToDoorStore = create<DoorToDoorStore>()(
       setIsEditingBoundary: (isEditing: boolean) => set({ isEditingBoundary: isEditing }),
       editedBoundary: null,
       setEditedBoundary: (boundary: [number, number][] | null) => set({ editedBoundary: boundary }),
+
+      editingBlockId: null,
+      setEditingBlockId: (id: string | null) => set({ editingBlockId: id }),
+      editedBlocks: null,
+      setEditedBlocks: (blocks: Array<{ id: string; name: string; type: "face" | "block"; coordinates: [number, number][] }> | null) => set({ editedBlocks: blocks }),
     }),
     {
       name: "door-to-door-storage",

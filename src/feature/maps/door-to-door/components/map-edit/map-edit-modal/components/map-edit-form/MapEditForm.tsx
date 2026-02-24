@@ -19,10 +19,16 @@ export const MapEditForm: React.FC<{
   const setIsEditingBoundary = useDoorToDoorStore((state) => state.setIsEditingBoundary);
   const editedBoundary = useDoorToDoorStore((state) => state.editedBoundary);
   const setEditedBoundary = useDoorToDoorStore((state) => state.setEditedBoundary);
+  const editedBlocks = useDoorToDoorStore((state) => state.editedBlocks);
+  const setEditedBlocks = useDoorToDoorStore((state) => state.setEditedBlocks);
+  const setEditingBlockId = useDoorToDoorStore((state) => state.setEditingBlockId);
   const [name, setName] = useState(editingMap?.name ?? "");
   const [details, setDetails] = useState(editingMap?.details ?? "");
   const [showSaveAlert, setShowSaveAlert] = useState(false);
   const [showUnsavedAlert, setShowUnsavedAlert] = useState(false);
+  const [showBlockNameAlert, setShowBlockNameAlert] = useState(false);
+  const [showFaceNameAlert, setShowFaceNameAlert] = useState(false);
+  const [blockFaceName, setBlockFaceName] = useState("");
 
   const hasUnsavedChanges = useMemo(() => {
     if (!editingMap) return false;
@@ -30,8 +36,10 @@ export const MapEditForm: React.FC<{
     const detailsChanged = (details || null) !== editingMap.details;
     const boundaryChanged = editedBoundary !== null && 
       JSON.stringify(editedBoundary) !== JSON.stringify(editingMap.boundary);
-    return nameChanged || detailsChanged || boundaryChanged;
-  }, [name, details, editedBoundary, editingMap]);
+    const blocksChanged = editedBlocks !== null &&
+      JSON.stringify(editedBlocks) !== JSON.stringify(editingMap.blocks);
+    return nameChanged || detailsChanged || boundaryChanged || blocksChanged;
+  }, [name, details, editedBoundary, editedBlocks, editingMap]);
 
   const handleFinished = () => {
     if (hasUnsavedChanges) {
@@ -47,6 +55,8 @@ export const MapEditForm: React.FC<{
     setEditMode(false);
     setEditingMap(null);
     setEditedBoundary(null);
+    setEditedBlocks(null);
+    setEditingBlockId(null);
   };
 
   const handleEditBoundary = () => {
@@ -54,6 +64,50 @@ export const MapEditForm: React.FC<{
     if (editingMap.boundary) {
       setEditedBoundary(editingMap.boundary);
     }
+    closeMapEditModal();
+  };
+
+  const handleAddBlock = (blockName: string) => {
+    if (!blockName || !blockName.trim()) return;
+    
+    const newBlock = {
+      id: crypto.randomUUID(),
+      name: blockName.trim(),
+      type: "block" as const,
+      coordinates: [] as [number, number][],
+    };
+
+    const currentBlocks = editedBlocks || editingMap.blocks || [];
+    setEditedBlocks([...currentBlocks, newBlock]);
+    setEditingBlockId(newBlock.id);
+    setShowBlockNameAlert(false);
+    setBlockFaceName("");
+    closeMapEditModal();
+  };
+
+  const handleAddFace = (faceName: string) => {
+    if (!faceName || !faceName.trim()) return;
+    
+    const newFace = {
+      id: crypto.randomUUID(),
+      name: faceName.trim(),
+      type: "face" as const,
+      coordinates: [] as [number, number][],
+    };
+
+    const currentBlocks = editedBlocks || editingMap.blocks || [];
+    setEditedBlocks([...currentBlocks, newFace]);
+    setEditingBlockId(newFace.id);
+    setShowFaceNameAlert(false);
+    setBlockFaceName("");
+    closeMapEditModal();
+  };
+
+  const handleEditBlock = (blockId: string) => {
+    if (!editedBlocks && editingMap.blocks) {
+      setEditedBlocks(editingMap.blocks);
+    }
+    setEditingBlockId(blockId);
     closeMapEditModal();
   };
 
@@ -70,6 +124,9 @@ export const MapEditForm: React.FC<{
       if (editedBoundary !== null) {
         draft.boundary = editedBoundary;
       }
+      if (editedBlocks !== null) {
+        draft.blocks = editedBlocks;
+      }
     });
 
     setShowSaveAlert(false);
@@ -77,6 +134,8 @@ export const MapEditForm: React.FC<{
     setEditMode(false);
     setEditingMap(null);
     setEditedBoundary(null);
+    setEditedBlocks(null);
+    setEditingBlockId(null);
   };
 
   return (
@@ -98,6 +157,18 @@ export const MapEditForm: React.FC<{
         </Item>
       </List>
       <Button onClick={handleEditBoundary}>Edit Boundary</Button>
+      <Button onClick={() => setShowBlockNameAlert(true)}>Add Block</Button>
+      <Button onClick={() => setShowFaceNameAlert(true)}>Add Face</Button>
+      
+      {(editedBlocks || editingMap.blocks)?.map((block) => (
+        <Button
+          key={block.id}
+          onClick={() => handleEditBlock(block.id)}
+        >
+          Edit {block.name}
+        </Button>
+      ))}
+      
       <Button onClick={handleSave}>Save</Button>
       <Button onClick={handleFinished}>Finished</Button>
       <IonAlert
@@ -129,6 +200,58 @@ export const MapEditForm: React.FC<{
           {
             text: "Exit Without Saving",
             handler: handleConfirmFinished,
+          },
+        ]}
+      />
+      <IonAlert
+        isOpen={showBlockNameAlert}
+        onDidDismiss={() => {
+          setShowBlockNameAlert(false);
+          setBlockFaceName("");
+        }}
+        header="Add Block"
+        inputs={[
+          {
+            name: "blockName",
+            type: "text",
+            placeholder: "Block name",
+            value: blockFaceName,
+          },
+        ]}
+        buttons={[
+          {
+            text: "Cancel",
+            role: "cancel",
+          },
+          {
+            text: "Add",
+            handler: (data) => handleAddBlock(data.blockName),
+          },
+        ]}
+      />
+      <IonAlert
+        isOpen={showFaceNameAlert}
+        onDidDismiss={() => {
+          setShowFaceNameAlert(false);
+          setBlockFaceName("");
+        }}
+        header="Add Face"
+        inputs={[
+          {
+            name: "faceName",
+            type: "text",
+            placeholder: "Face name",
+            value: blockFaceName,
+          },
+        ]}
+        buttons={[
+          {
+            text: "Cancel",
+            role: "cancel",
+          },
+          {
+            text: "Add",
+            handler: (data) => handleAddFace(data.faceName),
           },
         ]}
       />

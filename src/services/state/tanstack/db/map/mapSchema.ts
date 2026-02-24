@@ -6,7 +6,12 @@ export const mapSchema = z.object({
   name: z.string(),
   details: z.string().nullable(),
   boundary: z.array(z.tuple([z.number(), z.number()])).nullable(),
-  blocks: z.any().nullable(), // jsonb
+  blocks: z.array(z.object({
+    id: z.string(),
+    name: z.string(),
+    type: z.enum(["face", "block"]),
+    coordinates: z.array(z.tuple([z.number(), z.number()])),
+  })).nullable(),
 });
 
 export type Map = z.infer<typeof mapSchema>;
