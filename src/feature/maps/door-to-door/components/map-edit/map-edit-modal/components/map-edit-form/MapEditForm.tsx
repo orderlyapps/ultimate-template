@@ -7,6 +7,7 @@ import { Item } from "@ionic-layout/item/Item";
 import { Label } from "@ionic-display/label/Label";
 import { mapCollection } from "@tanstack-db/map/mapCollection";
 import type { Map } from "@tanstack-db/map/mapSchema";
+import { useDoorToDoorStore } from "@feature/maps/door-to-door/store/useDoorToDoorStore";
 import { useState, useMemo } from "react";
 
 export const MapEditForm: React.FC<{
@@ -15,6 +16,9 @@ export const MapEditForm: React.FC<{
   setEditMode: (value: boolean) => void;
   setEditingMap: (value: Map | null) => void;
 }> = ({ editingMap, closeMapEditModal, setEditMode, setEditingMap }) => {
+  const setIsEditingBoundary = useDoorToDoorStore((state) => state.setIsEditingBoundary);
+  const editedBoundary = useDoorToDoorStore((state) => state.editedBoundary);
+  const setEditedBoundary = useDoorToDoorStore((state) => state.setEditedBoundary);
   const [name, setName] = useState(editingMap?.name ?? "");
   const [details, setDetails] = useState(editingMap?.details ?? "");
   const [showSaveAlert, setShowSaveAlert] = useState(false);
@@ -22,8 +26,12 @@ export const MapEditForm: React.FC<{
 
   const hasUnsavedChanges = useMemo(() => {
     if (!editingMap) return false;
-    return name !== editingMap.name || (details || null) !== editingMap.details;
-  }, [name, details, editingMap]);
+    const nameChanged = name !== editingMap.name;
+    const detailsChanged = (details || null) !== editingMap.details;
+    const boundaryChanged = editedBoundary !== null && 
+      JSON.stringify(editedBoundary) !== JSON.stringify(editingMap.boundary);
+    return nameChanged || detailsChanged || boundaryChanged;
+  }, [name, details, editedBoundary, editingMap]);
 
   const handleFinished = () => {
     if (hasUnsavedChanges) {
@@ -38,6 +46,15 @@ export const MapEditForm: React.FC<{
     closeMapEditModal();
     setEditMode(false);
     setEditingMap(null);
+    setEditedBoundary(null);
+  };
+
+  const handleEditBoundary = () => {
+    setIsEditingBoundary(true);
+    if (editingMap.boundary) {
+      setEditedBoundary(editingMap.boundary);
+    }
+    closeMapEditModal();
   };
 
   const handleSave = () => {
@@ -50,12 +67,16 @@ export const MapEditForm: React.FC<{
     await mapCollection.update(editingMap.id, (draft) => {
       draft.name = name;
       draft.details = details || null;
+      if (editedBoundary !== null) {
+        draft.boundary = editedBoundary;
+      }
     });
 
     setShowSaveAlert(false);
     closeMapEditModal();
     setEditMode(false);
     setEditingMap(null);
+    setEditedBoundary(null);
   };
 
   return (
@@ -76,6 +97,7 @@ export const MapEditForm: React.FC<{
           </Textarea>
         </Item>
       </List>
+      <Button onClick={handleEditBoundary}>Edit Boundary</Button>
       <Button onClick={handleSave}>Save</Button>
       <Button onClick={handleFinished}>Finished</Button>
       <IonAlert

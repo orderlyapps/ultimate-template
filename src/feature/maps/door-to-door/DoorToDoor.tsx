@@ -11,6 +11,7 @@ import { DoNotCallUnitModal } from "@feature/maps/door-to-door/components/do-not
 import { AddAddressModal } from "@feature/maps/door-to-door/components/add-address-modal/AddAddressModal";
 import { MapEditFab } from "@feature/maps/door-to-door/components/map-edit/MapEditFab";
 import { MapEditModal } from "@feature/maps/door-to-door/components/map-edit/map-edit-modal/MapEditModal";
+import { BoundaryEditor } from "@feature/maps/door-to-door/components/boundary-editor/BoundaryEditor";
 import { useMapClickHandler } from "@feature/maps/door-to-door/handlers/useMapClickHandler";
 import type { MapTouchEvent } from "react-map-gl/mapbox";
 import { NotAtHome } from "@feature/maps/door-to-door/sources/not-at-home/NotAtHome";
@@ -18,6 +19,7 @@ import { NotAtHome } from "@feature/maps/door-to-door/sources/not-at-home/NotAtH
 export const DoorToDoor: React.FC = () => {
   const setMapRef = useDoorToDoorStore((state) => state.setMapRef);
   const setInlineAlert = useDoorToDoorStore((state) => state.setInlineAlert);
+  const isEditMode = useDoorToDoorStore((state) => state.isEditMode);
 
   const handleMapClick = useMapClickHandler();
 
@@ -45,6 +47,7 @@ export const DoorToDoor: React.FC = () => {
         <Maps />
         <DoNotCalls />
         <NotAtHome />
+        {isEditMode && <BoundaryEditor />}
       </Map>
       <GetDirectionsAlert />
       <DoNotCallAlert />

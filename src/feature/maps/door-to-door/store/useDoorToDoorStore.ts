@@ -42,6 +42,11 @@ interface DoorToDoorStore {
   isMapEditModalOpen: boolean;
   openMapEditModal: () => void;
   closeMapEditModal: () => void;
+
+  isEditingBoundary: boolean;
+  setIsEditingBoundary: (isEditing: boolean) => void;
+  editedBoundary: [number, number][] | null;
+  setEditedBoundary: (boundary: [number, number][] | null) => void;
 }
 
 export const useDoorToDoorStore = create<DoorToDoorStore>()(
@@ -96,6 +101,11 @@ export const useDoorToDoorStore = create<DoorToDoorStore>()(
       isMapEditModalOpen: false,
       openMapEditModal: () => set({ isMapEditModalOpen: true }),
       closeMapEditModal: () => set({ isMapEditModalOpen: false }),
+
+      isEditingBoundary: false,
+      setIsEditingBoundary: (isEditing: boolean) => set({ isEditingBoundary: isEditing }),
+      editedBoundary: null,
+      setEditedBoundary: (boundary: [number, number][] | null) => set({ editedBoundary: boundary }),
     }),
     {
       name: "door-to-door-storage",
