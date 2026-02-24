@@ -31,6 +31,12 @@ export const getLabelLayer = (selectedMap: Map | null): LayerProps => {
     },
     paint: {
       "text-color": "#F00",
+      "text-opacity": [
+        "case",
+        ["==", ["get", "id"], ["literal", selectedMapID]],
+        0,
+        1,
+      ],
     },
     beforeId: "road-label",
   };

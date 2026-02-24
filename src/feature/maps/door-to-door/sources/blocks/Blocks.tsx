@@ -1,38 +1,13 @@
 import { useDoorToDoorStore } from "@feature/maps/door-to-door/store/useDoorToDoorStore";
 import { Layer, Source } from "react-map-gl/mapbox";
 import type { FeatureCollection } from "geojson";
-import type { LayerProps } from "react-map-gl/mapbox";
+import { getPolygonBorderLayer } from "./layers/polygon-border";
+import { getPolygonLabelLayer } from "./layers/polygon-label";
+import { getLineStringLayer } from "./layers/line-string";
+import { getLineStringLabelAlongLayer } from "./layers/line-string-label-along";
+import { getLineStringLabelEndpointsLayer } from "./layers/line-string-label-endpoints";
 
 export const SOURCE_ID = "blocks";
-
-const getBlocksBorderLayer = (): LayerProps => ({
-  id: "blocks-borders",
-  type: "line",
-  source: SOURCE_ID,
-  paint: {
-    "line-color": "#3b82f6",
-    "line-width": 3,
-    "line-opacity": 0.3,
-  },
-  beforeId: "road-label",
-});
-
-const getBlocksLabelLayer = (): LayerProps => ({
-  id: "blocks-labels",
-  type: "symbol",
-  source: SOURCE_ID,
-  layout: {
-    "text-field": ["get", "name"],
-    "text-size": 20,
-    "text-anchor": "center",
-    "text-allow-overlap": false,
-  },
-  paint: {
-    "text-color": "#1e40af",
-    // "text-halo-color": "#ffffff",
-    // "text-halo-width": 2,
-  },
-});
 
 export const Blocks: React.FC = () => {
   const selectedMap = useDoorToDoorStore((state) => state.selectedMap);
@@ -65,8 +40,11 @@ export const Blocks: React.FC = () => {
 
   return (
     <Source id={SOURCE_ID} type="geojson" data={geojson}>
-      <Layer {...getBlocksBorderLayer()} />
-      <Layer {...getBlocksLabelLayer()} />
+      <Layer {...getPolygonBorderLayer()} />
+      <Layer {...getPolygonLabelLayer()} />
+      <Layer {...getLineStringLayer()} />
+      <Layer {...getLineStringLabelAlongLayer()} />
+      <Layer {...getLineStringLabelEndpointsLayer()} />
     </Source>
   );
 };
