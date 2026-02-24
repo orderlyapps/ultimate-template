@@ -8,7 +8,7 @@ import {
 } from "@ionic/react";
 import { useDoorToDoorStore } from "@feature/maps/door-to-door/store/useDoorToDoorStore";
 import { CloseButton } from "@input/button/close-button/CloseButton";
-import { Button } from "@ionic-input/button/Button";
+import { MapEditForm } from "@feature/maps/door-to-door/components/map-edit/map-edit-modal/components/map-edit-form/MapEditForm";
 
 export const MapEditModal: React.FC = () => {
   const isMapEditModalOpen = useDoorToDoorStore(
@@ -25,14 +25,12 @@ export const MapEditModal: React.FC = () => {
     closeMapEditModal();
   };
 
-  const handleFinished = () => {
-    closeMapEditModal();
-    setEditMode(false);
-    setEditingMap(null);
-  };
-
   return (
-    <IonModal isOpen={isMapEditModalOpen} onDidDismiss={handleClose}>
+    <IonModal
+      isOpen={isMapEditModalOpen}
+      onDidDismiss={handleClose}
+      key={editingMap?.id}
+    >
       <IonHeader>
         <IonToolbar>
           <IonTitle>Edit Map: {editingMap?.name}</IonTitle>
@@ -42,7 +40,15 @@ export const MapEditModal: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <Button onClick={handleFinished}>Finished</Button>
+        {editingMap && (
+          <MapEditForm
+            key={editingMap.id}
+            editingMap={editingMap}
+            closeMapEditModal={closeMapEditModal}
+            setEditMode={setEditMode}
+            setEditingMap={setEditingMap}
+          />
+        )}
       </IonContent>
     </IonModal>
   );

@@ -21,15 +21,29 @@ export const mapCollection = createCollection(
     schema: mapSchema,
     onInsert: async ({ transaction }) => {
       const { changes } = transaction.mutations[0];
-      await supabase.from("map").insert(changes);
+      const { data, error } = await supabase.from("map").insert(changes);
+      if (error) return error;
+      return data;
     },
+
     onUpdate: async ({ transaction }) => {
       const { changes, original } = transaction.mutations[0];
-      await supabase.from("map").update(changes).eq("id", original.id);
+      const { data, error } = await supabase
+        .from("map")
+        .update(changes)
+        .eq("id", original.id);
+      if (error) return error;
+      return data;
     },
+
     onDelete: async ({ transaction }) => {
       const { original } = transaction.mutations[0];
-      await supabase.from("map").delete().eq("id", original.id);
+      const { data, error } = await supabase
+        .from("map")
+        .delete()
+        .eq("id", original.id);
+      if (error) return error;
+      return data;
     },
-  })
+  }),
 );
