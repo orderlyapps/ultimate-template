@@ -33,6 +33,15 @@ interface DoorToDoorStore {
 
   selectedDoNotCallUnits: DoNotCall[] | null;
   setSelectedDoNotCallUnits: (units: DoNotCall[] | null) => void;
+
+  isEditMode: boolean;
+  setEditMode: (isEditMode: boolean) => void;
+  editingMap: Map | null;
+  setEditingMap: (map: Map | null) => void;
+
+  isMapEditModalOpen: boolean;
+  openMapEditModal: () => void;
+  closeMapEditModal: () => void;
 }
 
 export const useDoorToDoorStore = create<DoorToDoorStore>()(
@@ -78,6 +87,15 @@ export const useDoorToDoorStore = create<DoorToDoorStore>()(
       selectedDoNotCallUnits: null,
       setSelectedDoNotCallUnits: (units: DoNotCall[] | null) =>
         set({ selectedDoNotCallUnits: units }),
+
+      isEditMode: false,
+      setEditMode: (isEditMode: boolean) => set({ isEditMode }),
+      editingMap: null,
+      setEditingMap: (map: Map | null) => set({ editingMap: map }),
+
+      isMapEditModalOpen: false,
+      openMapEditModal: () => set({ isMapEditModalOpen: true }),
+      closeMapEditModal: () => set({ isMapEditModalOpen: false }),
     }),
     {
       name: "door-to-door-storage",

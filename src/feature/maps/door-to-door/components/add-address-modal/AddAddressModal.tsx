@@ -11,6 +11,7 @@ import {
   IonToast,
 } from "@ionic/react";
 import { useAddAddressStore } from "@feature/maps/door-to-door/components/add-address-modal/store/useAddAddressStore";
+import { useDoorToDoorStore } from "@feature/maps/door-to-door/store/useDoorToDoorStore";
 import addIcon from "@icons/add.svg";
 import { SuburbSelectModal } from "@feature/maps/door-to-door/components/add-address-modal/components/suburb-select-modal/SuburbSelectModal";
 import { StreetSelectModal } from "@feature/maps/door-to-door/components/add-address-modal/components/street-select-modal/StreetSelectModal";
@@ -39,13 +40,17 @@ export const AddAddressModal: React.FC = () => {
   const street = useAddAddressStore((state) => state.street);
   const houseNumber = useAddAddressStore((state) => state.houseNumber);
 
+  const isEditMode = useDoorToDoorStore((state) => state.isEditMode);
+
   return (
     <>
-      <IonFab slot="fixed" vertical="bottom" horizontal="end">
-        <IonFabButton onClick={openAddAddressModal}>
-          <IonIcon icon={addIcon} size="large" />
-        </IonFabButton>
-      </IonFab>
+      {!isEditMode && (
+        <IonFab slot="fixed" vertical="bottom" horizontal="end">
+          <IonFabButton onClick={openAddAddressModal}>
+            <IonIcon icon={addIcon} size="large" />
+          </IonFabButton>
+        </IonFab>
+      )}
       <IonModal isOpen={isOpen} onDidDismiss={closeAddAddressModal}>
         <IonHeader>
           <IonToolbar>

@@ -19,12 +19,15 @@ export const MapListModal: React.FC = () => {
   const isOpen = useDoorToDoorStore((state) => state.isMapListModalOpen);
   const openModal = useDoorToDoorStore((state) => state.openMapListModal);
   const closeModal = useDoorToDoorStore((state) => state.closeMapListModal);
+  const isEditMode = useDoorToDoorStore((state) => state.isEditMode);
 
   return (
     <>
-      <Button onClick={openModal}>
-        <Icon src={mapIcon} slot="icon-only" />
-      </Button>
+      {!isEditMode && (
+        <Button onClick={openModal}>
+          <Icon src={mapIcon} slot="icon-only" />
+        </Button>
+      )}
       <IonModal isOpen={isOpen} onDidDismiss={closeModal}>
         <IonHeader>
           <IonToolbar>

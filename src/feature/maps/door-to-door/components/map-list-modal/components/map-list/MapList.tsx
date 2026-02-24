@@ -5,9 +5,10 @@ import { mapCollection } from "@tanstack-db/map/mapCollection";
 import { useLiveQuery } from "@tanstack/react-db";
 import { useZoomToMap } from "@feature/maps/door-to-door/components/map-list-modal/components/map-list/hooks/use-zoom-to-map";
 import { useDoorToDoorStore } from "@feature/maps/door-to-door/store/useDoorToDoorStore";
-import { IonListHeader } from "@ionic/react";
+import { IonListHeader, IonIcon, IonButton } from "@ionic/react";
 import { Label } from "@ionic-display/label/Label";
 import type { Map } from "@tanstack-db/map/mapSchema";
+import pencilIcon from "@icons/edit.svg";
 
 export const MapList: React.FC = () => {
   const { data } = useLiveQuery((q) =>
@@ -25,6 +26,11 @@ export const MapList: React.FC = () => {
     (state) => state.setSelectedMap,
   );
   const addToRecentMaps = useDoorToDoorStore((state) => state.addToRecentMaps);
+  const setEditMode = useDoorToDoorStore((state) => state.setEditMode);
+  const setEditingMap = useDoorToDoorStore((state) => state.setEditingMap);
+  const closeMapListModal = useDoorToDoorStore(
+    (state) => state.closeMapListModal,
+  );
 
   const handleSelectMap = (map: Map) => {
     if (selectedMap) {
@@ -32,6 +38,14 @@ export const MapList: React.FC = () => {
     }
     handleZoomToMap(map);
     setSelectedMap(map);
+  };
+
+  const handleEditMap = (map: Map, event: React.MouseEvent) => {
+    event.stopPropagation();
+    handleZoomToMap(map);
+    setEditingMap(map);
+    setEditMode(true);
+    closeMapListModal();
   };
 
   if (!data) return null;
@@ -48,6 +62,13 @@ export const MapList: React.FC = () => {
           color={map.id === selectedMap?.id ? "medium" : ""}
         >
           <Text bold={map.id === selectedMap?.id}>{map.name}</Text>
+          <IonButton
+            slot="end"
+            fill="clear"
+            onClick={(e) => handleEditMap(map, e)}
+          >
+            <IonIcon icon={pencilIcon} />
+          </IonButton>
         </Item>
       ))}
     </List>
