@@ -5,6 +5,7 @@ import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 import { useDoorToDoorStore } from "@feature/maps/door-to-door/store/useDoorToDoorStore";
 
 export const ShapeEditor: React.FC = () => {
+  const isDrawMode = useDoorToDoorStore((state) => state.isDrawMode);
   const isEditingBoundary = useDoorToDoorStore((state) => state.isEditingBoundary);
   const editingBlockId = useDoorToDoorStore((state) => state.editingBlockId);
   const editingMap = useDoorToDoorStore((state) => state.editingMap);
@@ -13,8 +14,6 @@ export const ShapeEditor: React.FC = () => {
   const setEditedBlocks = useDoorToDoorStore((state) => state.setEditedBlocks);
   const mapRef = useDoorToDoorStore((state) => state.mapRef);
   const drawRef = useRef<MapboxDraw | null>(null);
-
-  const isActive = isEditingBoundary || editingBlockId !== null;
 
   const draw = useControl<MapboxDraw>(
     () => {
@@ -116,7 +115,7 @@ export const ShapeEditor: React.FC = () => {
       if (!currentBlock) return;
 
       if (currentBlock.coordinates && currentBlock.coordinates.length > 0) {
-        const feature = currentBlock.type === "face"
+        const feature = currentBlock.type === "block"
           ? {
               type: "Feature" as const,
               geometry: {
@@ -149,12 +148,12 @@ export const ShapeEditor: React.FC = () => {
   }, [isEditingBoundary, editingBlockId, editingMap, editedBlocks, draw]);
 
   useEffect(() => {
-    if (!isActive && draw) {
+    if (!isDrawMode && draw) {
       draw.deleteAll();
     }
-  }, [isActive, draw]);
+  }, [isDrawMode, draw]);
 
-  if (!isActive) return null;
+  if (!isDrawMode) return null;
 
   return null;
 };

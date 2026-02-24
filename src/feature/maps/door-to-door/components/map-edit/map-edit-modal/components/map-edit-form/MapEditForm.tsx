@@ -16,12 +16,14 @@ export const MapEditForm: React.FC<{
   setEditMode: (value: boolean) => void;
   setEditingMap: (value: Map | null) => void;
 }> = ({ editingMap, closeMapEditModal, setEditMode, setEditingMap }) => {
+  const setIsDrawMode = useDoorToDoorStore((state) => state.setIsDrawMode);
   const setIsEditingBoundary = useDoorToDoorStore((state) => state.setIsEditingBoundary);
   const editedBoundary = useDoorToDoorStore((state) => state.editedBoundary);
   const setEditedBoundary = useDoorToDoorStore((state) => state.setEditedBoundary);
   const editedBlocks = useDoorToDoorStore((state) => state.editedBlocks);
   const setEditedBlocks = useDoorToDoorStore((state) => state.setEditedBlocks);
   const setEditingBlockId = useDoorToDoorStore((state) => state.setEditingBlockId);
+  const setSelectedMap = useDoorToDoorStore((state) => state.setSelectedMap);
   const [name, setName] = useState(editingMap?.name ?? "");
   const [details, setDetails] = useState(editingMap?.details ?? "");
   const [showSaveAlert, setShowSaveAlert] = useState(false);
@@ -57,9 +59,12 @@ export const MapEditForm: React.FC<{
     setEditedBoundary(null);
     setEditedBlocks(null);
     setEditingBlockId(null);
+    setIsEditingBoundary(false);
+    setIsDrawMode(false);
   };
 
   const handleEditBoundary = () => {
+    setIsDrawMode(true);
     setIsEditingBoundary(true);
     if (editingMap.boundary) {
       setEditedBoundary(editingMap.boundary);
@@ -80,6 +85,7 @@ export const MapEditForm: React.FC<{
     const currentBlocks = editedBlocks || editingMap.blocks || [];
     setEditedBlocks([...currentBlocks, newBlock]);
     setEditingBlockId(newBlock.id);
+    setIsDrawMode(true);
     setShowBlockNameAlert(false);
     setBlockFaceName("");
     closeMapEditModal();
@@ -98,6 +104,7 @@ export const MapEditForm: React.FC<{
     const currentBlocks = editedBlocks || editingMap.blocks || [];
     setEditedBlocks([...currentBlocks, newFace]);
     setEditingBlockId(newFace.id);
+    setIsDrawMode(true);
     setShowFaceNameAlert(false);
     setBlockFaceName("");
     closeMapEditModal();
@@ -108,6 +115,7 @@ export const MapEditForm: React.FC<{
       setEditedBlocks(editingMap.blocks);
     }
     setEditingBlockId(blockId);
+    setIsDrawMode(true);
     closeMapEditModal();
   };
 
@@ -117,6 +125,14 @@ export const MapEditForm: React.FC<{
 
   const handleConfirmSave = async () => {
     if (!editingMap) return;
+
+    const updatedMap = {
+      ...editingMap,
+      name,
+      details: details || null,
+      boundary: editedBoundary !== null ? editedBoundary : editingMap.boundary,
+      blocks: editedBlocks !== null ? editedBlocks : editingMap.blocks,
+    };
 
     await mapCollection.update(editingMap.id, (draft) => {
       draft.name = name;
@@ -129,6 +145,7 @@ export const MapEditForm: React.FC<{
       }
     });
 
+    setSelectedMap(updatedMap);
     setShowSaveAlert(false);
     closeMapEditModal();
     setEditMode(false);
@@ -136,6 +153,8 @@ export const MapEditForm: React.FC<{
     setEditedBoundary(null);
     setEditedBlocks(null);
     setEditingBlockId(null);
+    setIsEditingBoundary(false);
+    setIsDrawMode(false);
   };
 
   return (
