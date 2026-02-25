@@ -7,10 +7,10 @@ export const getLineStringLabelEndpointsLayer = (): LayerProps => ({
   type: "symbol",
   source: SOURCE_ID,
   filter: ["==", ["get", "type"], "face"],
-  minzoom: 14,
+  minzoom: 14.5,
   layout: {
     "text-field": ["get", "name"],
-    "text-size": ["interpolate", ["linear"], ["zoom"], 14, 8, 23, 75],
+    "text-size": ["interpolate", ["linear"], ["zoom"], 14, 16, 23, 75],
     "symbol-placement": "point",
     "text-anchor": "center",
     "text-allow-overlap": false,

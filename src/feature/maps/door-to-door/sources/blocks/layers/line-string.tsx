@@ -7,11 +7,11 @@ export const getLineStringLayer = (): LayerProps => ({
   type: "line",
   source: SOURCE_ID,
   filter: ["==", ["get", "type"], "face"],
-  minzoom: 14,
+  minzoom: 15.5,
   paint: {
     "line-color": SHARED_CONSTANTS.color,
     "line-width": 2,
-    "line-opacity": 0.7,
+    "line-opacity": 0.4,
     "line-dasharray": [2, 4],
   },
   beforeId: "road-label",

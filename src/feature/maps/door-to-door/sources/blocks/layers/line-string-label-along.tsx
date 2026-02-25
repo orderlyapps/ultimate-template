@@ -7,13 +7,13 @@ export const getLineStringLabelAlongLayer = (): LayerProps => ({
   type: "symbol",
   source: SOURCE_ID,
   filter: ["==", ["get", "type"], "face"],
-  minzoom: 14,
+  minzoom: 14.5,
   layout: {
     "text-field": ["get", "name"],
-    "text-size": ["interpolate", ["linear"], ["zoom"], 14, 8, 23, 75],
+    "text-size": ["interpolate", ["linear"], ["zoom"], 14, 16, 23, 75],
     "symbol-placement": "line",
-    "text-rotation-alignment": "map",
-    "text-pitch-alignment": "viewport",
+    "text-rotation-alignment": "viewport",
+    "text-keep-upright": true,
     "text-allow-overlap": false,
   },
   paint: {

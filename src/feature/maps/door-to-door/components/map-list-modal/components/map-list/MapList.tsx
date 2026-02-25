@@ -50,6 +50,8 @@ export const MapList: React.FC = () => {
 
   if (!data) return null;
 
+  const show = true
+
   return (
     <List>
       <IonListHeader>
@@ -62,13 +64,13 @@ export const MapList: React.FC = () => {
           color={map.id === selectedMap?.id ? "medium" : ""}
         >
           <Text bold={map.id === selectedMap?.id}>{map.name}</Text>
-          <IonButton
+        {show && <IonButton
             slot="end"
             fill="clear"
             onClick={(e) => handleEditMap(map, e)}
           >
             <IonIcon icon={pencilIcon} />
-          </IonButton>
+          </IonButton>}
         </Item>
       ))}
     </List>

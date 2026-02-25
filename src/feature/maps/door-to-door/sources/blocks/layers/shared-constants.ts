@@ -1,5 +1,5 @@
 export const SHARED_CONSTANTS = {
-  color: "#3b82f6",
-  labelColor: "#1e40af",
+  color: "#00F",
+  labelColor: "#00F",
   labelSize: ["interpolate", ["linear"], ["zoom"], 14, 11, 23, 50],
 };
