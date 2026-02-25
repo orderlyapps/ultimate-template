@@ -12,10 +12,13 @@ export const MemorialCard: React.FC<Props> = ({ event }) => {
   return (
     <Row>
       <Col>
-        <Text bold color="primary">Memorial</Text>
-        <Text size="sm">
+        <Text bold color="primary">
+          Memorial
+        </Text>
+      </Col>
+      <Col className="ion-text-right">
+        <Text size="xs">
           {" "}
-          -{" "}
           {event.start_time && (
             <>
               {new Date(

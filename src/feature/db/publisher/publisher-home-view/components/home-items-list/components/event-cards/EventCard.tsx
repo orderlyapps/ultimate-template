@@ -10,9 +10,10 @@ import { OtherEventCard } from "./OtherEventCard";
 
 type Props = {
   event: Event;
+  week_id: string;
 };
 
-export const EventCard: React.FC<Props> = ({ event }) => {
+export const EventCard: React.FC<Props> = ({ event, week_id }) => {
   switch (event.type) {
     case "circuit_assembly":
       return <CircuitAssemblyCard event={event} />;
@@ -21,7 +22,7 @@ export const EventCard: React.FC<Props> = ({ event }) => {
     case "memorial":
       return <MemorialCard event={event} />;
     case "circuit_visit":
-      return <CircuitVisitCard />;
+      return <CircuitVisitCard week_id={week_id} />;
     case "special_meeting":
       return <SpecialMeetingCard event={event} />;
     case "campaign":

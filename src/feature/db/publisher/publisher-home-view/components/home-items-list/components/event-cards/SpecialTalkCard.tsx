@@ -10,10 +10,17 @@ type Props = {
 
 export const SpecialTalkCard: React.FC<Props> = ({ event }) => {
   return (
-    <Row >
+    <Row>
       <Col>
-        <Text color="primary" bold>Special Talk</Text>
-        <Text size="sm"> - {formatEventDate(event.start_date, event.end_date)}</Text>
+        <Text color="primary" bold>
+          Special Talk
+        </Text>
+      </Col>
+      <Col className="ion-text-right">
+        <Text size="xs">
+          {" "}
+          {formatEventDate(event.start_date, event.end_date)}
+        </Text>
       </Col>
     </Row>
   );

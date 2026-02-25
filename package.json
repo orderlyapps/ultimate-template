@@ -13,6 +13,7 @@
     "deploy:proclaimer": "pnpm run test:lint:build && npx wrangler pages deploy dist --project-name=proclaimer --branch=main",
     "lint": "eslint .",
     "preview": "vite preview --host",
+    "preview:prod": "vite preview --host --mode production",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage",

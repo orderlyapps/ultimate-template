@@ -48,7 +48,7 @@ export const HomeItemsList: React.FC<Props> = ({
 
   const getVisibleItems = (): MonthGroup[] => {
     if (displayMode === "all") return items;
-    const limit = displayMode === "initial" ? 6 : 12;
+    const limit = displayMode === "initial" ? 4 : 9;
 
     let count = 0;
     const result: MonthGroup[] = [];

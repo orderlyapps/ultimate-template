@@ -28,18 +28,19 @@ export const PublicTalkInfo: React.FC<Props> = ({ publicTalk }) => {
       <Row>
         <Col>
           <Text bold color="primary">
-            PUBLIC TALK
+            Public Talk
           </Text>
         </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Text bold>{publicTalk.outline_theme}</Text>
+        <Col className="ion-text-right">
+          <Text size="xs">{" This Week"}</Text>
         </Col>
       </Row>
-      <Row>
-        <Col className="ion-padding-start ion-margin-start">
-          <Text size="sm" color="medium">
+
+      <Row className="ion-padding-start">
+        <Col>
+          <Text size="sm">{publicTalk.outline_theme}</Text>
+          <br />
+          <Text size="xs">
             {speakerName}
             {!isLocalSpeaker &&
               publicTalk.congregation_name &&

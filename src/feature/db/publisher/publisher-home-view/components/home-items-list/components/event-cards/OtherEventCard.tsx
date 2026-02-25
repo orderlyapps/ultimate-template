@@ -12,8 +12,15 @@ export const OtherEventCard: React.FC<Props> = ({ event }) => {
   return (
     <Row>
       <Col>
-        <Text color="primary" bold>{event.name}</Text>
-        <Text size="sm"> - {formatEventDate(event.start_date, event.end_date)}</Text>
+        <Text color="primary" bold>
+          {event.name}
+        </Text>
+      </Col>
+      <Col className="ion-text-right">
+        <Text size="sm">
+          {" "}
+          - {formatEventDate(event.start_date, event.end_date)}
+        </Text>
       </Col>
     </Row>
   );

@@ -3,6 +3,7 @@ import { Col } from "@ionic-layout/col/Col";
 import { Row } from "@ionic-layout/row/Row";
 import type { Event } from "@tanstack-db/event/eventSchema";
 import { formatEventDate } from "@date/formatEventDate";
+import { Space } from "@layout/space/Space";
 
 type Props = {
   event: Event;
@@ -12,8 +13,16 @@ export const CampaignCard: React.FC<Props> = ({ event }) => {
   return (
     <Row>
       <Col>
-        <Text bold color="primary">{event.name}</Text>
-        <Text size="sm"> - Starts on {formatEventDate(event.start_date, event.end_date)}</Text>
+        <Text bold color="primary">
+          {event.name}
+        </Text>
+      </Col>
+      <Col className="ion-text-right">
+        <Text size="xs">
+          {" "}
+          {formatEventDate(event.start_date, event.end_date)}
+        </Text>
+        <Space height="0.7" />
       </Col>
     </Row>
   );
