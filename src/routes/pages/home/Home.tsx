@@ -2,7 +2,7 @@ import { IonPage, IonContent } from "@ionic/react";
 import { List } from "@ionic-layout/list/List";
 import { NavItem } from "@navigation/nav-item/NavItem";
 import { FeatureGuard } from "@services/app/features/FeatureGuard";
-import { PublisherHomeView } from "@feature/db/publisher/publisher-home-view/PublisherHomeView";
+import { PublisherHomeView2 } from "@feature/db/publisher/publisher-home-view-2/PublisherHomeView2";
 import { Item } from "@ionic-layout/item/Item";
 import { Text } from "@ionic-display/text/Text";
 import { Space } from "@layout/space/Space";
@@ -15,7 +15,7 @@ export const Home: React.FC = () => {
     <IonPage>
       <IonContent fullscreen className="ion-padding">
         {congregation?.id === "7b15d4e5-d4fa-4eb4-a276-3790b7c4897b" && (
-          <PublisherHomeView />
+          <PublisherHomeView2 />
         )}
 
         {congregation?.id !== "7b15d4e5-d4fa-4eb4-a276-3790b7c4897b" && (
