@@ -1,10 +1,8 @@
 import { Text } from "@ionic-display/text/Text";
 import type { WeekGroup } from "../../useHomeItems";
-// import { getTheocraticWeekLabel } from "@date/getTheocraticWeekLabel";
 import { Grid } from "@ionic-layout/grid/Grid";
 import { Row } from "@ionic-layout/row/Row";
 import { Col } from "@ionic-layout/col/Col";
-import { EventCard } from "../event-cards/EventCard";
 import { assignmentLabels } from "./assignmentLabels";
 import { Space } from "@layout/space/Space";
 import { Fragment } from "react";
@@ -18,6 +16,9 @@ type Props = {
 export const WeekGroupCard: React.FC<Props> = ({ weekGroup }) => {
   return (
     <Grid className="ion-no-padding">
+      {weekGroup.publicTalk && (
+        <PublicTalkInfo publicTalk={weekGroup.publicTalk} />
+      )}
       <Row>
         {weekGroup.midweekAssignments.length > 0 && (
           <Col>
@@ -26,7 +27,7 @@ export const WeekGroupCard: React.FC<Props> = ({ weekGroup }) => {
                 <Row className="ion-align-items-end">
                   <Col>
                     <Text bold color="primary">
-                      Assignment
+                      Midweek Assignment
                     </Text>
                   </Col>
                   <Col className="ion-text-right">
@@ -61,7 +62,7 @@ export const WeekGroupCard: React.FC<Props> = ({ weekGroup }) => {
                 <Row className="ion-align-items-end">
                   <Col>
                     <Text bold color="primary">
-                      Assignment
+                      Weekend Assignment
                     </Text>
                   </Col>
                   <Col className="ion-text-right">
@@ -74,8 +75,8 @@ export const WeekGroupCard: React.FC<Props> = ({ weekGroup }) => {
                   </Col>
                 </Row>
                 <Row>
-                  <Col className="ion-text-right">
-                    <Text bold color="primary">
+                  <Col className="ion-padding-start">
+                    <Text size="sm">
                       {assignment.title
                         ? assignmentLabels[assignment.title]
                         : ""}
@@ -88,20 +89,6 @@ export const WeekGroupCard: React.FC<Props> = ({ weekGroup }) => {
           </Col>
         )}
       </Row>
-      {weekGroup.events.length > 0 && (
-        <Row>
-          <Col>
-            {weekGroup.events.map((event) => (
-              <Fragment key={event.id}>
-                <EventCard event={event} week_id={weekGroup.weekId} />
-              </Fragment>
-            ))}
-          </Col>
-        </Row>
-      )}
-      {weekGroup.publicTalk && (
-        <PublicTalkInfo publicTalk={weekGroup.publicTalk} />
-      )}
     </Grid>
   );
 };

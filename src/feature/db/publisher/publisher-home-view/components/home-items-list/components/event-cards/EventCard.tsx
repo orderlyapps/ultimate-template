@@ -1,4 +1,5 @@
 import type { Event } from "@tanstack-db/event/eventSchema";
+import { getWeekIdFromDate } from "@date/getWeekIdFromDate";
 import { CircuitAssemblyCard } from "./CircuitAssemblyCard";
 import { ConventionCard } from "./ConventionCard";
 import { MemorialCard } from "./MemorialCard";
@@ -10,10 +11,9 @@ import { OtherEventCard } from "./OtherEventCard";
 
 type Props = {
   event: Event;
-  week_id: string;
 };
 
-export const EventCard: React.FC<Props> = ({ event, week_id }) => {
+export const EventCard: React.FC<Props> = ({ event }) => {
   switch (event.type) {
     case "circuit_assembly":
       return <CircuitAssemblyCard event={event} />;
@@ -22,7 +22,7 @@ export const EventCard: React.FC<Props> = ({ event, week_id }) => {
     case "memorial":
       return <MemorialCard event={event} />;
     case "circuit_visit":
-      return <CircuitVisitCard week_id={week_id} />;
+      return <CircuitVisitCard week_id={getWeekIdFromDate(event.start_date)} />;
     case "special_meeting":
       return <SpecialMeetingCard event={event} />;
     case "campaign":

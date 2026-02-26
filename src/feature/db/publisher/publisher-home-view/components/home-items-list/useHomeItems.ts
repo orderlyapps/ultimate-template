@@ -3,7 +3,7 @@ import type { Event } from "@tanstack-db/event/eventSchema";
 import type { MidweekAssignment, MidweekAssignmentID } from "@tanstack-db/midweek_assignment/midweekAssignmentSchema";
 import type { SpeakerAssignment } from "@tanstack-db/speaker_assignment/speakerAssignmentSchema";
 import type { WeekendAssignment, WeekendAssignmentID } from "@tanstack-db/weekend_assignment/weekendAssignmentSchema";
-import { getWeekIdFromDate } from "@date/getWeekIdFromDate";
+
 
 export type AssignmentItem = {
   kind: "Weekend Assignment" | "Speaker Assignment" | "Midweek Assignment" | "AV Assignment";
@@ -26,7 +26,6 @@ export type WeekGroup = {
   weekId: string;
   midweekAssignments: AssignmentItem[];
   weekendAssignments: AssignmentItem[];
-  events: Event[];
   publicTalk: PublicTalkInfo | null;
 };
 
@@ -35,6 +34,7 @@ export type MonthGroup = {
   monthId: string;
   monthLabel: string;
   weeks: WeekGroup[];
+  events: Event[];
 };
 
 export type HomeItem = MonthGroup;
@@ -92,10 +92,10 @@ export const useHomeItems = ({
     publicTalkMap.set(talk.week_id, talk);
   }
 
-  const weekMap = new Map<string, { midweek: AssignmentItem[]; weekend: AssignmentItem[]; events: Event[] }>();
+  const weekMap = new Map<string, { midweek: AssignmentItem[]; weekend: AssignmentItem[] }>();
   
   for (const assignment of allAssignments) {
-    const existing = weekMap.get(assignment.weekId) ?? { midweek: [], weekend: [], events: [] };
+    const existing = weekMap.get(assignment.weekId) ?? { midweek: [], weekend: [] };
     if (assignment.meetingType === "midweek") {
       existing.midweek.push({
         kind: assignment.kind,
@@ -112,37 +112,45 @@ export const useHomeItems = ({
     weekMap.set(assignment.weekId, existing);
   }
 
-  for (const event of events ?? []) {
-    const weekId = getWeekIdFromDate(event.start_date);
-    const existing = weekMap.get(weekId) ?? { midweek: [], weekend: [], events: [] };
-    existing.events.push(event);
-    weekMap.set(weekId, existing);
-  }
-
   for (const talk of publicTalks ?? []) {
     if (!weekMap.has(talk.week_id)) {
-      weekMap.set(talk.week_id, { midweek: [], weekend: [], events: [] });
+      weekMap.set(talk.week_id, { midweek: [], weekend: [] });
     }
   }
 
+  const eventMonthMap = new Map<string, Event[]>();
+  for (const event of events ?? []) {
+    const [year, month] = event.start_date.split("-");
+    const monthId = `${year}-${month}`;
+    const existing = eventMonthMap.get(monthId) ?? [];
+    existing.push(event);
+    eventMonthMap.set(monthId, existing);
+  }
+
   const weekGroups: WeekGroup[] = Array.from(weekMap.entries())
-    .map(([weekId, { midweek, weekend, events: weekEvents }]) => ({
+    .map(([weekId, { midweek, weekend }]) => ({
       type: "week" as const,
       weekId,
       midweekAssignments: midweek,
       weekendAssignments: weekend,
-      events: weekEvents,
       publicTalk: publicTalkMap.get(weekId) ?? null,
     }))
     .sort((a, b) => a.weekId.localeCompare(b.weekId));
 
-  const monthMap = new Map<string, WeekGroup[]>();
+  const allMonthIds = new Set<string>();
+
+  const weekMonthMap = new Map<string, WeekGroup[]>();
   for (const week of weekGroups) {
     const [year, month] = week.weekId.split("-");
     const monthId = `${year}-${month}`;
-    const existing = monthMap.get(monthId) ?? [];
+    allMonthIds.add(monthId);
+    const existing = weekMonthMap.get(monthId) ?? [];
     existing.push(week);
-    monthMap.set(monthId, existing);
+    weekMonthMap.set(monthId, existing);
+  }
+
+  for (const monthId of eventMonthMap.keys()) {
+    allMonthIds.add(monthId);
   }
 
   const now = new Date();
@@ -150,9 +158,11 @@ export const useHomeItems = ({
   const nextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
   const nextMonthId = `${nextMonth.getFullYear()}-${String(nextMonth.getMonth() + 1).padStart(2, "0")}`;
 
-  const sortedMonthEntries = Array.from(monthMap.entries()).sort((a, b) => a[0].localeCompare(b[0]));
+  const sortedMonthIds = Array.from(allMonthIds).sort((a, b) => a.localeCompare(b));
 
-  const monthGroups: MonthGroup[] = sortedMonthEntries.map(([monthId, weeks]) => {
+  const monthGroups: MonthGroup[] = sortedMonthIds.map((monthId) => {
+    const weeks = weekMonthMap.get(monthId) ?? [];
+    const monthEvents = (eventMonthMap.get(monthId) ?? []).sort((a, b) => a.start_date.localeCompare(b.start_date));
     const [year, month] = monthId.split("-");
     const date = new Date(Number(year), Number(month) - 1, 1);
 
@@ -174,6 +184,7 @@ export const useHomeItems = ({
       monthId,
       monthLabel,
       weeks,
+      events: monthEvents,
     };
   });
 

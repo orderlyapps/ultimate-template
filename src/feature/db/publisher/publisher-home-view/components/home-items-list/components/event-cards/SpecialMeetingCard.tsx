@@ -17,7 +17,6 @@ export const SpecialMeetingCard: React.FC<Props> = ({ event }) => (
     </Col>
     <Col className="ion-text-right">
       <Text size="xs">
-        {" "}
         {formatEventDate(event.start_date, event.end_date)}
       </Text>
     </Col>

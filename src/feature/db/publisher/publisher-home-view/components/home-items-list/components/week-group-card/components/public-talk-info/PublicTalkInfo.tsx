@@ -4,6 +4,7 @@ import { Col } from "@ionic-layout/col/Col";
 import { getUserCongregation } from "@feature/db/congregation/user-congregation/get-user-congregation/getUserCongregation";
 import { formatPublisherName } from "@format/formatPublisherName";
 import type { PublicTalkInfo as PublicTalkInfoType } from "../../../../useHomeItems";
+import { Space } from "@layout/space/Space";
 
 type Props = {
   publicTalk: PublicTalkInfoType;
@@ -46,6 +47,7 @@ export const PublicTalkInfo: React.FC<Props> = ({ publicTalk }) => {
               publicTalk.congregation_name &&
               ` — ${publicTalk.congregation_name}`}
           </Text>
+          <Space height="0.7" />
         </Col>
       </Row>
     </>

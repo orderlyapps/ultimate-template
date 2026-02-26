@@ -38,17 +38,14 @@ export const HomeItemsList: React.FC<Props> = ({
     publicTalks,
   });
 
-  const countItemsInWeek = (week: WeekGroup) =>
-    week.midweekAssignments.length + week.weekendAssignments.length + week.events.length;
+  const countCardsInMonth = (month: MonthGroup) =>
+    month.weeks.length + month.events.length;
 
-  const countItemsInMonth = (month: MonthGroup) =>
-    month.weeks.reduce((sum, week) => sum + countItemsInWeek(week), 0);
-
-  const totalItems = items.reduce((sum, month) => sum + countItemsInMonth(month), 0);
+  const totalCards = items.reduce((sum, month) => sum + countCardsInMonth(month), 0);
 
   const getVisibleItems = (): MonthGroup[] => {
     if (displayMode === "all") return items;
-    const limit = displayMode === "initial" ? 4 : 9;
+    const limit = displayMode === "initial" ? 4 : 8;
 
     let count = 0;
     const result: MonthGroup[] = [];
@@ -59,19 +56,15 @@ export const HomeItemsList: React.FC<Props> = ({
       const filteredWeeks: WeekGroup[] = [];
       for (const week of month.weeks) {
         if (count >= limit) break;
-
-        const weekItemCount = countItemsInWeek(week);
-        if (count + weekItemCount <= limit) {
-          filteredWeeks.push(week);
-          count += weekItemCount;
-        } else {
-          filteredWeeks.push(week);
-          count += weekItemCount;
-        }
+        filteredWeeks.push(week);
+        count++;
       }
 
-      if (filteredWeeks.length > 0) {
-        result.push({ ...month, weeks: filteredWeeks });
+      const filteredEvents = month.events.slice(0, Math.max(0, limit - count));
+      count += filteredEvents.length;
+
+      if (filteredWeeks.length > 0 || filteredEvents.length > 0) {
+        result.push({ ...month, weeks: filteredWeeks, events: filteredEvents });
       }
     }
 
@@ -96,7 +89,7 @@ export const HomeItemsList: React.FC<Props> = ({
     return "Show Less";
   };
 
-  const showButton = totalItems > 6 || displayMode !== "initial";
+  const showButton = totalCards > 6 || displayMode !== "initial";
 
   return (
     <>
