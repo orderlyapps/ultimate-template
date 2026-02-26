@@ -1,8 +1,8 @@
-import { SelectModal } from "@input/select/SelectModal";
 import { publisherCollection } from "@tanstack-db/publisher/publisherCollection";
 import { eq, or, useLiveQuery } from "@tanstack/react-db";
 import { formatPublisherName } from "@format/formatPublisherName";
 import { useUserPublisher } from "../use-user-publisher/useUserPublisher";
+import { TypeaheadPublisherModal } from "./components/typeahead-publisher-modal/TypeaheadPublisherModal";
 
 export const SelectUserPublisherModal: React.FC = () => {
   const [publisher, setPublisher] = useUserPublisher();
@@ -27,9 +27,9 @@ export const SelectUserPublisherModal: React.FC = () => {
   }));
 
   return (
-    <SelectModal
+    <TypeaheadPublisherModal
       options={options ?? []}
-      label="Publisher"
+      label="User Details"
       value={publisher?.id}
       onValueChange={(value) => setPublisher(data?.find((p) => p.id === value))}
     />

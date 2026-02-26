@@ -19,7 +19,7 @@ import { List } from "@ionic-layout/list/List";
 export const Profile: React.FC = () => {
   const show = false;
   const [presentAlert] = useIonAlert();
-  const [, setUserCongregation] = useUserCongregation();
+  const [userCongregation, setUserCongregation] = useUserCongregation();
 
   const handleResetApp = () => {
     presentAlert({
@@ -89,9 +89,13 @@ export const Profile: React.FC = () => {
               <Space height="2" />
               <SelectUserCongregationModal />
               <Space height="2" />
-              <SelectUserPublisherModal />
             </>
           )}
+
+          {userCongregation?.id === "7b15d4e5-d4fa-4eb4-a276-3790b7c4897b" && (
+            <SelectUserPublisherModal />
+          )}
+          <Space />
           <IonButton expand="block" color="danger" onClick={handleResetApp}>
             Reset App
           </IonButton>
