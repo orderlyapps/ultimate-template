@@ -6,11 +6,13 @@ import { getPolygonLabelLayer } from "./layers/polygon-label";
 import { getLineStringLayer } from "./layers/line-string";
 import { getLineStringLabelAlongLayer } from "./layers/line-string-label-along";
 import { getLineStringLabelEndpointsLayer } from "./layers/line-string-label-endpoints";
+import { useTheme } from "@services/app/theme/useTheme";
 
 export const SOURCE_ID = "blocks";
 
 export const Blocks: React.FC = () => {
   const selectedMap = useDoorToDoorStore((state) => state.selectedMap);
+  const isDark = useTheme();
 
   if (!selectedMap?.blocks || selectedMap.blocks.length === 0) return null;
 
@@ -40,11 +42,11 @@ export const Blocks: React.FC = () => {
 
   return (
     <Source id={SOURCE_ID} type="geojson" data={geojson}>
-      <Layer {...getPolygonBorderLayer()} />
-      <Layer {...getPolygonLabelLayer()} />
-      <Layer {...getLineStringLayer()} />
-      <Layer {...getLineStringLabelAlongLayer()} />
-      <Layer {...getLineStringLabelEndpointsLayer()} />
+      <Layer {...getPolygonBorderLayer(isDark)} />
+      <Layer {...getPolygonLabelLayer(isDark)} />
+      <Layer {...getLineStringLayer(isDark)} />
+      <Layer {...getLineStringLabelAlongLayer(isDark)} />
+      <Layer {...getLineStringLabelEndpointsLayer(isDark)} />
     </Source>
   );
 };

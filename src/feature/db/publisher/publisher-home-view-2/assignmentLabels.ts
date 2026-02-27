@@ -10,7 +10,7 @@ type AssignmentTitle =
 
 export const assignmentLabels: Record<AssignmentTitle, string> = {
   // Midweek assignments
-  chairman_1: "2Chairman",
+  chairman_1: "Chairman",
   prayer_1: "Opening Prayer",
   treasures: "Treasures",
   gems: "Gems",
