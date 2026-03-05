@@ -50,7 +50,7 @@ export const MapList: React.FC = () => {
 
   if (!data) return null;
 
-  const show = false
+  const show = true
 
   return (
     <List>

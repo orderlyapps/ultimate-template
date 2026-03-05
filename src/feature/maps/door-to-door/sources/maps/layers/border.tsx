@@ -8,7 +8,7 @@ export const getBorderLayer = (selectedMap: Map | null): LayerProps => {
     id: "maps-borders",
     type: "line",
     source: "maps",
-    minzoom: 14,
+    minzoom: 11,
     paint: {
       "line-color": [
         "case",

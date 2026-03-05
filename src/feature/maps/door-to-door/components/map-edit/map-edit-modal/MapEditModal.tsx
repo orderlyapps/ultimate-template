@@ -9,6 +9,7 @@ import {
 import { useDoorToDoorStore } from "@feature/maps/door-to-door/store/useDoorToDoorStore";
 import { CloseButton } from "@input/button/close-button/CloseButton";
 import { MapEditForm } from "@feature/maps/door-to-door/components/map-edit/map-edit-modal/components/map-edit-form/MapEditForm";
+import { MapAddForm } from "@feature/maps/door-to-door/components/map-edit/map-edit-modal/components/map-add-form/MapAddForm";
 
 export const MapEditModal: React.FC = () => {
   const isMapEditModalOpen = useDoorToDoorStore(
@@ -20,10 +21,13 @@ export const MapEditModal: React.FC = () => {
   );
   const setEditMode = useDoorToDoorStore((state) => state.setEditMode);
   const setEditingMap = useDoorToDoorStore((state) => state.setEditingMap);
+  const isAddingNewMap = useDoorToDoorStore((state) => state.isAddingNewMap);
 
   const handleClose = () => {
     closeMapEditModal();
   };
+
+  const title = isAddingNewMap ? "Add New Map" : `Edit Map: ${editingMap?.name}`;
 
   return (
     <IonModal
@@ -33,14 +37,20 @@ export const MapEditModal: React.FC = () => {
     >
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Edit Map: {editingMap?.name}</IonTitle>
+          <IonTitle>{title}</IonTitle>
           <IonButtons slot="end">
             <CloseButton onClick={handleClose} />
           </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        {editingMap && (
+        {editingMap && isAddingNewMap && (
+          <MapAddForm
+            key={editingMap.id}
+            newMap={editingMap}
+          />
+        )}
+        {editingMap && !isAddingNewMap && (
           <MapEditForm
             key={editingMap.id}
             editingMap={editingMap}

@@ -4,6 +4,7 @@ import type { MapRef } from "react-map-gl/mapbox";
 import type { Map } from "@tanstack-db/map/mapSchema";
 import type { DoNotCall } from "@feature/maps/door-to-door/sources/do-not-calls/DoNotCalls";
 import type { NotAtHome } from "@feature/maps/door-to-door/sources/not-at-home/NotAtHome";
+import { getUserCongregation } from "@feature/db/congregation/user-congregation/get-user-congregation/getUserCongregation";
 
 interface DoorToDoorStore {
   mapRef: MapRef | null;
@@ -38,6 +39,15 @@ interface DoorToDoorStore {
   setEditMode: (isEditMode: boolean) => void;
   editingMap: Map | null;
   setEditingMap: (map: Map | null) => void;
+
+  isAddingNewMap: boolean;
+  startAddingNewMap: () => void;
+  stopAddingNewMap: () => void;
+
+  newMapName: string;
+  setNewMapName: (name: string) => void;
+  newMapDetails: string;
+  setNewMapDetails: (details: string) => void;
 
   isMapEditModalOpen: boolean;
   openMapEditModal: () => void;
@@ -105,6 +115,34 @@ export const useDoorToDoorStore = create<DoorToDoorStore>()(
       setEditMode: (isEditMode: boolean) => set({ isEditMode }),
       editingMap: null,
       setEditingMap: (map: Map | null) => set({ editingMap: map }),
+
+      isAddingNewMap: false,
+      startAddingNewMap: () => {
+        const congregationId = getUserCongregation()?.id;
+        if (!congregationId) return;
+        const newMap: Map = {
+          id: crypto.randomUUID(),
+          congregation_id: congregationId,
+          name: "",
+          details: null,
+          boundary: null,
+          blocks: null,
+        };
+        set({
+          isAddingNewMap: true,
+          editingMap: newMap,
+          isEditMode: true,
+          isMapEditModalOpen: true,
+          newMapName: "",
+          newMapDetails: "",
+        });
+      },
+      stopAddingNewMap: () => set({ isAddingNewMap: false, newMapName: "", newMapDetails: "" }),
+
+      newMapName: "",
+      setNewMapName: (name: string) => set({ newMapName: name }),
+      newMapDetails: "",
+      setNewMapDetails: (details: string) => set({ newMapDetails: details }),
 
       isMapEditModalOpen: false,
       openMapEditModal: () => set({ isMapEditModalOpen: true }),

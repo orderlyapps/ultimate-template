@@ -3,6 +3,7 @@ import { MapMaster } from "@feature/maps/door-to-door/sources/map-master/MapMast
 import { DoNotCalls } from "@feature/maps/door-to-door/sources/do-not-calls/DoNotCalls";
 import { Blocks } from "@feature/maps/door-to-door/sources/blocks/Blocks";
 import { EditedBlocks } from "@feature/maps/door-to-door/sources/edited-blocks/EditedBlocks";
+import { EditedBoundary } from "@feature/maps/door-to-door/sources/edited-boundary/EditedBoundary";
 import { Map } from "@services/vendor/mapbox/components/map/Map";
 import { useDoorToDoorStore } from "@feature/maps/door-to-door/store/useDoorToDoorStore";
 import { GetDirectionsAlert } from "@feature/maps/door-to-door/components/get-directions-alert/GetDirectionsAlert";
@@ -49,6 +50,7 @@ export const DoorToDoor: React.FC = () => {
         <Maps />
         <Blocks />
         <EditedBlocks />
+        <EditedBoundary />
         <DoNotCalls />
         <NotAtHome />
         {isEditMode && <ShapeEditor />}

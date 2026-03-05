@@ -10,6 +10,7 @@ export const ShapeEditor: React.FC = () => {
   const editingBlockId = useDoorToDoorStore((state) => state.editingBlockId);
   const editingMap = useDoorToDoorStore((state) => state.editingMap);
   const editedBlocks = useDoorToDoorStore((state) => state.editedBlocks);
+  const editedBoundary = useDoorToDoorStore((state) => state.editedBoundary);
   const setEditedBoundary = useDoorToDoorStore((state) => state.setEditedBoundary);
   const setEditedBlocks = useDoorToDoorStore((state) => state.setEditedBlocks);
   const mapRef = useDoorToDoorStore((state) => state.mapRef);
@@ -93,12 +94,13 @@ export const ShapeEditor: React.FC = () => {
     draw.deleteAll();
 
     if (isEditingBoundary && editingMap) {
-      if (editingMap.boundary && editingMap.boundary.length > 0) {
+      const boundary = editedBoundary ?? editingMap.boundary;
+      if (boundary && boundary.length > 0) {
         const polygon = {
           type: "Feature" as const,
           geometry: {
             type: "Polygon" as const,
-            coordinates: [editingMap.boundary],
+            coordinates: [boundary],
           },
           properties: {},
         };
@@ -145,7 +147,7 @@ export const ShapeEditor: React.FC = () => {
         }
       }
     }
-  }, [isEditingBoundary, editingBlockId, editingMap, editedBlocks, draw]);
+  }, [isEditingBoundary, editingBlockId, editingMap, editedBoundary, editedBlocks, draw]);
 
   useEffect(() => {
     if (!isDrawMode && draw) {
