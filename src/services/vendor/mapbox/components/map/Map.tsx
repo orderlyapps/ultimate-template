@@ -52,6 +52,7 @@ export const Map = ({ children, id, onLongPress, ...props }: MapProps) => {
         trackUserLocation={true}
         showUserHeading={true}
         showAccuracyCircle={true}
+        fitBoundsOptions={{ zoom: 17 }}
       />
       {children}
     </MapComponent>

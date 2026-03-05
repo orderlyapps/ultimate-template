@@ -177,6 +177,7 @@ export const MapList = () => {
     { id: "2021", type: "jpeg" },
     { id: "2022", type: "jpeg" },
     { id: "2023", type: "png" },
+    { id: "2024", type: "png" },
     { id: "2029", type: "jpeg" },
     { id: "2030", type: "jpeg" },
     { id: "2031", type: "jpeg" },
