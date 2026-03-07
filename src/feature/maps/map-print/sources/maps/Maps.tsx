@@ -9,6 +9,7 @@ export const SOURCE_ID = "maps";
 
 export const Maps: React.FC = () => {
   const selectedMap = useMapPrintStore((state) => state.selectedMap);
+  const borderWidth = useMapPrintStore((state) => state.styling.borderWidth);
 
   const { data } = useLiveQuery((q) =>
     q.from({
@@ -45,7 +46,7 @@ export const Maps: React.FC = () => {
 
   return (
     <Source id={SOURCE_ID} type="geojson" data={geojson}>
-      <Layer {...getBorderLayer(selectedMap)} />
+      <Layer {...getBorderLayer(selectedMap, borderWidth)} />
     </Source>
   );
 };

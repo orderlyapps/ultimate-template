@@ -30,6 +30,5 @@ export const setMapStyle = (
     return layer;
   });
 
-  // @ts-expect-error - Immutable.js type inference is overly strict for this use case
   return defaultMapStyle.set("layers", layers);
 };

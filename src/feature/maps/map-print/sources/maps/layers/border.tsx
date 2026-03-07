@@ -1,7 +1,10 @@
 import type { Map } from "@tanstack-db/map/mapSchema";
 import type { LayerProps } from "react-map-gl/mapbox";
 
-export const getBorderLayer = (selectedMap: Map | null): LayerProps => {
+export const getBorderLayer = (
+  selectedMap: Map | null,
+  borderWidth: number
+): LayerProps => {
   const selectedMapId = selectedMap?.id || "";
 
   return {
@@ -17,9 +20,9 @@ export const getBorderLayer = (selectedMap: Map | null): LayerProps => {
         ["linear"],
         ["zoom"],
         14,
-        2,
+        2 * borderWidth,
         23,
-        12,
+        12 * borderWidth,
       ],
       "line-opacity": 1,
     },

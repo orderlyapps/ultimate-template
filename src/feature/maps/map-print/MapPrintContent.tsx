@@ -1,6 +1,7 @@
 import { Map } from "@services/vendor/mapbox/components/map/Map";
 import { MapSelectionModal } from "@feature/maps/map-print/components/map-selection-modal/MapSelectionModal";
 import { MapOverlay } from "@feature/maps/map-print/components/map-overlay/MapOverlay";
+import { StyleControlsModal } from "@feature/maps/map-print/components/style-controls-modal/StyleControlsModal";
 import { useMapPrintStore } from "@feature/maps/map-print/store/use-map-print-store";
 import { useLiveQuery } from "@tanstack/react-db";
 import { mapCollection } from "@tanstack-db/map/mapCollection";
@@ -59,6 +60,7 @@ export const MapPrintContent: React.FC = () => {
           onLoad={(e) => {
             mapRef.current = e.target;
           }}
+          maxZoom={20}
         >
           <Maps />
         </Map>
@@ -75,6 +77,8 @@ export const MapPrintContent: React.FC = () => {
         }}
         selectedMapId={selectedMap?.id}
       />
+
+      <StyleControlsModal />
     </>
   );
 };

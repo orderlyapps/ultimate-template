@@ -45,6 +45,7 @@ export const DoorToDoor: React.FC = () => {
           "not-at-home-cluster-points",
         ]}
         onClick={handleMapClick}
+        maxZoom={22}
       >
         <MapMaster />
         <Maps />
