@@ -15,11 +15,11 @@ export const MapOverlay: React.FC<MapOverlayProps> = ({ map }) => {
       <div
         style={{
           position: "absolute",
-          top: 16,
-          left: 16,
+          top: styling.mapDetailsSize / 2,
+          left: styling.mapDetailsSize / 2,
           backgroundColor: "white",
-          padding: "12px 16px",
-          borderRadius: 4,
+          padding: styling.mapDetailsSize / 10,
+          borderRadius: styling.mapDetailsSize / 10,
           boxShadow: "0 2px 8px rgba(0, 0, 0, 0.15)",
           zIndex: 10,
         }}
@@ -30,6 +30,8 @@ export const MapOverlay: React.FC<MapOverlayProps> = ({ map }) => {
             fontSize: styling.mapNameSize,
             fontWeight: 600,
             textAlign: "left",
+            paddingLeft: styling.mapDetailsSize / 4,
+            paddingRight: styling.mapDetailsSize / 4,
           }}
         >
           {map.name}
@@ -39,11 +41,11 @@ export const MapOverlay: React.FC<MapOverlayProps> = ({ map }) => {
                 color: "black",
                 fontSize: styling.mapDetailsSize,
                 textAlign: "left",
-                marginTop: 4,
                 fontWeight: 400,
+                paddingLeft: styling.mapDetailsSize / 2,
               }}
             >
-              {" " + map.details}
+              {map.details}
             </span>
           )}
         </div>
