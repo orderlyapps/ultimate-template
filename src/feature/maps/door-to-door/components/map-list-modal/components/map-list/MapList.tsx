@@ -5,12 +5,12 @@ import { mapCollection } from "@tanstack-db/map/mapCollection";
 import { useLiveQuery } from "@tanstack/react-db";
 import { useZoomToMap } from "@feature/maps/door-to-door/components/map-list-modal/components/map-list/hooks/use-zoom-to-map";
 import { useDoorToDoorStore } from "@feature/maps/door-to-door/store/useDoorToDoorStore";
-import { IonListHeader, IonIcon, IonButton } from "@ionic/react";
+import { IonListHeader } from "@ionic/react";
 import { Label } from "@ionic-display/label/Label";
 import type { Map } from "@tanstack-db/map/mapSchema";
-import pencilIcon from "@icons/edit.svg";
+import { MapEditButton } from "@feature/maps/door-to-door/components/map-list-modal/components/map-list/components/map-edit-button/MapEditButton";
 
-export const MapList: React.FC = () => {
+export const MapList: React.FC<{ show: boolean }> = ({ show }) => {
   const { data } = useLiveQuery((q) =>
     q
       .from({
@@ -22,9 +22,7 @@ export const MapList: React.FC = () => {
   const { handleZoomToMap } = useZoomToMap();
 
   const selectedMap = useDoorToDoorStore((state) => state.selectedMap);
-  const setSelectedMap = useDoorToDoorStore(
-    (state) => state.setSelectedMap,
-  );
+  const setSelectedMap = useDoorToDoorStore((state) => state.setSelectedMap);
   const addToRecentMaps = useDoorToDoorStore((state) => state.addToRecentMaps);
   const setEditMode = useDoorToDoorStore((state) => state.setEditMode);
   const setEditingMap = useDoorToDoorStore((state) => state.setEditingMap);
@@ -50,8 +48,6 @@ export const MapList: React.FC = () => {
 
   if (!data) return null;
 
-  const show = true
-
   return (
     <List>
       <IonListHeader>
@@ -64,13 +60,14 @@ export const MapList: React.FC = () => {
           color={map.id === selectedMap?.id ? "medium" : ""}
         >
           <Text bold={map.id === selectedMap?.id}>{map.name}</Text>
-        {show && <IonButton
-            slot="end"
-            fill="clear"
-            onClick={(e) => handleEditMap(map, e)}
-          >
-            <IonIcon icon={pencilIcon} />
-          </IonButton>}
+          <div slot="end">
+            <MapEditButton
+              map={map}
+              selectedMap={selectedMap}
+              show={show}
+              onEdit={handleEditMap}
+            />
+          </div>
         </Item>
       ))}
     </List>

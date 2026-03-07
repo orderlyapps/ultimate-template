@@ -8,13 +8,23 @@ import { useLiveQuery } from "@tanstack/react-db";
 import { IonListHeader } from "@ionic/react";
 import { Label } from "@ionic-display/label/Label";
 import type { Map } from "@tanstack-db/map/mapSchema";
+import { MapEditButton } from "@feature/maps/door-to-door/components/map-list-modal/components/map-list/components/map-edit-button/MapEditButton";
 
-export const RecentMaps: React.FC = () => {
+interface RecentMapsProps {
+  show: boolean;
+}
+
+export const RecentMaps: React.FC<RecentMapsProps> = ({ show }) => {
   const recentMaps = useDoorToDoorStore((state) => state.recentMaps);
   const { handleZoomToMap } = useZoomToMap();
   const selectedMap = useDoorToDoorStore((state) => state.selectedMap);
   const setSelectedMap = useDoorToDoorStore((state) => state.setSelectedMap);
   const addToRecentMaps = useDoorToDoorStore((state) => state.addToRecentMaps);
+  const setEditMode = useDoorToDoorStore((state) => state.setEditMode);
+  const setEditingMap = useDoorToDoorStore((state) => state.setEditingMap);
+  const closeMapListModal = useDoorToDoorStore(
+    (state) => state.closeMapListModal,
+  );
 
   const { data: allMaps } = useLiveQuery((q) =>
     q.from({
@@ -42,6 +52,14 @@ export const RecentMaps: React.FC = () => {
     setSelectedMap(map);
   };
 
+  const handleEditMap = (map: Map, event: React.MouseEvent) => {
+    event.stopPropagation();
+    handleZoomToMap(map);
+    setEditingMap(map);
+    setEditMode(true);
+    closeMapListModal();
+  };
+
   return (
     <List>
       <IonListHeader>
@@ -50,6 +68,14 @@ export const RecentMaps: React.FC = () => {
       {recentMapObjects.map((map) => (
         <Item key={map.id} onClick={() => handleSelectMap(map)}>
           <Text>{map.name}</Text>
+          <div slot="end">
+            <MapEditButton
+              map={map}
+              selectedMap={selectedMap}
+              show={show}
+              onEdit={handleEditMap}
+            />
+          </div>
         </Item>
       ))}
     </List>

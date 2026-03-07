@@ -23,12 +23,16 @@ export const MapListModal: React.FC = () => {
   const openModal = useDoorToDoorStore((state) => state.openMapListModal);
   const closeModal = useDoorToDoorStore((state) => state.closeMapListModal);
   const isEditMode = useDoorToDoorStore((state) => state.isEditMode);
-  const startAddingNewMap = useDoorToDoorStore((state) => state.startAddingNewMap);
+  const startAddingNewMap = useDoorToDoorStore(
+    (state) => state.startAddingNewMap,
+  );
 
   const handleAddMap = () => {
     closeModal();
     startAddingNewMap();
   };
+
+  const show = false;
 
   return (
     <>
@@ -40,11 +44,13 @@ export const MapListModal: React.FC = () => {
       <IonModal isOpen={isOpen} onDidDismiss={closeModal}>
         <IonHeader>
           <IonToolbar>
-            <IonButtons slot="start">
-              <IonButton onClick={handleAddMap}>
-                <IonIcon icon={addIcon} slot="icon-only" />
-              </IonButton>
-            </IonButtons>
+            {show && (
+              <IonButtons slot="start">
+                <IonButton onClick={handleAddMap}>
+                  <IonIcon icon={addIcon} slot="icon-only" />
+                </IonButton>
+              </IonButtons>
+            )}
             <IonTitle>Map List</IonTitle>
             <IonButtons slot="end">
               <CloseButton onClick={closeModal} />
@@ -52,9 +58,9 @@ export const MapListModal: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <IonContent>
-          <SelectedMap />
-          <RecentMaps />
-          <MapList />
+          <SelectedMap show={show} />
+          <RecentMaps show={show} />
+          <MapList show={show} />
         </IonContent>
       </IonModal>
     </>
