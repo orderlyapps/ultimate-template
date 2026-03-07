@@ -11,7 +11,12 @@ import { Space } from "@layout/space/Space";
 
 const WeeklyScheduleContent: React.FC = () => {
   const weeklySchedule = [
-    { day: "Monday", groups: [] },
+    {
+      day: "Monday",
+      groups: [
+        { time: "9:15", location: "Kingdom Hall", conductor: "Igor De Souza" },
+      ],
+    },
     { day: "Tuesday", groups: [] },
     {
       day: "Wednesday",
@@ -55,12 +60,12 @@ const WeeklyScheduleContent: React.FC = () => {
         },
       ],
     },
-    // {
-    //   day: "Sunday",
-    //   groups: [
-    //     { time: "9:15", location: "Kingdom Hall", conductor: "See Below" },
-    //   ],
-    // },
+    {
+      day: "Sunday",
+      groups: [
+        { time: "9:45", location: "Kingdom Hall", conductor: "Damian Amodeo" },
+      ],
+    },
   ];
 
   // const sundayGroups = [
