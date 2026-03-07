@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 import type { Map as MapType } from "@tanstack-db/map/mapSchema";
 
 export interface MapPrintStyling {
@@ -28,14 +29,21 @@ const defaultStyling: MapPrintStyling = {
   borderWidth: 1,
 };
 
-export const useMapPrintStore = create<MapPrintStore>((set) => ({
-  isModalOpen: true,
-  isStyleModalOpen: false,
-  selectedMap: null,
-  styling: defaultStyling,
-  setIsModalOpen: (isOpen) => set({ isModalOpen: isOpen }),
-  setIsStyleModalOpen: (isOpen) => set({ isStyleModalOpen: isOpen }),
-  setSelectedMap: (map) => set({ selectedMap: map }),
-  setStyling: (newStyling) =>
-    set((state) => ({ styling: { ...state.styling, ...newStyling } })),
-}));
+export const useMapPrintStore = create<MapPrintStore>()(
+  persist(
+    (set) => ({
+      isModalOpen: true,
+      isStyleModalOpen: false,
+      selectedMap: null,
+      styling: defaultStyling,
+      setIsModalOpen: (isOpen) => set({ isModalOpen: isOpen }),
+      setIsStyleModalOpen: (isOpen) => set({ isStyleModalOpen: isOpen }),
+      setSelectedMap: (map) => set({ selectedMap: map }),
+      setStyling: (newStyling) =>
+        set((state) => ({ styling: { ...state.styling, ...newStyling } })),
+    }),
+    {
+      name: "map-print-store",
+    }
+  )
+);
