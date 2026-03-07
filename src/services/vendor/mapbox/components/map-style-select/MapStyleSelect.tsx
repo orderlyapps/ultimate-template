@@ -21,6 +21,10 @@ const options: { label: string; value: MapStyle }[] = [
     label: "Satellite",
     value: "satellite",
   },
+  {
+    label: "Print",
+    value: "print",
+  },
 ];
 
 export const MapStyleSelect: React.FC<MapStyleSelectProps> = ({

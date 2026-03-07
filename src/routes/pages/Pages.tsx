@@ -2,6 +2,7 @@ import { Redirect, Route } from "react-router-dom";
 import { IonRouterOutlet } from "@ionic/react";
 import { Home } from "@pages/home/Home";
 import { Talks } from "@pages/home/talks/Talks";
+import { MapPrint } from "@pages/home/map-print/MapPrint";
 import { Talk } from "@pages/home/talks/talk/Talk";
 import { TalkSection } from "@pages/home/talks/talk/section/TalkSection";
 import { TalkSubsection } from "@pages/home/talks/talk/section/subsection/TalkSubsection";
@@ -31,6 +32,7 @@ export const pages = (
     <Route exact path="/login" render={() => <Login />} />
     <Route exact path="/home" render={() => <Home />} />
     <Route exact path="/home/talks" render={() => <Talks />} />
+    <Route exact path="/home/map-print" render={() => <MapPrint />} />
     <Route exact path="/home/talks/:talkId" render={() => <Talk />} />
     <Route
       exact

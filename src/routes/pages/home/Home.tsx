@@ -32,6 +32,9 @@ export const Home: React.FC = () => {
           <FeatureGuard id="talks">
             <NavItem routerLink="/home/talks">Talks</NavItem>
           </FeatureGuard>
+          <FeatureGuard id="mapPrint">
+            <NavItem routerLink="/home/map-print">Map Print</NavItem>
+          </FeatureGuard>
         </List>
       </IonContent>
     </IonPage>
