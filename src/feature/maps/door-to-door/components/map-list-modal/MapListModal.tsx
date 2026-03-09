@@ -32,7 +32,7 @@ export const MapListModal: React.FC = () => {
     startAddingNewMap();
   };
 
-  const show = true;
+  const show = false;
 
   return (
     <>

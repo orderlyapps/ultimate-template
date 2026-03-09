@@ -12,6 +12,7 @@
     "deploy:orderly": "pnpm run test:lint:build && npx wrangler pages deploy dist --project-name=orderly --branch=main",
     "deploy:proclaimer": "pnpm run test:lint:build && npx wrangler pages deploy dist --project-name=proclaimer --branch=main",
     "deploy:both": "pnpm run test:lint:build && npx wrangler pages deploy dist --project-name=orderly --branch=main && npx wrangler pages deploy dist --project-name=proclaimer --branch=main",
+    "deploy:maps": "pnpm run test:lint:build && npx wrangler pages deploy dist --project-name=orderly --branch=maps",
     "lint": "eslint .",
     "preview": "vite preview --host",
     "preview:prod": "vite preview --host --mode production",

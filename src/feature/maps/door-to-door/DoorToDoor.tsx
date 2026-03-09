@@ -2,22 +2,22 @@ import { Maps } from "@feature/maps/door-to-door/sources/maps/Maps";
 import { MapMaster } from "@feature/maps/door-to-door/sources/map-master/MapMaster";
 import { DoNotCalls } from "@feature/maps/door-to-door/sources/do-not-calls/DoNotCalls";
 import { Blocks } from "@feature/maps/door-to-door/sources/blocks/Blocks";
-import { EditedBlocks } from "@feature/maps/door-to-door/sources/edited-blocks/EditedBlocks";
-import { EditedBoundary } from "@feature/maps/door-to-door/sources/edited-boundary/EditedBoundary";
+// import { EditedBlocks } from "@feature/maps/door-to-door/sources/edited-blocks/EditedBlocks";
+// import { EditedBoundary } from "@feature/maps/door-to-door/sources/edited-boundary/EditedBoundary";
 import { Map } from "@services/vendor/mapbox/components/map/Map";
 import { useDoorToDoorStore } from "@feature/maps/door-to-door/store/useDoorToDoorStore";
 import { GetDirectionsAlert } from "@feature/maps/door-to-door/components/get-directions-alert/GetDirectionsAlert";
 import { DoNotCallAlert } from "@feature/maps/door-to-door/components/do-not-calls/do-not-call-alert/DoNotCallAlert";
-import { NotAtHomeAlert } from "@feature/maps/door-to-door/components/not-at-homes/components/not-at-home-alert/NotAtHomeAlert";
-import { NotAtHomeUnitModal } from "@feature/maps/door-to-door/components/not-at-homes/components/not-at-home-unit-modal/NotAtHomeUnitModal";
+// import { NotAtHomeAlert } from "@feature/maps/door-to-door/components/not-at-homes/components/not-at-home-alert/NotAtHomeAlert";
+// import { NotAtHomeUnitModal } from "@feature/maps/door-to-door/components/not-at-homes/components/not-at-home-unit-modal/NotAtHomeUnitModal";
 import { DoNotCallUnitModal } from "@feature/maps/door-to-door/components/do-not-calls/do-not-call-unit-modal/DoNotCallUnitModal";
-import { AddAddressModal } from "@feature/maps/door-to-door/components/add-address-modal/AddAddressModal";
-import { MapEditFab } from "@feature/maps/door-to-door/components/map-edit/MapEditFab";
-import { MapEditModal } from "@feature/maps/door-to-door/components/map-edit/map-edit-modal/MapEditModal";
+// import { AddAddressModal } from "@feature/maps/door-to-door/components/add-address-modal/AddAddressModal";
+// import { MapEditFab } from "@feature/maps/door-to-door/components/map-edit/MapEditFab";
+// import { MapEditModal } from "@feature/maps/door-to-door/components/map-edit/map-edit-modal/MapEditModal";
 import { ShapeEditor } from "@feature/maps/door-to-door/components/map-edit/shape-editor/ShapeEditor";
 import { useMapClickHandler } from "@feature/maps/door-to-door/handlers/useMapClickHandler";
 import type { MapTouchEvent } from "react-map-gl/mapbox";
-import { NotAtHome } from "@feature/maps/door-to-door/sources/not-at-home/NotAtHome";
+// import { NotAtHome } from "@feature/maps/door-to-door/sources/not-at-home/NotAtHome";
 
 export const DoorToDoor: React.FC = () => {
   const setMapRef = useDoorToDoorStore((state) => state.setMapRef);
@@ -50,20 +50,20 @@ export const DoorToDoor: React.FC = () => {
         <MapMaster />
         <Maps />
         <Blocks />
-        <EditedBlocks />
-        <EditedBoundary />
+        {/* <EditedBlocks /> */}
+        {/* <EditedBoundary /> */}
         <DoNotCalls />
-        <NotAtHome />
+        {/* <NotAtHome /> */}
         {isEditMode && <ShapeEditor />}
       </Map>
       <GetDirectionsAlert />
       <DoNotCallAlert />
-      <NotAtHomeAlert />
-      <NotAtHomeUnitModal />
+      {/* <NotAtHomeAlert /> */}
+      {/* <NotAtHomeUnitModal /> */}
       <DoNotCallUnitModal />
-      <AddAddressModal />
-      <MapEditFab />
-      <MapEditModal />
+      {/* <AddAddressModal /> */}
+      {/* <MapEditFab />
+      <MapEditModal /> */}
     </>
   );
 };
