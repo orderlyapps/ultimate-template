@@ -13,6 +13,7 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
+import { SelectTheme } from "@services/app/theme/SelectTheme";
 import { MapStyleSelect } from "@services/vendor/mapbox/components/map-style-select/MapStyleSelect";
 import { useState } from "react";
 
@@ -40,6 +41,7 @@ export const MapSettingsModal: React.FC<{ id?: string }> = ({ id }) => {
                 <Label slot="label">Map Style</Label>
               </MapStyleSelect>
             </Item>
+            <SelectTheme />
           </List>
         </IonContent>
       </IonModal>
