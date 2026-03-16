@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import { Fragment, type FC } from "react";
 import { and, eq, useLiveQuery } from "@tanstack/react-db";
 import { speakerAssignmentCollection } from "@tanstack-db/speaker_assignment/speakerAssignmentCollection";
 import { publisherCollection } from "@tanstack-db/publisher/publisherCollection";
@@ -55,37 +55,38 @@ export const OutgoingSpeakers: FC<Props> = ({ weekId }) => {
   }
 
   return (
-    <Item>
-      <Grid className="ion-text-nowrap ion-no-padding">
-        <Row>
-          <Col className="ion-text-center ion-padding-top">
-            <Text bold color="medium">
-              Outgoing Speakers
-            </Text>
-            <Space height="0.5" />
-          </Col>
-        </Row>
-        <Row className="ion-text-nowrap">
-          <Col>
-            {outgoingSpeakers.map((item, index) => (
-              <Text key={index}>
-                {item.speaker &&
-                  formatPublisherName(item.speaker, "display last")}
-                {item.outline && (
-                  <>
-                    {" - "}
-                    {item.outline.id}
-                  </>
-                )}
-                {item.destinationCongregation && (
-                  <Text> - {item.destinationCongregation.name}</Text>
-                )}
-                <br />
-              </Text>
-            ))}
-          </Col>
-        </Row>
-      </Grid>
-    </Item>
+    <>
+      <Space height="1.5" />
+      <Item lines="none">
+        <Text bold size="xl">
+          Outgoing Speakers
+        </Text>
+      </Item>
+      <Item>
+        <Grid className="ion-text-nowrap ion-no-padding">
+          {outgoingSpeakers.map((item, index) => (
+            <Fragment key={index}>
+              <Row>
+                <Col>
+                  <Text bold color="primary">
+                    {item.speaker &&
+                      formatPublisherName(item.speaker as Parameters<typeof formatPublisherName>[0], "display last")}
+                  </Text>
+                </Col>
+              </Row>
+              <Row className="ion-padding-start ion-padding-start ion-margin-start ion-padding-bottom">
+                <Col>
+                  <Text>
+                    Outline {item.outline?.id}
+                    {item.outline && item.destinationCongregation && " - "}
+                    {item.destinationCongregation?.name}
+                  </Text>
+                </Col>
+              </Row>
+            </Fragment>
+          ))}
+        </Grid>
+      </Item>
+    </>
   );
 };

@@ -84,7 +84,7 @@ export const MidweekAttendantAssignments: FC<Props> = ({ weekId }) => {
                   <Col>
                     <Text>
                       {formatPublisherName(
-                        assignment.participant,
+                        assignment.participant as Parameters<typeof formatPublisherName>[0],
                         "display last",
                       )}
                     </Text>

@@ -228,21 +228,21 @@ export const MeetingAgendaItems: FC<Props> = ({ meeting, weekId }) => {
                     <Col>
                       {participant && (
                         <Text>
-                          {formatPublisherName(participant, "display last")}
+                          {formatPublisherName(participant as Parameters<typeof formatPublisherName>[0], "display last")}
                           <br />
                         </Text>
                       )}
 
                       {reader && (
                         <Text color="medium">
-                          Reader: {formatPublisherName(reader, "display last")}
+                          Reader: {formatPublisherName(reader as Parameters<typeof formatPublisherName>[0], "display last")}
                         </Text>
                       )}
 
                       {assistant && (
                         <Text color="medium">
                           Assistant:{" "}
-                          {formatPublisherName(assistant, "display last")}
+                          {formatPublisherName(assistant as Parameters<typeof formatPublisherName>[0], "display last")}
                         </Text>
                       )}
                     </Col>

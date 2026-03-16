@@ -169,13 +169,13 @@ export const usePublisherHomeItems = (
     const isLocal = firstPublicTalk.speaker_congregation_id === userCongId;
     const speakerName = formatPublisherName(
       {
-        first_name: firstPublicTalk.speaker_first_name,
-        last_name: firstPublicTalk.speaker_last_name,
+        first_name: firstPublicTalk.speaker_first_name ?? "",
+        last_name: firstPublicTalk.speaker_last_name ?? "",
         display_name: firstPublicTalk.speaker_display_name,
       },
       "display last",
     );
-    const details = [firstPublicTalk.outline_theme];
+    const details = [firstPublicTalk.outline_theme ?? ""];
     const congregationLabel =
       !isLocal && firstPublicTalk.congregation_name
         ? `${speakerName} — ${firstPublicTalk.congregation_name}`

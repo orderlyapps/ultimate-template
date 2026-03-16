@@ -53,21 +53,22 @@ export const IncomingTalk: FC<Props> = ({ weekId }) => {
     talk.speaker?.congregation_id !== userCongregation?.id;
 
   return (
-    <Item>
-      <Grid className="ion-text-nowrap ion-text-center">
+    <Item lines="none">
+      <Grid className="ion-text-nowrap ion-no-padding">
         <Row>
           <Col>
-            {talk.outline && (
-              <Text bold color="medium">
-                {talk.outline.theme}
-              </Text>
-            )}
-            <br />
+            <Text bold color="medium">
+              {talk.outline?.theme ?? "Public Talk"}
+            </Text>
+          </Col>
+        </Row>
+        <Row className="ion-padding-start ion-padding-start ion-margin-start ion-padding-bottom">
+          <Col>
             {talk.speaker && (
               <Text>
-                {formatPublisherName(talk.speaker, "display last")}
+                {formatPublisherName(talk.speaker as Parameters<typeof formatPublisherName>[0], "display last")}
                 {isVisitingSpeaker && talk.speakerCongregation && (
-                  <Text> ({talk.speakerCongregation.name})</Text>
+                  <> ({talk.speakerCongregation.name})</>
                 )}
               </Text>
             )}

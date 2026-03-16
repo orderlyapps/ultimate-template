@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import { Fragment, type FC } from "react";
 import { and, eq, useLiveQuery } from "@tanstack/react-db";
 import { weekendAssignmentCollection } from "@tanstack-db/weekend_assignment/weekendAssignmentCollection";
 import { publisherCollection } from "@tanstack-db/publisher/publisherCollection";
@@ -42,34 +42,35 @@ export const WeekendAssignments: FC<Props> = ({ weekId }) => {
     return null;
   }
 
+  const items = [
+    { label: "Chairman", participant: chairman?.participant },
+    { label: "Reader", participant: reader?.participant },
+  ];
+
   return (
     <Item>
-      <Grid className="ion-no-padding">
-        {chairman?.participant && (
-          <Row>
-            <Col>
-              <Text bold>Chairman</Text>
-            </Col>
-            <Col className="ion-text-end">
-              <Text>
-                {formatPublisherName(chairman.participant, "display last")}
-              </Text>
-            </Col>
-          </Row>
-        )}
-
-        {reader?.participant && (
-          <Row>
-            <Col>
-              <Text bold>Reader</Text>
-            </Col>
-            <Col className="ion-text-end">
-              <Text>
-                {formatPublisherName(reader.participant, "display last")}
-              </Text>
-            </Col>
-          </Row>
-        )}
+      <Grid className="ion-text-nowrap ion-no-padding">
+        {items.map(({ label, participant }) => {
+          if (!participant) return null;
+          return (
+            <Fragment key={label}>
+              <Row>
+                <Col>
+                  <Text bold color="medium">
+                    {label}
+                  </Text>
+                </Col>
+              </Row>
+              <Row className="ion-padding-start ion-padding-start ion-margin-start ion-padding-bottom">
+                <Col>
+                  <Text>
+                    {formatPublisherName(participant as Parameters<typeof formatPublisherName>[0], "display last")}
+                  </Text>
+                </Col>
+              </Row>
+            </Fragment>
+          );
+        })}
       </Grid>
     </Item>
   );

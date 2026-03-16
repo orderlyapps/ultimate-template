@@ -10,6 +10,7 @@ import { congregationCollection } from "@tanstack-db/congregation/congregationCo
 import type { Publisher } from "@tanstack-db/publisher/publisherSchema";
 import { getThisWeekID } from "@util/date/getThisWeekID";
 import { getUserCongregation } from "@feature/db/congregation/user-congregation/get-user-congregation/getUserCongregation";
+import type { PublicTalkInfo } from "./components/home-items-list/useHomeItems";
 
 const emptyResult = {
   weekendAssignments: [] as never[],
@@ -112,13 +113,13 @@ export const usePublisherHomeQueries = (
         )
         .select(({ sa, o, p, c }) => ({
           week_id: sa.week_id,
-          outline_theme: o!.theme,
-          speaker_first_name: p!.first_name,
-          speaker_last_name: p!.last_name,
+          outline_theme: o!.theme ?? "",
+          speaker_first_name: p!.first_name ?? "",
+          speaker_last_name: p!.last_name ?? "",
           speaker_display_name: p!.display_name,
-          speaker_congregation_id: p!.congregation_id,
+          speaker_congregation_id: p!.congregation_id ?? "",
           congregation_name: c?.name ?? null,
-        })),
+        } as PublicTalkInfo)),
     [congregationId, thisWeekId],
   );
 

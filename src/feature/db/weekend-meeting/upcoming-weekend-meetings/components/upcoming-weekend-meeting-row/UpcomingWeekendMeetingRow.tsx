@@ -7,6 +7,7 @@ import { WeekendAttendantAssignments } from "./components/weekend-attendant-assi
 import { OutgoingSpeakers } from "./components/outgoing-speakers/OutgoingSpeakers";
 import { WeekEvents } from "@feature/db/shared/week-events/WeekEvents";
 import { useBlockingEvents } from "@feature/db/shared/week-events/useBlockingEvents";
+import { Space } from "@layout/space/Space";
 
 type Props = {
   weekId: string;
@@ -27,6 +28,7 @@ export const UpcomingWeekendMeetingRow: FC<Props> = ({ weekId }) => {
           <OutgoingSpeakers weekId={weekId} />
         </>
       )}
+      <Space height="3" />
     </List>
   );
 };

@@ -5,8 +5,6 @@ type UpcomingWeekendMeetingsProps = {
   weekId: string;
 };
 
-export const UpcomingWeekendMeetings: FC<UpcomingWeekendMeetingsProps> = ({
-  weekId,
-}) => {
+export const UpcomingWeekendMeetings: FC<UpcomingWeekendMeetingsProps> = ({ weekId }) => {
   return <UpcomingWeekendMeetingRow weekId={weekId} />;
 };
