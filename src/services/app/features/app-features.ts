@@ -16,7 +16,11 @@ export type AppFeatureDefinition = {
 };
 
 export const featureGroups: readonly FeatureGroupDefinition[] = [
-  
+  {
+    id: "tools",
+    label: "Tools",
+    defaultEnabled: false,
+  },
 ];
 
 export const appFeatures: readonly AppFeatureDefinition[] = [
@@ -24,13 +28,13 @@ export const appFeatures: readonly AppFeatureDefinition[] = [
     id: "talks",
     label: "Talks",
     defaultEnabled: false,
-    groups: [],
+    groups: ["tools"],
   },
   {
     id: "mapPrint",
     label: "Map Print",
     defaultEnabled: false,
-    groups: [],
+    groups: ["tools"],
   },
 ];
 

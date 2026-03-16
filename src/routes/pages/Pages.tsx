@@ -1,6 +1,9 @@
 import { Redirect, Route } from "react-router-dom";
 import { IonRouterOutlet } from "@ionic/react";
 import { Home } from "@pages/home/Home";
+import { Tools } from "@pages/home/tools/Tools";
+import { Announcements } from "@pages/home/announcements/Announcements";
+import { Announcement } from "@pages/home/announcement/Announcement";
 import { Talks } from "@pages/home/talks/Talks";
 import { MapPrint } from "@pages/home/map-print/MapPrint";
 import { Talk } from "@pages/home/talks/talk/Talk";
@@ -31,6 +34,9 @@ export const pages = (
   <IonRouterOutlet>
     <Route exact path="/login" render={() => <Login />} />
     <Route exact path="/home" render={() => <Home />} />
+    <Route exact path="/home/tools" render={() => <Tools />} />
+    <Route exact path="/home/announcements" render={() => <Announcements />} />
+    <Route exact path="/home/announcements/:announcementId" render={() => <Announcement />} />
     <Route exact path="/home/talks" render={() => <Talks />} />
     <Route exact path="/home/map-print" render={() => <MapPrint />} />
     <Route exact path="/home/talks/:talkId" render={() => <Talk />} />
