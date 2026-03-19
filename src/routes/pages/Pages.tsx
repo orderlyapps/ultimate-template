@@ -24,6 +24,9 @@ import { AudioAndVideo } from "@pages/schedules/audio-and-video/AudioAndVideo";
 import { Cleaning } from "@pages/schedules/cleaning/Cleaning";
 import { Events } from "@pages/schedules/events/Events";
 import { Publishers } from "@pages/publishers/Publishers";
+import { PublisherGroups } from "@pages/publishers/groups/PublisherGroups";
+import { Appointed } from "@pages/publishers/appointed/Appointed";
+import { RegularPioneers } from "@pages/publishers/regular-pioneers/RegularPioneers";
 import { Settings } from "@pages/settings/Settings";
 import { Profile } from "@pages/settings/profile/Profile";
 import { Appearance } from "@pages/settings/appearance/Appearance";
@@ -79,6 +82,9 @@ export const pages = (
     <Route exact path="/schedules/cleaning" render={() => <Cleaning />} />
     <Route exact path="/schedules/events" render={() => <Events />} />
     <Route exact path="/publishers" render={() => <Publishers />} />
+    <Route exact path="/publishers/groups" render={() => <PublisherGroups />} />
+    <Route exact path="/publishers/appointed" render={() => <Appointed />} />
+    <Route exact path="/publishers/regular-pioneers" render={() => <RegularPioneers />} />
     <Route exact path="/settings" render={() => <Settings />} />
     <Route exact path="/settings/profile" render={() => <Profile />} />
     <Route exact path="/settings/appearance" render={() => <Appearance />} />

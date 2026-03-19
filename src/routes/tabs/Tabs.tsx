@@ -26,7 +26,7 @@ export const Tabs: React.FC = () => {
   const layout = isPortrait ? "icon-top" : "icon-start";
   const className = isPortrait ? "" : "ion-padding-end";
 
-  const show = false;
+  const show = import.meta.env.VITE_IS_BETA;
 
   return (
     <IonTabBar slot="bottom">
