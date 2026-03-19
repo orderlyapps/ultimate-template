@@ -25,23 +25,27 @@ export const featureGroups: readonly FeatureGroupDefinition[] = [
 
 export const appFeatures: readonly AppFeatureDefinition[] = [
   {
-    id: "talks",
+    id: "talks" as const,
     label: "Talks",
     defaultEnabled: false,
     groups: ["tools"],
   },
   {
-    id: "mapPrint",
+    id: "mapPrint" as const,
     label: "Map Print",
     defaultEnabled: false,
     groups: ["tools"],
   },
-  {
-    id: "groups",
-    label: "Groups",
-    defaultEnabled: false,
-    groups: ["tools"],
-  },
+  ...(import.meta.env.VITE_IS_BETA
+    ? [
+        {
+          id: "groups" as const,
+          label: "Groups",
+          defaultEnabled: false,
+          groups: ["tools"],
+        },
+      ]
+    : []),
 ];
 
 export type FeatureOverrides = Partial<Record<AppFeatureId, boolean>>;
@@ -49,7 +53,7 @@ export type FeatureGroupOverrides = Partial<Record<FeatureGroupId, boolean>>;
 
 export function isGroupEnabled(
   groupId: FeatureGroupId,
-  groupOverrides: FeatureGroupOverrides
+  groupOverrides: FeatureGroupOverrides,
 ) {
   const override = groupOverrides[groupId];
   if (typeof override === "boolean") return override;
@@ -75,6 +79,6 @@ export function isFeatureEnabled(args: {
   if (!featureEnabled) return false;
 
   return feature.groups.every((groupId) =>
-    isGroupEnabled(groupId, args.groupOverrides)
+    isGroupEnabled(groupId, args.groupOverrides),
   );
 }

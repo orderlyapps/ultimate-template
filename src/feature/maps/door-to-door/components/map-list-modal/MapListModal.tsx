@@ -32,7 +32,7 @@ export const MapListModal: React.FC = () => {
     startAddingNewMap();
   };
 
-  const show = true; // proclaimer beta version
+  const show = import.meta.env.VITE_IS_BETA;
 
   return (
     <>
