@@ -15,6 +15,8 @@ export const Home: React.FC = () => {
   const isMapPrintEnabled = useAppFeaturesStore((s) => s.isEnabled("mapPrint"));
   const hasAnyToolEnabled = isTalksEnabled || isMapPrintEnabled;
 
+  const show = import.meta.env.VITE_IS_BETA;
+
   return (
     <IonPage>
       <IonContent fullscreen className="ion-padding">
@@ -33,7 +35,9 @@ export const Home: React.FC = () => {
           </List>
         )}
         <List>
-          <NavItem routerLink="/home/announcements">Announcements</NavItem>
+          {show && (
+            <NavItem routerLink="/home/announcements">Announcements</NavItem>
+          )}
           {hasAnyToolEnabled && (
             <NavItem routerLink="/home/tools">Tools</NavItem>
           )}
