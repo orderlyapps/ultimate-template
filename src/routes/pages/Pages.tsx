@@ -6,6 +6,8 @@ import { Announcements } from "@pages/home/announcements/Announcements";
 import { Announcement } from "@pages/home/announcement/Announcement";
 import { Talks } from "@pages/home/talks/Talks";
 import { MapPrint } from "@pages/home/map-print/MapPrint";
+import { Groups } from "@pages/home/groups/Groups";
+import { Group } from "@pages/home/groups/group/Group";
 import { Talk } from "@pages/home/talks/talk/Talk";
 import { TalkSection } from "@pages/home/talks/talk/section/TalkSection";
 import { TalkSubsection } from "@pages/home/talks/talk/section/subsection/TalkSubsection";
@@ -39,6 +41,8 @@ export const pages = (
     <Route exact path="/home/announcements/:announcementId" render={() => <Announcement />} />
     <Route exact path="/home/talks" render={() => <Talks />} />
     <Route exact path="/home/map-print" render={() => <MapPrint />} />
+    <Route exact path="/home/groups" render={() => <Groups />} />
+    <Route exact path="/home/groups/:groupId" render={() => <Group />} />
     <Route exact path="/home/talks/:talkId" render={() => <Talk />} />
     <Route
       exact

@@ -35,6 +35,9 @@ export const Tools: React.FC = () => {
           <FeatureGuard id="mapPrint">
             <NavItem routerLink="/home/map-print">Map Print</NavItem>
           </FeatureGuard>
+          <FeatureGuard id="groups">
+            <NavItem routerLink="/home/groups">Groups</NavItem>
+          </FeatureGuard>
         </List>
       </IonContent>
     </IonPage>
