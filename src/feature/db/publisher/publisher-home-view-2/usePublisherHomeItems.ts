@@ -4,6 +4,8 @@ import { speakerAssignmentCollection } from "@tanstack-db/speaker_assignment/spe
 import { midweekAssignmentCollection } from "@tanstack-db/midweek_assignment/midweekAssignemtCollection";
 import { eventCollection } from "@tanstack-db/event/eventCollection";
 import { avAssignmentCollection } from "@tanstack-db/av_assignment/avAssignmentCollection";
+import { cleanMajorCollection } from "@tanstack-db/clean_major/cleanMajorCollection";
+import { cleanMinorCollection } from "@tanstack-db/clean_minor/cleanMinorCollection";
 import { outlineCollection } from "@tanstack-db/outline/outlineCollection";
 import { publisherCollection } from "@tanstack-db/publisher/publisherCollection";
 import { congregationCollection } from "@tanstack-db/congregation/congregationCollection";
@@ -58,6 +60,16 @@ export const usePublisherHomeItems = (
   const congregationId = getUserCongregation()?.id;
   const thisWeekId = getThisWeekID();
   const enabled = !!publisher;
+
+  const { data: livePublisher } = useLiveQuery(
+    (q) =>
+      q
+        .from({ p: publisherCollection })
+        .where(({ p }) => eq(p.id, publisherId)),
+    [publisherId],
+  );
+
+  const groupId = livePublisher?.[0]?.group_id ?? "";
 
   const { data: weekendAssignments } = useLiveQuery(
     (q) =>
@@ -158,6 +170,34 @@ export const usePublisherHomeItems = (
           congregation_name: c?.name ?? null,
         })),
     [congregationId, thisWeekId],
+  );
+
+  const { data: cleanMajorAssignments } = useLiveQuery(
+    (q) =>
+      q
+        .from({ cm: cleanMajorCollection })
+        .where(({ cm }) =>
+          and(
+            eq(cm.group_id, groupId),
+            eq(cm.congregation_id, congregationId),
+            gte(cm.week_id, thisWeekId),
+          ),
+        ),
+    [groupId, congregationId, thisWeekId],
+  );
+
+  const { data: cleanMinorAssignments } = useLiveQuery(
+    (q) =>
+      q
+        .from({ cm: cleanMinorCollection })
+        .where(({ cm }) =>
+          and(
+            eq(cm.group_id, groupId),
+            eq(cm.congregation_id, congregationId),
+            gte(cm.week_id, thisWeekId),
+          ),
+        ),
+    [groupId, congregationId, thisWeekId],
   );
 
   const items: HomeItem[] = [];
@@ -286,6 +326,36 @@ export const usePublisherHomeItems = (
         }),
         sortDate: weekId,
         sortOrder: 2,
+        monthId: getMonthId(weekId),
+        details,
+      });
+    }
+
+    // --- Cleaning assignments (grouped by week, combining major and minor) ---
+    const cleaningByWeek = new Map<string, string[]>();
+
+    for (const a of cleanMajorAssignments ?? []) {
+      const existing = cleaningByWeek.get(a.week_id) ?? [];
+      existing.push("Thorough Clean");
+      cleaningByWeek.set(a.week_id, existing);
+    }
+
+    for (const a of cleanMinorAssignments ?? []) {
+      const existing = cleaningByWeek.get(a.week_id) ?? [];
+      existing.push("Light Clean");
+      cleaningByWeek.set(a.week_id, existing);
+    }
+
+    for (const [weekId, details] of cleaningByWeek) {
+      items.push({
+        key: `cleaning-${weekId}`,
+        title: "Cleaning Assignment",
+        dateLabel: getTheocraticWeekLabel(weekId, {
+          format: "week-range-capital-case",
+          useRelativeWeek: true,
+        }),
+        sortDate: weekId,
+        sortOrder: 4,
         monthId: getMonthId(weekId),
         details,
       });
