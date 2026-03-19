@@ -7,7 +7,7 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { PublisherGroupsList } from "@feature/db/publisher/publisher-groups-list/PublisherGroupsList";
+import { PublisherGroupsList } from "@feature/db/publisher/lists/publisher-groups-list/PublisherGroupsList";
 import { Space } from "@layout/space/Space";
 
 export const PublisherGroups: React.FC = () => {

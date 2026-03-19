@@ -7,7 +7,7 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { AppointedList } from "@feature/db/publisher/appointed-list/AppointedList";
+import { AppointedList } from "@feature/db/publisher/lists/appointed-list/AppointedList";
 import { Space } from "@layout/space/Space";
 
 export const Appointed: React.FC = () => {

@@ -2,7 +2,7 @@ import z from "zod";
 
 export const genderOptions = [
   { id: "male", label: "Male" },
-  { id: "female", label: "Male" },
+  { id: "female", label: "Female" },
 ] as const;
 
 export const gender = z.union(

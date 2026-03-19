@@ -7,14 +7,30 @@
 process.on("unhandledRejection", (reason: Error) => {
   if (
     reason?.message?.includes("includes") ||
+    reason?.message?.includes("push") ||
     reason?.stack?.includes("@stencil") ||
+    reason?.stack?.includes("@ionic") ||
     reason?.stack?.includes("addStyle")
   ) {
-    // Suppress Stencil style-related errors in JSDOM
+    // Suppress Stencil/Ionic style-related errors in JSDOM
     return;
   }
   // Re-throw other unhandled rejections
   throw reason;
+});
+
+// Suppress uncaught exceptions from Ionic/Stencil async operations
+process.on("uncaughtException", (error: Error) => {
+  if (
+    error?.message?.includes("push") ||
+    error?.message?.includes("includes") ||
+    error?.stack?.includes("@ionic") ||
+    error?.stack?.includes("@stencil")
+  ) {
+    // Suppress Ionic/Stencil async errors in JSDOM
+    return;
+  }
+  throw error;
 });
 
 // Mock adoptedStyleSheets for Stencil

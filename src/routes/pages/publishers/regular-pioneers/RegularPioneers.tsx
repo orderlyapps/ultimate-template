@@ -7,7 +7,7 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { RegularPioneersList } from "@feature/db/publisher/regular-pioneers-list/RegularPioneersList";
+import { RegularPioneersList } from "@feature/db/publisher/lists/regular-pioneers-list/RegularPioneersList";
 import { Space } from "@layout/space/Space";
 
 export const RegularPioneers: React.FC = () => {

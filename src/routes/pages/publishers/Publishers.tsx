@@ -19,12 +19,13 @@ export const Publishers: React.FC = () => {
       </IonHeader>
       <IonContent fullscreen className="ion-padding">
         <IonHeader collapse="condense">
-          <IonToolbar >
+          <IonToolbar>
             <IonTitle size="large">Publishers</IonTitle>
           </IonToolbar>
         </IonHeader>
         <Space height="2" />
         <List>
+          <NavItem routerLink="/publishers/all">All Publishers</NavItem>
           <NavItem routerLink="/publishers/groups">Groups</NavItem>
           <NavItem routerLink="/publishers/appointed">Appointed</NavItem>
           <NavItem routerLink="/publishers/regular-pioneers">Regular Pioneers</NavItem>
