@@ -12,7 +12,8 @@ type PublicTalkSelectProps = {
   outlineTheme?: string;
   congregationName?: string;
   isLocalSpeaker?: boolean;
-  onSelect?: (speakerId: string, outlineId: string) => void;
+  onSelect?: (speakerId: string, outlineId: string | null) => void;
+  onDelete?: () => void;
   disabled?: boolean;
 };
 
@@ -24,6 +25,7 @@ export const PublicTalkSelect: React.FC<PublicTalkSelectProps> = ({
   congregationName,
   isLocalSpeaker = true,
   onSelect,
+  onDelete,
   disabled = false,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,7 +35,7 @@ export const PublicTalkSelect: React.FC<PublicTalkSelectProps> = ({
 
   const handleSelect = (
     selectedSpeakerId: string,
-    selectedOutlineId: string,
+    selectedOutlineId: string | null,
   ) => {
     onSelect?.(selectedSpeakerId, selectedOutlineId);
     setIsModalOpen(false);
@@ -67,6 +69,7 @@ export const PublicTalkSelect: React.FC<PublicTalkSelectProps> = ({
         isOpen={isModalOpen}
         onDismiss={() => setIsModalOpen(false)}
         onSelect={handleSelect}
+        onDelete={onDelete}
         currentSpeakerId={speakerId}
         currentOutlineId={outlineId}
       />

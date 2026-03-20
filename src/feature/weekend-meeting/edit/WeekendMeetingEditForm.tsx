@@ -48,8 +48,31 @@ export const WeekendMeetingEditForm: React.FC<WeekendMeetingEditFormProps> = ({
       ? `${currentAssignment.speakerFirstName} ${currentAssignment.speakerLastName}`
       : undefined);
 
-  const handlePublicTalkSelect = (speakerId: string, outlineId: string) => {
-    console.log("Selected speaker:", speakerId, "outline:", outlineId);
+  const handlePublicTalkSelect = async (speakerId: string, outlineId: string | null) => {
+    if (!congregationId) return;
+
+    const key = weekId + congregationId;
+
+    if (currentAssignment) {
+      speakerAssignmentCollection.update(key, (draft) => {
+        draft.speaker_id = speakerId;
+        draft.outline_id = outlineId;
+      });
+    } else {
+      speakerAssignmentCollection.insert({
+        week_id: weekId,
+        speaker_id: speakerId,
+        congregation_id: congregationId,
+        outline_id: outlineId,
+      });
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!congregationId || !currentAssignment) return;
+
+    const key = weekId + congregationId;
+    speakerAssignmentCollection.delete(key);
   };
 
   return (
@@ -60,7 +83,8 @@ export const WeekendMeetingEditForm: React.FC<WeekendMeetingEditFormProps> = ({
       outlineTheme={currentAssignment?.outlineTheme}
       congregationName={currentAssignment?.congregationName}
       isLocalSpeaker={currentAssignment?.speakerCongregationId === congregationId}
-      onSelect={handlePublicTalkSelect} 
+      onSelect={handlePublicTalkSelect}
+      onDelete={handleDelete}
     />
   );
 };

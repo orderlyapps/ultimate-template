@@ -3,6 +3,7 @@ import { Label } from "@ionic-display/label/Label";
 import { Text } from "@ionic-display/text/Text";
 import { Item } from "@ionic-layout/item/Item";
 import { List } from "@ionic-layout/list/List";
+import { Searchbar } from "@ionic-input/searchbar/Searchbar";
 import {
   IonAccordion,
   IonAccordionGroup,
@@ -19,12 +20,15 @@ import { publisherCollection } from "@tanstack-db/publisher/publisherCollection"
 import { speakerOutlineCollection } from "@tanstack-db/speaker_outline/speakerOutlineCollection";
 import { outlineCollection } from "@tanstack-db/outline/outlineCollection";
 import { congregationCollection } from "@tanstack-db/congregation/congregationCollection";
-import { useMemo } from "react";
+import { formatPublisherName } from "@util/format/formatPublisherName";
+import { useMemo, useState } from "react";
+import { Button } from "@ionic-input/button/Button";
 
 type PublicTalkSelectModalProps = {
   isOpen: boolean;
   onDismiss: () => void;
-  onSelect: (speakerId: string, outlineId: string) => void;
+  onSelect: (speakerId: string, outlineId: string | null) => void;
+  onDelete?: () => void;
   currentSpeakerId?: string | null;
   currentOutlineId?: string | null;
 };
@@ -45,40 +49,43 @@ export const PublicTalkSelectModal: React.FC<PublicTalkSelectModalProps> = ({
   isOpen,
   onDismiss,
   onSelect,
+  onDelete,
   currentSpeakerId,
   currentOutlineId,
 }) => {
   const userCongregationId = localStorage.getItem("congregationId");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const { data: publishers = [] } = useLiveQuery((q) =>
     q.from({ p: publisherCollection }).select(({ p }) => ({
       id: p.id,
       firstName: p.first_name,
+      middleName: p.middle_name,
       lastName: p.last_name,
       displayName: p.display_name,
       congregationId: p.congregation_id,
-    }))
+    })),
   );
 
   const { data: speakerOutlines = [] } = useLiveQuery((q) =>
     q.from({ so: speakerOutlineCollection }).select(({ so }) => ({
       speakerId: so.speaker_id,
       outlineId: so.outline_id,
-    }))
+    })),
   );
 
   const { data: outlines = [] } = useLiveQuery((q) =>
     q.from({ o: outlineCollection }).select(({ o }) => ({
       id: o.id,
       theme: o.theme,
-    }))
+    })),
   );
 
   const { data: congregations = [] } = useLiveQuery((q) =>
     q.from({ c: congregationCollection }).select(({ c }) => ({
       id: c.id,
       name: c.name,
-    }))
+    })),
   );
 
   const speakersWithOutlines = useMemo(() => {
@@ -91,12 +98,15 @@ export const PublicTalkSelectModal: React.FC<PublicTalkSelectModalProps> = ({
       if (!publisher || !outline) return;
 
       const congregation = congregations.find(
-        (c) => c.id === publisher.congregationId
+        (c) => c.id === publisher.congregationId,
       );
 
-      const speakerName =
-        publisher.displayName ||
-        `${publisher.firstName} ${publisher.lastName}`;
+      const speakerName = formatPublisherName({
+        first_name: publisher.firstName,
+        middle_name: publisher.middleName,
+        last_name: publisher.lastName,
+        display_name: publisher.displayName,
+      });
 
       if (!speakerMap.has(publisher.id)) {
         speakerMap.set(publisher.id, {
@@ -115,13 +125,32 @@ export const PublicTalkSelectModal: React.FC<PublicTalkSelectModalProps> = ({
       });
     });
 
-    return Array.from(speakerMap.values());
-  }, [publishers, speakerOutlines, outlines, congregations, userCongregationId]);
+    return Array.from(speakerMap.values()).sort((a, b) =>
+      a.name.localeCompare(b.name),
+    );
+  }, [
+    publishers,
+    speakerOutlines,
+    outlines,
+    congregations,
+    userCongregationId,
+  ]);
 
-  const localSpeakers = speakersWithOutlines.filter((s) => s.isLocal);
-  const visitingSpeakers = speakersWithOutlines.filter((s) => !s.isLocal);
+  const filteredSpeakers = useMemo(() => {
+    if (!searchQuery.trim()) return speakersWithOutlines;
 
-  const handleOutlineSelect = (speakerId: string, outlineId: string) => {
+    const query = searchQuery.toLowerCase();
+    return speakersWithOutlines.filter(
+      (speaker) =>
+        speaker.name.toLowerCase().includes(query) ||
+        speaker.congregationName.toLowerCase().includes(query),
+    );
+  }, [speakersWithOutlines, searchQuery]);
+
+  const localSpeakers = filteredSpeakers.filter((s) => s.isLocal);
+  const visitingSpeakers = filteredSpeakers.filter((s) => !s.isLocal);
+
+  const handleOutlineSelect = (speakerId: string, outlineId: string | null) => {
     onSelect(speakerId, outlineId);
   };
 
@@ -136,6 +165,22 @@ export const PublicTalkSelectModal: React.FC<PublicTalkSelectModalProps> = ({
         </Label>
       </Item>
       <List slot="content">
+        <Item
+          key="tbc"
+          onClick={() => handleOutlineSelect(speaker.id, null)}
+          color={
+            currentSpeakerId === speaker.id && currentOutlineId === null
+              ? "medium"
+              : undefined
+          }
+        >
+          <Text
+            bold={currentSpeakerId === speaker.id && currentOutlineId === null}
+            color="medium"
+          >
+            TBC
+          </Text>
+        </Item>
         {speaker.outlines.map((outline) => (
           <Item
             key={outline.id}
@@ -169,8 +214,21 @@ export const PublicTalkSelectModal: React.FC<PublicTalkSelectModalProps> = ({
             <CloseButton onClick={onDismiss} />
           </IonButtons>
         </IonToolbar>
+        <IonToolbar>
+          <Searchbar
+            value={searchQuery}
+            onIonInput={(e) => setSearchQuery(e.detail.value ?? "")}
+            placeholder="Search speakers..."
+            debounce={300}
+          />
+        </IonToolbar>
       </IonHeader>
       <IonContent>
+        {currentSpeakerId && onDelete && (
+          <Button onClick={onDelete} color={"danger"}>
+            Clear Assignment
+          </Button>
+        )}
         {localSpeakers.length > 0 && (
           <List inset>
             <IonListHeader>
