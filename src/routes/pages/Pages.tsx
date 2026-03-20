@@ -20,6 +20,7 @@ import { Schedule } from "@pages/ministry/schedule/Schedule";
 import { Schedules } from "@pages/schedules/Schedules";
 import { MidweekMeeting } from "@pages/schedules/midweek-meeting/MidweekMeeting";
 import { WeekendMeeting } from "@pages/schedules/weekend-meeting/WeekendMeeting";
+import { WeekendMeetingEdit } from "@pages/schedules/weekend-meeting/edit/WeekendMeetingEdit";
 import { AudioAndVideo } from "@pages/schedules/audio-and-video/AudioAndVideo";
 import { Cleaning } from "@pages/schedules/cleaning/Cleaning";
 import { Events } from "@pages/schedules/events/Events";
@@ -75,6 +76,11 @@ export const pages = (
       exact
       path="/schedules/weekend-meeting/:week_id"
       render={() => <WeekendMeeting />}
+    />
+    <Route
+      exact
+      path="/schedules/weekend-meeting/:week_id/edit"
+      render={() => <WeekendMeetingEdit />}
     />
     <Route
       exact

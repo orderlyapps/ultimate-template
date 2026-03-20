@@ -21,16 +21,17 @@ import { Text } from "@ionic-display/text/Text";
 
 type WeekNavigationProps = {
   week_id: string;
+  weeksToDisplay?: number;
 };
 
-export const WeekNavigation = ({ week_id }: WeekNavigationProps) => {
+export const WeekNavigation = ({ week_id, weeksToDisplay = 14 }: WeekNavigationProps) => {
   const router = useIonRouter();
   const weekLabel = getTheocraticWeekLabel(week_id);
   const [popoverOpen, setPopoverOpen] = useState(false);
 
   const currentDate = parseISO(week_id);
-  const weekOptions = Array.from({ length: 14 }, (_, i) => {
-    const offset = i - 4;
+  const weekOptions = Array.from({ length: weeksToDisplay }, (_, i) => {
+    const offset = i - Math.floor(weeksToDisplay / 2);
     const weekDate = addWeeks(currentDate, offset);
     return {
       weekId: format(weekDate, "yyyy-MM-dd"),
@@ -38,6 +39,17 @@ export const WeekNavigation = ({ week_id }: WeekNavigationProps) => {
       isCurrent: offset === 0,
     };
   });
+
+  const getUpdatedPath = (newWeekId: string) => {
+    const currentPath = router.routeInfo.pathname;
+    const weekIdPattern = /\/\d{4}-\d{2}-\d{2}(\/|$)/;
+    
+    if (weekIdPattern.test(currentPath)) {
+      return currentPath.replace(/\/\d{4}-\d{2}-\d{2}(\/|$)/, `/${newWeekId}$1`);
+    }
+    
+    return `${currentPath}/${newWeekId}`;
+  };
 
   return (
     <IonItemDivider sticky style={{ zIndex: 1000 }}>
@@ -48,7 +60,7 @@ export const WeekNavigation = ({ week_id }: WeekNavigationProps) => {
               fill="clear"
               onClick={() => {
                 const previousWeekId = format(addWeeks(currentDate, -1), "yyyy-MM-dd");
-                router.push(`${previousWeekId}`, "back", "replace");
+                router.push(getUpdatedPath(previousWeekId), "back", "replace");
               }}
             >
               <IonIcon src={backIcon} slot="icon-only" size="large" />
@@ -76,7 +88,7 @@ export const WeekNavigation = ({ week_id }: WeekNavigationProps) => {
                   onClick={() => {
                     setPopoverOpen(false);
                     if (!option.isCurrent) {
-                      router.push(`${option.weekId}`, "none", "replace");
+                      router.push(getUpdatedPath(option.weekId), "none", "replace");
                     }
                   }}
                   lines="none"
@@ -97,7 +109,7 @@ export const WeekNavigation = ({ week_id }: WeekNavigationProps) => {
               fill="clear"
               onClick={() => {
                 const nextWeekId = format(addWeeks(currentDate, 1), "yyyy-MM-dd");
-                router.push(`${nextWeekId}`, "forward", "replace");
+                router.push(getUpdatedPath(nextWeekId), "forward", "replace");
               }}
             >
               <IonIcon src={forwardIcon} slot="icon-only" size="large" />
