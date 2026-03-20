@@ -22,6 +22,8 @@ import { Button } from "@ionic-input/button/Button";
 import { useWeekendMeetingEditStore } from "@feature/weekend-meeting/edit/store/useWeekendMeetingEditStore";
 import { groupSpeakersWithOutlines, filterSpeakers } from "./utils/groupSpeakersWithOutlines";
 import { SpeakerAccordion } from "./components/speaker-accordion/SpeakerAccordion";
+import { AddVisitingSpeakerModal } from "./components/add-visiting-speaker/AddVisitingSpeakerModal";
+import { useAddVisitingSpeakerStore } from "./components/add-visiting-speaker/store/useAddVisitingSpeakerStore";
 
 type PublicTalkSelectModalProps = {
   currentSpeakerId?: string | null;
@@ -38,6 +40,7 @@ export const PublicTalkSelectModal: React.FC<PublicTalkSelectModalProps> = ({
   const setSearchQuery = useWeekendMeetingEditStore((s) => s.setSearchQuery);
   const deleteAssignment = useWeekendMeetingEditStore((s) => s.deleteAssignment);
   const congregationId = useWeekendMeetingEditStore((s) => s.congregationId);
+  const openAddSpeaker = useAddVisitingSpeakerStore((s) => s.open);
 
   const { data: publishers = [] } = useLiveQuery((q) =>
     q.from({ p: publisherCollection }).select(({ p }) => ({
@@ -148,6 +151,12 @@ export const PublicTalkSelectModal: React.FC<PublicTalkSelectModalProps> = ({
             <Text color="medium">No speakers with outlines available</Text>
           </div>
         )}
+
+        <Button onClick={openAddSpeaker}>
+          Add Visiting Speaker
+        </Button>
+
+        <AddVisitingSpeakerModal />
       </IonContent>
     </IonModal>
   );
