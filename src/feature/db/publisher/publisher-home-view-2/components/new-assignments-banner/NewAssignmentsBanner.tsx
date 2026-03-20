@@ -1,13 +1,16 @@
-import { IonIcon } from "@ionic/react";
-import { close } from "ionicons/icons";
+import { IonIcon, IonLabel } from "@ionic/react";
+import close from "@icons/cross.svg";
 import { Text } from "@ionic-display/text/Text";
 import { Item } from "@ionic-layout/item/Item";
-import { List } from "@ionic-layout/list/List";
-import type { HomeItem } from "../../usePublisherHomeItems";
-import { Button } from "@ionic-input/button/Button";
+import type { NotificationItem } from "../../use-new-assignments/useNewAssignments";
+import { Grid } from "@ionic-layout/grid/Grid";
+import { Row } from "@ionic-layout/row/Row";
+import { Col } from "@ionic-layout/col/Col";
+
+import { Space } from "@layout/space/Space";
 
 type Props = {
-  items: HomeItem[];
+  items: NotificationItem[];
   onDismiss: (key: string) => void;
   onDismissAll: () => void;
 };
@@ -20,36 +23,50 @@ export const NewAssignmentsBanner: React.FC<Props> = ({
   if (items.length === 0) return null;
 
   return (
-    <List>
+    <>
+      <Space height="2" />
       <Item lines="none">
-        <Text color="primary" size="xxl">
-          New Assignments
-        </Text>
-        <Button slot="end" onClick={onDismissAll} fill="clear">
+        <IonLabel>
+          <Text color="primary" size="xxl">
+            New Assignments
+          </Text>
+        </IonLabel>
+        <Text onClick={onDismissAll} size="sm" color="primary">
           Clear All
-        </Button>
+        </Text>
       </Item>
+      <Space height="1" />
       {items.map((item) => (
-        <Item key={item.key} lines="full">
-          <div>
-            <Text bold size="sm">
-              {item.title}
-            </Text>
-            <br />
-            <Text size="xs" color="medium">
-              {item.dateLabel}
-            </Text>
-          </div>
-          <button
-            slot="end"
-            onClick={() => onDismiss(item.key)}
-            aria-label={`Dismiss ${item.title}`}
-            style={{ background: "none", border: "none", cursor: "pointer" }}
-          >
-            <IonIcon icon={close} color="medium" />
-          </button>
-        </Item>
+        <Grid key={item.key} className="ion-no-padding ion-no-margin">
+          <Row>
+            <Col>
+              <Row>
+                <Col>
+                  <Text bold size="sm">
+                    {item.title}
+                  </Text>
+                  <br />
+                  <Text size="xs">{item.detail}</Text>
+                </Col>
+                <Col className="ion-text-right">
+                  <Text size="xs" color="medium">
+                    {item.dateLabel}
+                  </Text>
+                </Col>
+              </Row>
+            </Col>
+            <Col size="auto" className="ion-padding-start">
+              <Space height="0.2" />
+              <IonIcon
+                onClick={() => onDismiss(item.key)}
+                icon={close}
+                color="medium"
+              />
+            </Col>
+          </Row>
+          <Space height="0.6" />
+        </Grid>
       ))}
-    </List>
+    </>
   );
 };

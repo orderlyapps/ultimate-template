@@ -19,9 +19,7 @@ export const HomeItemCard: React.FC<Props> = ({
     <Grid className="ion-no-padding">
       <Row className="">
         <Col>
-          <Text bold color="primary">
-            {title}
-          </Text>
+          <Text bold size="sm">{title}</Text>
         </Col>
         <Col className="ion-text-right">
           <Text size="xs">{dateLabel}</Text>
@@ -32,7 +30,7 @@ export const HomeItemCard: React.FC<Props> = ({
           <Col>
             {details.map((detail, index) => (
               <Fragment key={`${detail}-${index}`}>
-                <Text size="sm">{detail}</Text>
+                <Text size="xs">{detail}</Text>
                 <br />
               </Fragment>
             ))}
