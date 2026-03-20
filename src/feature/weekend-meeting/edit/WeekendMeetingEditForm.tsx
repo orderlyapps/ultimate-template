@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useLiveQuery } from "@tanstack/react-db";
 import { speakerAssignmentCollection } from "@tanstack-db/speaker_assignment/speakerAssignmentCollection";
 import { publisherCollection } from "@tanstack-db/publisher/publisherCollection";
@@ -5,6 +6,7 @@ import { outlineCollection } from "@tanstack-db/outline/outlineCollection";
 import { congregationCollection } from "@tanstack-db/congregation/congregationCollection";
 import { and, eq } from "@tanstack/react-db";
 import { PublicTalkSelect } from "./components/public-talk-select/PublicTalkSelect";
+import { useWeekendMeetingEditStore } from "./store/useWeekendMeetingEditStore";
 
 type WeekendMeetingEditFormProps = {
   weekId: string;
@@ -13,7 +15,15 @@ type WeekendMeetingEditFormProps = {
 export const WeekendMeetingEditForm: React.FC<WeekendMeetingEditFormProps> = ({
   weekId,
 }) => {
+  const setWeekId = useWeekendMeetingEditStore((s) => s.setWeekId);
+  const setCongregationId = useWeekendMeetingEditStore((s) => s.setCongregationId);
+  const setHasCurrentAssignment = useWeekendMeetingEditStore((s) => s.setHasCurrentAssignment);
   const congregationId = localStorage.getItem("congregationId");
+
+  useEffect(() => {
+    setWeekId(weekId);
+    setCongregationId(congregationId);
+  }, [weekId, congregationId, setWeekId, setCongregationId]);
 
   const { data: currentAssignments } = useLiveQuery(
     (q) =>
@@ -43,48 +53,23 @@ export const WeekendMeetingEditForm: React.FC<WeekendMeetingEditFormProps> = ({
 
   const currentAssignment = currentAssignments?.[0];
 
+  useEffect(() => {
+    setHasCurrentAssignment(!!currentAssignment);
+  }, [currentAssignment, setHasCurrentAssignment]);
+
   const speakerName = currentAssignment?.speakerDisplayName ||
     (currentAssignment?.speakerFirstName && currentAssignment?.speakerLastName
       ? `${currentAssignment.speakerFirstName} ${currentAssignment.speakerLastName}`
       : undefined);
 
-  const handlePublicTalkSelect = async (speakerId: string, outlineId: string | null) => {
-    if (!congregationId) return;
-
-    const key = weekId + congregationId;
-
-    if (currentAssignment) {
-      speakerAssignmentCollection.update(key, (draft) => {
-        draft.speaker_id = speakerId;
-        draft.outline_id = outlineId;
-      });
-    } else {
-      speakerAssignmentCollection.insert({
-        week_id: weekId,
-        speaker_id: speakerId,
-        congregation_id: congregationId,
-        outline_id: outlineId,
-      });
-    }
-  };
-
-  const handleDelete = async () => {
-    if (!congregationId || !currentAssignment) return;
-
-    const key = weekId + congregationId;
-    speakerAssignmentCollection.delete(key);
-  };
-
   return (
-    <PublicTalkSelect 
+    <PublicTalkSelect
       speakerId={currentAssignment?.speakerId}
       outlineId={currentAssignment?.outlineId}
       speakerName={speakerName}
       outlineTheme={currentAssignment?.outlineTheme}
       congregationName={currentAssignment?.congregationName}
       isLocalSpeaker={currentAssignment?.speakerCongregationId === congregationId}
-      onSelect={handlePublicTalkSelect}
-      onDelete={handleDelete}
     />
   );
 };

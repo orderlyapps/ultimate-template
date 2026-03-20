@@ -1,11 +1,9 @@
 import { CloseButton } from "@input/button/close-button/CloseButton";
 import { Label } from "@ionic-display/label/Label";
 import { Text } from "@ionic-display/text/Text";
-import { Item } from "@ionic-layout/item/Item";
 import { List } from "@ionic-layout/list/List";
 import { Searchbar } from "@ionic-input/searchbar/Searchbar";
 import {
-  IonAccordion,
   IonAccordionGroup,
   IonButtons,
   IonContent,
@@ -20,41 +18,26 @@ import { publisherCollection } from "@tanstack-db/publisher/publisherCollection"
 import { speakerOutlineCollection } from "@tanstack-db/speaker_outline/speakerOutlineCollection";
 import { outlineCollection } from "@tanstack-db/outline/outlineCollection";
 import { congregationCollection } from "@tanstack-db/congregation/congregationCollection";
-import { formatPublisherName } from "@util/format/formatPublisherName";
-import { useMemo, useState } from "react";
 import { Button } from "@ionic-input/button/Button";
+import { useWeekendMeetingEditStore } from "@feature/weekend-meeting/edit/store/useWeekendMeetingEditStore";
+import { groupSpeakersWithOutlines, filterSpeakers } from "./utils/groupSpeakersWithOutlines";
+import { SpeakerAccordion } from "./components/speaker-accordion/SpeakerAccordion";
 
 type PublicTalkSelectModalProps = {
-  isOpen: boolean;
-  onDismiss: () => void;
-  onSelect: (speakerId: string, outlineId: string | null) => void;
-  onDelete?: () => void;
   currentSpeakerId?: string | null;
   currentOutlineId?: string | null;
 };
 
-type SpeakerWithOutlines = {
-  id: string;
-  name: string;
-  congregationId: string;
-  congregationName: string;
-  isLocal: boolean;
-  outlines: Array<{
-    id: string;
-    theme: string;
-  }>;
-};
-
 export const PublicTalkSelectModal: React.FC<PublicTalkSelectModalProps> = ({
-  isOpen,
-  onDismiss,
-  onSelect,
-  onDelete,
   currentSpeakerId,
   currentOutlineId,
 }) => {
-  const userCongregationId = localStorage.getItem("congregationId");
-  const [searchQuery, setSearchQuery] = useState("");
+  const isOpen = useWeekendMeetingEditStore((s) => s.isModalOpen);
+  const closeModal = useWeekendMeetingEditStore((s) => s.closeModal);
+  const searchQuery = useWeekendMeetingEditStore((s) => s.searchQuery);
+  const setSearchQuery = useWeekendMeetingEditStore((s) => s.setSearchQuery);
+  const deleteAssignment = useWeekendMeetingEditStore((s) => s.deleteAssignment);
+  const congregationId = useWeekendMeetingEditStore((s) => s.congregationId);
 
   const { data: publishers = [] } = useLiveQuery((q) =>
     q.from({ p: publisherCollection }).select(({ p }) => ({
@@ -88,130 +71,25 @@ export const PublicTalkSelectModal: React.FC<PublicTalkSelectModalProps> = ({
     })),
   );
 
-  const speakersWithOutlines = useMemo(() => {
-    const speakerMap = new Map<string, SpeakerWithOutlines>();
-
-    speakerOutlines.forEach((so) => {
-      const publisher = publishers.find((p) => p.id === so.speakerId);
-      const outline = outlines.find((o) => o.id === so.outlineId);
-
-      if (!publisher || !outline) return;
-
-      const congregation = congregations.find(
-        (c) => c.id === publisher.congregationId,
-      );
-
-      const speakerName = formatPublisherName({
-        first_name: publisher.firstName,
-        middle_name: publisher.middleName,
-        last_name: publisher.lastName,
-        display_name: publisher.displayName,
-      });
-
-      if (!speakerMap.has(publisher.id)) {
-        speakerMap.set(publisher.id, {
-          id: publisher.id,
-          name: speakerName,
-          congregationId: publisher.congregationId,
-          congregationName: congregation?.name || "Unknown",
-          isLocal: publisher.congregationId === userCongregationId,
-          outlines: [],
-        });
-      }
-
-      speakerMap.get(publisher.id)!.outlines.push({
-        id: outline.id,
-        theme: outline.theme,
-      });
-    });
-
-    return Array.from(speakerMap.values()).sort((a, b) =>
-      a.name.localeCompare(b.name),
-    );
-  }, [
+  const speakersWithOutlines = groupSpeakersWithOutlines(
     publishers,
     speakerOutlines,
     outlines,
     congregations,
-    userCongregationId,
-  ]);
+    congregationId,
+  );
 
-  const filteredSpeakers = useMemo(() => {
-    if (!searchQuery.trim()) return speakersWithOutlines;
-
-    const query = searchQuery.toLowerCase();
-    return speakersWithOutlines.filter(
-      (speaker) =>
-        speaker.name.toLowerCase().includes(query) ||
-        speaker.congregationName.toLowerCase().includes(query),
-    );
-  }, [speakersWithOutlines, searchQuery]);
-
+  const filteredSpeakers = filterSpeakers(speakersWithOutlines, searchQuery);
   const localSpeakers = filteredSpeakers.filter((s) => s.isLocal);
   const visitingSpeakers = filteredSpeakers.filter((s) => !s.isLocal);
 
-  const handleOutlineSelect = (speakerId: string, outlineId: string | null) => {
-    onSelect(speakerId, outlineId);
-  };
-
-  const renderSpeakerAccordion = (speaker: SpeakerWithOutlines) => (
-    <IonAccordion key={speaker.id} value={speaker.id}>
-      <Item slot="header">
-        <Label>
-          <Text bold>{speaker.name}</Text>
-          {!speaker.isLocal && (
-            <Text color="medium"> - {speaker.congregationName}</Text>
-          )}
-        </Label>
-      </Item>
-      <List slot="content">
-        <Item
-          key="tbc"
-          onClick={() => handleOutlineSelect(speaker.id, null)}
-          color={
-            currentSpeakerId === speaker.id && currentOutlineId === null
-              ? "medium"
-              : undefined
-          }
-        >
-          <Text
-            bold={currentSpeakerId === speaker.id && currentOutlineId === null}
-            color="medium"
-          >
-            TBC
-          </Text>
-        </Item>
-        {speaker.outlines.map((outline) => (
-          <Item
-            key={outline.id}
-            onClick={() => handleOutlineSelect(speaker.id, outline.id)}
-            color={
-              currentSpeakerId === speaker.id && currentOutlineId === outline.id
-                ? "medium"
-                : undefined
-            }
-          >
-            <Text
-              bold={
-                currentSpeakerId === speaker.id &&
-                currentOutlineId === outline.id
-              }
-            >
-              {outline.theme}
-            </Text>
-          </Item>
-        ))}
-      </List>
-    </IonAccordion>
-  );
-
   return (
-    <IonModal isOpen={isOpen} onDidDismiss={onDismiss}>
+    <IonModal isOpen={isOpen} onDidDismiss={closeModal}>
       <IonHeader>
         <IonToolbar>
           <IonTitle>Select Public Talk</IonTitle>
           <IonButtons slot="end">
-            <CloseButton onClick={onDismiss} />
+            <CloseButton onClick={closeModal} />
           </IonButtons>
         </IonToolbar>
         <IonToolbar>
@@ -224,8 +102,8 @@ export const PublicTalkSelectModal: React.FC<PublicTalkSelectModalProps> = ({
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        {currentSpeakerId && onDelete && (
-          <Button onClick={onDelete} color={"danger"}>
+        {currentSpeakerId && (
+          <Button onClick={deleteAssignment} color={"danger"}>
             Clear Assignment
           </Button>
         )}
@@ -235,7 +113,14 @@ export const PublicTalkSelectModal: React.FC<PublicTalkSelectModalProps> = ({
               <Label color="medium">Local Speakers</Label>
             </IonListHeader>
             <IonAccordionGroup>
-              {localSpeakers.map(renderSpeakerAccordion)}
+              {localSpeakers.map((speaker) => (
+                <SpeakerAccordion
+                  key={speaker.id}
+                  speaker={speaker}
+                  currentSpeakerId={currentSpeakerId}
+                  currentOutlineId={currentOutlineId}
+                />
+              ))}
             </IonAccordionGroup>
           </List>
         )}
@@ -246,7 +131,14 @@ export const PublicTalkSelectModal: React.FC<PublicTalkSelectModalProps> = ({
               <Label color="medium">Visiting Speakers</Label>
             </IonListHeader>
             <IonAccordionGroup>
-              {visitingSpeakers.map(renderSpeakerAccordion)}
+              {visitingSpeakers.map((speaker) => (
+                <SpeakerAccordion
+                  key={speaker.id}
+                  speaker={speaker}
+                  currentSpeakerId={currentSpeakerId}
+                  currentOutlineId={currentOutlineId}
+                />
+              ))}
             </IonAccordionGroup>
           </List>
         )}

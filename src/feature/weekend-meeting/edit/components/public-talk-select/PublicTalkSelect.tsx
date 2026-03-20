@@ -2,8 +2,8 @@ import { Item } from "@ionic-layout/item/Item";
 import { Text } from "@ionic-display/text/Text";
 import { IonIcon, IonLabel } from "@ionic/react";
 import { caretDownSharp, chevronExpand } from "ionicons/icons";
-import { useState } from "react";
 import { PublicTalkSelectModal } from "./components/public-talk-select-modal/PublicTalkSelectModal";
+import { useWeekendMeetingEditStore } from "@feature/weekend-meeting/edit/store/useWeekendMeetingEditStore";
 
 type PublicTalkSelectProps = {
   speakerId?: string | null;
@@ -12,8 +12,6 @@ type PublicTalkSelectProps = {
   outlineTheme?: string;
   congregationName?: string;
   isLocalSpeaker?: boolean;
-  onSelect?: (speakerId: string, outlineId: string | null) => void;
-  onDelete?: () => void;
   disabled?: boolean;
 };
 
@@ -24,22 +22,12 @@ export const PublicTalkSelect: React.FC<PublicTalkSelectProps> = ({
   outlineTheme,
   congregationName,
   isLocalSpeaker = true,
-  onSelect,
-  onDelete,
   disabled = false,
 }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = useWeekendMeetingEditStore((s) => s.openModal);
 
   const displayText =
     speakerName && outlineTheme ? `${speakerName}` : "Select Speaker & Talk";
-
-  const handleSelect = (
-    selectedSpeakerId: string,
-    selectedOutlineId: string | null,
-  ) => {
-    onSelect?.(selectedSpeakerId, selectedOutlineId);
-    setIsModalOpen(false);
-  };
 
   return (
     <>
@@ -47,7 +35,7 @@ export const PublicTalkSelect: React.FC<PublicTalkSelectProps> = ({
         <Text>{outlineTheme}</Text>
       </Item>
       <Item
-        onClick={() => !disabled && setIsModalOpen(true)}
+        onClick={() => !disabled && openModal()}
         disabled={disabled}
       >
         <IonLabel>
@@ -66,10 +54,6 @@ export const PublicTalkSelect: React.FC<PublicTalkSelectProps> = ({
       </Item>
 
       <PublicTalkSelectModal
-        isOpen={isModalOpen}
-        onDismiss={() => setIsModalOpen(false)}
-        onSelect={handleSelect}
-        onDelete={onDelete}
         currentSpeakerId={speakerId}
         currentOutlineId={outlineId}
       />
