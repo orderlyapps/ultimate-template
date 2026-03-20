@@ -30,6 +30,14 @@ export interface BuiltInPreset {
 
 export const builtInPresets: BuiltInPreset[] = [
   {
+    id: "all",
+    name: "All Publishers",
+    filters: {
+      ...defaultFilters,
+      type: ["continuous_auxilary", "publisher", "regular_pioneer"],
+    },
+  },
+  {
     id: "regular_pioneers",
     name: "Regular Pioneers",
     filters: { ...defaultFilters, type: ["regular_pioneer"] },

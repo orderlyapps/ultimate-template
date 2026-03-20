@@ -78,7 +78,7 @@ export function AllPublishersList({
       </Button>
       <Item>
         <Text color="medium" size="sm">
-          {count} {count === 1 ? "publisher" : "publishers"} found
+          {count} {count === 1 ? "record" : "records"} found
         </Text>
       </Item>
       <List>
