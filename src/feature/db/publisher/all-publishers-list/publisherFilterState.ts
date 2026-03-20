@@ -15,3 +15,56 @@ export const defaultFilters: PublisherFilterState = {
   gender: [],
   group: [],
 };
+
+export interface UserFilterPreset {
+  id: string;
+  name: string;
+  filters: PublisherFilterState;
+}
+
+export interface BuiltInPreset {
+  id: string;
+  name: string;
+  filters: PublisherFilterState;
+}
+
+export const builtInPresets: BuiltInPreset[] = [
+  {
+    id: "regular_pioneers",
+    name: "Regular Pioneers",
+    filters: { ...defaultFilters, type: ["regular_pioneer"] },
+  },
+  {
+    id: "ministerial_servants",
+    name: "Ministerial Servants",
+    filters: {
+      ...defaultFilters,
+      standing: ["ministerial_servant"],
+      type: ["continuous_auxilary", "publisher", "regular_pioneer"],
+    },
+  },
+  {
+    id: "elders",
+    name: "Elders",
+    filters: {
+      ...defaultFilters,
+      standing: ["elder"],
+      type: ["continuous_auxilary", "publisher", "regular_pioneer"],
+    },
+  },
+  {
+    id: "baptised_brothers",
+    name: "Baptised Brothers",
+    filters: { ...defaultFilters, standing: ["publisher"], gender: ["male"] },
+  },
+  {
+    id: "baptised_sisters",
+    name: "Baptised Sisters",
+    filters: { ...defaultFilters, standing: ["publisher"], gender: ["female"] },
+  },
+  {
+    id: "unbaptised_publishers",
+    name: "Unbaptised Publishers",
+    filters: { ...defaultFilters, standing: ["unbaptised_publisher"] },
+  },
+];

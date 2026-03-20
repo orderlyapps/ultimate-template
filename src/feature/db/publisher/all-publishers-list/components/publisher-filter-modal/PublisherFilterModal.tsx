@@ -9,17 +9,17 @@ import {
   IonListHeader,
   IonLabel,
 } from "@ionic/react";
+import { useState } from "react";
 import { useLiveQuery } from "@tanstack/react-db";
 import { CloseButton } from "@input/button/close-button/CloseButton";
 import { List } from "@ionic-layout/list/List";
 import { Item } from "@ionic-layout/item/Item";
 import { Checkbox } from "@ionic-input/checkbox/Checkbox";
-import { SelectItem } from "@input/select/SelectItem";
+import { SavePresetAlert } from "../save-preset-alert/SavePresetAlert";
 import { standingOptions } from "@tanstack-db/publisher/standingSchema";
 import { typeOptions } from "@tanstack-db/publisher/typeSchema";
 import { genderOptions } from "@tanstack-db/publisher/genderSchema";
 import { groupCollection } from "@tanstack-db/group/groupCollection";
-import { defaultFilters } from "../../publisherFilterState";
 import type { PublisherFilterState } from "../../publisherFilterState";
 import type { PublisherStanding } from "@tanstack-db/publisher/standingSchema";
 import type { PublisherType } from "@tanstack-db/publisher/typeSchema";
@@ -30,22 +30,17 @@ interface PublisherFilterModalProps {
   onDismiss: () => void;
   filters: PublisherFilterState;
   onFiltersChange: (filters: PublisherFilterState) => void;
+  onSavePreset: (name: string, filters: PublisherFilterState) => void;
 }
-
-const filterPresets = [
-  { value: "all_speakers", label: "All Speakers" },
-  { value: "local_speakers", label: "Local Speakers" },
-  { value: "all_females", label: "All Females" },
-] as const;
-
-type FilterPreset = (typeof filterPresets)[number]["value"];
 
 export function PublisherFilterModal({
   isOpen,
   onDismiss,
   filters,
   onFiltersChange,
+  onSavePreset,
 }: PublisherFilterModalProps) {
+  const [isSaveAlertOpen, setIsSaveAlertOpen] = useState(false);
   const { data: groups } = useLiveQuery((q) =>
     q.from({ g: groupCollection }).orderBy(({ g }) => g.name)
   );
@@ -83,30 +78,6 @@ export function PublisherFilterModal({
     onFiltersChange({ ...filters, group: newGroup });
   };
 
-  const applyPreset = (preset: FilterPreset) => {
-    switch (preset) {
-      case "all_speakers":
-        onFiltersChange({
-          ...defaultFilters,
-          type: ["speaker"],
-        });
-        break;
-      case "local_speakers":
-        onFiltersChange({
-          ...defaultFilters,
-          type: ["speaker"],
-          gender: ["male"],
-        });
-        break;
-      case "all_females":
-        onFiltersChange({
-          ...defaultFilters,
-          gender: ["female"],
-        });
-        break;
-    }
-  };
-
   return (
     <IonModal isOpen={isOpen} onDidDismiss={onDismiss}>
       <IonHeader>
@@ -118,21 +89,6 @@ export function PublisherFilterModal({
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <List>
-          <IonListHeader>
-            <IonLabel>Presets</IonLabel>
-          </IonListHeader>
-          <SelectItem
-            label="Apply Preset"
-            value=""
-            options={[...filterPresets]}
-            onIonChange={(e) => {
-              if (e.detail.value) {
-                applyPreset(e.detail.value as FilterPreset);
-              }
-            }}
-          />
-        </List>
         <List>
           <IonListHeader>
             <IonLabel>Standing</IonLabel>
@@ -251,6 +207,22 @@ export function PublisherFilterModal({
             ))}
           </List>
         )}
+        <List>
+          <Item>
+            <IonButton
+              expand="full"
+              fill="clear"
+              onClick={() => setIsSaveAlertOpen(true)}
+            >
+              Save Current Filters as Preset
+            </IonButton>
+          </Item>
+        </List>
+        <SavePresetAlert
+          isOpen={isSaveAlertOpen}
+          onDismiss={() => setIsSaveAlertOpen(false)}
+          onSave={(name) => onSavePreset(name, filters)}
+        />
       </IonContent>
     </IonModal>
   );

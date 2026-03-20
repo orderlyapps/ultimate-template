@@ -1,5 +1,6 @@
-import { IonLabel } from "@ionic/react";
+import { IonButton, IonIcon, IonLabel } from "@ionic/react";
 import { useLiveQuery } from "@tanstack/react-db";
+import { optionsOutline } from "ionicons/icons";
 import { publisherCollection } from "@tanstack-db/publisher/publisherCollection";
 import { Item } from "@ionic-layout/item/Item";
 import { List } from "@ionic-layout/list/List";
@@ -11,9 +12,10 @@ import type { PublisherFilterState } from "./publisherFilterState";
 interface AllPublishersListProps {
   filters: PublisherFilterState;
   searchQuery: string;
+  onOpenPresets: () => void;
 }
 
-export function AllPublishersList({ filters, searchQuery }: AllPublishersListProps) {
+export function AllPublishersList({ filters, searchQuery, onOpenPresets }: AllPublishersListProps) {
   const { data: publishers } = useLiveQuery((q) =>
     q
       .from({ p: publisherCollection })
@@ -58,6 +60,10 @@ export function AllPublishersList({ filters, searchQuery }: AllPublishersListPro
 
   return (
     <>
+      <IonButton fill="clear" size="small" onClick={onOpenPresets}>
+        <IonIcon icon={optionsOutline} slot="start" />
+        Presets
+      </IonButton>
       <Text color="medium" size="sm">
         {count} {count === 1 ? "publisher" : "publishers"} found
       </Text>

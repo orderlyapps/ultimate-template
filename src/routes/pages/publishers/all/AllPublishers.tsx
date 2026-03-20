@@ -16,6 +16,8 @@ import { Searchbar } from "@ionic-input/searchbar/Searchbar";
 import { AllPublishersList } from "@feature/db/publisher/all-publishers-list/AllPublishersList";
 import { AddPublisherModal } from "@feature/db/publisher/all-publishers-list/components/add-publisher-modal/AddPublisherModal";
 import { PublisherFilterModal } from "@feature/db/publisher/all-publishers-list/components/publisher-filter-modal/PublisherFilterModal";
+import { PresetSelectionModal } from "@feature/db/publisher/all-publishers-list/components/preset-selection-modal/PresetSelectionModal";
+import { usePublisherFilterPresets } from "@feature/db/publisher/all-publishers-list/usePublisherFilterPresets";
 import { useLocalStorage } from "@util/hooks/useLocalStorage";
 import { defaultFilters } from "@feature/db/publisher/all-publishers-list/publisherFilterState";
 import type { PublisherFilterState } from "@feature/db/publisher/all-publishers-list/publisherFilterState";
@@ -24,7 +26,10 @@ import { Space } from "@layout/space/Space";
 export const AllPublishers: React.FC = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+  const [isPresetModalOpen, setIsPresetModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const { userPresets, savePreset, renamePreset, duplicatePreset, deletePreset } =
+    usePublisherFilterPresets();
   const [storedFilters, setFilters] = useLocalStorage<PublisherFilterState>(
     "publisher-list-filters",
     defaultFilters
@@ -76,7 +81,11 @@ export const AllPublishers: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <Space height="2" />
-        <AllPublishersList filters={filters} searchQuery={searchQuery} />
+        <AllPublishersList
+          filters={filters}
+          searchQuery={searchQuery}
+          onOpenPresets={() => setIsPresetModalOpen(true)}
+        />
         <AddPublisherModal
           isOpen={isAddModalOpen}
           onDismiss={() => setIsAddModalOpen(false)}
@@ -86,6 +95,16 @@ export const AllPublishers: React.FC = () => {
           onDismiss={() => setIsFilterModalOpen(false)}
           filters={filters}
           onFiltersChange={setFilters}
+          onSavePreset={(name, f) => savePreset(name, f)}
+        />
+        <PresetSelectionModal
+          isOpen={isPresetModalOpen}
+          onDismiss={() => setIsPresetModalOpen(false)}
+          userPresets={userPresets}
+          onSelect={setFilters}
+          onRename={renamePreset}
+          onDuplicate={duplicatePreset}
+          onDelete={deletePreset}
         />
       </IonContent>
     </IonPage>
