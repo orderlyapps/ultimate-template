@@ -23,7 +23,7 @@ export const Home: React.FC = () => {
         {congregation?.id === "7b15d4e5-d4fa-4eb4-a276-3790b7c4897b" && (
           <PublisherHomeView2 />
         )}
-
+        <Space height="2" />
         {congregation?.id !== "7b15d4e5-d4fa-4eb4-a276-3790b7c4897b" && (
           <List>
             <Space />
