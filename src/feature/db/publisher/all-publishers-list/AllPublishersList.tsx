@@ -1,4 +1,4 @@
-import { IonButton, IonIcon, IonLabel } from "@ionic/react";
+import { IonIcon, IonLabel } from "@ionic/react";
 import { useLiveQuery } from "@tanstack/react-db";
 import { optionsOutline } from "ionicons/icons";
 import { publisherCollection } from "@tanstack-db/publisher/publisherCollection";
@@ -8,6 +8,7 @@ import { Text } from "@ionic-display/text/Text";
 import { formatPublisherName } from "@format/formatPublisherName";
 import { Space } from "@layout/space/Space";
 import type { PublisherFilterState } from "./publisherFilterState";
+import { Button } from "@ionic-input/button/Button";
 
 interface AllPublishersListProps {
   filters: PublisherFilterState;
@@ -15,24 +16,35 @@ interface AllPublishersListProps {
   onOpenPresets: () => void;
 }
 
-export function AllPublishersList({ filters, searchQuery, onOpenPresets }: AllPublishersListProps) {
+export function AllPublishersList({
+  filters,
+  searchQuery,
+  onOpenPresets,
+}: AllPublishersListProps) {
   const { data: publishers } = useLiveQuery((q) =>
-    q
-      .from({ p: publisherCollection })
-      .orderBy(({ p }) => p.last_name)
+    q.from({ p: publisherCollection }).orderBy(({ p }) => p.last_name),
   );
 
   const filteredPublishers = publishers?.filter((publisher) => {
-    if (filters.standing.length > 0 && !filters.standing.includes(publisher.standing)) {
+    if (
+      filters.standing.length > 0 &&
+      !filters.standing.includes(publisher.standing)
+    ) {
       return false;
     }
     if (filters.type.length > 0 && !filters.type.includes(publisher.type)) {
       return false;
     }
-    if (filters.gender.length > 0 && !filters.gender.includes(publisher.gender)) {
+    if (
+      filters.gender.length > 0 &&
+      !filters.gender.includes(publisher.gender)
+    ) {
       return false;
     }
-    if (filters.group.length > 0 && (!publisher.group_id || !filters.group.includes(publisher.group_id))) {
+    if (
+      filters.group.length > 0 &&
+      (!publisher.group_id || !filters.group.includes(publisher.group_id))
+    ) {
       return false;
     }
     if (searchQuery) {
@@ -60,33 +72,35 @@ export function AllPublishersList({ filters, searchQuery, onOpenPresets }: AllPu
 
   return (
     <>
-      <IonButton fill="clear" size="small" onClick={onOpenPresets}>
+      <Button fill="clear" onClick={onOpenPresets}>
         <IonIcon icon={optionsOutline} slot="start" />
-        Presets
-      </IonButton>
-      <Text color="medium" size="sm">
-        {count} {count === 1 ? "publisher" : "publishers"} found
-      </Text>
+        Filter
+      </Button>
+      <Item>
+        <Text color="medium" size="sm">
+          {count} {count === 1 ? "publisher" : "publishers"} found
+        </Text>
+      </Item>
       <List>
         {filteredPublishers?.map((publisher) => (
-        <Item
-          key={publisher.id}
-          routerLink={`/publishers/all/${publisher.id}`}
-          detail
-        >
-          <IonLabel>
-            <Text>{formatPublisherName(publisher)}</Text>
-          </IonLabel>
-        </Item>
-      ))}
-      {filteredPublishers?.length === 0 && (
-        <Item lines="none">
-          <IonLabel>
-            <Text>No publishers match the current filters.</Text>
-          </IonLabel>
-        </Item>
-      )}
-      <Space />
+          <Item
+            key={publisher.id}
+            routerLink={`/publishers/all/${publisher.id}`}
+            detail={false}
+          >
+            <IonLabel>
+              <Text>{formatPublisherName(publisher)}</Text>
+            </IonLabel>
+          </Item>
+        ))}
+        {filteredPublishers?.length === 0 && (
+          <Item lines="none">
+            <IonLabel>
+              <Text>No publishers match the current filters.</Text>
+            </IonLabel>
+          </Item>
+        )}
+        <Space />
       </List>
     </>
   );

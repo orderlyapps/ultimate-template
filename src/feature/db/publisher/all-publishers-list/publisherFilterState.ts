@@ -55,12 +55,22 @@ export const builtInPresets: BuiltInPreset[] = [
   {
     id: "baptised_brothers",
     name: "Baptised Brothers",
-    filters: { ...defaultFilters, standing: ["publisher"], gender: ["male"] },
+    filters: {
+      ...defaultFilters,
+      standing: ["publisher"],
+      type: ["continuous_auxilary", "regular_pioneer", "publisher"],
+      gender: ["male"],
+    },
   },
   {
     id: "baptised_sisters",
     name: "Baptised Sisters",
-    filters: { ...defaultFilters, standing: ["publisher"], gender: ["female"] },
+    filters: {
+      ...defaultFilters,
+      standing: ["publisher"],
+      type: ["continuous_auxilary", "regular_pioneer", "publisher"],
+      gender: ["female"],
+    },
   },
   {
     id: "unbaptised_publishers",

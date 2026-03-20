@@ -28,6 +28,10 @@ export const AllPublishers: React.FC = () => {
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [isPresetModalOpen, setIsPresetModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [activePresetName, setActivePresetName] = useLocalStorage<string>(
+    "publisher-list-preset-name",
+    "All Publishers"
+  );
   const { userPresets, savePreset, renamePreset, duplicatePreset, deletePreset } =
     usePublisherFilterPresets();
   const [storedFilters, setFilters] = useLocalStorage<PublisherFilterState>(
@@ -63,7 +67,7 @@ export const AllPublishers: React.FC = () => {
             </IonButton>
             <AddButton onClick={() => setIsAddModalOpen(true)} />
           </IonButtons>
-          <IonTitle>All Publishers</IonTitle>
+          <IonTitle>{activePresetName}</IonTitle>
         </IonToolbar>
         <IonToolbar>
           <Searchbar
@@ -77,7 +81,7 @@ export const AllPublishers: React.FC = () => {
       <IonContent fullscreen className="ion-padding">
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">All Publishers</IonTitle>
+            <IonTitle size="large">{activePresetName}</IonTitle>
           </IonToolbar>
         </IonHeader>
         <Space height="2" />
@@ -94,14 +98,20 @@ export const AllPublishers: React.FC = () => {
           isOpen={isFilterModalOpen}
           onDismiss={() => setIsFilterModalOpen(false)}
           filters={filters}
-          onFiltersChange={setFilters}
+          onFiltersChange={(f) => {
+            setFilters(f);
+            setActivePresetName("All Publishers");
+          }}
           onSavePreset={(name, f) => savePreset(name, f)}
         />
         <PresetSelectionModal
           isOpen={isPresetModalOpen}
           onDismiss={() => setIsPresetModalOpen(false)}
           userPresets={userPresets}
-          onSelect={setFilters}
+          onSelect={(f, name) => {
+            setFilters(f);
+            setActivePresetName(name);
+          }}
           onRename={renamePreset}
           onDuplicate={duplicatePreset}
           onDelete={deletePreset}

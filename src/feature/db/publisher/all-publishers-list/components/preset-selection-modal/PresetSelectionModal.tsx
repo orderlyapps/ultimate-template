@@ -27,7 +27,7 @@ interface PresetSelectionModalProps {
   isOpen: boolean;
   onDismiss: () => void;
   userPresets: UserFilterPreset[];
-  onSelect: (filters: PublisherFilterState) => void;
+  onSelect: (filters: PublisherFilterState, name: string) => void;
   onRename: (id: string, newName: string) => void;
   onDuplicate: (id: string) => void;
   onDelete: (id: string) => void;
@@ -45,8 +45,8 @@ export function PresetSelectionModal({
   const [renameTarget, setRenameTarget] = useState<UserFilterPreset | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<UserFilterPreset | null>(null);
 
-  const handleSelect = (filters: PublisherFilterState) => {
-    onSelect(filters);
+  const handleSelect = (filters: PublisherFilterState, name: string) => {
+    onSelect(filters, name);
     onDismiss();
   };
 
@@ -91,7 +91,7 @@ export function PresetSelectionModal({
 function BuiltInPresetsList({
   onSelect,
 }: {
-  onSelect: (filters: PublisherFilterState) => void;
+  onSelect: (filters: PublisherFilterState, name: string) => void;
 }) {
   return (
     <List>
@@ -99,7 +99,7 @@ function BuiltInPresetsList({
         <IonLabel>Built-in</IonLabel>
       </IonListHeader>
       {builtInPresets.map((preset) => (
-        <Item key={preset.id} button onClick={() => onSelect(preset.filters)}>
+        <Item key={preset.id} button onClick={() => onSelect(preset.filters, preset.name)}>
           <IonLabel>
             <Text>{preset.name}</Text>
           </IonLabel>
@@ -117,7 +117,7 @@ function UserPresetsList({
   onDelete,
 }: {
   presets: UserFilterPreset[];
-  onSelect: (filters: PublisherFilterState) => void;
+  onSelect: (filters: PublisherFilterState, name: string) => void;
   onRename: (preset: UserFilterPreset) => void;
   onDuplicate: (id: string) => void;
   onDelete: (preset: UserFilterPreset) => void;
@@ -129,7 +129,7 @@ function UserPresetsList({
       </IonListHeader>
       {presets.map((preset) => (
         <IonItemSliding key={preset.id}>
-          <Item button onClick={() => onSelect(preset.filters)}>
+          <Item button onClick={() => onSelect(preset.filters, preset.name)}>
             <IonLabel>
               <Text>{preset.name}</Text>
             </IonLabel>
