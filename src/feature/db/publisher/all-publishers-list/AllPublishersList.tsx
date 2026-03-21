@@ -9,6 +9,7 @@ import { formatPublisherName } from "@format/formatPublisherName";
 import { Space } from "@layout/space/Space";
 import type { PublisherFilterState } from "./publisherFilterState";
 import { Button } from "@ionic-input/button/Button";
+import { useFeatureAccess } from "@services/app/auth/temp-feature-access/useFeatureAccess";
 
 interface AllPublishersListProps {
   filters: PublisherFilterState;
@@ -21,7 +22,10 @@ export function AllPublishersList({
   searchQuery,
   onOpenPresets,
 }: AllPublishersListProps) {
-  
+  const { isUnlocked } = useFeatureAccess([
+    "9da270dd-ef23-417b-89a8-2a61bcbe24e0",
+  ]);
+
   const { data: publishers } = useLiveQuery((q) =>
     q.from({ p: publisherCollection }).orderBy(({ p }) => p.last_name),
   );
@@ -86,8 +90,7 @@ export function AllPublishersList({
         {filteredPublishers?.map((publisher) => (
           <Item
             key={publisher.id}
-            routerLink={`/publishers/all/${publisher.id}`}
-            detail={false}
+            routerLink={isUnlocked ? `/publishers/all/${publisher.id}` : undefined}
           >
             <IonLabel>
               <Text>{formatPublisherName(publisher)}</Text>
