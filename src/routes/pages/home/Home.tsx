@@ -8,6 +8,7 @@ import { Space } from "@layout/space/Space";
 import { Label } from "@ionic-display/label/Label";
 import { useUserCongregation } from "@feature/db/congregation/user-congregation/use-user-congregation/useUserCongregation";
 import { useAppFeaturesStore } from "@services/app/features/useAppFeaturesStore";
+import { useFeatureAccess } from "@services/app/auth/temp-feature-access/useFeatureAccess";
 
 export const Home: React.FC = () => {
   const [congregation] = useUserCongregation();
@@ -15,7 +16,9 @@ export const Home: React.FC = () => {
   const isMapPrintEnabled = useAppFeaturesStore((s) => s.isEnabled("mapPrint"));
   const hasAnyToolEnabled = isTalksEnabled || isMapPrintEnabled;
 
-  const show = import.meta.env.VITE_IS_BETA;
+  const { isUnlocked } = useFeatureAccess([
+    "9da270dd-ef23-417b-89a8-2a61bcbe24e0",
+  ]);
 
   return (
     <IonPage>
@@ -35,10 +38,10 @@ export const Home: React.FC = () => {
           </List>
         )}
         <List>
-          {show && (
+          {isUnlocked && (
             <NavItem routerLink="/home/announcements">Announcements</NavItem>
           )}
-          {hasAnyToolEnabled && (
+          {hasAnyToolEnabled && isUnlocked && (
             <NavItem routerLink="/home/tools">Tools</NavItem>
           )}
         </List>

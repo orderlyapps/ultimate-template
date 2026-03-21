@@ -13,12 +13,15 @@ import {
 import { useParams, useHistory } from "react-router-dom";
 import { WeekNavigation } from "@ui/components/custom/navigation/week-navigation/WeekNavigation";
 import editIcon from "@icons/edit.svg";
+import { useFeatureAccess } from "@services/app/auth/temp-feature-access/useFeatureAccess";
 
 export const WeekendMeeting: React.FC = () => {
   const history = useHistory();
   const { week_id } = useParams<{ week_id: string }>();
 
-  const show = import.meta.env.VITE_IS_BETA;
+  const { isUnlocked: show } = useFeatureAccess([
+    "9da270dd-ef23-417b-89a8-2a61bcbe24e0",
+  ]);
 
   return (
     <IonPage>

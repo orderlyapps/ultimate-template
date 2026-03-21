@@ -21,6 +21,7 @@ export function AllPublishersList({
   searchQuery,
   onOpenPresets,
 }: AllPublishersListProps) {
+  
   const { data: publishers } = useLiveQuery((q) =>
     q.from({ p: publisherCollection }).orderBy(({ p }) => p.last_name),
   );
@@ -74,7 +75,7 @@ export function AllPublishersList({
     <>
       <Button fill="clear" onClick={onOpenPresets}>
         <IonIcon icon={optionsOutline} slot="start" />
-        Filter
+        Lists
       </Button>
       <Item>
         <Text color="medium" size="sm">

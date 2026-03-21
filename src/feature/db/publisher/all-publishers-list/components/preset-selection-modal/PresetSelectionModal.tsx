@@ -21,7 +21,14 @@ import { ItemOptionCopy } from "@input/sliding-item-option/ItemOptionCopy";
 import { RenamePresetAlert } from "../rename-preset-alert/RenamePresetAlert";
 import { DeletePresetAlert } from "../delete-preset-alert/DeletePresetAlert";
 import { builtInPresets } from "../../publisherFilterState";
-import type { PublisherFilterState, UserFilterPreset } from "../../publisherFilterState";
+import {
+  useFeatureAccess,
+  TEMP_ALL_AUTHORIZED_USER_IDS,
+} from "@services/app/auth/temp-feature-access/useFeatureAccess";
+import type {
+  PublisherFilterState,
+  UserFilterPreset,
+} from "../../publisherFilterState";
 
 interface PresetSelectionModalProps {
   isOpen: boolean;
@@ -42,8 +49,12 @@ export function PresetSelectionModal({
   onDuplicate,
   onDelete,
 }: PresetSelectionModalProps) {
-  const [renameTarget, setRenameTarget] = useState<UserFilterPreset | null>(null);
-  const [deleteTarget, setDeleteTarget] = useState<UserFilterPreset | null>(null);
+  const [renameTarget, setRenameTarget] = useState<UserFilterPreset | null>(
+    null,
+  );
+  const [deleteTarget, setDeleteTarget] = useState<UserFilterPreset | null>(
+    null,
+  );
 
   const handleSelect = (filters: PublisherFilterState, name: string) => {
     onSelect(filters, name);
@@ -93,13 +104,28 @@ function BuiltInPresetsList({
 }: {
   onSelect: (filters: PublisherFilterState, name: string) => void;
 }) {
+  const { isUnlocked } = useFeatureAccess(TEMP_ALL_AUTHORIZED_USER_IDS);
+  
+  const presets = isUnlocked
+    ? builtInPresets
+    : builtInPresets.filter(
+        (p) =>
+          p.id === "regular_pioneers" ||
+          p.id === "ministerial_servants" ||
+          p.id === "elders",
+      );
+
   return (
     <List>
       <IonListHeader>
-        <IonLabel>Built-in</IonLabel>
+        <IonLabel>Lists</IonLabel>
       </IonListHeader>
-      {builtInPresets.map((preset) => (
-        <Item key={preset.id} button onClick={() => onSelect(preset.filters, preset.name)}>
+      {presets.map((preset) => (
+        <Item
+          key={preset.id}
+          button
+          onClick={() => onSelect(preset.filters, preset.name)}
+        >
           <IonLabel>
             <Text>{preset.name}</Text>
           </IonLabel>

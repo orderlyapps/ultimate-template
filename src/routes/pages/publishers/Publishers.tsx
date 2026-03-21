@@ -25,10 +25,10 @@ export const Publishers: React.FC = () => {
         </IonHeader>
         <Space height="2" />
         <List>
-          <NavItem routerLink="/publishers/all">All Publishers</NavItem>
+          <NavItem routerLink="/publishers/all">Publisher Lists</NavItem>
           <NavItem routerLink="/publishers/groups">Groups</NavItem>
-          <NavItem routerLink="/publishers/appointed">Appointed</NavItem>
-          <NavItem routerLink="/publishers/regular-pioneers">Regular Pioneers</NavItem>
+          {/* <NavItem routerLink="/publishers/appointed">Appointed</NavItem>
+          <NavItem routerLink="/publishers/regular-pioneers">Regular Pioneers</NavItem> */}
         </List>
       </IonContent>
     </IonPage>

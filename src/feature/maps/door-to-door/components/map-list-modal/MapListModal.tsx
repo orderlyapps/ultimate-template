@@ -17,6 +17,7 @@ import { useDoorToDoorStore } from "@feature/maps/door-to-door/store/useDoorToDo
 import { SelectedMap } from "@feature/maps/door-to-door/components/map-list-modal/components/selected-map/SelectedMap";
 import { RecentMaps } from "@feature/maps/door-to-door/components/map-list-modal/components/recent-maps/RecentMaps";
 import addIcon from "@icons/add.svg";
+import { useFeatureAccess } from "@services/app/auth/temp-feature-access/useFeatureAccess";
 
 export const MapListModal: React.FC = () => {
   const isOpen = useDoorToDoorStore((state) => state.isMapListModalOpen);
@@ -32,7 +33,9 @@ export const MapListModal: React.FC = () => {
     startAddingNewMap();
   };
 
-  const show = import.meta.env.VITE_IS_BETA;
+  const { isUnlocked: show } = useFeatureAccess([
+    "9da270dd-ef23-417b-89a8-2a61bcbe24e0",
+  ]);
 
   return (
     <>

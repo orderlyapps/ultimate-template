@@ -22,7 +22,10 @@ import { useLocalStorage } from "@util/hooks/useLocalStorage";
 import { defaultFilters } from "@feature/db/publisher/all-publishers-list/publisherFilterState";
 import type { PublisherFilterState } from "@feature/db/publisher/all-publishers-list/publisherFilterState";
 import { Space } from "@layout/space/Space";
-
+import {
+  useFeatureAccess,
+  TEMP_ALL_AUTHORIZED_USER_IDS,
+} from "@services/app/auth/temp-feature-access/useFeatureAccess";
 export const AllPublishers: React.FC = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
@@ -30,13 +33,18 @@ export const AllPublishers: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [activePresetName, setActivePresetName] = useLocalStorage<string>(
     "publisher-list-preset-name",
-    "All Publishers"
+    "All Publishers",
   );
-  const { userPresets, savePreset, renamePreset, duplicatePreset, deletePreset } =
-    usePublisherFilterPresets();
+  const {
+    userPresets,
+    savePreset,
+    renamePreset,
+    duplicatePreset,
+    deletePreset,
+  } = usePublisherFilterPresets();
   const [storedFilters, setFilters] = useLocalStorage<PublisherFilterState>(
     "publisher-list-filters",
-    defaultFilters
+    defaultFilters,
   );
 
   const filters: PublisherFilterState = {
@@ -50,6 +58,8 @@ export const AllPublishers: React.FC = () => {
     filters.gender.length > 0 ||
     filters.group.length > 0;
 
+  const { isUnlocked } = useFeatureAccess(TEMP_ALL_AUTHORIZED_USER_IDS);
+
   return (
     <IonPage>
       <IonHeader>
@@ -58,14 +68,18 @@ export const AllPublishers: React.FC = () => {
             <IonBackButton defaultHref="/publishers" text="Publishers" />
           </IonButtons>
           <IonButtons slot="end">
-            <IonButton onClick={() => setIsFilterModalOpen(true)}>
-              <IonIcon
-                icon={funnel}
-                slot="icon-only"
-                color={hasActiveFilters ? "primary" : undefined}
-              />
-            </IonButton>
-            <AddButton onClick={() => setIsAddModalOpen(true)} />
+            {isUnlocked && (
+              <>
+                <IonButton onClick={() => setIsFilterModalOpen(true)}>
+                  <IonIcon
+                    icon={funnel}
+                    slot="icon-only"
+                    color={hasActiveFilters ? "primary" : undefined}
+                  />
+                </IonButton>
+                <AddButton onClick={() => setIsAddModalOpen(true)} />
+              </>
+            )}
           </IonButtons>
           <IonTitle>{activePresetName}</IonTitle>
         </IonToolbar>
