@@ -1,10 +1,13 @@
+import { useState } from "react";
 import { Label } from "@ionic-display/label/Label";
 import { Text } from "@ionic-display/text/Text";
 import { Item } from "@ionic-layout/item/Item";
 import { List } from "@ionic-layout/list/List";
-import { IonAccordion } from "@ionic/react";
+import { IonAccordion, IonIcon } from "@ionic/react";
+import editIcon from "@icons/edit.svg";
 import type { SpeakerWithOutlines } from "../../utils/groupSpeakersWithOutlines";
 import { useWeekendMeetingEditStore } from "@feature/weekend-meeting/edit/store/useWeekendMeetingEditStore";
+import { EditSpeakerModal } from "@feature/weekend-meeting/edit-speaker/EditSpeakerForm";
 
 type SpeakerAccordionProps = {
   speaker: SpeakerWithOutlines;
@@ -17,6 +20,7 @@ export const SpeakerAccordion: React.FC<SpeakerAccordionProps> = ({
   currentSpeakerId,
   currentOutlineId,
 }) => {
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const selectSpeaker = useWeekendMeetingEditStore((s) => s.selectSpeaker);
 
   return (
@@ -66,7 +70,17 @@ export const SpeakerAccordion: React.FC<SpeakerAccordionProps> = ({
             </Text>
           </Item>
         ))}
+        <Item onClick={() => setIsEditModalOpen(true)} detail>
+          <IonIcon src={editIcon} slot="start" color="primary" />
+          <Text color="primary">Edit Speaker</Text>
+        </Item>
       </List>
+
+      <EditSpeakerModal
+        speakerId={speaker.id}
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+      />
     </IonAccordion>
   );
 };

@@ -7,6 +7,7 @@ import { congregationCollection } from "@tanstack-db/congregation/congregationCo
 import { and, eq } from "@tanstack/react-db";
 import { PublicTalkSelect } from "./components/public-talk-select/PublicTalkSelect";
 import { useWeekendMeetingEditStore } from "./store/useWeekendMeetingEditStore";
+import { getUserCongregation } from "@feature/db/congregation/user-congregation/get-user-congregation/getUserCongregation";
 
 type WeekendMeetingEditFormProps = {
   weekId: string;
@@ -16,9 +17,15 @@ export const WeekendMeetingEditForm: React.FC<WeekendMeetingEditFormProps> = ({
   weekId,
 }) => {
   const setWeekId = useWeekendMeetingEditStore((s) => s.setWeekId);
-  const setCongregationId = useWeekendMeetingEditStore((s) => s.setCongregationId);
-  const setHasCurrentAssignment = useWeekendMeetingEditStore((s) => s.setHasCurrentAssignment);
-  const congregationId = localStorage.getItem("congregationId");
+  const setCongregationId = useWeekendMeetingEditStore(
+    (s) => s.setCongregationId,
+  );
+  const setHasCurrentAssignment = useWeekendMeetingEditStore(
+    (s) => s.setHasCurrentAssignment,
+  );
+  const congregation = getUserCongregation();
+
+  const congregationId = congregation ? congregation.id : null;
 
   useEffect(() => {
     setWeekId(weekId);
@@ -29,14 +36,20 @@ export const WeekendMeetingEditForm: React.FC<WeekendMeetingEditFormProps> = ({
     (q) =>
       q
         .from({ sa: speakerAssignmentCollection })
-        .leftJoin({ p: publisherCollection }, ({ sa, p }) => eq(sa.speaker_id, p!.id))
-        .leftJoin({ o: outlineCollection }, ({ sa, o }) => eq(sa.outline_id, o!.id))
-        .leftJoin({ c: congregationCollection }, ({ p, c }) => eq(p?.congregation_id, c!.id))
+        .leftJoin({ p: publisherCollection }, ({ sa, p }) =>
+          eq(sa.speaker_id, p!.id),
+        )
+        .leftJoin({ o: outlineCollection }, ({ sa, o }) =>
+          eq(sa.outline_id, o!.id),
+        )
+        .leftJoin({ c: congregationCollection }, ({ p, c }) =>
+          eq(p?.congregation_id, c!.id),
+        )
         .where(({ sa }) =>
           and(
             eq(sa.week_id, weekId),
-            eq(sa.congregation_id, congregationId ?? "")
-          )
+            eq(sa.congregation_id, congregationId ?? ""),
+          ),
         )
         .select(({ sa, p, o, c }) => ({
           speakerId: sa.speaker_id,
@@ -48,7 +61,7 @@ export const WeekendMeetingEditForm: React.FC<WeekendMeetingEditFormProps> = ({
           congregationName: c?.name,
           outlineTheme: o?.theme,
         })),
-    [weekId, congregationId]
+    [weekId, congregationId],
   );
 
   const currentAssignment = currentAssignments?.[0];
@@ -57,7 +70,8 @@ export const WeekendMeetingEditForm: React.FC<WeekendMeetingEditFormProps> = ({
     setHasCurrentAssignment(!!currentAssignment);
   }, [currentAssignment, setHasCurrentAssignment]);
 
-  const speakerName = currentAssignment?.speakerDisplayName ||
+  const speakerName =
+    currentAssignment?.speakerDisplayName ||
     (currentAssignment?.speakerFirstName && currentAssignment?.speakerLastName
       ? `${currentAssignment.speakerFirstName} ${currentAssignment.speakerLastName}`
       : undefined);
@@ -69,7 +83,9 @@ export const WeekendMeetingEditForm: React.FC<WeekendMeetingEditFormProps> = ({
       speakerName={speakerName}
       outlineTheme={currentAssignment?.outlineTheme}
       congregationName={currentAssignment?.congregationName}
-      isLocalSpeaker={currentAssignment?.speakerCongregationId === congregationId}
+      isLocalSpeaker={
+        currentAssignment?.speakerCongregationId === congregationId
+      }
     />
   );
 };

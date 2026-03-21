@@ -20,10 +20,14 @@ import { outlineCollection } from "@tanstack-db/outline/outlineCollection";
 import { congregationCollection } from "@tanstack-db/congregation/congregationCollection";
 import { Button } from "@ionic-input/button/Button";
 import { useWeekendMeetingEditStore } from "@feature/weekend-meeting/edit/store/useWeekendMeetingEditStore";
-import { groupSpeakersWithOutlines, filterSpeakers } from "./utils/groupSpeakersWithOutlines";
+import {
+  groupSpeakersWithOutlines,
+  filterSpeakers,
+} from "./utils/groupSpeakersWithOutlines";
 import { SpeakerAccordion } from "./components/speaker-accordion/SpeakerAccordion";
 import { AddVisitingSpeakerModal } from "./components/add-visiting-speaker/AddVisitingSpeakerModal";
 import { useAddVisitingSpeakerStore } from "./components/add-visiting-speaker/store/useAddVisitingSpeakerStore";
+import { Space } from "@layout/space/Space";
 
 type PublicTalkSelectModalProps = {
   currentSpeakerId?: string | null;
@@ -38,7 +42,9 @@ export const PublicTalkSelectModal: React.FC<PublicTalkSelectModalProps> = ({
   const closeModal = useWeekendMeetingEditStore((s) => s.closeModal);
   const searchQuery = useWeekendMeetingEditStore((s) => s.searchQuery);
   const setSearchQuery = useWeekendMeetingEditStore((s) => s.setSearchQuery);
-  const deleteAssignment = useWeekendMeetingEditStore((s) => s.deleteAssignment);
+  const deleteAssignment = useWeekendMeetingEditStore(
+    (s) => s.deleteAssignment,
+  );
   const congregationId = useWeekendMeetingEditStore((s) => s.congregationId);
   const openAddSpeaker = useAddVisitingSpeakerStore((s) => s.open);
 
@@ -152,11 +158,13 @@ export const PublicTalkSelectModal: React.FC<PublicTalkSelectModalProps> = ({
           </div>
         )}
 
-        <Button onClick={openAddSpeaker}>
-          Add Visiting Speaker
-        </Button>
+        <Space height="2" />
+
+        <Button onClick={openAddSpeaker}>Add Visiting Speaker</Button>
 
         <AddVisitingSpeakerModal />
+
+        <Space />
       </IonContent>
     </IonModal>
   );
