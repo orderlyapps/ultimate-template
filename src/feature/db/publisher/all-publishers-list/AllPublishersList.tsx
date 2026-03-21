@@ -1,6 +1,6 @@
 import { IonIcon, IonLabel } from "@ionic/react";
 import { useLiveQuery } from "@tanstack/react-db";
-import { optionsOutline } from "ionicons/icons";
+import { listOutline } from "ionicons/icons";
 import { publisherCollection } from "@tanstack-db/publisher/publisherCollection";
 import { Item } from "@ionic-layout/item/Item";
 import { List } from "@ionic-layout/list/List";
@@ -78,7 +78,7 @@ export function AllPublishersList({
   return (
     <>
       <Button fill="clear" onClick={onOpenPresets}>
-        <IonIcon icon={optionsOutline} slot="start" />
+        <IonIcon icon={listOutline} slot="start" />
         Lists
       </Button>
       <Item>
