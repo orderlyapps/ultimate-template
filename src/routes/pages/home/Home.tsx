@@ -18,7 +18,7 @@ export const Home: React.FC = () => {
   const hasAnyToolEnabled = isTalksEnabled || isMapPrintEnabled;
 
   const { isUnlocked } = useFeatureAccess([
-    "9da270dd-ef23-417b-89a8-2a61bcbe24e0",
+    "damian",
   ]);
 
   return (
@@ -40,9 +40,6 @@ export const Home: React.FC = () => {
         )}
         <HomeAccordions />
         <List>
-          {isUnlocked && (
-            <NavItem routerLink="/home/announcements">Announcements</NavItem>
-          )}
           {hasAnyToolEnabled && isUnlocked && (
             <NavItem routerLink="/home/tools">Tools</NavItem>
           )}

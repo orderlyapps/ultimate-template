@@ -24,7 +24,7 @@ import type { PublisherFilterState } from "@feature/db/publisher/all-publishers-
 import { Space } from "@layout/space/Space";
 import {
   useFeatureAccess,
-  TEMP_ALL_AUTHORIZED_USER_IDS,
+  TEMP_ALL_AUTHORIZED_NAMES,
 } from "@services/app/auth/temp-feature-access/useFeatureAccess";
 export const AllPublishers: React.FC = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -58,7 +58,7 @@ export const AllPublishers: React.FC = () => {
     filters.gender.length > 0 ||
     filters.group.length > 0;
 
-  const { isUnlocked } = useFeatureAccess(TEMP_ALL_AUTHORIZED_USER_IDS);
+  const { isUnlocked } = useFeatureAccess(TEMP_ALL_AUTHORIZED_NAMES);
 
   return (
     <IonPage>

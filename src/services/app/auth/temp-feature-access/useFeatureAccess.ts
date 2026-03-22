@@ -6,11 +6,11 @@ const TEMP_FEATURE_ACCESS_KEY = "temp-feature-access-unlocked";
 
 // TEMPORARY: Authorized users with passwords
 const TEMP_AUTHORIZED_USERS = [
-  { id: "9da270dd-ef23-417b-89a8-2a61bcbe24e0", password: "amodeo" },
-  { id: "3d0dbd38-c50d-487c-a6a4-2aa2f9b844b0", password: "bennies" },
-];
+  { id: "9da270dd-ef23-417b-89a8-2a61bcbe24e0", password: "amodeo" , name: "damian"},
+  { id: "3d0dbd38-c50d-487c-a6a4-2aa2f9b844b0", password: "bennies", name: "tom" },
+] as const;
 
-export const useFeatureAccess = (allowedUserIds: string[]) => {
+export const useFeatureAccess = (allowedNames: string[]) => {
   const [userPublisher] = useUserPublisher();
   const [unlockedUsers, setUnlockedUsers] = useLocalStorage<string[]>(
     TEMP_FEATURE_ACCESS_KEY,
@@ -19,8 +19,12 @@ export const useFeatureAccess = (allowedUserIds: string[]) => {
 
   const currentUserId = userPublisher?.id;
 
-  const isUserAllowed = currentUserId
-    ? allowedUserIds.includes(currentUserId)
+  const currentUserName = TEMP_AUTHORIZED_USERS.find(
+    (u) => u.id === currentUserId
+  )?.name;
+
+  const isUserAllowed = currentUserName
+    ? allowedNames.includes(currentUserName)
     : false;
 
   const isUnlocked = currentUserId ? unlockedUsers.includes(currentUserId) : false;
@@ -54,5 +58,5 @@ export const useFeatureAccess = (allowedUserIds: string[]) => {
   };
 };
 
-// TEMPORARY: Get all authorized user IDs for convenience
-export const TEMP_ALL_AUTHORIZED_USER_IDS = TEMP_AUTHORIZED_USERS.map((u) => u.id);
+// TEMPORARY: Get all authorized user names for convenience
+export const TEMP_ALL_AUTHORIZED_NAMES = TEMP_AUTHORIZED_USERS.map((u) => u.name);

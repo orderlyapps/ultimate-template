@@ -23,7 +23,7 @@ import {
 import { useAppFeaturesStore } from "@services/app/features/useAppFeaturesStore";
 import {
   useFeatureAccess,
-  TEMP_ALL_AUTHORIZED_USER_IDS,
+  TEMP_ALL_AUTHORIZED_NAMES,
 } from "@services/app/auth/temp-feature-access/useFeatureAccess";
 import { Button } from "@ionic-input/button/Button";
 
@@ -35,12 +35,10 @@ export const Features: React.FC = () => {
 
   // TEMPORARY: Feature access control - remove when auth is implemented
   const { isUserAllowed, isUnlocked, validatePassword } = useFeatureAccess(
-    TEMP_ALL_AUTHORIZED_USER_IDS,
+    TEMP_ALL_AUTHORIZED_NAMES,
   );
 
-  const { isUnlocked: damianUnlocked } = useFeatureAccess([
-    "9da270dd-ef23-417b-89a8-2a61bcbe24e0",
-  ]);
+  const { isUserAllowed: damianUnlocked } = useFeatureAccess(["damian"]);
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
@@ -100,7 +98,7 @@ export const Features: React.FC = () => {
           </List>
         )}
 
-        {damianUnlocked && (
+        {isUserAllowed && (
           <List>
             {featureGroups.length > 0 ? (
               <>
@@ -124,26 +122,30 @@ export const Features: React.FC = () => {
               </>
             ) : null}
 
-            {appFeatures.map((feature) => {
-              const enabled = isFeatureEnabled({
-                featureId: feature.id,
-                featureOverrides,
-                groupOverrides,
-              });
+            {appFeatures
+              .filter(({ id }) => {
+                return id === "groups" ? damianUnlocked : true;
+              })
+              .map((feature) => {
+                const enabled = isFeatureEnabled({
+                  featureId: feature.id,
+                  featureOverrides,
+                  groupOverrides,
+                });
 
-              return (
-                <Item key={feature.id}>
-                  <Label>{feature.label}</Label>
-                  <Toggle
-                    slot="end"
-                    checked={enabled}
-                    onIonChange={(e) =>
-                      setFeatureEnabled(feature.id, e.detail.checked)
-                    }
-                  />
-                </Item>
-              );
-            })}
+                return (
+                  <Item key={feature.id}>
+                    <Label>{feature.label}</Label>
+                    <Toggle
+                      slot="end"
+                      checked={enabled}
+                      onIonChange={(e) =>
+                        setFeatureEnabled(feature.id, e.detail.checked)
+                      }
+                    />
+                  </Item>
+                );
+              })}
           </List>
         )}
       </IonContent>

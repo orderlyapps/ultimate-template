@@ -36,16 +36,12 @@ export const appFeatures: readonly AppFeatureDefinition[] = [
     defaultEnabled: false,
     groups: ["tools"],
   },
-  ...(import.meta.env.VITE_IS_BETA
-    ? [
-        {
-          id: "groups" as const,
-          label: "Groups",
-          defaultEnabled: false,
-          groups: ["tools"],
-        },
-      ]
-    : []),
+  {
+    id: "groups" as const,
+    label: "Groups",
+    defaultEnabled: false,
+    groups: ["tools"],
+  },
 ];
 
 export type FeatureOverrides = Partial<Record<AppFeatureId, boolean>>;

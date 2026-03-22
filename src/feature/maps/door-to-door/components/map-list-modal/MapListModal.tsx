@@ -34,7 +34,7 @@ export const MapListModal: React.FC = () => {
   };
 
   const { isUnlocked: show } = useFeatureAccess([
-    "9da270dd-ef23-417b-89a8-2a61bcbe24e0",
+    "damian",
   ]);
 
   return (

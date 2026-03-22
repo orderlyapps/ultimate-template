@@ -23,7 +23,7 @@ import { DeletePresetAlert } from "../delete-preset-alert/DeletePresetAlert";
 import { builtInPresets } from "../../publisherFilterState";
 import {
   useFeatureAccess,
-  TEMP_ALL_AUTHORIZED_USER_IDS,
+  TEMP_ALL_AUTHORIZED_NAMES,
 } from "@services/app/auth/temp-feature-access/useFeatureAccess";
 import type {
   PublisherFilterState,
@@ -104,7 +104,7 @@ function BuiltInPresetsList({
 }: {
   onSelect: (filters: PublisherFilterState, name: string) => void;
 }) {
-  const { isUnlocked } = useFeatureAccess(TEMP_ALL_AUTHORIZED_USER_IDS);
+  const { isUnlocked } = useFeatureAccess(TEMP_ALL_AUTHORIZED_NAMES);
   
   const presets = isUnlocked
     ? builtInPresets

@@ -7,7 +7,7 @@ import publishers from "@icons/publishers.svg";
 import settings from "@icons/settings.svg";
 import {
   useFeatureAccess,
-  TEMP_ALL_AUTHORIZED_USER_IDS,
+  TEMP_ALL_AUTHORIZED_NAMES,
 } from "@services/app/auth/temp-feature-access/useFeatureAccess";
 
 const useOrientation = () => {
@@ -30,7 +30,7 @@ export const Tabs: React.FC = () => {
   const layout = isPortrait ? "icon-top" : "icon-start";
   const className = isPortrait ? "" : "ion-padding-end";
 
-  const { isUnlocked } = useFeatureAccess(TEMP_ALL_AUTHORIZED_USER_IDS);
+  const { isUnlocked } = useFeatureAccess(TEMP_ALL_AUTHORIZED_NAMES);
 
   return (
     <IonTabBar slot="bottom">
