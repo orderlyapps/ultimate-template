@@ -10,6 +10,10 @@ export function HomeAccordions() {
   const expandedIds = useHomeAccordionOrderStore((s) => s.expandedIds);
   const setExpandedIds = useHomeAccordionOrderStore((s) => s.setExpandedIds);
 
+  const show = false;
+
+  if (!show) return null;
+
   return (
     <IonAccordionGroup
       multiple

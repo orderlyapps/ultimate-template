@@ -1,7 +1,7 @@
 import { Text } from "@ionic-display/text/Text";
 
 interface SectionHeadingProps {
-  children: string;
+  children: string | string[];
 }
 
 export const SectionHeading: React.FC<SectionHeadingProps> = ({ children }) => {

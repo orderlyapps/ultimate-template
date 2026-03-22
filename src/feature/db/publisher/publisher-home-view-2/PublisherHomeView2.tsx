@@ -7,6 +7,8 @@ import { Text } from "@ionic-display/text/Text";
 import { HomeItemsList } from "./components/home-items-list/HomeItemsList";
 import { NewAssignmentsBanner } from "./components/new-assignments-banner/NewAssignmentsBanner";
 import { useNewAssignments } from "./use-new-assignments/useNewAssignments";
+import { SectionHeading } from "@display/section-heading/SectionHeading";
+import { List } from "@ionic-layout/list/List";
 
 export const PublisherHomeView2: React.FC = () => {
   const [publisher] = useUserPublisher();
@@ -14,7 +16,7 @@ export const PublisherHomeView2: React.FC = () => {
   const { newItems, dismiss, dismissAll } = useNewAssignments(items);
 
   return (
-    <>
+    <List>
       <Space height="3" />
       <Item lines="none">
         <Text bold size="xxl">
@@ -28,11 +30,9 @@ export const PublisherHomeView2: React.FC = () => {
       />
       <Space height="2" />
       <Item lines="none">
-        <Text color={"primary"} size="xxl">
-          Calendar
-        </Text>
+        <SectionHeading>Calendar</SectionHeading>
       </Item>
       <HomeItemsList items={items} />
-    </>
+    </List>
   );
 };

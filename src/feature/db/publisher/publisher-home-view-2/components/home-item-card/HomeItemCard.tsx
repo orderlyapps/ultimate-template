@@ -16,13 +16,17 @@ export const HomeItemCard: React.FC<Props> = ({
   details,
 }) => {
   return (
-    <Grid className="ion-no-padding">
+    <Grid className="ion-no-padding ion-padding-horizontal">
       <Row className="">
         <Col>
-          <Text bold size="sm">{title}</Text>
+          <Text bold size="sm">
+            {title}
+          </Text>
         </Col>
         <Col className="ion-text-right">
-          <Text size="xs">{dateLabel}</Text>
+          <Text size="xs" color="medium">
+            {dateLabel}
+          </Text>
         </Col>
       </Row>
       {details && details.length > 0 && (
@@ -30,7 +34,7 @@ export const HomeItemCard: React.FC<Props> = ({
           <Col>
             {details.map((detail, index) => (
               <Fragment key={`${detail}-${index}`}>
-                <Text size="xs">{detail}</Text>
+                <Text size="xs" color="medium">{detail}</Text>
                 <br />
               </Fragment>
             ))}

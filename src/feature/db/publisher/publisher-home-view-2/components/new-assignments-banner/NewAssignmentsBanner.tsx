@@ -8,6 +8,7 @@ import { Row } from "@ionic-layout/row/Row";
 import { Col } from "@ionic-layout/col/Col";
 
 import { Space } from "@layout/space/Space";
+import { SectionHeading } from "@display/section-heading/SectionHeading";
 
 type Props = {
   items: NotificationItem[];
@@ -22,22 +23,22 @@ export const NewAssignmentsBanner: React.FC<Props> = ({
 }) => {
   if (items.length === 0) return null;
 
+  const s = items.length > 1 ? "s" : "";
+
   return (
     <>
       <Space height="2" />
       <Item lines="none">
         <IonLabel>
-          <Text color="primary" size="xxl">
-            New Assignments
-          </Text>
+          <SectionHeading>Assignment Notification{s}</SectionHeading>
         </IonLabel>
         <Text onClick={onDismissAll} size="sm" color="primary">
-          Clear All
+          Clear {s && "All"}
         </Text>
       </Item>
       <Space height="1" />
       {items.map((item) => (
-        <Grid key={item.key} className="ion-no-padding ion-no-margin">
+        <Grid key={item.key} className="ion-no-padding ion-padding-horizontal">
           <Row>
             <Col>
               <Row>
@@ -46,7 +47,9 @@ export const NewAssignmentsBanner: React.FC<Props> = ({
                     {item.title}
                   </Text>
                   <br />
-                  <Text size="xs">{item.detail}</Text>
+                  <Text size="xs" color="medium">
+                    {item.detail}
+                  </Text>
                 </Col>
                 <Col className="ion-text-right">
                   <Text size="xs" color="medium">

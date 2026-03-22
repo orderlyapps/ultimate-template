@@ -9,7 +9,7 @@
     "dev:prod:beta": "VITE_IS_BETA=true vite --port 3000 --host --mode production",
     "build": "tsc -b && vite build",
     "test:lint:build": "eslint . && tsc -b && vitest run && vite build",
-    "deploy:beta": "VITE_IS_BETA=true pnpm run test:lint:build && npx wrangler pages deploy dist --project-name=orderly --branch=beta && echo DEPLOYED TO BETA",
+    "deploy:beta": "pnpm run test:lint:build && npx wrangler pages deploy dist --project-name=orderly --branch=beta && echo DEPLOYED TO BETA",
     "deploy:orderly": "pnpm run test:lint:build && npx wrangler pages deploy dist --project-name=orderly --branch=main",
     "deploy:proclaimer": "pnpm run test:lint:build && npx wrangler pages deploy dist --project-name=proclaimer --branch=main",
     "deploy:both": "pnpm run test:lint:build && npx wrangler pages deploy dist --project-name=orderly --branch=main && npx wrangler pages deploy dist --project-name=proclaimer --branch=main",
