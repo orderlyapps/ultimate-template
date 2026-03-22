@@ -44,7 +44,7 @@ export const HomeItemsList: React.FC<Props> = ({ items }) => {
             {showDivider && (
               <Item className="ion-no-padding ion-text-center" lines="none">
                 <IonLabel>
-                  <Text size="lg" bold color="primary">
+                  <Text bold >
                     {getMonthLabel(item.monthId).toUpperCase()}
                   </Text>
                 </IonLabel>

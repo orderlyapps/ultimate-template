@@ -8,6 +8,7 @@ import { and, eq } from "@tanstack/react-db";
 import { PublicTalkSelect } from "./components/public-talk-select/PublicTalkSelect";
 import { useWeekendMeetingEditStore } from "./store/useWeekendMeetingEditStore";
 import { getUserCongregation } from "@feature/db/congregation/user-congregation/get-user-congregation/getUserCongregation";
+import { formatPublisherName } from "@format/formatPublisherName";
 
 type WeekendMeetingEditFormProps = {
   weekId: string;
@@ -54,9 +55,9 @@ export const WeekendMeetingEditForm: React.FC<WeekendMeetingEditFormProps> = ({
         .select(({ sa, p, o, c }) => ({
           speakerId: sa.speaker_id,
           outlineId: sa.outline_id,
-          speakerFirstName: p?.first_name,
-          speakerLastName: p?.last_name,
-          speakerDisplayName: p?.display_name,
+          first_name: p?.first_name,
+          last_name: p?.last_name,
+          display_name: p?.display_name,
           speakerCongregationId: p?.congregation_id,
           congregationName: c?.name,
           outlineTheme: o?.theme,
@@ -70,11 +71,16 @@ export const WeekendMeetingEditForm: React.FC<WeekendMeetingEditFormProps> = ({
     setHasCurrentAssignment(!!currentAssignment);
   }, [currentAssignment, setHasCurrentAssignment]);
 
-  const speakerName =
-    currentAssignment?.speakerDisplayName ||
-    (currentAssignment?.speakerFirstName && currentAssignment?.speakerLastName
-      ? `${currentAssignment.speakerFirstName} ${currentAssignment.speakerLastName}`
-      : undefined);
+  const speakerName = formatPublisherName(
+    currentAssignment?.first_name && currentAssignment?.last_name
+      ? {
+          first_name: currentAssignment.first_name,
+          last_name: currentAssignment.last_name,
+          display_name: currentAssignment.display_name,
+        }
+      : undefined,
+    "display last",
+  );
 
   return (
     <PublicTalkSelect

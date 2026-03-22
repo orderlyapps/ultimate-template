@@ -12,6 +12,7 @@ import {
   IonModal,
   IonTitle,
   IonToolbar,
+  type AccordionGroupCustomEvent,
 } from "@ionic/react";
 import { useLiveQuery } from "@tanstack/react-db";
 import { publisherCollection } from "@tanstack-db/publisher/publisherCollection";
@@ -28,6 +29,7 @@ import { SpeakerAccordion } from "./components/speaker-accordion/SpeakerAccordio
 import { AddVisitingSpeakerModal } from "./components/add-visiting-speaker/AddVisitingSpeakerModal";
 import { useAddVisitingSpeakerStore } from "./components/add-visiting-speaker/store/useAddVisitingSpeakerStore";
 import { Space } from "@layout/space/Space";
+import { useState } from "react";
 
 type PublicTalkSelectModalProps = {
   currentSpeakerId?: string | null;
@@ -92,6 +94,11 @@ export const PublicTalkSelectModal: React.FC<PublicTalkSelectModalProps> = ({
   const localSpeakers = filteredSpeakers.filter((s) => s.isLocal);
   const visitingSpeakers = filteredSpeakers.filter((s) => !s.isLocal);
 
+  const [openAccordion, setOpenAccordion] = useState();
+  const accordionGroupChange = (event: AccordionGroupCustomEvent) => {
+    setOpenAccordion(event.detail.value);
+  };
+
   return (
     <IonModal isOpen={isOpen} onDidDismiss={closeModal}>
       <IonHeader>
@@ -117,17 +124,18 @@ export const PublicTalkSelectModal: React.FC<PublicTalkSelectModalProps> = ({
           </Button>
         )}
         {localSpeakers.length > 0 && (
-          <List inset>
+          <List>
             <IonListHeader>
               <Label color="medium">Local Speakers</Label>
             </IonListHeader>
-            <IonAccordionGroup>
+            <IonAccordionGroup onIonChange={accordionGroupChange}>
               {localSpeakers.map((speaker) => (
                 <SpeakerAccordion
                   key={speaker.id}
                   speaker={speaker}
                   currentSpeakerId={currentSpeakerId}
                   currentOutlineId={currentOutlineId}
+                  openAccordion={openAccordion}
                 />
               ))}
             </IonAccordionGroup>
@@ -135,7 +143,7 @@ export const PublicTalkSelectModal: React.FC<PublicTalkSelectModalProps> = ({
         )}
 
         {visitingSpeakers.length > 0 && (
-          <List inset>
+          <List>
             <IonListHeader>
               <Label color="medium">Visiting Speakers</Label>
             </IonListHeader>
@@ -146,6 +154,7 @@ export const PublicTalkSelectModal: React.FC<PublicTalkSelectModalProps> = ({
                   speaker={speaker}
                   currentSpeakerId={currentSpeakerId}
                   currentOutlineId={currentOutlineId}
+                  openAccordion={openAccordion}
                 />
               ))}
             </IonAccordionGroup>
