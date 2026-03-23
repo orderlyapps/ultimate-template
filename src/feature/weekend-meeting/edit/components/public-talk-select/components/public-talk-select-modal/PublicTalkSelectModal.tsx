@@ -1,18 +1,16 @@
 import { CloseButton } from "@input/button/close-button/CloseButton";
-import { Label } from "@ionic-display/label/Label";
 import { Text } from "@ionic-display/text/Text";
 import { List } from "@ionic-layout/list/List";
 import { Searchbar } from "@ionic-input/searchbar/Searchbar";
 import {
+  IonAccordion,
   IonAccordionGroup,
   IonButtons,
   IonContent,
-  IonHeader,
-  IonListHeader,
-  IonModal,
+  IonHeader, IonModal,
   IonTitle,
   IonToolbar,
-  type AccordionGroupCustomEvent,
+  type AccordionGroupCustomEvent
 } from "@ionic/react";
 import { useLiveQuery } from "@tanstack/react-db";
 import { publisherCollection } from "@tanstack-db/publisher/publisherCollection";
@@ -29,6 +27,8 @@ import { SpeakerAccordion } from "./components/speaker-accordion/SpeakerAccordio
 import { AddVisitingSpeakerModal } from "./components/add-visiting-speaker/AddVisitingSpeakerModal";
 import { Space } from "@layout/space/Space";
 import { useState } from "react";
+import { ItemAccordionHeader } from "@ionic-layout/accordion-header/AccordionHeader";
+import { SectionHeading } from "@display/section-heading/SectionHeading";
 
 type PublicTalkSelectModalProps = {
   currentSpeakerId?: string | null;
@@ -117,48 +117,58 @@ export const PublicTalkSelectModal: React.FC<PublicTalkSelectModalProps> = ({
         </IonToolbar>
       </IonHeader>
       <IonContent>
+        <Space height="1.5" />
         {currentSpeakerId && (
           <Button onClick={deleteAssignment} color={"danger"}>
             Clear Assignment
           </Button>
         )}
-        {localSpeakers.length > 0 && (
-          <List>
-            <IonListHeader>
-              <Label color="medium">Local Speakers</Label>
-            </IonListHeader>
-            <IonAccordionGroup onIonChange={accordionGroupChange}>
-              {localSpeakers.map((speaker) => (
-                <SpeakerAccordion
-                  key={speaker.id}
-                  speaker={speaker}
-                  currentSpeakerId={currentSpeakerId}
-                  currentOutlineId={currentOutlineId}
-                  openAccordion={openAccordion}
-                />
-              ))}
-            </IonAccordionGroup>
-          </List>
-        )}
 
-        {visitingSpeakers.length > 0 && (
-          <List>
-            <IonListHeader>
-              <Label color="medium">Visiting Speakers</Label>
-            </IonListHeader>
-            <IonAccordionGroup>
-              {visitingSpeakers.map((speaker) => (
-                <SpeakerAccordion
-                  key={speaker.id}
-                  speaker={speaker}
-                  currentSpeakerId={currentSpeakerId}
-                  currentOutlineId={currentOutlineId}
-                  openAccordion={openAccordion}
-                />
-              ))}
-            </IonAccordionGroup>
-          </List>
-        )}
+        <Space height="1.5" />
+
+        <IonAccordionGroup multiple={true}>
+          {localSpeakers.length > 0 && (
+            <IonAccordion value="local">
+              <ItemAccordionHeader>
+                <SectionHeading>Local Speakers</SectionHeading>
+              </ItemAccordionHeader>
+              <List slot="content">
+                <IonAccordionGroup onIonChange={accordionGroupChange}>
+                  {localSpeakers.map((speaker) => (
+                    <SpeakerAccordion
+                      key={speaker.id}
+                      speaker={speaker}
+                      currentSpeakerId={currentSpeakerId}
+                      currentOutlineId={currentOutlineId}
+                      openAccordion={openAccordion}
+                    />
+                  ))}
+                </IonAccordionGroup>
+              </List>
+            </IonAccordion>
+          )}
+
+          {visitingSpeakers.length > 0 && (
+            <IonAccordion value="visiting">
+              <ItemAccordionHeader>
+                <SectionHeading>Visiting Speakers</SectionHeading>
+              </ItemAccordionHeader>
+              <List slot="content">
+                <IonAccordionGroup onIonChange={accordionGroupChange}>
+                  {visitingSpeakers.map((speaker) => (
+                    <SpeakerAccordion
+                      key={speaker.id}
+                      speaker={speaker}
+                      currentSpeakerId={currentSpeakerId}
+                      currentOutlineId={currentOutlineId}
+                      openAccordion={openAccordion}
+                    />
+                  ))}
+                </IonAccordionGroup>
+              </List>
+            </IonAccordion>
+          )}
+        </IonAccordionGroup>
 
         {speakersWithOutlines.length === 0 && (
           <div style={{ padding: "2rem", textAlign: "center" }}>
@@ -166,9 +176,11 @@ export const PublicTalkSelectModal: React.FC<PublicTalkSelectModalProps> = ({
           </div>
         )}
 
-        <Space height="2" />
+        <Space height="3" />
 
-        <Button onClick={() => setShowAddSpeaker(true)}>Add Visiting Speaker</Button>
+        <Button onClick={() => setShowAddSpeaker(true)}>
+          Add Visiting Speaker
+        </Button>
 
         <AddVisitingSpeakerModal
           isOpen={showAddSpeaker}
