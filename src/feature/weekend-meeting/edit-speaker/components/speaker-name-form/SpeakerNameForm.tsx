@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Text } from "@ionic-display/text/Text";
 import { Item } from "@ionic-layout/item/Item";
 import { List } from "@ionic-layout/list/List";
-import { Input } from "@ionic-input/input/Input";
-import { IonAlert, IonIcon, IonListHeader, IonSelectOption } from "@ionic/react";
-import { Label } from "@ionic-display/label/Label";
-import { Select } from "@ionic-input/select/Select";
-import { addOutline } from "ionicons/icons";
+import {
+  IonAlert
+} from "@ionic/react";
 import { congregationCollection } from "@tanstack-db/congregation/congregationCollection";
+import { TextInput } from "@input/text/TextInput";
+import { SelectItem } from "@input/select/SelectItem";
+import { Space } from "@layout/space/Space";
 
 type Congregation = {
   id: string;
@@ -39,6 +40,8 @@ export const SpeakerNameForm: React.FC<SpeakerNameFormProps> = ({
 }) => {
   const [showAlert, setShowAlert] = useState(false);
   const [alertKey, setAlertKey] = useState(0);
+  const [selectKey, setSelectKey] = useState(0);
+  const previousCongregationId = useRef(congregationId);
 
   const userCongregationId = localStorage.getItem("congregationId");
 
@@ -56,39 +59,38 @@ export const SpeakerNameForm: React.FC<SpeakerNameFormProps> = ({
 
   return (
     <>
-      <List inset>
-        <IonListHeader>
-          <Label color="medium">Congregation</Label>
-        </IonListHeader>
+      <List>
+        <Space height="2" />
         {isLocal ? (
           <Item>
             <Text>{congregationName}</Text>
           </Item>
         ) : (
           <>
-            <Item>
-              <Select
-                label="Congregation"
-                labelPlacement="stacked"
-                value={congregationId}
-                onIonChange={(e) => setCongregationId(e.detail.value)}
-              >
-                {congregations.map((c) => (
-                  <IonSelectOption key={c.id} value={c.id}>
-                    {c.name}
-                  </IonSelectOption>
-                ))}
-              </Select>
-            </Item>
-            <Item
-              onClick={() => {
-                setAlertKey((k) => k + 1);
-                setShowAlert(true);
+            <SelectItem
+              key={selectKey}
+              label="Congregation"
+              value={congregationId}
+              onIonChange={(e) => {
+                if (e.detail.value === "__new__") {
+                  previousCongregationId.current = congregationId;
+                  setAlertKey((k) => k + 1);
+                  setShowAlert(true);
+                  return;
+                }
+                setCongregationId(e.detail.value);
               }}
-            >
-              <IonIcon icon={addOutline} slot="start" color="primary" />
-              <Text color="primary">Add New Congregation</Text>
-            </Item>
+              options={[
+                { value: "__new__", label: "- ADD NEW -" },
+                ...congregations
+                  .slice()
+                  .sort((a, b) => a.name.localeCompare(b.name))
+                  .map((c) => ({
+                    value: c.id,
+                    label: c.name,
+                  })),
+              ]}
+            />
           </>
         )}
       </List>
@@ -96,7 +98,16 @@ export const SpeakerNameForm: React.FC<SpeakerNameFormProps> = ({
       <IonAlert
         key={alertKey}
         isOpen={showAlert}
-        onDidDismiss={() => setShowAlert(false)}
+        onDidDismiss={(e) => {
+          if (
+            e.detail.role === "cancel" ||
+            !e.detail.data?.values?.name?.trim()
+          ) {
+            setCongregationId(previousCongregationId.current);
+            setSelectKey((k) => k + 1);
+          }
+          setShowAlert(false);
+        }}
         header="New Congregation"
         inputs={[
           {
@@ -119,26 +130,17 @@ export const SpeakerNameForm: React.FC<SpeakerNameFormProps> = ({
         ]}
       />
 
-      <List inset>
-        <IonListHeader>
-          <Label color="medium">Speaker Details</Label>
-        </IonListHeader>
-        <Item>
-          <Input
-            label="First Name"
-            labelPlacement="stacked"
-            value={firstName}
-            onIonInput={(e) => setFirstName(e.detail.value ?? "")}
-          />
-        </Item>
-        <Item>
-          <Input
-            label="Last Name"
-            labelPlacement="stacked"
-            value={lastName}
-            onIonInput={(e) => setLastName(e.detail.value ?? "")}
-          />
-        </Item>
+      <List>
+        <TextInput
+          label="First Name"
+          value={firstName}
+          onIonInput={(e) => setFirstName(e.detail.value ?? "")}
+        />
+        <TextInput
+          label="Last Name"
+          value={lastName}
+          onIonInput={(e) => setLastName(e.detail.value ?? "")}
+        />
       </List>
     </>
   );

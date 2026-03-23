@@ -42,7 +42,7 @@ export const SpeakerOutlinesForm: React.FC<SpeakerOutlinesFormProps> = ({
 
   return (
     <>
-      <List inset>
+      <List>
         <IonListHeader>
           <Label color="medium">Assigned Outlines</Label>
         </IonListHeader>
@@ -52,15 +52,8 @@ export const SpeakerOutlinesForm: React.FC<SpeakerOutlinesFormProps> = ({
           </Item>
         ) : (
           assignedOutlines.map((outline) => (
-            <Item
-              key={outline.id}
-              onClick={() => onToggleOutline(outline.id)}
-            >
-              <Checkbox
-                slot="start"
-                checked={true}
-                onIonChange={() => {}}
-              />
+            <Item key={outline.id} onClick={() => onToggleOutline(outline.id)}>
+              <Checkbox slot="start" checked={true} onIonChange={() => {}} />
               <Text>
                 {outline.id} - {outline.theme}
               </Text>
@@ -69,7 +62,7 @@ export const SpeakerOutlinesForm: React.FC<SpeakerOutlinesFormProps> = ({
         )}
       </List>
 
-      <List inset>
+      <List>
         <IonAccordionGroup>
           <IonAccordion value="all-outlines">
             <Item slot="header">
