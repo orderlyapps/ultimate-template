@@ -114,18 +114,20 @@ export const SpeakerNameForm: React.FC<SpeakerNameFormProps> = ({
         ]}
       />
 
-      <List>
-        <TextInput
-          label="First Name"
-          value={firstName}
-          onIonInput={(e) => setFirstName(e.detail.value ?? "")}
-        />
-        <TextInput
-          label="Last Name"
-          value={lastName}
-          onIonInput={(e) => setLastName(e.detail.value ?? "")}
-        />
-      </List>
+      {congregationId && (
+        <List>
+          <TextInput
+            label="First Name"
+            value={firstName}
+            onIonInput={(e) => setFirstName(e.detail.value ?? "")}
+          />
+          <TextInput
+            label="Last Name"
+            value={lastName}
+            onIonInput={(e) => setLastName(e.detail.value ?? "")}
+          />
+        </List>
+      )}
     </>
   );
 };

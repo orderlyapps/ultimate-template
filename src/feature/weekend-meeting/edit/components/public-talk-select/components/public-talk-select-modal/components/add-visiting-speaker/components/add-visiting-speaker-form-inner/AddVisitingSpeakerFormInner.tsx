@@ -22,6 +22,7 @@ export const AddVisitingSpeakerFormInner: React.FC<
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [congregationId, setCongregationId] = useState("");
+  const [speakerId, setSpeakerId] = useState<string | null>(null);
   const [selectedOutlineIds, setSelectedOutlineIds] = useState<string[]>([]);
 
   const handleToggleOutline = (outlineId: string) => {
@@ -32,12 +33,12 @@ export const AddVisitingSpeakerFormInner: React.FC<
     );
   };
 
-  const handleSave = () => {
+  const handleCreateSpeaker = () => {
     if (!congregationId) return;
 
-    const speakerId = crypto.randomUUID();
+    const newSpeakerId = crypto.randomUUID();
     publisherCollection.insert({
-      id: speakerId,
+      id: newSpeakerId,
       congregation_id: congregationId,
       first_name: firstName.trim(),
       last_name: lastName.trim(),
@@ -50,6 +51,12 @@ export const AddVisitingSpeakerFormInner: React.FC<
       type: "speaker",
     });
 
+    setSpeakerId(newSpeakerId);
+  };
+
+  const handleSaveOutlines = () => {
+    if (!speakerId) return;
+
     selectedOutlineIds.forEach((outlineId) => {
       speakerOutlineCollection.insert({
         speaker_id: speakerId,
@@ -60,7 +67,7 @@ export const AddVisitingSpeakerFormInner: React.FC<
     onClose();
   };
 
-  const canSave =
+  const canCreate =
     firstName.trim().length > 0 &&
     lastName.trim().length > 0 &&
     congregationId.length > 0;
@@ -77,14 +84,24 @@ export const AddVisitingSpeakerFormInner: React.FC<
         congregations={congregations}
       />
 
-      <SpeakerOutlinesForm
-        selectedOutlineIds={selectedOutlineIds}
-        onToggleOutline={handleToggleOutline}
-      />
+      {!speakerId && (
+        <Button onClick={handleCreateSpeaker} disabled={!canCreate}>
+          Save & Add Outlines
+        </Button>
+      )}
 
-      <Button onClick={handleSave} disabled={!canSave}>
-        Save Speaker
-      </Button>
+      {speakerId && (
+        <>
+          <SpeakerOutlinesForm
+            selectedOutlineIds={selectedOutlineIds}
+            onToggleOutline={handleToggleOutline}
+          />
+
+          <Button onClick={handleSaveOutlines}>
+            Save Outlines
+          </Button>
+        </>
+      )}
 
       <Space />
     </>
