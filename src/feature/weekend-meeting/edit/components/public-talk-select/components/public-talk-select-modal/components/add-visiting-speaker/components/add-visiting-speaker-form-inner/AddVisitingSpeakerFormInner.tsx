@@ -97,9 +97,9 @@ export const AddVisitingSpeakerFormInner: React.FC<
             onToggleOutline={handleToggleOutline}
           />
 
-          <Button onClick={handleSaveOutlines}>
-            Save Outlines
-          </Button>
+          <Space height="2" />
+          
+          <Button onClick={handleSaveOutlines}>Save Outlines</Button>
         </>
       )}
 

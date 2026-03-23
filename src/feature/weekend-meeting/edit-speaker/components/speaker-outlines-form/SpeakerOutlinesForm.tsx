@@ -9,6 +9,8 @@ import { Label } from "@ionic-display/label/Label";
 import { useLiveQuery } from "@tanstack/react-db";
 import { outlineCollection } from "@tanstack-db/outline/outlineCollection";
 import { sortByNumberString } from "@sort/sortByNumberString";
+import { ItemAccordionHeader } from "@ionic-layout/accordion-header/AccordionHeader";
+import { Space } from "@layout/space/Space";
 
 type SpeakerOutlinesFormProps = {
   selectedOutlineIds: string[];
@@ -44,7 +46,7 @@ export const SpeakerOutlinesForm: React.FC<SpeakerOutlinesFormProps> = ({
     <>
       <List>
         <IonListHeader>
-          <Label color="medium">Assigned Outlines</Label>
+          <Label>Assigned Outlines</Label>
         </IonListHeader>
         {assignedOutlines.length === 0 ? (
           <Item>
@@ -53,8 +55,8 @@ export const SpeakerOutlinesForm: React.FC<SpeakerOutlinesFormProps> = ({
         ) : (
           assignedOutlines.map((outline) => (
             <Item key={outline.id} onClick={() => onToggleOutline(outline.id)}>
-              <Checkbox slot="start" checked={true} onIonChange={() => {}} />
-              <Text>
+              <Checkbox slot="end" checked={true} onIonChange={() => {}} />
+              <Text size="xs">
                 {outline.id} - {outline.theme}
               </Text>
             </Item>
@@ -62,42 +64,43 @@ export const SpeakerOutlinesForm: React.FC<SpeakerOutlinesFormProps> = ({
         )}
       </List>
 
+      <Space height="1.5" />
       <List>
         <IonAccordionGroup>
           <IonAccordion value="all-outlines">
-            <Item slot="header">
-              <Label>All Outlines</Label>
-            </Item>
-            <div slot="content">
-              <Searchbar
-                value={searchQuery}
-                onIonInput={(e) => setSearchQuery(e.detail.value ?? "")}
-                placeholder="Search outlines..."
-                debounce={300}
-              />
-              <List>
-                {filtered.map((outline) => (
-                  <Item
-                    key={outline.id}
-                    onClick={() => onToggleOutline(outline.id)}
-                  >
-                    <Checkbox
-                      slot="start"
-                      checked={selectedOutlineIds.includes(outline.id)}
-                      onIonChange={() => {}}
-                    />
-                    <Text>
-                      {outline.id} - {outline.theme}
-                    </Text>
-                  </Item>
-                ))}
-                {filtered.length === 0 && (
-                  <Item>
-                    <Text color="medium">No outlines found</Text>
-                  </Item>
-                )}
-              </List>
-            </div>
+            <ItemAccordionHeader>
+              <Label>Outline List</Label>
+            </ItemAccordionHeader>
+            <List slot="content">
+              <Item lines="none">
+                <Searchbar
+                  value={searchQuery}
+                  onIonInput={(e) => setSearchQuery(e.detail.value ?? "")}
+                  placeholder="Search outlines..."
+                  debounce={300}
+                />
+              </Item>
+              {filtered.map((outline) => (
+                <Item
+                  key={outline.id}
+                  onClick={() => onToggleOutline(outline.id)}
+                >
+                  <Checkbox
+                    slot="end"
+                    checked={selectedOutlineIds.includes(outline.id)}
+                    onIonChange={() => {}}
+                  />
+                  <Text size="xs">
+                    {outline.id} - {outline.theme}
+                  </Text>
+                </Item>
+              ))}
+              {filtered.length === 0 && (
+                <Item>
+                  <Text color="medium">No outlines found</Text>
+                </Item>
+              )}
+            </List>
           </IonAccordion>
         </IonAccordionGroup>
       </List>
