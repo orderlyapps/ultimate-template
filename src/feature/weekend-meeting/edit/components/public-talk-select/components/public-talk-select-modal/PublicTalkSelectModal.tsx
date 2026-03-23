@@ -27,7 +27,6 @@ import {
 } from "./utils/groupSpeakersWithOutlines";
 import { SpeakerAccordion } from "./components/speaker-accordion/SpeakerAccordion";
 import { AddVisitingSpeakerModal } from "./components/add-visiting-speaker/AddVisitingSpeakerModal";
-import { useAddVisitingSpeakerStore } from "./components/add-visiting-speaker/store/useAddVisitingSpeakerStore";
 import { Space } from "@layout/space/Space";
 import { useState } from "react";
 
@@ -48,7 +47,7 @@ export const PublicTalkSelectModal: React.FC<PublicTalkSelectModalProps> = ({
     (s) => s.deleteAssignment,
   );
   const congregationId = useWeekendMeetingEditStore((s) => s.congregationId);
-  const openAddSpeaker = useAddVisitingSpeakerStore((s) => s.open);
+  const [showAddSpeaker, setShowAddSpeaker] = useState(false);
 
   const { data: publishers = [] } = useLiveQuery((q) =>
     q.from({ p: publisherCollection }).select(({ p }) => ({
@@ -169,9 +168,12 @@ export const PublicTalkSelectModal: React.FC<PublicTalkSelectModalProps> = ({
 
         <Space height="2" />
 
-        <Button onClick={openAddSpeaker}>Add Visiting Speaker</Button>
+        <Button onClick={() => setShowAddSpeaker(true)}>Add Visiting Speaker</Button>
 
-        <AddVisitingSpeakerModal />
+        <AddVisitingSpeakerModal
+          isOpen={showAddSpeaker}
+          onClose={() => setShowAddSpeaker(false)}
+        />
 
         <Space />
       </IonContent>

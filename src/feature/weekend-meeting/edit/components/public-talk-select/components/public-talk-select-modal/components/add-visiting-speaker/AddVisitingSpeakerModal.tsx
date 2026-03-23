@@ -1,5 +1,5 @@
-import { CloseButton } from "@input/button/close-button/CloseButton";
 import {
+  IonButton,
   IonButtons,
   IonContent,
   IonHeader,
@@ -7,37 +7,47 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { useAddVisitingSpeakerStore } from "./store/useAddVisitingSpeakerStore";
-import { CongregationStep } from "./components/congregation-step/CongregationStep";
-import { DetailsStep } from "./components/details-step/DetailsStep";
-import { OutlinesStep } from "./components/outlines-step/OutlinesStep";
+import { useAddVisitingSpeakerData } from "./useAddVisitingSpeakerData";
+import { AddVisitingSpeakerFormInner } from "./components/add-visiting-speaker-form-inner/AddVisitingSpeakerFormInner";
 
-const stepTitles = {
-  congregation: "Select Congregation",
-  details: "Speaker Details",
-  outlines: "Select Outlines",
-} as const;
+type AddVisitingSpeakerModalProps = {
+  isOpen: boolean;
+  onClose: () => void;
+};
 
-export const AddVisitingSpeakerModal: React.FC = () => {
-  const isOpen = useAddVisitingSpeakerStore((s) => s.isOpen);
-  const step = useAddVisitingSpeakerStore((s) => s.step);
-  const close = useAddVisitingSpeakerStore((s) => s.close);
-
+export const AddVisitingSpeakerModal: React.FC<
+  AddVisitingSpeakerModalProps
+> = ({ isOpen, onClose }) => {
   return (
-    <IonModal isOpen={isOpen} onDidDismiss={close}>
+    <IonModal isOpen={isOpen} onDidDismiss={onClose}>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>{stepTitles[step]}</IonTitle>
-          <IonButtons slot="end">
-            <CloseButton onClick={close} />
+          <IonButtons slot="start">
+            <IonButton onClick={onClose}>Cancel</IonButton>
           </IonButtons>
+          <IonTitle>Add Visiting Speaker</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        {step === "congregation" && <CongregationStep />}
-        {step === "details" && <DetailsStep />}
-        {step === "outlines" && <OutlinesStep />}
+        <AddVisitingSpeakerContent onClose={onClose} />
       </IonContent>
     </IonModal>
+  );
+};
+
+type AddVisitingSpeakerContentProps = {
+  onClose: () => void;
+};
+
+const AddVisitingSpeakerContent: React.FC<AddVisitingSpeakerContentProps> = ({
+  onClose,
+}) => {
+  const { congregations } = useAddVisitingSpeakerData();
+
+  return (
+    <AddVisitingSpeakerFormInner
+      congregations={congregations}
+      onClose={onClose}
+    />
   );
 };
