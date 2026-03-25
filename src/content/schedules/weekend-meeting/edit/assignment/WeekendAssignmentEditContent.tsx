@@ -1,16 +1,8 @@
-import { useParams } from "react-router-dom";
+import { usePublishers } from "./hooks/usePublishers";
+import { PublisherList } from "./components/publisher-list/PublisherList";
 
 export const WeekendAssignmentEditContent: React.FC = () => {
-  const { week_id, assignment_id } = useParams<{
-    week_id: string;
-    assignment_id: string;
-  }>();
+  const { publishers } = usePublishers();
 
-  return (
-    <div className="p-4">
-      <p>Weekend Assignment Edit Content Placeholder</p>
-      <p>Week ID: {week_id}</p>
-      <p>Assignment ID: {assignment_id}</p>
-    </div>
-  );
+  return <PublisherList publishers={publishers} />;
 };
