@@ -1,18 +1,18 @@
+import { WeekendAssignmentEditContent } from "@/content/schedules/weekend-meeting/edit/assignment/WeekendAssignmentEditContent";
 import {
   IonBackButton,
   IonButtons,
-  IonPage,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
   IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
 } from "@ionic/react";
 import { useParams } from "react-router-dom";
 
 export const WeekendAssignmentEdit: React.FC = () => {
   const { week_id } = useParams<{
     week_id: string;
-    assignment_id: string;
   }>();
 
   return (
@@ -29,7 +29,7 @@ export const WeekendAssignmentEdit: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        {/* Content will be implemented later */}
+        <WeekendAssignmentEditContent />
       </IonContent>
     </IonPage>
   );
