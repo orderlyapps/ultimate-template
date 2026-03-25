@@ -9,6 +9,7 @@ import { PublicTalkSelect } from "./components/public-talk-select/PublicTalkSele
 import { useWeekendMeetingEditStore } from "./store/useWeekendMeetingEditStore";
 import { getUserCongregation } from "@feature/db/congregation/user-congregation/get-user-congregation/getUserCongregation";
 import { formatPublisherName } from "@format/formatPublisherName";
+import { WeekEvents } from "@feature/db/shared/week-events/WeekEvents";
 
 type WeekendMeetingEditFormProps = {
   weekId: string;
@@ -83,15 +84,18 @@ export const WeekendMeetingEditForm: React.FC<WeekendMeetingEditFormProps> = ({
   );
 
   return (
-    <PublicTalkSelect
-      speakerId={currentAssignment?.speakerId}
-      outlineId={currentAssignment?.outlineId}
-      speakerName={speakerName}
-      outlineTheme={currentAssignment?.outlineTheme}
-      congregationName={currentAssignment?.congregationName}
-      isLocalSpeaker={
-        currentAssignment?.speakerCongregationId === congregationId
-      }
-    />
+    <>
+      <WeekEvents weekId={weekId} meetingType="weekend" />
+      <PublicTalkSelect
+        speakerId={currentAssignment?.speakerId}
+        outlineId={currentAssignment?.outlineId}
+        speakerName={speakerName}
+        outlineTheme={currentAssignment?.outlineTheme}
+        congregationName={currentAssignment?.congregationName}
+        isLocalSpeaker={
+          currentAssignment?.speakerCongregationId === congregationId
+        }
+      />
+    </>
   );
 };
