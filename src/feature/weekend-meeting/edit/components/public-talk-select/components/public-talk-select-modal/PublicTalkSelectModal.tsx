@@ -22,8 +22,10 @@ import { useWeekendMeetingEditStore } from "@feature/weekend-meeting/edit/store/
 import {
   groupSpeakersWithOutlines,
   filterSpeakers,
+  groupSpeakersByCongregation,
 } from "./utils/groupSpeakersWithOutlines";
 import { SpeakerAccordion } from "./components/speaker-accordion/SpeakerAccordion";
+import { CongregationSpeakersAccordion } from "./components/congregation-speakers-accordion/CongregationSpeakersAccordion";
 import { AddVisitingSpeakerModal } from "./components/add-visiting-speaker/AddVisitingSpeakerModal";
 import { Space } from "@layout/space/Space";
 import { useState } from "react";
@@ -92,6 +94,7 @@ export const PublicTalkSelectModal: React.FC<PublicTalkSelectModalProps> = ({
   const filteredSpeakers = filterSpeakers(speakersWithOutlines, searchQuery);
   const localSpeakers = filteredSpeakers.filter((s) => s.isLocal);
   const visitingSpeakers = filteredSpeakers.filter((s) => !s.isLocal);
+  const congregationGroups = groupSpeakersByCongregation(visitingSpeakers);
 
   const [openAccordion, setOpenAccordion] = useState();
   const accordionGroupChange = (event: AccordionGroupCustomEvent) => {
@@ -148,20 +151,21 @@ export const PublicTalkSelectModal: React.FC<PublicTalkSelectModalProps> = ({
             </IonAccordion>
           )}
 
-          {visitingSpeakers.length > 0 && (
+          {congregationGroups.length > 0 && (
             <IonAccordion value="visiting">
               <ItemAccordionHeader>
                 <SectionHeading>Visiting Speakers</SectionHeading>
               </ItemAccordionHeader>
               <List slot="content">
-                <IonAccordionGroup onIonChange={accordionGroupChange}>
-                  {visitingSpeakers.map((speaker) => (
-                    <SpeakerAccordion
-                      key={speaker.id}
-                      speaker={speaker}
+                <IonAccordionGroup multiple={true}>
+                  {congregationGroups.map((group) => (
+                    <CongregationSpeakersAccordion
+                      key={group.congregationId}
+                      group={group}
                       currentSpeakerId={currentSpeakerId}
                       currentOutlineId={currentOutlineId}
                       openAccordion={openAccordion}
+                      onAccordionChange={accordionGroupChange}
                     />
                   ))}
                 </IonAccordionGroup>

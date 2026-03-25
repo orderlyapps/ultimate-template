@@ -84,6 +84,33 @@ export const groupSpeakersWithOutlines = (
   );
 };
 
+export type CongregationGroup = {
+  congregationId: string;
+  congregationName: string;
+  speakers: SpeakerWithOutlines[];
+};
+
+export const groupSpeakersByCongregation = (
+  speakers: SpeakerWithOutlines[],
+): CongregationGroup[] => {
+  const map = new Map<string, CongregationGroup>();
+
+  speakers.forEach((speaker) => {
+    if (!map.has(speaker.congregationId)) {
+      map.set(speaker.congregationId, {
+        congregationId: speaker.congregationId,
+        congregationName: speaker.congregationName,
+        speakers: [],
+      });
+    }
+    map.get(speaker.congregationId)!.speakers.push(speaker);
+  });
+
+  return Array.from(map.values()).sort((a, b) =>
+    a.congregationName.localeCompare(b.congregationName),
+  );
+};
+
 export const filterSpeakers = (
   speakers: SpeakerWithOutlines[],
   searchQuery: string,
