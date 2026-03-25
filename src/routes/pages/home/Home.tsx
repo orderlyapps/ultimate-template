@@ -17,9 +17,7 @@ export const Home: React.FC = () => {
   const isMapPrintEnabled = useAppFeaturesStore((s) => s.isEnabled("mapPrint"));
   const hasAnyToolEnabled = isTalksEnabled || isMapPrintEnabled;
 
-  const { isUnlocked } = useFeatureAccess([
-    "damian",
-  ]);
+  const { isUnlocked } = useFeatureAccess(["damian"]);
 
   return (
     <IonPage>
@@ -44,6 +42,7 @@ export const Home: React.FC = () => {
             <NavItem routerLink="/home/tools">Tools</NavItem>
           )}
         </List>
+        <Space />
       </IonContent>
     </IonPage>
   );

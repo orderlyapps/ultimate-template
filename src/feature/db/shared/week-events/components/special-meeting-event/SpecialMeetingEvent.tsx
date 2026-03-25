@@ -7,7 +7,7 @@ import { Col } from "@ionic-layout/col/Col";
 
 export const SpecialMeetingEvent: FC = () => {
   return (
-    <Item color="primary">
+    <Item color="primary" lines="none">
       <Grid className="ion-text-nowrap ion-text-center">
         <Row>
           <Col>

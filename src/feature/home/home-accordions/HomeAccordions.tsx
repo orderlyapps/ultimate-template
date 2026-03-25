@@ -2,7 +2,7 @@ import { IonAccordionGroup } from "@ionic/react";
 import {
   useHomeAccordionOrderStore,
   type HomeAccordionId,
-} from "@services/app/home-accordion-order/useHomeAccordionOrderStore";
+} from "@feature/home/store/useHomeAccordionOrderStore";
 import { HomeAccordionItem } from "./components/home-accordion-item/HomeAccordionItem";
 
 export function HomeAccordions() {

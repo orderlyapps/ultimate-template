@@ -12,7 +12,7 @@ export const SpecialTalkEvent: FC<{ meetingType: "midweek" | "weekend" }> = ({
     return null;
   }
   return (
-    <Item color="primary" className="ion-padding-vertical">
+    <Item color="primary" className="ion-padding-vertical" lines="none">
       <Grid className="ion-text-nowrap ion-text-center">
         <Row>
           <Col>

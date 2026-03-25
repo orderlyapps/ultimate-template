@@ -1,9 +1,7 @@
 import { UpcomingWeekendMeetings } from "@feature/db/weekend-meeting/upcoming-weekend-meetings/UpcomingWeekendMeetings";
 import {
   IonBackButton,
-  IonButton,
   IonButtons,
-  IonIcon,
   IonPage,
   IonHeader,
   IonToolbar,
@@ -12,16 +10,14 @@ import {
 } from "@ionic/react";
 import { useParams, useHistory } from "react-router-dom";
 import { WeekNavigation } from "@ui/components/custom/navigation/week-navigation/WeekNavigation";
-import editIcon from "@icons/edit.svg";
 import { useFeatureAccess } from "@services/app/auth/temp-feature-access/useFeatureAccess";
+import { EditButton } from "@input/button/edit-button/EditButton";
 
 export const WeekendMeeting: React.FC = () => {
   const history = useHistory();
   const { week_id } = useParams<{ week_id: string }>();
 
-  const { isUnlocked: show } = useFeatureAccess([
-    "damian",
-  ]);
+  const { isUnlocked: show } = useFeatureAccess(["damian"]);
 
   return (
     <IonPage>
@@ -32,13 +28,11 @@ export const WeekendMeeting: React.FC = () => {
           </IonButtons>
           <IonButtons slot="end">
             {show && (
-              <IonButton
+              <EditButton
                 onClick={() =>
                   history.push(`/schedules/weekend-meeting/${week_id}/edit`)
                 }
-              >
-                <IonIcon src={editIcon} slot="icon-only" />
-              </IonButton>
+              />
             )}
           </IonButtons>
           <IonTitle>Weekend Meeting</IonTitle>

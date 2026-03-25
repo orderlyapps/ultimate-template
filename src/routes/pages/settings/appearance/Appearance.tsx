@@ -14,7 +14,7 @@ import { Item } from "@ionic-layout/item/Item";
 import { List } from "@ionic-layout/list/List";
 import { Text } from "@ionic-display/text/Text";
 import { SelectTheme } from "@services/app/theme/SelectTheme";
-import { ReorderAccordionsModal } from "@feature/home/reorder-accordions-modal/ReorderAccordionsModal";
+import { ReorderAccordionsModal } from "@feature/home/home-accordions/components/reorder-accordions-modal/ReorderAccordionsModal";
 
 export const Appearance: React.FC = () => {
   const [isReorderOpen, setIsReorderOpen] = useState(false);
