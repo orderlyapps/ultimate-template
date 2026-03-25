@@ -10,6 +10,7 @@ import { useWeekendMeetingEditStore } from "./store/useWeekendMeetingEditStore";
 import { getUserCongregation } from "@feature/db/congregation/user-congregation/get-user-congregation/getUserCongregation";
 import { formatPublisherName } from "@format/formatPublisherName";
 import { WeekEvents } from "@feature/db/shared/week-events/WeekEvents";
+import { WeekendAssignmentsList } from "./components/weekend-assignments-list/WeekendAssignmentsList";
 
 type WeekendMeetingEditFormProps = {
   weekId: string;
@@ -86,6 +87,7 @@ export const WeekendMeetingEditForm: React.FC<WeekendMeetingEditFormProps> = ({
   return (
     <>
       <WeekEvents weekId={weekId} meetingType="weekend" />
+      <WeekendAssignmentsList weekId={weekId} />
       <PublicTalkSelect
         speakerId={currentAssignment?.speakerId}
         outlineId={currentAssignment?.outlineId}

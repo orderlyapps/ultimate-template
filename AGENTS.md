@@ -18,13 +18,26 @@ load: "node_modules/.pnpm/@tanstack+react-db@0.1.76_react@19.2.4_typescript@5.9.
 
 <coding_guidelines>
 
-1. Never use barrel files
-2. Try to keep react component files to less than 75 lines. When breaking down components keep the smaller components in a kebab-case subfolder in a "components" folder inside the parent component.
-3. Do not use ionic card components unless explicitly requested
-4. All ionic page components should be kept in src/routes/pages. Pages should be kept in a kebab case folder and nested according to their route
-5. All folders should be kebab case.
-6. Do not use useMemo or useCallback unless explicitly requested
-7. Route pages in src/routes/pages should only contain IonPage wrapper components with minimal state for modals/alerts. All feature logic, lists, forms, and reusable components should be placed in src/feature/{feature-name}. Route pages should import and compose feature components.
-8. Prefer managing state in a Zustand store over passing state via props
-9. Place any useLiveQuery from @tanstack/react-db code in a new custom hook in it's own file. 
-   </coding_guidelines>
+# Code Organization
+
+- Never use barrel files
+- All folders should be kebab case.
+- Try to keep react component files to less than 75 lines. When breaking down components keep the smaller components in a kebab-case subfolder in a "components" folder inside the parent component.
+- Route pages in src/routes/pages should only contain IonPage wrapper components with minimal state for modals/alerts. All feature logic, lists, forms, and reusable components should be placed in src/feature/{feature-name}. Route pages should import and compose feature components.
+- All ionic page components should be kept in src/routes/pages. Pages should be kept in a kebab case folder and nested according to their route
+
+# Working with TanStack DB
+
+- When using useLiveQuery from @tanstack/react-db place the code in a new custom hook in it's own file.
+- When selecting or mapping database fields in queries, preserve the original snake_case property names from the schema. Do not convert to camelCase.
+
+# State Management
+
+- Prefer managing state in a Zustand store over passing state via props.
+
+# UI
+
+- Use div tags as a last resort when an Ionic component or a component from src/ui/components will not do the job.
+- Do not use ionic card components unless explicitly requested
+
+  </coding_guidelines>
