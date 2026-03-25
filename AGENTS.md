@@ -25,7 +25,7 @@ load: "node_modules/.pnpm/@tanstack+react-db@0.1.76_react@19.2.4_typescript@5.9.
 - Try to keep react component files to less than 75 lines. When breaking down components keep the smaller components in a kebab-case subfolder in a "components" folder inside the parent component.
 - All ionic page components should be kept in src/routes/pages. Pages should be kept in a kebab case folder and nested according to their route
 - Route pages in src/routes/pages should only contain IonPage wrapper components with minimal state for modals/alerts. All feature logic, lists, forms, and reusable components should be placed in src/feature/{feature-name}. Route pages should import and compose feature components.
-- Place page content in src/content. The folder structure of this directory should match src/routes/pages.
+- Place page content components in src/content in a folder so that structure of this directory matches src/routes/pages.
 
 # Working with TanStack DB
 
