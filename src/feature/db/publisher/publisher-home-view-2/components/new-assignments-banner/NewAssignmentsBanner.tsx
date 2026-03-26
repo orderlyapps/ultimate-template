@@ -30,7 +30,7 @@ export const NewAssignmentsBanner: React.FC<Props> = ({
       <Space height="2" />
       <Item lines="none">
         <IonLabel>
-          <SectionHeading>Assignment Notification{s}</SectionHeading>
+          <SectionHeading>Notification{s}</SectionHeading>
         </IonLabel>
         <Text onClick={onDismissAll} size="sm" color="primary">
           Clear {s && "All"}
