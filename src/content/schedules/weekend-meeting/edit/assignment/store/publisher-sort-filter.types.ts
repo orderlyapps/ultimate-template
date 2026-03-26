@@ -53,8 +53,6 @@ export const FILTERABLE_STATS: Exclude<SortableStatKey, "alphabetical">[] = [
   "weeksUntilAnyAssignment",
   "avgWeeksBetweenSameAssignment",
   "avgWeeksBetweenAnyAssignment",
-  "pastAssignments",
-  "futureAssignments",
 ];
 
 export const DEFAULT_PRESETS: SortFilterPreset[] = [
