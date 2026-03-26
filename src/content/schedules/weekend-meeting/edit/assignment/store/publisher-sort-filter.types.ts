@@ -84,45 +84,27 @@ export const DEFAULT_PRESETS: SortFilterPreset[] = [
     },
     isBuiltIn: true,
   },
-
   {
-    id: "builtin-longest-since-same",
-    name: "Longest Since Same Assignment",
+    id: "custom-1774496976944",
+    name: "Fill In",
     config: {
-      sortBy: "weeksSinceSameAssignment",
+      sortBy: "weeksBetweenAnyLastAndNext",
       sortDirection: "desc",
-      filters: [],
+      filters: [
+        {
+          stat: "weeksBetweenAnyLastAndNext",
+          minWeeks: 4,
+        },
+        {
+          stat: "weeksSinceAnyAssignment",
+          minWeeks: 2,
+        },
+      ],
       nullValueHandling: "end",
-      hideWithCurrentWeekAssignment: false,
-      hideNonParticipants: false,
+      hideWithCurrentWeekAssignment: true,
+      hideNonParticipants: true,
     },
-    isBuiltIn: true,
-  },
-  {
-    id: "builtin-longest-since-any",
-    name: "Longest Since Any Assignment",
-    config: {
-      sortBy: "weeksSinceAnyAssignment",
-      sortDirection: "desc",
-      filters: [],
-      nullValueHandling: "end",
-      hideWithCurrentWeekAssignment: false,
-      hideNonParticipants: false,
-    },
-    isBuiltIn: true,
-  },
-  {
-    id: "builtin-alphabetical",
-    name: "Alphabetical",
-    config: {
-      sortBy: "alphabetical",
-      sortDirection: "asc",
-      filters: [],
-      nullValueHandling: "end",
-      hideWithCurrentWeekAssignment: false,
-      hideNonParticipants: false,
-    },
-    isBuiltIn: true,
+    isBuiltIn: false,
   },
 ];
 
