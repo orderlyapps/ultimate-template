@@ -1,24 +1,37 @@
-import { Text } from "@ionic-display/text/Text";
 import type { PublisherAssignmentStats } from "../../../../hooks/usePublisherAssignmentStats";
+import { usePublisherSortFilterStore } from "../../../../store/usePublisherSortFilterStore";
+import {
+  type SortableStatKey,
+} from "../../../../store/publisher-sort-filter.types";
+import { IonChip } from "@ionic/react";
 
 type Props = {
   stats: PublisherAssignmentStats | undefined;
 };
 
 export const StatsDisplay: React.FC<Props> = ({ stats }) => {
-  if (!stats) return null;
-
-  const sinceSame = stats.weeksSinceSameAssignment ?? "-";
-  const sinceAny = stats.weeksSinceAnyAssignment ?? "-";
-  const untilSame = stats.weeksUntilSameAssignment ?? "-";
-  const untilAny = stats.weeksUntilAnyAssignment ?? "-";
-  const avgSame = stats.avgWeeksBetweenSameAssignment ?? "-";
-  const avgAny = stats.avgWeeksBetweenAnyAssignment ?? "-";
-  const hasAssignment = stats.hasCurrentWeekAssignment ? "✓" : "";
-
-  return (
-    <Text>
-      {`${sinceSame} | ${sinceAny} | ${untilSame} | ${untilAny} | ${avgSame} | ${avgAny}${hasAssignment ? ` | ${hasAssignment}` : ""}`}
-    </Text>
+  const configByAssignment = usePublisherSortFilterStore(
+    (s) => s.configByAssignment,
   );
+  const currentAssignmentId = usePublisherSortFilterStore(
+    (s) => s.currentAssignmentId,
+  );
+  const sortBy = currentAssignmentId
+    ? (configByAssignment[currentAssignmentId]?.config?.sortBy ??
+      "alphabetical")
+    : "alphabetical";
+
+  if (!stats) return null;
+  if (sortBy === "alphabetical") return null;
+
+  const value = getStatValue(stats, sortBy);
+
+  return <IonChip>{`${value ?? "-"}`}</IonChip>;
 };
+
+function getStatValue(
+  stats: PublisherAssignmentStats,
+  key: Exclude<SortableStatKey, "alphabetical">,
+): number | null {
+  return stats[key];
+}

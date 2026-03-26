@@ -12,6 +12,8 @@ export type PublisherAssignmentStats = {
   weeksUntilAnyAssignment: number | null;
   avgWeeksBetweenSameAssignment: number | null;
   avgWeeksBetweenAnyAssignment: number | null;
+  pastAssignments: number;
+  futureAssignments: number;
   hasCurrentWeekAssignment: boolean;
 };
 
@@ -142,6 +144,8 @@ export const usePublisherAssignmentStats = (
       weeksUntilAnyAssignment,
       avgWeeksBetweenSameAssignment,
       avgWeeksBetweenAnyAssignment,
+      pastAssignments: sameAssignmentWeeks.length,
+      futureAssignments: futureSameAssignmentWeeks.length,
       hasCurrentWeekAssignment: currentWeekAssignments.length > 0,
     });
   }

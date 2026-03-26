@@ -21,7 +21,7 @@ export const SelectItem: React.FC<SelectItemProps> = ({
 
   return (
     <IonItem>
-      <Label>{label}</Label>
+      {label && <Label>{label}</Label>}
       <Select {...defaultProps}>
         {options.map((option) => (
           <IonSelectOption key={option.value} value={option.value}>
