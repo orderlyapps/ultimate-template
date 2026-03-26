@@ -2,6 +2,7 @@ import { Redirect, Route } from "react-router-dom";
 import { IonRouterOutlet } from "@ionic/react";
 import { Home } from "@pages/home/Home";
 import { Tools } from "@pages/home/tools/Tools";
+import { SchedulePdfs } from "@pages/home/tools/schedule-pdfs/SchedulePdfs";
 import { Announcements } from "@pages/home/announcements/Announcements";
 import { Announcement } from "@pages/home/announcement/Announcement";
 import { Talks } from "@pages/home/talks/Talks";
@@ -44,6 +45,7 @@ export const pages = (
     <Route exact path="/login" render={() => <Login />} />
     <Route exact path="/home" render={() => <Home />} />
     <Route exact path="/home/tools" render={() => <Tools />} />
+    <Route exact path="/home/tools/schedule-pdfs" render={() => <SchedulePdfs />} />
     <Route exact path="/home/announcements" render={() => <Announcements />} />
     <Route exact path="/home/announcements/:announcementId" render={() => <Announcement />} />
     <Route exact path="/home/talks" render={() => <Talks />} />

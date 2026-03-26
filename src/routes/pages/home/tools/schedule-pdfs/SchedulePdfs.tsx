@@ -7,26 +7,26 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { ToolsContent } from "@/content/home/tools/ToolsContent";
+import { SchedulePdfsContent } from "@/content/home/tools/schedule-pdfs/SchedulePdfsContent";
 
-export const Tools: React.FC = () => {
+export const SchedulePdfs: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/home" text="Home" />
+            <IonBackButton defaultHref="/home/tools" text="Tools" />
           </IonButtons>
-          <IonTitle>Tools</IonTitle>
+          <IonTitle>Schedule PDFs</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen className="ion-padding">
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Tools</IonTitle>
+            <IonTitle size="large">Schedule PDFs</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <ToolsContent />
+        <SchedulePdfsContent />
       </IonContent>
     </IonPage>
   );
