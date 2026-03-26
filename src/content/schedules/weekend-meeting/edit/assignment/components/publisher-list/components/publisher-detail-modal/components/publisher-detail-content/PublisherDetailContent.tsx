@@ -5,6 +5,7 @@ import { Text } from "@ionic-display/text/Text";
 import type { Publisher } from "@tanstack-db/publisher/publisherSchema";
 import { usePublisherAssignmentHistory } from "../../../../../../hooks/usePublisherAssignmentHistory";
 import { getTheocraticWeekLabel } from "@date/getTheocraticWeekLabel";
+import { differenceInWeeks, parseISO } from "date-fns";
 import { formatAssignmentLabel } from "@/content/schedules/weekend-meeting/edit/assignment/components/publisher-list/components/publisher-detail-modal/components/publisher-detail-content/formatAssignmentLabel";
 import type { WeekendAssignmentID } from "@tanstack-db/weekend_assignment/weekendAssignmentSchema";
 import { useParams } from "react-router-dom";
@@ -14,10 +15,10 @@ type Props = {
 };
 
 export const PublisherDetailContent: React.FC<Props> = ({ publisher }) => {
-    const { week_id, assignment_id } = useParams<{
-      week_id: string;
-      assignment_id: WeekendAssignmentID;
-    }>();
+  const { week_id, assignment_id } = useParams<{
+    week_id: string;
+    assignment_id: WeekendAssignmentID;
+  }>();
 
   const history = usePublisherAssignmentHistory(
     publisher.id,
@@ -25,58 +26,52 @@ export const PublisherDetailContent: React.FC<Props> = ({ publisher }) => {
     assignment_id,
   );
 
+  const selectedWeekDate = parseISO(week_id);
+
+  const getWeeksDiff = (assignmentWeekId: string): number => {
+    return differenceInWeeks(parseISO(assignmentWeekId), selectedWeekDate);
+  };
+
   return (
     <List>
       <Item>
         <IonLabel>
-          <Text>
-            <strong>Weeks since same assignment:</strong>{" "}
-            {history.weeksSinceSameAssignment ?? "Never"}
-          </Text>
+          <strong>Weeks since same assignment:</strong>{" "}
         </IonLabel>
+        <Text>{history.weeksSinceSameAssignment ?? "Never"}</Text>
       </Item>
       <Item>
         <IonLabel>
-          <Text>
-            <strong>Weeks since any assignment:</strong>{" "}
-            {history.weeksSinceAnyAssignment ?? "Never"}
-          </Text>
+          <strong>Weeks since any assignment:</strong>{" "}
         </IonLabel>
+        <Text>{history.weeksSinceAnyAssignment ?? "Never"}</Text>
       </Item>
       <Item>
         <IonLabel>
-          <Text>
-            <strong>Weeks until same assignment:</strong>{" "}
-            {history.weeksUntilSameAssignment ?? "None scheduled"}
-          </Text>
+          <strong>Weeks until same assignment:</strong>{" "}
         </IonLabel>
+        <Text>{history.weeksUntilSameAssignment ?? "None scheduled"}</Text>
       </Item>
       <Item>
         <IonLabel>
-          <Text>
-            <strong>Weeks until any assignment:</strong>{" "}
-            {history.weeksUntilAnyAssignment ?? "None scheduled"}
-          </Text>
+          <strong>Weeks until any assignment:</strong>{" "}
         </IonLabel>
+        <Text>{history.weeksUntilAnyAssignment ?? "None scheduled"}</Text>
       </Item>
       <Item>
         <IonLabel>
-          <Text>
-            <strong>Avg weeks between same assignment:</strong>{" "}
-            {history.avgWeeksBetweenSameAssignment ?? "N/A"}
-          </Text>
+          <strong>Avg weeks between same assignment:</strong>{" "}
         </IonLabel>
+        <Text>{history.avgWeeksBetweenSameAssignment ?? "N/A"}</Text>
       </Item>
       <Item>
         <IonLabel>
-          <Text>
-            <strong>Avg weeks between any assignment:</strong>{" "}
-            {history.avgWeeksBetweenAnyAssignment ?? "N/A"}
-          </Text>
+          <strong>Avg weeks between any assignment:</strong>{" "}
         </IonLabel>
+        <Text>{history.avgWeeksBetweenAnyAssignment ?? "N/A"}</Text>
       </Item>
 
-      {history.currentWeekAssignments.length > 0 && (
+      {
         <>
           <Item>
             <IonLabel>
@@ -85,6 +80,9 @@ export const PublisherDetailContent: React.FC<Props> = ({ publisher }) => {
               </Text>
             </IonLabel>
           </Item>
+
+          {history.currentWeekAssignments.length === 0 && <Item>None</Item>}
+
           {history.currentWeekAssignments.map((a, i) => (
             <Item key={`current-${i}`}>
               <IonLabel className="ion-padding-start">
@@ -93,9 +91,9 @@ export const PublisherDetailContent: React.FC<Props> = ({ publisher }) => {
             </Item>
           ))}
         </>
-      )}
+      }
 
-      {history.futureAssignments.length > 0 && (
+      {
         <>
           <Item>
             <IonLabel>
@@ -104,19 +102,23 @@ export const PublisherDetailContent: React.FC<Props> = ({ publisher }) => {
               </Text>
             </IonLabel>
           </Item>
+
+          {history.futureAssignments.length === 0 && <Item>None</Item>}
+
           {history.futureAssignments.map((a, i) => (
             <Item key={`future-${i}`}>
               <IonLabel className="ion-padding-start">
                 <Text>
-                  {getTheocraticWeekLabel(a.week_id)} - {formatAssignmentLabel(a)}
+                  {getTheocraticWeekLabel(a.week_id)} ({getWeeksDiff(a.week_id)}{" "}
+                  weeks) - {formatAssignmentLabel(a)}
                 </Text>
               </IonLabel>
             </Item>
           ))}
         </>
-      )}
+      }
 
-      {history.pastAssignments.length > 0 && (
+      {
         <>
           <Item>
             <IonLabel>
@@ -125,17 +127,21 @@ export const PublisherDetailContent: React.FC<Props> = ({ publisher }) => {
               </Text>
             </IonLabel>
           </Item>
+
+          {history.pastAssignments.length === 0 && <Item>None</Item>}
+
           {history.pastAssignments.map((a, i) => (
             <Item key={`past-${i}`}>
               <IonLabel className="ion-padding-start">
                 <Text>
-                  {getTheocraticWeekLabel(a.week_id)} - {formatAssignmentLabel(a)}
+                  {getTheocraticWeekLabel(a.week_id)} ({getWeeksDiff(a.week_id)}{" "}
+                  weeks) - {formatAssignmentLabel(a)}
                 </Text>
               </IonLabel>
             </Item>
           ))}
         </>
-      )}
+      }
     </List>
   );
 };
