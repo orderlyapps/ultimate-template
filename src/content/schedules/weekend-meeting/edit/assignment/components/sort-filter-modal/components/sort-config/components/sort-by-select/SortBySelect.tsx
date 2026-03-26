@@ -15,6 +15,8 @@ const SORT_OPTIONS: SortableStatKey[] = [
   "weeksUntilAnyAssignment",
   "avgWeeksBetweenSameAssignment",
   "avgWeeksBetweenAnyAssignment",
+  "weeksBetweenAnyLastAndNext",
+  "weeksBetweenSameLastAndNext",
 ];
 
 export const SortBySelect: React.FC = () => {

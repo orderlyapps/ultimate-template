@@ -1,4 +1,4 @@
-import { and, eq, or, useLiveQuery } from "@tanstack/react-db";
+import { and, eq, useLiveQuery } from "@tanstack/react-db";
 import { publisherCollection } from "@tanstack-db/publisher/publisherCollection";
 import { useUserCongregation } from "@feature/db/congregation/user-congregation/use-user-congregation/useUserCongregation";
 
@@ -16,7 +16,7 @@ export const usePublishers = () => {
         .where(({ p }) => {
           return and(
             eq(p.congregation_id, congregationId),
-            or(eq(p.standing, "elder"), eq(p.standing, "ministerial_servant")),
+            eq(p.gender, "male"),
           );
         }),
     [congregationId],

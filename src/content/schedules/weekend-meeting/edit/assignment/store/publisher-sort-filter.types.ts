@@ -5,6 +5,8 @@ export type SortableStatKey =
   | "weeksUntilAnyAssignment"
   | "avgWeeksBetweenSameAssignment"
   | "avgWeeksBetweenAnyAssignment"
+  | "weeksBetweenAnyLastAndNext"
+  | "weeksBetweenSameLastAndNext"
   | "pastAssignments"
   | "futureAssignments"
   | "alphabetical";
@@ -41,6 +43,8 @@ export const STAT_LABELS: Record<SortableStatKey, string> = {
   weeksUntilAnyAssignment: "Weeks Until Any",
   avgWeeksBetweenSameAssignment: "Avg Between Same",
   avgWeeksBetweenAnyAssignment: "Avg Between Any",
+  weeksBetweenAnyLastAndNext: "Between Any Last & Next",
+  weeksBetweenSameLastAndNext: "Between Same Last & Next",
   pastAssignments: "Past Assignments",
   futureAssignments: "Future Assignments",
   alphabetical: "Alphabetical",
@@ -53,9 +57,34 @@ export const FILTERABLE_STATS: Exclude<SortableStatKey, "alphabetical">[] = [
   "weeksUntilAnyAssignment",
   "avgWeeksBetweenSameAssignment",
   "avgWeeksBetweenAnyAssignment",
+  "weeksBetweenAnyLastAndNext",
+  "weeksBetweenSameLastAndNext",
 ];
 
 export const DEFAULT_PRESETS: SortFilterPreset[] = [
+  {
+    id: "custom-1774496530581",
+    name: "Default",
+    config: {
+      sortBy: "weeksSinceAnyAssignment",
+      sortDirection: "desc",
+      filters: [
+        {
+          stat: "weeksSinceAnyAssignment",
+          minWeeks: 4,
+        },
+        {
+          stat: "avgWeeksBetweenAnyAssignment",
+          minWeeks: 4,
+        },
+      ],
+      nullValueHandling: "start",
+      hideWithCurrentWeekAssignment: true,
+      hideNonParticipants: true,
+    },
+    isBuiltIn: true,
+  },
+
   {
     id: "builtin-longest-since-same",
     name: "Longest Since Same Assignment",
@@ -94,44 +123,6 @@ export const DEFAULT_PRESETS: SortFilterPreset[] = [
       hideNonParticipants: false,
     },
     isBuiltIn: true,
-  },
-  {
-    id: "custom-177449459254dfv5",
-    name: "Fill In List",
-    config: {
-      sortBy: "weeksSinceAnyAssignment",
-      sortDirection: "desc",
-      filters: [
-        {
-          stat: "weeksSinceSameAssignment",
-          minWeeks: 6,
-        },
-        {
-          stat: "weeksSinceAnyAssignment",
-          minWeeks: 2,
-        },
-        {
-          stat: "avgWeeksBetweenAnyAssignment",
-          minWeeks: 3,
-        },
-        {
-          stat: "avgWeeksBetweenSameAssignment",
-          minWeeks: 5,
-        },
-        {
-          stat: "weeksUntilSameAssignment",
-          minWeeks: 6,
-        },
-        {
-          stat: "weeksUntilAnyAssignment",
-          minWeeks: 2,
-        },
-      ],
-      nullValueHandling: "hide",
-      hideWithCurrentWeekAssignment: true,
-      hideNonParticipants: true,
-    },
-    isBuiltIn: false,
   },
 ];
 

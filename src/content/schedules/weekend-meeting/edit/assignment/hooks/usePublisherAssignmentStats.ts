@@ -12,6 +12,8 @@ export type PublisherAssignmentStats = {
   weeksUntilAnyAssignment: number | null;
   avgWeeksBetweenSameAssignment: number | null;
   avgWeeksBetweenAnyAssignment: number | null;
+  weeksBetweenAnyLastAndNext: number | null;
+  weeksBetweenSameLastAndNext: number | null;
   pastAssignments: number;
   futureAssignments: number;
   hasCurrentWeekAssignment: boolean;
@@ -137,6 +139,16 @@ export const usePublisherAssignmentStats = (
     const avgWeeksBetweenSameAssignment = calculateAverageGap(sameAssignmentWeeks);
     const avgWeeksBetweenAnyAssignment = calculateAverageGap(uniqueAllWeeks);
 
+    const weeksBetweenAnyLastAndNext =
+      weeksSinceAnyAssignment !== null && weeksUntilAnyAssignment !== null
+        ? weeksSinceAnyAssignment + weeksUntilAnyAssignment
+        : null;
+
+    const weeksBetweenSameLastAndNext =
+      weeksSinceSameAssignment !== null && weeksUntilSameAssignment !== null
+        ? weeksSinceSameAssignment + weeksUntilSameAssignment
+        : null;
+
     statsMap.set(publisherId, {
       weeksSinceSameAssignment,
       weeksSinceAnyAssignment,
@@ -144,6 +156,8 @@ export const usePublisherAssignmentStats = (
       weeksUntilAnyAssignment,
       avgWeeksBetweenSameAssignment,
       avgWeeksBetweenAnyAssignment,
+      weeksBetweenAnyLastAndNext,
+      weeksBetweenSameLastAndNext,
       pastAssignments: sameAssignmentWeeks.length,
       futureAssignments: futureSameAssignmentWeeks.length,
       hasCurrentWeekAssignment: currentWeekAssignments.length > 0,
