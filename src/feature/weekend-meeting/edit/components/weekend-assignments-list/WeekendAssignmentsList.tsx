@@ -1,10 +1,10 @@
 import type { FC } from "react";
-import { IonLabel } from "@ionic/react";
 import { Item } from "@ionic-layout/item/Item";
 import { List } from "@ionic-layout/list/List";
 import { Text } from "@ionic-display/text/Text";
 import { formatPublisherName } from "@format/formatPublisherName";
 import { useWeekendAssignments } from "../../hooks/useWeekendAssignments";
+import { Label } from "@ionic-display/label/Label";
 
 type Props = {
   weekId: string;
@@ -46,12 +46,8 @@ export const WeekendAssignmentsList: FC<Props> = ({ weekId }) => {
             routerLink={`/schedules/weekend-meeting/${weekId}/edit/${id}`}
             detail
           >
-            <IonLabel>
-              <Text color="medium" size="sm">
-                {assignmentLabels[id]}
-              </Text>
-              <Text>{name}</Text>
-            </IonLabel>
+            <Label>{assignmentLabels[id]}</Label>
+            <Text>{name}</Text>
           </Item>
         );
       })}

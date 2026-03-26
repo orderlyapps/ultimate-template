@@ -11,6 +11,7 @@ import { getUserCongregation } from "@feature/db/congregation/user-congregation/
 import { formatPublisherName } from "@format/formatPublisherName";
 import { WeekEvents } from "@feature/db/shared/week-events/WeekEvents";
 import { WeekendAssignmentsList } from "./components/weekend-assignments-list/WeekendAssignmentsList";
+import { Space } from "@layout/space/Space";
 
 type WeekendMeetingEditFormProps = {
   weekId: string;
@@ -87,7 +88,6 @@ export const WeekendMeetingEditForm: React.FC<WeekendMeetingEditFormProps> = ({
   return (
     <>
       <WeekEvents weekId={weekId} meetingType="weekend" />
-      <WeekendAssignmentsList weekId={weekId} />
       <PublicTalkSelect
         speakerId={currentAssignment?.speakerId}
         outlineId={currentAssignment?.outlineId}
@@ -98,6 +98,8 @@ export const WeekendMeetingEditForm: React.FC<WeekendMeetingEditFormProps> = ({
           currentAssignment?.speakerCongregationId === congregationId
         }
       />
+      <Space height="1.5" />
+      <WeekendAssignmentsList weekId={weekId} />
     </>
   );
 };

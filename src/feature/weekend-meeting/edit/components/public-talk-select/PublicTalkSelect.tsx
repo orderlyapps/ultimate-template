@@ -33,9 +33,7 @@ export const PublicTalkSelect: React.FC<PublicTalkSelectProps> = ({
     <>
       <Item onClick={() => !disabled && openModal()} disabled={disabled}>
         <IonLabel>
-          <Text bold size="sm">
-            {outlineTheme}
-          </Text>
+          <Text bold>{outlineTheme}</Text>
           <br />
           <Text size="sm">{displayText}</Text>
           {!isLocalSpeaker && congregationName && (
