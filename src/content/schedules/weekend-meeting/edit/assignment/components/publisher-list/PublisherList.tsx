@@ -12,9 +12,11 @@ import { usePublisherSortFilterStore } from "../../store/usePublisherSortFilterS
 import { DEFAULT_PRESETS } from "../../store/publisher-sort-filter.types";
 import { PublisherDetailModal } from "./components/publisher-detail-modal/PublisherDetailModal";
 import { StatsDisplay } from "./components/stats-display/StatsDisplay";
+import { DeleteAssignmentButton } from "./components/delete-assignment-button/DeleteAssignmentButton";
 import { useParams } from "react-router-dom";
 import type { WeekendAssignmentID } from "@tanstack-db/weekend_assignment/weekendAssignmentSchema";
 import { usePublishers } from "@/content/schedules/weekend-meeting/edit/assignment/hooks/usePublishers";
+import { Space } from "@layout/space/Space";
 
 export const PublisherList: React.FC = () => {
   const { week_id, assignment_id } = useParams<{
@@ -25,7 +27,9 @@ export const PublisherList: React.FC = () => {
     null,
   );
 
-  const setCurrentAssignmentId = usePublisherSortFilterStore((s) => s.setCurrentAssignmentId);
+  const setCurrentAssignmentId = usePublisherSortFilterStore(
+    (s) => s.setCurrentAssignmentId,
+  );
 
   useEffect(() => {
     if (assignment_id) {
@@ -37,13 +41,19 @@ export const PublisherList: React.FC = () => {
 
   const { statsMap } = usePublisherAssignmentStats(week_id, assignment_id);
   const participantIds = useWeekendParticipantIds(assignment_id);
-  const sortedPublishers = useSortedFilteredPublishers(publishers, statsMap, participantIds);
+  const sortedPublishers = useSortedFilteredPublishers(
+    publishers,
+    statsMap,
+    participantIds,
+  );
 
-  const configByAssignment = usePublisherSortFilterStore((s) => s.configByAssignment);
+  const configByAssignment = usePublisherSortFilterStore(
+    (s) => s.configByAssignment,
+  );
   const customPresets = usePublisherSortFilterStore((s) => s.customPresets);
   const allPresets = [...DEFAULT_PRESETS, ...customPresets];
   const activePresetId = assignment_id
-    ? configByAssignment[assignment_id]?.presetId ?? DEFAULT_PRESETS[0].id
+    ? (configByAssignment[assignment_id]?.presetId ?? DEFAULT_PRESETS[0].id)
     : DEFAULT_PRESETS[0].id;
   const activePreset = allPresets.find((p) => p.id === activePresetId);
 
@@ -69,7 +79,9 @@ export const PublisherList: React.FC = () => {
         {activePreset && (
           <Item lines="none">
             <IonLabel>
-              <Text style={{ fontWeight: "bold", color: "var(--ion-color-medium)" }}>
+              <Text
+                style={{ fontWeight: "bold", color: "var(--ion-color-medium)" }}
+              >
                 {activePreset.name}
               </Text>
             </IonLabel>
@@ -104,6 +116,16 @@ export const PublisherList: React.FC = () => {
         isOpen={!!selectedPublisher}
         onDismiss={() => setSelectedPublisher(null)}
       />
+      {week_id && assignment_id && (
+        <>
+          <Space />
+          <DeleteAssignmentButton
+            weekId={week_id}
+            assignmentId={assignment_id}
+          />
+        </>
+      )}
+      <Space />
     </>
   );
 };
