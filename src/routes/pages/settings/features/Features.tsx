@@ -98,7 +98,7 @@ export const Features: React.FC = () => {
           </List>
         )}
 
-        {isUserAllowed && (
+        {isUserAllowed && isUnlocked && (
           <List>
             {featureGroups.length > 0 ? (
               <>
