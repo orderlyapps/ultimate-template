@@ -8,7 +8,6 @@ import { Label } from "@ionic-display/label/Label";
 import { useUserCongregation } from "@feature/db/congregation/user-congregation/use-user-congregation/useUserCongregation";
 import { useAppFeaturesStore } from "@services/app/features/useAppFeaturesStore";
 import { useFeatureAccess } from "@services/app/auth/temp-feature-access/useFeatureAccess";
-import { MonthPicker } from "@input/date/month-picker/MonthPicker";
 
 export const HomeContent: React.FC = () => {
   const [congregation] = useUserCongregation();
@@ -19,7 +18,6 @@ export const HomeContent: React.FC = () => {
   const { isUnlocked, isUserAllowed } = useFeatureAccess(["damian"]);
   return (
     <>
-      <MonthPicker onValueChange={e => console.log(e)}></MonthPicker>
       {congregation?.id === "7b15d4e5-d4fa-4eb4-a276-3790b7c4897b" && (
         <PublisherHomeView2 />
       )}
