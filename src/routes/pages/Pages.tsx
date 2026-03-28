@@ -29,6 +29,7 @@ import { Events } from "@pages/schedules/events/Events";
 import { Publishers } from "@pages/publishers/Publishers";
 import { AllPublishers } from "@pages/publishers/all/AllPublishers";
 import { PublisherDetail } from "@pages/publishers/all/publisher-detail/PublisherDetail";
+import { PublisherEdit } from "@pages/publishers/all/publisher-detail/publisher-local-edit/PublisherLocalEdit";
 import { PublisherGroups } from "@pages/publishers/groups/PublisherGroups";
 import { Appointed } from "@pages/publishers/appointed/Appointed";
 import { RegularPioneers } from "@pages/publishers/regular-pioneers/RegularPioneers";
@@ -100,6 +101,7 @@ export const pages = (
     <Route exact path="/publishers" render={() => <Publishers />} />
     <Route exact path="/publishers/all" render={() => <AllPublishers />} />
     <Route exact path="/publishers/all/:publisherId" render={() => <PublisherDetail />} />
+    <Route exact path="/publishers/all/:publisherId/edit" render={() => <PublisherEdit />} />
     <Route exact path="/publishers/groups" render={() => <PublisherGroups />} />
     <Route exact path="/publishers/appointed" render={() => <Appointed />} />
     <Route exact path="/publishers/regular-pioneers" render={() => <RegularPioneers />} />

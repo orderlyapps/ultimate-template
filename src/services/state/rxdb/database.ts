@@ -6,7 +6,7 @@ import { createRxDatabase } from "rxdb/plugins/core";
 import {
   publisherSchemaLiteral,
   type PublisherLocal,
-} from "@state/rxdb/collections/publisher/0";
+} from "@state/rxdb/collections/publisher";
 
 if (import.meta.env.DEV) addRxPlugin(RxDBDevModePlugin);
 

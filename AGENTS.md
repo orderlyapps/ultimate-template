@@ -42,4 +42,8 @@ load: "node_modules/.pnpm/@tanstack+react-db@0.1.76_react@19.2.4_typescript@5.9.
 - Use div tags as a last resort when an Ionic component or a component from src/ui/components will not do the job.
 - Do not use ionic card components unless explicitly requested
 
+# Types
+
+- Search for existing types in src/services, src/ui or src/util before creating new ones
+
   </coding_guidelines>
