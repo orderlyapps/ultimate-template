@@ -1,4 +1,5 @@
 import {
+  IonAlert,
   IonBackButton,
   IonButton,
   IonButtons,
@@ -26,10 +27,18 @@ import {
   useFeatureAccess,
   TEMP_ALL_AUTHORIZED_NAMES,
 } from "@services/app/auth/temp-feature-access/useFeatureAccess";
+import { FileExport } from "@input/file-export/FileExport";
+import { FileImport } from "@input/file-import/FileImport";
+import {
+  exportPublisherLocalData,
+  importPublisherLocalData,
+  generateExportFilename,
+} from "@state/tanstack/db/publisher-local/publisherLocalExportImport";
 export const AllPublishers: React.FC = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [isPresetModalOpen, setIsPresetModalOpen] = useState(false);
+  const [pendingImportFile, setPendingImportFile] = useState<File | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [activePresetName, setActivePresetName] = useLocalStorage<string>(
     "publisher-list-preset-name",
@@ -70,6 +79,16 @@ export const AllPublishers: React.FC = () => {
           <IonButtons slot="end">
             {isUnlocked && (
               <>
+                <FileImport
+                  onFileSelect={(file) => setPendingImportFile(file)}
+                  accept=".json"
+                  iconOnly
+                />
+                <FileExport
+                  getData={exportPublisherLocalData}
+                  filename={generateExportFilename()}
+                  iconOnly
+                />
                 <IonButton onClick={() => setIsFilterModalOpen(true)}>
                   <IonIcon
                     icon={funnel}
@@ -131,6 +150,29 @@ export const AllPublishers: React.FC = () => {
           onDelete={deletePreset}
         />
       </IonContent>
+      <IonAlert
+        isOpen={pendingImportFile !== null}
+        header="Import Publishers"
+        message="This will overwrite all existing local publisher data. Are you sure you want to continue?"
+        buttons={[
+          {
+            text: "Cancel",
+            role: "cancel",
+            handler: () => setPendingImportFile(null),
+          },
+          {
+            text: "Import",
+            role: "destructive",
+            handler: async () => {
+              if (pendingImportFile) {
+                await importPublisherLocalData(pendingImportFile);
+                setPendingImportFile(null);
+              }
+            },
+          },
+        ]}
+        onDidDismiss={() => setPendingImportFile(null)}
+      />
     </IonPage>
   );
 };
