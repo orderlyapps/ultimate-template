@@ -142,7 +142,7 @@ export const publisherSchemaLiteral = {
 export const schemaTyped = toTypedRxJsonSchema(publisherSchemaLiteral);
 
 export type PublisherLocal = ExtractDocumentTypeFromTypedRxJsonSchema<
-  typeof schemaTyped
+typeof schemaTyped
 >;
 
 export type Version = PublisherLocal["version"];

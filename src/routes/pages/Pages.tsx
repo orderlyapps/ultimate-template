@@ -33,6 +33,7 @@ import { PublisherEdit } from "@pages/publishers/all/publisher-detail/publisher-
 import { PublisherGroups } from "@pages/publishers/groups/PublisherGroups";
 import { Appointed } from "@pages/publishers/appointed/Appointed";
 import { RegularPioneers } from "@pages/publishers/regular-pioneers/RegularPioneers";
+import { PublisherAddresses } from "@pages/publishers/addresses/PublisherAddresses";
 import { Settings } from "@pages/settings/Settings";
 import { Profile } from "@pages/settings/profile/Profile";
 import { Appearance } from "@pages/settings/appearance/Appearance";
@@ -105,6 +106,7 @@ export const pages = (
     <Route exact path="/publishers/groups" render={() => <PublisherGroups />} />
     <Route exact path="/publishers/appointed" render={() => <Appointed />} />
     <Route exact path="/publishers/regular-pioneers" render={() => <RegularPioneers />} />
+    <Route exact path="/publishers/addresses" render={() => <PublisherAddresses />} />
     <Route exact path="/settings" render={() => <Settings />} />
     <Route exact path="/settings/profile" render={() => <Profile />} />
     <Route exact path="/settings/appearance" render={() => <Appearance />} />
