@@ -4,6 +4,10 @@ import { useEffect } from "react";
 import { usePublisherLocal } from "../hooks/usePublisherLocal";
 import { usePublisherEditStore } from "./store/usePublisherEditStore";
 import { publisherLocalCollection } from "@state/tanstack/db/publisher-local/publisherLocalCollection";
+import { PhoneListEdit } from "./components/phone-list-edit/PhoneListEdit";
+import { EmailListEdit } from "./components/email-list-edit/EmailListEdit";
+import { AddressListEdit } from "./components/address-list-edit/AddressListEdit";
+import { EmergencyContactListEdit } from "./components/emergency-contact-list-edit/EmergencyContactListEdit";
 
 export const PublisherLocalEditContent: React.FC = () => {
   const { publisherId } = useParams<{ publisherId: string }>();
@@ -14,7 +18,10 @@ export const PublisherLocalEditContent: React.FC = () => {
     confidential_id,
     birth_date,
     baptism_date,
-    setConfidentialId,
+    phone,
+    address,
+    email,
+    emergency_contact,
     setBirthDate,
     setBaptismDate,
     initializeFromPublisher,
@@ -29,6 +36,10 @@ export const PublisherLocalEditContent: React.FC = () => {
         confidential_id: publisher.confidential_id as string,
         birth_date: publisher.birth_date as string | undefined,
         baptism_date: publisher.baptism_date as string | undefined,
+        phone: publisher.phone as typeof phone | undefined,
+        address: publisher.address as typeof address | undefined,
+        email: publisher.email as typeof email | undefined,
+        emergency_contact: publisher.emergency_contact as typeof emergency_contact | undefined,
       });
     }
     return () => reset();
@@ -47,6 +58,10 @@ export const PublisherLocalEditContent: React.FC = () => {
         confidential_id: crypto.randomUUID(),
         birth_date: birth_date || undefined,
         baptism_date: baptism_date || undefined,
+        phone: phone.length > 0 ? phone : undefined,
+        address: address.length > 0 ? address : undefined,
+        email: email.length > 0 ? email : undefined,
+        emergency_contact: emergency_contact.length > 0 ? emergency_contact : undefined,
         version: {
           created_by: "user",
           updated_by: "user",
@@ -59,6 +74,10 @@ export const PublisherLocalEditContent: React.FC = () => {
         draft.confidential_id = confidential_id;
         draft.birth_date = birth_date || undefined;
         draft.baptism_date = baptism_date || undefined;
+        draft.phone = phone.length > 0 ? phone : undefined;
+        draft.address = address.length > 0 ? address : undefined;
+        draft.email = email.length > 0 ? email : undefined;
+        draft.emergency_contact = emergency_contact.length > 0 ? emergency_contact : undefined;
         draft.version.updated_at = now;
       });
     }
@@ -67,14 +86,6 @@ export const PublisherLocalEditContent: React.FC = () => {
 
   return (
     <IonList>
-      <IonItem>
-        <IonInput
-          label="Confidential ID"
-          labelPlacement="stacked"
-          value={confidential_id}
-          onIonInput={(e) => setConfidentialId(e.detail.value ?? "")}
-        />
-      </IonItem>
       <IonItem>
         <IonInput
           label="Birth Date"
@@ -93,6 +104,10 @@ export const PublisherLocalEditContent: React.FC = () => {
           onIonInput={(e) => setBaptismDate(e.detail.value ?? "")}
         />
       </IonItem>
+      <PhoneListEdit />
+      <EmailListEdit />
+      <AddressListEdit />
+      <EmergencyContactListEdit />
       <IonButton expand="block" onClick={handleSave} className="ion-margin-top">
         Save
       </IonButton>
