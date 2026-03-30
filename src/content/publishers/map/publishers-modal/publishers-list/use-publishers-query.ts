@@ -1,8 +1,19 @@
+import { publisherLocalCollection } from "@tanstack-db/publisher-local/publisherLocalCollection";
 import { publisherCollection } from "@tanstack-db/publisher/publisherCollection";
-import { useLiveQuery } from "@tanstack/react-db";
+import { eq, useLiveQuery } from "@tanstack/react-db";
 
 export const usePublishersQuery = () => {
-  return useLiveQuery((q) =>
-    q.from({ p: publisherCollection }).orderBy(({ p }) => p.last_name),
+  const data = useLiveQuery((q) =>
+    q
+      .from({ p: publisherCollection })
+      .leftJoin({ pl: publisherLocalCollection }, ({ p, pl }) => {
+        return eq(pl.publisher_id, p.id);
+      })
+      .orderBy(({ p }) => p.last_name)
+      .select(({ p, pl }) => {
+        return { publisher: p, publiser_local: pl };
+      }),
   );
+
+  return data;
 };
