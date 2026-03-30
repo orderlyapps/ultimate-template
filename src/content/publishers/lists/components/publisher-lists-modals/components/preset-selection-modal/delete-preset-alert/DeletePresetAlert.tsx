@@ -1,5 +1,5 @@
 import { IonAlert } from "@ionic/react";
-import type { UserFilterPreset } from "../../publisherFilterState";
+import type { UserFilterPreset } from "../publisherFilterState";
 
 type Props = {
   isOpen: boolean;

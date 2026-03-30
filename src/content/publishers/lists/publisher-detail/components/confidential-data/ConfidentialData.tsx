@@ -2,9 +2,9 @@ import { IonButton, IonIcon, IonItem, IonLabel, IonList } from "@ionic/react";
 import { useParams, useHistory } from "react-router-dom";
 import editIcon from "@icons/edit.svg";
 import type { PublisherLocal } from "@state/rxdb/collections/publisher";
-import { usePublisherLocal } from "@/content/publishers/all/publisher-detail/hooks/usePublisherLocal";
 import { Text } from "@ionic-display/text/Text";
 import { Item } from "@ionic-layout/item/Item";
+import { usePublisherLocal } from "@/content/publishers/lists/publisher-detail/hooks/usePublisherLocal";
 
 export const ConfidentialData: React.FC = () => {
   const { publisherId } = useParams<{ publisherId: string }>();

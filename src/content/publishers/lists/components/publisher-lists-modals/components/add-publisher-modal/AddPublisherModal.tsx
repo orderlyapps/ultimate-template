@@ -7,7 +7,7 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import { CloseButton } from "@input/button/close-button/CloseButton";
-import { PublisherForm } from "../publisher-form/PublisherForm";
+import { PublisherForm } from "./publisher-form/PublisherForm";
 
 type Props = {
   isOpen: boolean;

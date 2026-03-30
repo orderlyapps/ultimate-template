@@ -13,7 +13,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import editIcon from "@icons/edit.svg";
 import { EditPublisherModal } from "@feature/db/publisher/all-publishers-list/components/edit-publisher-modal/EditPublisherModal";
-import { PublisherDetailContent } from "@/content/publishers/all/publisher-detail/PublisherDetailContent";
+// import { PublisherDetailContent } from "@/content/publishers/all/publisher-detail/PublisherDetailContent";
 
 export const PublisherDetail: React.FC = () => {
   const { publisherId } = useParams<{ publisherId: string }>();
@@ -40,7 +40,7 @@ export const PublisherDetail: React.FC = () => {
           isOpen={isEditModalOpen}
           onDismiss={() => setIsEditModalOpen(false)}
         />
-        <PublisherDetailContent />
+        {/* <PublisherDetailContent /> */}
       </IonContent>
     </IonPage>
   );

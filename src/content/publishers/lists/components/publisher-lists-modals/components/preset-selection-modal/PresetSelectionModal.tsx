@@ -18,9 +18,9 @@ import { Text } from "@ionic-display/text/Text";
 import { ItemOptionDelete } from "@input/sliding-item-option/ItemOptionDelete";
 import { ItemOptionEdit } from "@input/sliding-item-option/ItemOptionEdit";
 import { ItemOptionCopy } from "@input/sliding-item-option/ItemOptionCopy";
-import { RenamePresetAlert } from "../rename-preset-alert/RenamePresetAlert";
-import { DeletePresetAlert } from "../delete-preset-alert/DeletePresetAlert";
-import { builtInPresets } from "../../publisherFilterState";
+import { RenamePresetAlert } from "./rename-preset-alert/RenamePresetAlert";
+import { DeletePresetAlert } from "./delete-preset-alert/DeletePresetAlert";
+import { builtInPresets } from "./publisherFilterState";
 import {
   useFeatureAccess,
   TEMP_ALL_AUTHORIZED_NAMES,
@@ -28,7 +28,7 @@ import {
 import type {
   PublisherFilterState,
   UserFilterPreset,
-} from "../../publisherFilterState";
+} from "./publisherFilterState";
 
 interface PresetSelectionModalProps {
   isOpen: boolean;

@@ -7,7 +7,7 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { PublisherLocalEditContent } from "@/content/publishers/all/publisher-detail/publisher-local-edit/PublisherLocalEditContent";
+// import { PublisherLocalEditContent } from "@/content/publishers/all/publisher-detail/publisher-local-edit/PublisherLocalEditContent";
 
 export const PublisherEdit: React.FC = () => {
   return (
@@ -21,7 +21,7 @@ export const PublisherEdit: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen className="ion-padding">
-        <PublisherLocalEditContent />
+        {/* <PublisherLocalEditContent /> */}
       </IonContent>
     </IonPage>
   );

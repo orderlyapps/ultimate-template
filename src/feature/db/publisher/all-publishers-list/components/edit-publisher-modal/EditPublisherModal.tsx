@@ -7,7 +7,7 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import { CloseButton } from "@input/button/close-button/CloseButton";
-import { PublisherForm } from "../publisher-form/PublisherForm";
+import { PublisherForm } from "../../../../../../content/publishers/lists/components/publisher-lists-modals/components/add-publisher-modal/publisher-form/PublisherForm";
 
 type Props = {
   publisherId: string;
