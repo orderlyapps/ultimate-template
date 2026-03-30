@@ -27,9 +27,7 @@ export const Publishers: React.FC = () => {
         <List>
           <NavItem routerLink="/publishers/all">Publisher Lists</NavItem>
           <NavItem routerLink="/publishers/groups">Groups</NavItem>
-          <NavItem routerLink="/publishers/addresses">Addresses Map</NavItem>
-          {/* <NavItem routerLink="/publishers/appointed">Appointed</NavItem>
-          <NavItem routerLink="/publishers/regular-pioneers">Regular Pioneers</NavItem> */}
+          <NavItem routerLink="/publishers/map">Map</NavItem>
         </List>
       </IonContent>
     </IonPage>
