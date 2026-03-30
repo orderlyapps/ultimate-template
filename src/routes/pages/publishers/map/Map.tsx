@@ -7,7 +7,7 @@ import {
   IonButtons,
   IonBackButton,
 } from "@ionic/react";
-import { PublishersMapContent } from "@/content/publishers/map/PublisherMapContent";
+import { PublishersMapContent } from "@/content/publishers/map/PublishersMapContent";
 import { MapSettingsModal } from "@feature/maps/map-settings-modal/MapSettingsModal";
 
 export const PublishersMap: React.FC = () => {

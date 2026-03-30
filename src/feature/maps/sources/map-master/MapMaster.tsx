@@ -2,7 +2,7 @@ import { mapMasterCollection } from "@tanstack-db/map_master/mapMasterCollection
 import { useLiveQuery } from "@tanstack/react-db";
 import { Layer, Source } from "react-map-gl/mapbox";
 import type { FeatureCollection } from "geojson";
-import { getBorderLayer } from "@feature/maps/door-to-door/sources/map-master/layers/border";
+import { getBorderLayer } from "@feature/maps/sources/map-master/layers/border";
 
 export const SOURCE_ID = "map-master";
 

@@ -4,5 +4,5 @@ import { useLocalStorage } from "@util/hooks/useLocalStorage";
 export const getMapStyleKey = (id?: string) => `map-style-[${id || "default"}]`;
 
 export const useMapStyle = (id?: string) => {
-  return useLocalStorage<MapStyle>(getMapStyleKey(id));
+  return useLocalStorage<MapStyle>(getMapStyleKey(id), "standard");
 };

@@ -1,5 +1,5 @@
 import { Maps } from "@feature/maps/door-to-door/sources/maps/Maps";
-import { MapMaster } from "@feature/maps/door-to-door/sources/map-master/MapMaster";
+import { MapMaster } from "@feature/maps/sources/map-master/MapMaster";
 import { DoNotCalls } from "@feature/maps/door-to-door/sources/do-not-calls/DoNotCalls";
 import { Blocks } from "@feature/maps/door-to-door/sources/blocks/Blocks";
 import { EditedBlocks } from "@feature/maps/door-to-door/sources/edited-blocks/EditedBlocks";
