@@ -2,6 +2,7 @@ import { IonList, IonItem, IonLabel, IonSpinner } from "@ionic/react";
 import { usePublishersQuery } from "@/content/publishers/map/publishers-modal/publishers-list/use-publishers-query";
 import { formatPublisherName } from "@format/formatPublisherName";
 import { useZoomToPublisher } from "@/content/publishers/map/publishers-modal/publishers-list/use-zoom-to-publisher";
+import { Text } from "@ionic-display/text/Text";
 
 export const PublishersList: React.FC = () => {
   const { data: publishers = [], isLoading } = usePublishersQuery();
@@ -29,12 +30,19 @@ export const PublishersList: React.FC = () => {
   return (
     <IonList>
       {publishers.map(({ publisher, publisher_local }) => (
-        <IonItem 
+        <IonItem
           key={publisher.id}
           button
           onClick={() => handlePublisherClick(publisher_local)}
         >
-          <IonLabel>{formatPublisherName(publisher)}</IonLabel>
+          <IonLabel>
+            <Text
+              color={publisher_local?.address ? "" : "medium"}
+              size={publisher_local?.address ? undefined : "sm"}
+            >
+              {formatPublisherName(publisher)}
+            </Text>
+          </IonLabel>
         </IonItem>
       ))}
     </IonList>
