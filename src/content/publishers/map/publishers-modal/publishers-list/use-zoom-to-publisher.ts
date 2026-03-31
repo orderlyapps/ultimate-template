@@ -6,7 +6,7 @@ export const useZoomToPublisher = () => {
   const closeModal = usePublishersMapStore((state) => state.closeModal);
 
   const handlePublisherClick = (
-    publisherLocal: ReturnType<typeof usePublishersQuery>["data"][0]["publiser_local"]
+    publisherLocal: ReturnType<typeof usePublishersQuery>["data"][0]["publisher_local"]
   ) => {
     if (!mapRef || !publisherLocal?.address?.[0]?.coordinates) return;
 

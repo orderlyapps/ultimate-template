@@ -5,7 +5,7 @@ import { useZoomToPublisher } from "@/content/publishers/map/publishers-modal/pu
 
 export const PublishersList: React.FC = () => {
   const { data: publishers = [], isLoading } = usePublishersQuery();
-  
+
   const { handlePublisherClick } = useZoomToPublisher();
 
   if (isLoading) {
@@ -28,11 +28,11 @@ export const PublishersList: React.FC = () => {
 
   return (
     <IonList>
-      {publishers.map(({ publisher, publiser_local }) => (
+      {publishers.map(({ publisher, publisher_local }) => (
         <IonItem 
           key={publisher.id}
           button
-          onClick={() => handlePublisherClick(publiser_local)}
+          onClick={() => handlePublisherClick(publisher_local)}
         >
           <IonLabel>{formatPublisherName(publisher)}</IonLabel>
         </IonItem>
