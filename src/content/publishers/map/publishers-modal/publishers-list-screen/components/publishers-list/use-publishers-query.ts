@@ -12,7 +12,7 @@ export const usePublishersQuery = () => {
       .orderBy(({ p }) => p.last_name)
       .select(({ p, pl }) => {
         return { publisher: p, publisher_local: pl };
-      }),
+      })
   );
 
   return data;

@@ -4,7 +4,7 @@ import { Map } from "@services/vendor/mapbox/components/map/Map";
 import { PublishersModal } from "@/content/publishers/map/publishers-modal/PublishersModal";
 import { HouseholdDetailModal } from "@/content/publishers/map/household-detail-modal/HouseholdDetailModal";
 import { usePublishersMapStore } from "@/content/publishers/map/store/use-publishers-map-store";
-import { usePublishersQuery } from "@/content/publishers/map/publishers-modal/publishers-list/use-publishers-query";
+import { usePublishersQuery } from "@/content/publishers/map/publishers-modal/publishers-list-screen/components/publishers-list/use-publishers-query";
 
 export const PublishersMapContent: React.FC = () => {
   const setMapRef = usePublishersMapStore((state) => state.setMapRef);

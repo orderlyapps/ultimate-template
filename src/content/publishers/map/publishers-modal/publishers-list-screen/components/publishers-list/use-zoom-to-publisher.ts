@@ -1,5 +1,5 @@
+import type { usePublishersQuery } from "@/content/publishers/map/publishers-modal/publishers-list-screen/components/publishers-list/use-publishers-query";
 import { usePublishersMapStore } from "@/content/publishers/map/store/use-publishers-map-store";
-import type { usePublishersQuery } from "@/content/publishers/map/publishers-modal/publishers-list/use-publishers-query";
 
 export const useZoomToPublisher = () => {
   const mapRef = usePublishersMapStore((state) => state.mapRef);
@@ -18,7 +18,7 @@ export const useZoomToPublisher = () => {
     mapRef.flyTo({
       center: [coordinates[0], coordinates[1]],
       zoom: 17,
-      duration: 1200,
+      duration: 4000,
     });
   };
 

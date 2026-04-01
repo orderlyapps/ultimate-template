@@ -8,11 +8,12 @@ import {
   IonTitle,
   IonContent,
   IonButtons,
-  IonButton,
 } from "@ionic/react";
 import peopleIcon from "@icons/brother-sister.svg";
-import { PublishersList } from "./publishers-list/PublishersList";
 import { usePublishersMapStore } from "@/content/publishers/map/store/use-publishers-map-store";
+import { CloseButton } from "@input/button/close-button/CloseButton";
+import { PublishersList } from "./publishers-list-screen/components/publishers-list/PublishersList";
+import { EditAddressModal } from "./edit-address-modal/EditAddressModal";
 
 export const PublishersModal: React.FC = () => {
   const { isOpen, openModal, closeModal } = usePublishersMapStore();
@@ -29,7 +30,7 @@ export const PublishersModal: React.FC = () => {
           <IonToolbar>
             <IonTitle>Publishers</IonTitle>
             <IonButtons slot="end">
-              <IonButton onClick={closeModal}>Close</IonButton>
+              <CloseButton onClick={closeModal} />
             </IonButtons>
           </IonToolbar>
         </IonHeader>
@@ -37,6 +38,7 @@ export const PublishersModal: React.FC = () => {
           <PublishersList />
         </IonContent>
       </IonModal>
+      <EditAddressModal />
     </>
   );
 };
