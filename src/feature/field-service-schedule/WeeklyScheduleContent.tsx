@@ -27,11 +27,11 @@ const WeeklyScheduleContent: React.FC = () => {
           location: "180A George St, East Maitland",
           conductor: "Callum MacDonald",
         },
-        {
-          time: "5:30",
-          location: "180A George St, East Maitland",
-          conductor: "Callum MacDonald",
-        },
+        // {
+        //   time: "5:30",
+        //   location: "180A George St, East Maitland",
+        //   conductor: "Callum MacDonald",
+        // },
       ],
     },
     {
@@ -55,7 +55,7 @@ const WeeklyScheduleContent: React.FC = () => {
       groups: [
         {
           time: "9:15",
-          location: "Kingdom Hall",
+          location: "Group Locations",
           conductor: "Group Overseers",
         },
       ],
