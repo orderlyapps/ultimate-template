@@ -1,4 +1,4 @@
-import { IonAccordion } from "@ionic/react";
+import { IonAccordion, IonLabel } from "@ionic/react";
 import { List } from "@ionic-layout/list/List";
 import {
   ACCORDION_LABELS,
@@ -8,21 +8,19 @@ import { AssignmentsContent } from "../assignments-content/AssignmentsContent";
 import { CalendarContent } from "../calendar-content/CalendarContent";
 import { AnnouncementsContent } from "../announcements-content/AnnouncementsContent";
 import { ToolsContent } from "../tools-content/ToolsContent";
-import { NotificationsContent } from "@/content/home/content/home-accordions/components/notifications-content/NotificationsContent";
 import { ItemAccordionHeader } from "@ionic-layout/accordion-header/AccordionHeader";
 import { SectionHeading } from "@display/section-heading/SectionHeading";
 import { Space } from "@layout/space/Space";
 
 type Props = {
-  id: HomeAccordionId;
+  id: Exclude<HomeAccordionId, "notifications">;
 };
 
-const CONTENT_MAP: Record<HomeAccordionId, React.FC> = {
+const CONTENT_MAP: Record<Exclude<HomeAccordionId, "notifications">, React.FC> = {
   assignments: AssignmentsContent,
   calendar: CalendarContent,
   announcements: AnnouncementsContent,
   tools: ToolsContent,
-  notifications: NotificationsContent,
 };
 
 export function HomeAccordionItem({ id }: Props) {
@@ -31,9 +29,12 @@ export function HomeAccordionItem({ id }: Props) {
   return (
     <IonAccordion value={id}>
       <ItemAccordionHeader lines="none">
-        <SectionHeading>{ACCORDION_LABELS[id]}</SectionHeading>
+        <IonLabel>
+          <SectionHeading>{ACCORDION_LABELS[id]}</SectionHeading>
+        </IonLabel>
       </ItemAccordionHeader>
-      <List slot="content">
+      <List slot="content" lines="none">
+        <Space height="1" />
         <Content />
         <Space height="2" />
       </List>

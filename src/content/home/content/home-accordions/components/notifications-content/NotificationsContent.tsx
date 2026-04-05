@@ -1,37 +1,29 @@
-import { IonLabel } from "@ionic/react";
+import { IonItem, IonLabel } from "@ionic/react";
 import { Text } from "@ionic-display/text/Text";
-import { Item } from "@ionic-layout/item/Item";
-import { Space } from "@layout/space/Space";
-import { useUserPublisher } from "@feature/db/publisher/user-publisher/use-user-publisher/useUserPublisher";
-import { usePublisherHomeItems } from "@/content/home/content/home-accordions/components/notifications-content/hooks/usePublisherHomeItems";
-import { useNewAssignments } from "@/content/home/content/home-accordions/components/notifications-content/hooks/useNewAssignments";
 import { NotificationRow } from "@/content/home/content/home-accordions/components/notifications-content/components/notification-row/NotificationRow";
+import type { NotificationItem } from "@/content/home/content/home-accordions/components/notifications-content/hooks/useNewAssignments";
 
-export function NotificationsContent() {
-  const [publisher] = useUserPublisher();
-  const items = usePublisherHomeItems(publisher);
-  const { newItems, dismiss, dismissAll } = useNewAssignments(items);
+type Props = {
+  newItems: NotificationItem[];
+  dismiss: (key: string) => void;
+  dismissAll: () => void;
+};
 
-  if (newItems.length === 0) return null;
-
+export function NotificationsContent({ newItems, dismiss, dismissAll }: Props) {
   const s = newItems.length > 1 ? "s" : "";
 
   return (
     <>
-      <Item lines="none">
-        <IonLabel>
-          <Text bold size="sm">
-            Notification{s}
-          </Text>
-        </IonLabel>
-        <Text onClick={dismissAll} size="sm" color="primary">
-          Clear {s && "All"}
-        </Text>
-      </Item>
-      <Space height="1" />
       {newItems.map((item) => (
         <NotificationRow key={item.key} item={item} onDismiss={dismiss} />
       ))}
+      <IonItem lines="inset">
+        <IonLabel className="ion-text-right">
+          <Text onClick={dismissAll} size="sm" color="primary">
+            Clear {s && "All"}
+          </Text>
+        </IonLabel>
+      </IonItem>
     </>
   );
 }

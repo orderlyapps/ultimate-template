@@ -43,7 +43,6 @@ export function NotificationRow({ item, onDismiss }: Props) {
           />
         </Col>
       </Row>
-      <Space height="0.6" />
     </Grid>
   );
 }
