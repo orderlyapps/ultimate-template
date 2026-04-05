@@ -2,7 +2,7 @@ import { IonAccordionGroup } from "@ionic/react";
 import {
   useHomeAccordionOrderStore,
   type HomeAccordionId,
-} from "@feature/home/store/useHomeAccordionOrderStore";
+} from "@/content/home/content/home-accordions/store/useHomeAccordionOrderStore";
 import { HomeAccordionItem } from "./components/home-accordion-item/HomeAccordionItem";
 
 export function HomeAccordions() {
@@ -10,7 +10,7 @@ export function HomeAccordions() {
   const expandedIds = useHomeAccordionOrderStore((s) => s.expandedIds);
   const setExpandedIds = useHomeAccordionOrderStore((s) => s.setExpandedIds);
 
-  const show = false;
+  const show = true;
 
   if (!show) return null;
 

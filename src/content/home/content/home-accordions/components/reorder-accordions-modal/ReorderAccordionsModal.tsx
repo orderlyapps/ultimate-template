@@ -17,7 +17,7 @@ import { Text } from "@ionic-display/text/Text";
 import {
   ACCORDION_LABELS,
   useHomeAccordionOrderStore,
-} from "@feature/home/store/useHomeAccordionOrderStore";
+} from "@/content/home/content/home-accordions/store/useHomeAccordionOrderStore";
 
 type Props = {
   isOpen: boolean;

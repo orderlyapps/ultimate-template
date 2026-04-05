@@ -3,7 +3,7 @@ import { List } from "@ionic-layout/list/List";
 import {
   ACCORDION_LABELS,
   type HomeAccordionId,
-} from "@feature/home/store/useHomeAccordionOrderStore";
+} from "@/content/home/content/home-accordions/store/useHomeAccordionOrderStore";
 import { AssignmentsContent } from "../assignments-content/AssignmentsContent";
 import { CalendarContent } from "../calendar-content/CalendarContent";
 import { AnnouncementsContent } from "../announcements-content/AnnouncementsContent";

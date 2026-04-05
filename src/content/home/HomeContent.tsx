@@ -9,6 +9,7 @@ import { Label } from "@ionic-display/label/Label";
 import { useUserCongregation } from "@feature/db/congregation/user-congregation/use-user-congregation/useUserCongregation";
 import { useAppFeaturesStore } from "@services/app/features/useAppFeaturesStore";
 import { useFeatureAccess } from "@services/app/auth/temp-feature-access/useFeatureAccess";
+import { HomeAccordions } from "@/content/home/content/home-accordions/HomeAccordions";
 
 export const HomeContent: React.FC = () => {
   const [congregation] = useUserCongregation();
@@ -23,6 +24,7 @@ export const HomeContent: React.FC = () => {
         <>
           <Space height="3" />
           <WelcomeHeading />
+          <HomeAccordions />
           <PublisherHomeView2 />
         </>
       )}

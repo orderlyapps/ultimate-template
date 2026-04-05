@@ -8,7 +8,7 @@ export type HomeAccordionId =
   | "tools";
 
 export const DEFAULT_ACCORDION_ORDER: HomeAccordionId[] = [
-  // "assignments",
+  "assignments",
   "calendar",
   "announcements",
   "tools",
