@@ -1,28 +1,35 @@
 import { IonLabel } from "@ionic/react";
 import { Item } from "@ionic-layout/item/Item";
 import { Text } from "@ionic-display/text/Text";
+import { usePublisherAssignments } from "./hooks/usePublisherAssignments";
+import { AssignmentRow } from "./components/assignment-row/AssignmentRow";
 
+/**
+ * Displays all upcoming assignments for the current publisher.
+ * Queries midweek, weekend, AV, speaker, and cleaning collections.
+ */
 export function AssignmentsContent() {
-  return (
-    <>
-      <Item>
-        <IonLabel>
-          <Text bold>Bible Reading</Text>
-          <Text size="sm" color="medium">Due: April 12</Text>
-        </IonLabel>
-      </Item>
-      <Item>
-        <IonLabel>
-          <Text bold>Initial Call</Text>
-          <Text size="sm" color="medium">Due: April 19</Text>
-        </IonLabel>
-      </Item>
+  const { assignments, isLoading } = usePublisherAssignments();
+
+  if (isLoading) return null;
+
+  if (assignments.length === 0) {
+    return (
       <Item lines="none">
         <IonLabel>
-          <Text bold>Return Visit</Text>
-          <Text size="sm" color="medium">Due: May 3</Text>
+          <Text size="sm" color="medium">
+            No upcoming assignments
+          </Text>
         </IonLabel>
       </Item>
+    );
+  }
+
+  return (
+    <>
+      {assignments.map((item) => (
+        <AssignmentRow key={item.key} item={item} />
+      ))}
     </>
   );
 }
