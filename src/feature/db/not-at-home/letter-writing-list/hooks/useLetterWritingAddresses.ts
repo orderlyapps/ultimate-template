@@ -18,18 +18,23 @@ export const useLetterWritingAddresses = () => {
     [userCongregation?.id],
   );
 
-  const { data: oldestNonWriteAddresses } = useLiveQuery(
+  const { data: nonWriteAddresses } = useLiveQuery(
     (q) =>
       userCongregation?.id
         ? q
             .from({ nah: notAtHomeCollection })
             .where(({ nah }) => eq(nah.congregation_id, userCongregation.id))
             .where(({ nah }) => eq(nah.write, false))
-            .orderBy(({ nah }) => nah.created_at)
-            .limit(5)
         : undefined,
     [userCongregation?.id],
   );
+
+  // Sort by created_at ascending and take 5 oldest — done in JS
+  // because TanStack DB orderBy+limit requires a collection index
+  const oldestNonWriteAddresses = nonWriteAddresses
+    ?.slice()
+    .sort((a, b) => a.created_at.localeCompare(b.created_at))
+    .slice(0, 5);
 
   const { data: suburbs } = useLiveQuery(
     (q) =>

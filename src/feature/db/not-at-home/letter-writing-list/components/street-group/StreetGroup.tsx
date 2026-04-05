@@ -3,9 +3,9 @@ import { IonLabel } from "@ionic/react";
 import { Accordion } from "@ionic-layout/accordion/Accordion";
 import { ItemAccordionHeader } from "@ionic-layout/accordion-header/AccordionHeader";
 import { AccordionContent } from "@ionic-layout/accordion-content/AccordionContent";
-import { Text } from "@ionic-display/text/Text";
 import { AddressRow } from "../address-row/AddressRow";
 import type { StreetGroup as StreetGroupType } from "../../groupBySuburbAndStreet";
+import { LabelText } from "@display/label-text/LabelText";
 
 type Props = {
   street: StreetGroupType;
@@ -17,7 +17,7 @@ export const StreetGroup: FC<Props> = ({ street, onDelete }) => {
     <Accordion value={street.streetId}>
       <ItemAccordionHeader>
         <IonLabel>
-          <Text size="sm" bold>{street.streetName}</Text>
+          <LabelText>{street.streetName}</LabelText>
         </IonLabel>
       </ItemAccordionHeader>
       <AccordionContent>
