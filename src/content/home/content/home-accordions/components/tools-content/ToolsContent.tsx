@@ -1,28 +1,57 @@
-import { IonLabel } from "@ionic/react";
-import { Item } from "@ionic-layout/item/Item";
+import { List } from "@ionic-layout/list/List";
+import { IonItem, IonLabel } from "@ionic/react";
+import { FeatureGuard } from "@services/app/features/FeatureGuard";
 import { Text } from "@ionic-display/text/Text";
 
 export function ToolsContent() {
   return (
-    <>
-      <Item>
+    <List>
+      <FeatureGuard id="talks">
+        <IonItem
+          lines="none"
+          routerLink="/home/talks"
+          className="ion-text-right"
+          slot="end"
+        >
+          <IonLabel>
+            <Text bold>Talks</Text>
+          </IonLabel>
+        </IonItem>
+      </FeatureGuard>
+      <FeatureGuard id="mapPrint">
+        <IonItem
+          lines="none"
+          routerLink="/home/map-print"
+          className="ion-text-right"
+          slot="end"
+        >
+          <IonLabel>
+            <Text bold>Map Print</Text>
+          </IonLabel>
+        </IonItem>
+      </FeatureGuard>
+      <FeatureGuard id="groups">
+        <IonItem
+          lines="none"
+          routerLink="/home/groups"
+          className="ion-text-right"
+          slot="end"
+        >
+          <IonLabel>
+            <Text bold>Groups</Text>
+          </IonLabel>
+        </IonItem>
+      </FeatureGuard>
+      <IonItem
+        // lines="none"
+        routerLink="/home/tools/schedule-pdfs"
+        className="ion-text-right"
+        slot="end"
+      >
         <IonLabel>
-          <Text bold>Timer</Text>
-          <Text size="sm" color="medium">Practice talk timer</Text>
+          <Text bold>Schedule PDFs</Text>
         </IonLabel>
-      </Item>
-      <Item>
-        <IonLabel>
-          <Text bold>Territory Map</Text>
-          <Text size="sm" color="medium">View and manage territory</Text>
-        </IonLabel>
-      </Item>
-      <Item lines="none">
-        <IonLabel>
-          <Text bold>Report</Text>
-          <Text size="sm" color="medium">Submit field service report</Text>
-        </IonLabel>
-      </Item>
-    </>
+      </IonItem>
+    </List>
   );
 }

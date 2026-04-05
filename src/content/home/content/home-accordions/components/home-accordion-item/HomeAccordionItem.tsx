@@ -28,12 +28,12 @@ export function HomeAccordionItem({ id }: Props) {
 
   return (
     <IonAccordion value={id}>
-      <ItemAccordionHeader>
+      <ItemAccordionHeader lines="none">
         <SectionHeading>{ACCORDION_LABELS[id]}</SectionHeading>
       </ItemAccordionHeader>
       <List slot="content">
         <Content />
-        <Space height="2"/>
+        <Space height="2" />
       </List>
     </IonAccordion>
   );
