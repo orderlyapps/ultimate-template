@@ -16,7 +16,7 @@ import { getTheocraticWeekLabel } from "@date/getTheocraticWeekLabel";
 import { formatEventDate } from "@date/formatEventDate";
 import { formatPublisherName } from "@format/formatPublisherName";
 import { getWeekIdFromDate } from "@date/getWeekIdFromDate";
-import { assignmentLabels } from "./assignmentLabels";
+import { assignmentLabels } from "@/content/home/content/home-accordions/components/notifications-content/helper/assignmentLabels";
 
 function getMonthId(dateStr: string): string {
   const [year, month] = dateStr.split("-");

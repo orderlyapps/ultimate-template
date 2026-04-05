@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
-import { useDismissedAssignmentsStore } from "../dismissed-assignments-store/useDismissedAssignmentsStore";
-import type { HomeItem } from "../usePublisherHomeItems";
+import { useDismissedAssignmentsStore } from "../store/useDismissedAssignmentsStore";
+import type { HomeItem } from "./usePublisherHomeItems";
 import { getThisWeekID } from "@util/date/getThisWeekID";
 
 export type NotificationItem = {

@@ -2,7 +2,7 @@ import { IonIcon, IonLabel } from "@ionic/react";
 import close from "@icons/cross.svg";
 import { Text } from "@ionic-display/text/Text";
 import { Item } from "@ionic-layout/item/Item";
-import type { NotificationItem } from "../../use-new-assignments/useNewAssignments";
+import type { NotificationItem } from "../../../../../../content/home/content/home-accordions/components/notifications-content/hooks/useNewAssignments";
 import { Grid } from "@ionic-layout/grid/Grid";
 import { Row } from "@ionic-layout/row/Row";
 import { Col } from "@ionic-layout/col/Col";

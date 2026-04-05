@@ -4,7 +4,7 @@ import { Space } from "@layout/space/Space";
 import { Text } from "@ionic-display/text/Text";
 import { Item } from "@ionic-layout/item/Item";
 import { HomeItemCard } from "../home-item-card/HomeItemCard";
-import { getMonthLabel, type HomeItem } from "../../usePublisherHomeItems";
+import { getMonthLabel, type HomeItem } from "../../../../../../content/home/content/home-accordions/components/notifications-content/hooks/usePublisherHomeItems";
 
 type DisplayMode = "initial" | "more" | "all";
 
