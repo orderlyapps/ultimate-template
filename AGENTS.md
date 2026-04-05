@@ -18,6 +18,15 @@ load: "node_modules/.pnpm/@tanstack+react-db@0.1.76_react@19.2.4_typescript@5.9.
 
 <coding_guidelines>
 
+# Code Style
+
+- Add comments to new code to help you understand the purpose and functionality of each section, making it easier to maintain and debug in the future
+- Include JSDoc comments for functions and components explaining parameters, return types, and usage examples
+- Add inline comments for complex logic or non-obvious implementation details
+- Document any assumptions or edge cases handled in the code
+- Don't forget to update comments when necessary.
+- Write all new code as self-contained modules. Ask before adding dependencies from existing files.
+
 # Code Organization
 
 - Never use barrel files
