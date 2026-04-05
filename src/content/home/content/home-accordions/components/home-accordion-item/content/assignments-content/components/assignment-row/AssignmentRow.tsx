@@ -14,7 +14,7 @@ type Props = {
  */
 export function AssignmentRow({ item }: Props) {
   return (
-    <Grid className="ion-no-padding ion-padding-horizontal">
+    <Grid className="ion-no-padding ion-no-margin">
       <Row>
         <Col>
           <Text bold size="sm">

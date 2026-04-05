@@ -11,7 +11,7 @@ import { getThisWeekID } from "@util/date/getThisWeekID";
 import { getUserCongregation } from "@feature/db/congregation/user-congregation/get-user-congregation/getUserCongregation";
 import { getUserPublisher } from "@feature/db/publisher/user-publisher/get-user-publisher/getUserPublisher";
 import { getTheocraticWeekLabel } from "@date/getTheocraticWeekLabel";
-import { assignmentLabels } from "@/content/home/content/home-accordions/components/notifications-content/helper/assignmentLabels";
+import { assignmentLabels } from "@/content/home/content/home-accordions/components/notifications-accordion-item/notifications-content/helper/assignmentLabels";
 
 /** A single assignment item for display in the assignments accordion */
 export type AssignmentItem = {

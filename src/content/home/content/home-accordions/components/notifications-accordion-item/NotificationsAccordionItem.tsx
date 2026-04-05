@@ -1,13 +1,12 @@
 import { IonAccordion, IonBadge, IonLabel } from "@ionic/react";
 import { List } from "@ionic-layout/list/List";
 import { ACCORDION_LABELS } from "@/content/home/content/home-accordions/store/useHomeAccordionOrderStore";
-import { NotificationsContent } from "@/content/home/content/home-accordions/components/notifications-content/NotificationsContent";
 import { ItemAccordionHeader } from "@ionic-layout/accordion-header/AccordionHeader";
 import { SectionHeading } from "@display/section-heading/SectionHeading";
-import { Space } from "@layout/space/Space";
 import { useUserPublisher } from "@feature/db/publisher/user-publisher/use-user-publisher/useUserPublisher";
-import { usePublisherHomeItems } from "@/content/home/content/home-accordions/components/notifications-content/hooks/usePublisherHomeItems";
-import { useNewAssignments } from "@/content/home/content/home-accordions/components/notifications-content/hooks/useNewAssignments";
+import { usePublisherHomeItems } from "@/content/home/content/home-accordions/components/notifications-accordion-item/notifications-content/hooks/usePublisherHomeItems";
+import { useNewAssignments } from "@/content/home/content/home-accordions/components/notifications-accordion-item/notifications-content/hooks/useNewAssignments";
+import { NotificationsContent } from "@/content/home/content/home-accordions/components/notifications-accordion-item/notifications-content/NotificationsContent";
 
 export function NotificationsAccordionItem() {
   const [publisher] = useUserPublisher();
@@ -17,7 +16,7 @@ export function NotificationsAccordionItem() {
   if (newItems.length < 1) return null;
 
   return (
-    <IonAccordion value="notifications">
+    <IonAccordion value="notifications" id="no-lines">
       <ItemAccordionHeader lines="none">
         <IonLabel>
           <SectionHeading>{ACCORDION_LABELS.notifications}</SectionHeading>
@@ -27,13 +26,11 @@ export function NotificationsAccordionItem() {
         </IonBadge>
       </ItemAccordionHeader>
       <List slot="content" lines="none">
-        <Space height="1" />
         <NotificationsContent
           newItems={newItems}
           dismiss={dismiss}
           dismissAll={dismissAll}
         />
-        <Space height="2" />
       </List>
     </IonAccordion>
   );

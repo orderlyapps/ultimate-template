@@ -24,6 +24,7 @@
 @import "./overides/app/theme.css";
 
 /* COMPONENTS */
+@import "./overides/components/accordion.css";
 @import "./overides/components/card.css";
 @import "./overides/components/item.css";
 @import "./overides/components/item-divider.css";

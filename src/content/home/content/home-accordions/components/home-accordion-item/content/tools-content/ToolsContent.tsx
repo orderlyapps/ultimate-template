@@ -18,6 +18,7 @@ export function ToolsContent() {
           </IonLabel>
         </IonItem>
       </FeatureGuard>
+
       <FeatureGuard id="mapPrint">
         <IonItem
           lines="none"
@@ -30,6 +31,7 @@ export function ToolsContent() {
           </IonLabel>
         </IonItem>
       </FeatureGuard>
+
       <FeatureGuard id="groups">
         <IonItem
           lines="none"
@@ -42,10 +44,10 @@ export function ToolsContent() {
           </IonLabel>
         </IonItem>
       </FeatureGuard>
+
       <IonItem
-        // lines="none"
+        className="ion-text-right ion-padding-bottom ion-margin-bottom"
         routerLink="/home/tools/schedule-pdfs"
-        className="ion-text-right"
         slot="end"
       >
         <IonLabel>

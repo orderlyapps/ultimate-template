@@ -1,0 +1,4 @@
+ion-accordion#no-lines ion-item[slot="header"] {
+  --border-width: 0px;
+  --inner-border-width: 0px;
+}

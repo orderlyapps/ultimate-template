@@ -4,9 +4,9 @@ import {
   type HomeAccordionId,
 } from "@/content/home/content/home-accordions/store/useHomeAccordionOrderStore";
 import { HomeAccordionItem } from "./components/home-accordion-item/HomeAccordionItem";
-import { NotificationsAccordionItem } from "./components/home-accordion-item/components/notifications-accordion-item/NotificationsAccordionItem";
 import { useAppFeaturesStore } from "@services/app/features/useAppFeaturesStore";
 import { useFeatureAccess } from "@services/app/auth/temp-feature-access/useFeatureAccess";
+import { NotificationsAccordionItem } from "@/content/home/content/home-accordions/components/notifications-accordion-item/NotificationsAccordionItem";
 
 export function HomeAccordions() {
   const order = useHomeAccordionOrderStore((s) => s.order);

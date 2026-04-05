@@ -5,7 +5,7 @@ import { Grid } from "@ionic-layout/grid/Grid";
 import { Row } from "@ionic-layout/row/Row";
 import { Col } from "@ionic-layout/col/Col";
 import { Space } from "@layout/space/Space";
-import type { NotificationItem } from "@/content/home/content/home-accordions/components/notifications-content/hooks/useNewAssignments";
+import type { NotificationItem } from "@/content/home/content/home-accordions/components/notifications-accordion-item/notifications-content/hooks/useNewAssignments";
 
 type Props = {
   item: NotificationItem;
@@ -14,27 +14,24 @@ type Props = {
 
 export function NotificationRow({ item, onDismiss }: Props) {
   return (
-    <Grid className="ion-no-padding ion-padding-horizontal">
+    <Grid className="ion-no-padding ion-no-margin">
       <Row>
         <Col>
-          <Row>
-            <Col>
-              <Text bold size="sm">
-                {item.title}
-              </Text>
-              <br />
-              <Text size="xs" color="medium">
-                {item.detail}
-              </Text>
-            </Col>
-            <Col className="ion-text-right">
-              <Text size="xs" color="medium">
-                {item.dateLabel}
-              </Text>
-            </Col>
-          </Row>
+          <Text bold size="sm">
+            {item.title}
+          </Text>
+          <br />
+          <Text size="xs" color="medium">
+            {item.detail}
+          </Text>
         </Col>
-        <Col size="auto" className="ion-padding-start">
+        <Col className="ion-text-right ion-padding-end">
+          <Text size="xs" color="medium">
+            {item.dateLabel}
+          </Text>
+        </Col>
+
+        <Col size="auto">
           <Space height="0.2" />
           <IonIcon
             onClick={() => onDismiss(item.key)}

@@ -15,7 +15,7 @@ export function AssignmentsContent() {
 
   if (assignments.length === 0) {
     return (
-      <Item lines="none">
+      <Item className="ion-margin-bottom">
         <IonLabel>
           <Text size="sm" color="medium">
             No upcoming assignments
@@ -26,10 +26,12 @@ export function AssignmentsContent() {
   }
 
   return (
-    <>
-      {assignments.slice(0, 3).map((item) => (
-        <AssignmentRow key={item.key} item={item} />
-      ))}
-    </>
+    <Item lines="inset" className="ion-padding-bottom ion-margin-bottom">
+      <IonLabel>
+        {assignments.slice(0, 3).map((item) => (
+          <AssignmentRow key={item.key} item={item} />
+        ))}
+      </IonLabel>
+    </Item>
   );
 }

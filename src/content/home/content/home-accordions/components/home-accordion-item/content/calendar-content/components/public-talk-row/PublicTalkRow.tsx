@@ -2,6 +2,7 @@ import { Text } from "@ionic-display/text/Text";
 import { Row } from "@ionic-layout/row/Row";
 import { Col } from "@ionic-layout/col/Col";
 import type { PublicTalkItem } from "../../hooks/usePublicTalk";
+import { Grid } from "@ionic-layout/grid/Grid";
 
 type Props = {
   talk: PublicTalkItem;
@@ -13,36 +14,28 @@ type Props = {
  */
 export function PublicTalkRow({ talk }: Props) {
   return (
-    <>
+    <Grid className="ion-no-padding ion-no-margin">
       <Row>
         <Col>
           <Text bold size="sm">
             Public Talk
           </Text>
+          <br />
+          <Text size="xs" color="medium">
+            {talk.outlineTheme}
+          </Text>
+          <br />
+          <Text size="xs" color="medium">
+            {talk.speakerLabel}
+          </Text>
         </Col>
 
-        <Col className="ion-text-right">
+        <Col className="ion-text-right" size="auto">
           <Text size="xs" color="medium">
             {talk.dateLabel}
           </Text>
         </Col>
       </Row>
-
-      <Row>
-        <Col>
-          <Text size="xs" color="medium">
-            {talk.outlineTheme}
-          </Text>
-        </Col>
-      </Row>
-
-      <Row>
-        <Col>
-          <Text size="xs" color="medium">
-            {talk.speakerLabel}
-          </Text>
-        </Col>
-      </Row>
-    </>
+    </Grid>
   );
 }
