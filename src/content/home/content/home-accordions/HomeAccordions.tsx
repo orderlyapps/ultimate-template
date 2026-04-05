@@ -31,6 +31,10 @@ export function HomeAccordions() {
     >
       {order.map((id) => {
         if (id === "tools" && !showTools) return null;
+
+        if (id === "announcements" && (!isUnlocked || !isUserAllowed))
+          return null;
+
         if (id === "notifications")
           return <NotificationsAccordionItem key={id} />;
 
