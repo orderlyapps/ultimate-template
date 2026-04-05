@@ -1,4 +1,5 @@
 import { PublisherHomeView2 } from "@feature/db/publisher/publisher-home-view-2/PublisherHomeView2";
+import { WelcomeHeading } from "./content/welcome-heading/WelcomeHeading";
 import { List } from "@ionic-layout/list/List";
 import { NavItem } from "@navigation/nav-item/NavItem";
 import { Item } from "@ionic-layout/item/Item";
@@ -19,7 +20,11 @@ export const HomeContent: React.FC = () => {
   return (
     <>
       {congregation?.id === "7b15d4e5-d4fa-4eb4-a276-3790b7c4897b" && (
-        <PublisherHomeView2 />
+        <>
+          <Space height="3" />
+          <WelcomeHeading />
+          <PublisherHomeView2 />
+        </>
       )}
       <Space height="2" />
       {congregation?.id !== "7b15d4e5-d4fa-4eb4-a276-3790b7c4897b" && (
