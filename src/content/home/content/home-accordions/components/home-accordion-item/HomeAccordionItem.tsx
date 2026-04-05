@@ -8,6 +8,7 @@ import { AssignmentsContent } from "../assignments-content/AssignmentsContent";
 import { CalendarContent } from "../calendar-content/CalendarContent";
 import { AnnouncementsContent } from "../announcements-content/AnnouncementsContent";
 import { ToolsContent } from "../tools-content/ToolsContent";
+import { NotificationsContent } from "@/content/home/content/home-accordions/components/notifications-content/NotificationsContent";
 import { ItemAccordionHeader } from "@ionic-layout/accordion-header/AccordionHeader";
 import { SectionHeading } from "@display/section-heading/SectionHeading";
 import { Space } from "@layout/space/Space";
@@ -21,6 +22,7 @@ const CONTENT_MAP: Record<HomeAccordionId, React.FC> = {
   calendar: CalendarContent,
   announcements: AnnouncementsContent,
   tools: ToolsContent,
+  notifications: NotificationsContent,
 };
 
 export function HomeAccordionItem({ id }: Props) {

@@ -5,9 +5,11 @@ export type HomeAccordionId =
   | "assignments"
   | "calendar"
   | "announcements"
-  | "tools";
+  | "tools"
+  | "notifications";
 
 export const DEFAULT_ACCORDION_ORDER: HomeAccordionId[] = [
+  "notifications",
   "assignments",
   "calendar",
   "announcements",
@@ -19,6 +21,7 @@ export const ACCORDION_LABELS: Record<HomeAccordionId, string> = {
   calendar: "Calendar",
   announcements: "Announcements",
   tools: "Tools",
+  notifications: "Notifications",
 };
 
 interface HomeAccordionOrderState {
