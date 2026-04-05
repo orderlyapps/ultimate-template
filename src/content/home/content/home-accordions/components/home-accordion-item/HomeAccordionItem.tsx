@@ -10,7 +10,7 @@ import { AnnouncementsContent } from "../announcements-content/AnnouncementsCont
 import { ToolsContent } from "../tools-content/ToolsContent";
 import { ItemAccordionHeader } from "@ionic-layout/accordion-header/AccordionHeader";
 import { SectionHeading } from "@display/section-heading/SectionHeading";
-import { Space } from "@layout/space/Space";
+// import { Space } from "@layout/space/Space";
 
 type Props = {
   id: Exclude<HomeAccordionId, "notifications">;
@@ -33,10 +33,10 @@ export function HomeAccordionItem({ id }: Props) {
           <SectionHeading>{ACCORDION_LABELS[id]}</SectionHeading>
         </IonLabel>
       </ItemAccordionHeader>
-      <List slot="content" lines="none">
-        <Space height="1" />
+      <List slot="content" lines="none" className="ion-no-padding ion-no-margin">
+        {/* <Space height="1" /> */}
         <Content />
-        <Space height="2" />
+        {/* <Space height="2" /> */}
       </List>
     </IonAccordion>
   );

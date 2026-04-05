@@ -1,5 +1,4 @@
-import { Fragment } from "react";
-import { IonLabel } from "@ionic/react";
+import { IonItem, IonLabel } from "@ionic/react";
 import { Item } from "@ionic-layout/item/Item";
 import { Text } from "@ionic-display/text/Text";
 import { useCalendarItems, getMonthLabel } from "./hooks/useCalendarItems";
@@ -7,6 +6,8 @@ import { usePublicTalk } from "./hooks/usePublicTalk";
 import { CalendarItemRow } from "./components/calendar-item-row/CalendarItemRow";
 import { CalendarMonthHeader } from "./components/calendar-month-header/CalendarMonthHeader";
 import { PublicTalkRow } from "./components/public-talk-row/PublicTalkRow";
+import { Grid } from "@ionic-layout/grid/Grid";
+import { Fragment } from "react";
 
 /**
  * Displays the first upcoming public talk above a month-grouped
@@ -31,20 +32,24 @@ export function CalendarContent() {
   }
 
   return (
-    <>
-      {publicTalk && <PublicTalkRow talk={publicTalk} />}
-      {items.map((item, index) => {
-        const showHeader =
-          index === 0 || item.monthId !== items[index - 1].monthId;
-        return (
-          <Fragment key={item.key}>
-            {showHeader && (
-              <CalendarMonthHeader label={getMonthLabel(item.monthId)} />
-            )}
-            <CalendarItemRow item={item} />
-          </Fragment>
-        );
-      })}
-    </>
+    <IonItem className="" lines="inset">
+      <IonLabel className="ion-no-margin ion-padding-bottom">
+        <Grid className="ion-no-padding ion-no-margin">
+          {publicTalk && <PublicTalkRow talk={publicTalk} />}
+          {items.slice(0, 3).map((item, index) => {
+            const showHeader =
+              index === 0 || item.monthId !== items[index - 1].monthId;
+            return (
+              <Fragment key={item.key}>
+                {showHeader && (
+                  <CalendarMonthHeader label={getMonthLabel(item.monthId)} />
+                )}
+                <CalendarItemRow item={item} />
+              </Fragment>
+            );
+          })}
+        </Grid>
+      </IonLabel>
+    </IonItem>
   );
 }

@@ -27,7 +27,7 @@ export function AssignmentsContent() {
 
   return (
     <>
-      {assignments.map((item) => (
+      {assignments.slice(0, 3).map((item) => (
         <AssignmentRow key={item.key} item={item} />
       ))}
     </>
