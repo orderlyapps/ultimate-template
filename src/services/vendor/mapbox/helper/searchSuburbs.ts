@@ -7,10 +7,23 @@ export async function searchSuburbs(
   query: string,
   bbox?: [number, number, number, number],
 ): Promise<MapboxGeocodingFeature[]> {
+  let paddedBbox: [number, number, number, number] | undefined;
+
+  if (bbox) {
+    const padding = 0.3;
+    const [minLng, minLat, maxLng, maxLat] = bbox;
+    paddedBbox = [
+      Math.max(-180, minLng - padding),
+      Math.max(-90, minLat - padding),
+      Math.min(180, maxLng + padding),
+      Math.min(90, maxLat + padding),
+    ];
+  }
+
   const accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
   if (!accessToken) {
     throw new Error(
-      "Mapbox access token not found. Please set VITE_MAPBOX_TOKEN environment variable.",
+      "Mapbox access token not found. Please set VITE_MAPBOX_ACCESS_TOKEN environment variable.",
     );
   }
 
@@ -24,12 +37,16 @@ export async function searchSuburbs(
       `limit=10&` +
       `types=locality,place`;
 
-    if (bbox) {
-      const bboxParam = bbox.join(",");
+    if (paddedBbox) {
+      const bboxParam = paddedBbox.join(",");
       url += `&bbox=${bboxParam}`;
     }
 
     const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`Mapbox API error: ${response.status} ${response.statusText}`);
+    }
 
     const { features }: MapboxGeocodingResponse = await response.json();
 
