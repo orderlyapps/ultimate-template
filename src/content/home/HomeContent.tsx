@@ -17,6 +17,7 @@ export const HomeContent: React.FC = () => {
       {congregation?.id === "7b15d4e5-d4fa-4eb4-a276-3790b7c4897b" && (
         <>
           <WelcomeHeading />
+        <Space height="1" />
           <HomeAccordions />
           <PublisherHomeView2 />
         </>

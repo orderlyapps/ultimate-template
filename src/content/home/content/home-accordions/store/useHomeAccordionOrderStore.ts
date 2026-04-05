@@ -18,7 +18,7 @@ export const DEFAULT_ACCORDION_ORDER: HomeAccordionId[] = [
 
 export const ACCORDION_LABELS: Record<HomeAccordionId, string> = {
   assignments: "Assignments",
-  calendar: "Calendar",
+  calendar: "Events",
   announcements: "Announcements",
   tools: "Tools",
   notifications: "Notifications",
@@ -36,7 +36,13 @@ export const useHomeAccordionOrderStore = create<HomeAccordionOrderState>()(
   persist(
     (set) => ({
       order: DEFAULT_ACCORDION_ORDER,
-      expandedIds: [],
+      expandedIds: [
+        "notifications",
+        "assignments",
+        "calendar",
+        "announcements",
+        "tools",
+      ],
       setOrder: (order) => set({ order }),
       reorder: (fromIndex, toIndex) =>
         set((state) => {
