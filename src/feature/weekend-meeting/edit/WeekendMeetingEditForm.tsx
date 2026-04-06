@@ -6,7 +6,7 @@ import { outlineCollection } from "@tanstack-db/outline/outlineCollection";
 import { congregationCollection } from "@tanstack-db/congregation/congregationCollection";
 import { and, eq } from "@tanstack/react-db";
 import { PublicTalkSelect } from "./components/public-talk-select/PublicTalkSelect";
-import { useWeekendMeetingEditStore } from "./store/useWeekendMeetingEditStore";
+import { useWeekendMeetingEditStore } from "../../../content/schedules/weekend-meeting/edit/store/useWeekendMeetingEditStore";
 import { getUserCongregation } from "@feature/db/congregation/user-congregation/get-user-congregation/getUserCongregation";
 import { formatPublisherName } from "@format/formatPublisherName";
 import { WeekEvents } from "@feature/db/shared/week-events/WeekEvents";
@@ -89,8 +89,6 @@ export const WeekendMeetingEditForm: React.FC<WeekendMeetingEditFormProps> = ({
     <>
       <WeekEvents weekId={weekId} meetingType="weekend" />
       <PublicTalkSelect
-        speakerId={currentAssignment?.speakerId}
-        outlineId={currentAssignment?.outlineId}
         speakerName={speakerName}
         outlineTheme={currentAssignment?.outlineTheme}
         congregationName={currentAssignment?.congregationName}

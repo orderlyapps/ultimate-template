@@ -4,11 +4,12 @@ import { Item } from "@ionic-layout/item/Item";
 import { List } from "@ionic-layout/list/List";
 import { IonAccordion, IonLabel } from "@ionic/react";
 import type { SpeakerWithOutlines } from "../../utils/groupSpeakersWithOutlines";
-import { useWeekendMeetingEditStore } from "@feature/weekend-meeting/edit/store/useWeekendMeetingEditStore";
-import { EditSpeakerModal } from "@feature/weekend-meeting/edit-speaker/EditSpeakerForm";
+import { useWeekendMeetingEditStore } from "@/content/schedules/weekend-meeting/edit/store/useWeekendMeetingEditStore";
+import { EditSpeakerModal } from "@/content/schedules/weekend-meeting/edit/edit-speaker/components/speaker-accordion/edit-speaker/EditSpeakerForm";
 import { ItemAccordionHeader } from "@ionic-layout/accordion-header/AccordionHeader";
 import { Space } from "@layout/space/Space";
 import { sortByNumberString } from "@sort/sortByNumberString";
+import { useHistory } from "react-router-dom";
 
 type SpeakerAccordionProps = {
   speaker: SpeakerWithOutlines;
@@ -25,6 +26,13 @@ export const SpeakerAccordion: React.FC<SpeakerAccordionProps> = ({
 }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const selectSpeaker = useWeekendMeetingEditStore((s) => s.selectSpeaker);
+  const history = useHistory();
+
+  /** Select a speaker and navigate back to the edit page */
+  const handleSelectSpeaker = (speakerId: string, outlineId: string | null) => {
+    selectSpeaker(speakerId, outlineId);
+    history.goBack();
+  };
 
   return (
     <IonAccordion value={speaker.id}>
@@ -39,7 +47,7 @@ export const SpeakerAccordion: React.FC<SpeakerAccordionProps> = ({
       <List slot="content">
         <Item
           key="tbc"
-          onClick={() => selectSpeaker(speaker.id, null)}
+          onClick={() => handleSelectSpeaker(speaker.id, null)}
           color={
             currentSpeakerId === speaker.id && currentOutlineId === null
               ? "medium"
@@ -59,7 +67,7 @@ export const SpeakerAccordion: React.FC<SpeakerAccordionProps> = ({
         {speaker.outlines.sort(sortByNumberString("id")).map((outline) => (
           <Item
             key={outline.id}
-            onClick={() => selectSpeaker(speaker.id, outline.id)}
+            onClick={() => handleSelectSpeaker(speaker.id, outline.id)}
             color={
               currentSpeakerId === speaker.id && currentOutlineId === outline.id
                 ? "medium"

@@ -18,15 +18,15 @@ import { speakerOutlineCollection } from "@tanstack-db/speaker_outline/speakerOu
 import { outlineCollection } from "@tanstack-db/outline/outlineCollection";
 import { congregationCollection } from "@tanstack-db/congregation/congregationCollection";
 import { Button } from "@ionic-input/button/Button";
-import { useWeekendMeetingEditStore } from "@feature/weekend-meeting/edit/store/useWeekendMeetingEditStore";
+import { useWeekendMeetingEditStore } from "@/content/schedules/weekend-meeting/edit/store/useWeekendMeetingEditStore";
 import {
   groupSpeakersWithOutlines,
   filterSpeakers,
   groupSpeakersByCongregation,
-} from "./utils/groupSpeakersWithOutlines";
-import { SpeakerAccordion } from "./components/speaker-accordion/SpeakerAccordion";
-import { CongregationSpeakersAccordion } from "./components/congregation-speakers-accordion/CongregationSpeakersAccordion";
-import { AddVisitingSpeakerModal } from "./components/add-visiting-speaker/AddVisitingSpeakerModal";
+} from "../../../../../../../content/schedules/weekend-meeting/edit/edit-speaker/utils/groupSpeakersWithOutlines";
+import { SpeakerAccordion } from "../../../../../../../content/schedules/weekend-meeting/edit/edit-speaker/components/speaker-accordion/SpeakerAccordion";
+import { CongregationSpeakersAccordion } from "../../../../../../../content/schedules/weekend-meeting/edit/edit-speaker/components/congregation-speakers-accordion/CongregationSpeakersAccordion";
+import { AddVisitingSpeakerModal } from "../../../../../../../content/schedules/weekend-meeting/edit/edit-speaker/components/add-visiting-speaker/AddVisitingSpeakerModal";
 import { Space } from "@layout/space/Space";
 import { useState } from "react";
 import { ItemAccordionHeader } from "@ionic-layout/accordion-header/AccordionHeader";
