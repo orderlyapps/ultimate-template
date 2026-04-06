@@ -40,7 +40,10 @@ export const PublicTalkSelect: React.FC<PublicTalkSelectProps> = ({
         <IonNote>
           <Text size="sm">{displayText}</Text>
           {!isLocalSpeaker && congregationName && (
-            <Text color="medium"> - {congregationName}</Text>
+            <Text size="sm" color="medium">
+              {" "}
+              - {congregationName}
+            </Text>
           )}
         </IonNote>
       </IonLabel>
