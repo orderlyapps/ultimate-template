@@ -4,6 +4,7 @@ import { Text } from "@ionic-display/text/Text";
 import { formatPublisherName } from "@format/formatPublisherName";
 import { useWeekendAssignments } from "../../hooks/useWeekendAssignments";
 import { Label } from "@ionic-display/label/Label";
+import { IonListHeader } from "@ionic/react";
 
 type Props = {
   weekId: string;
@@ -27,6 +28,7 @@ export const WeekendAssignmentsList: FC<Props> = ({ weekId }) => {
 
   return (
     <>
+      <IonListHeader>Assignments</IonListHeader>
       {assignments.map(({ id, data: assignment }) => {
         const name = assignment
           ? formatPublisherName(

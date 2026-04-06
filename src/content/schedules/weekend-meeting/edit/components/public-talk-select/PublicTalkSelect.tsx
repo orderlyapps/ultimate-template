@@ -1,6 +1,6 @@
 import { Item } from "@ionic-layout/item/Item";
 import { Text } from "@ionic-display/text/Text";
-import { IonLabel, IonNote } from "@ionic/react";
+import { IonLabel, IonListHeader, IonNote } from "@ionic/react";
 import { useWeekendMeetingEditStore } from "@/content/schedules/weekend-meeting/edit/store/useWeekendMeetingEditStore";
 import { useHistory } from "react-router-dom";
 
@@ -33,20 +33,29 @@ export const PublicTalkSelect: React.FC<PublicTalkSelectProps> = ({
   };
 
   return (
-    <Item lines="none" onClick={handleClick} disabled={disabled} button detail>
-      <IonLabel>
-        <Text bold>{outlineTheme}</Text>
-        <br />
-        <IonNote>
-          <Text size="sm">{displayText}</Text>
-          {!isLocalSpeaker && congregationName && (
-            <Text size="sm" color="medium">
-              {" "}
-              - {congregationName}
-            </Text>
-          )}
-        </IonNote>
-      </IonLabel>
-    </Item>
+    <>
+      <IonListHeader>Public Talk</IonListHeader>
+      <Item
+        lines="none"
+        onClick={handleClick}
+        disabled={disabled}
+        button
+        detail
+      >
+        <IonLabel>
+          <Text bold>{outlineTheme}</Text>
+          <br />
+          <IonNote>
+            <Text size="sm">{displayText}</Text>
+            {!isLocalSpeaker && congregationName && (
+              <Text size="sm" color="medium">
+                {" "}
+                - {congregationName}
+              </Text>
+            )}
+          </IonNote>
+        </IonLabel>
+      </Item>
+    </>
   );
 };
