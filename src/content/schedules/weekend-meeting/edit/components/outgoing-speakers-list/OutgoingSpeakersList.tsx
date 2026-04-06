@@ -1,10 +1,7 @@
 import type { FC } from "react";
-import { Item } from "@ionic-layout/item/Item";
-import { Text } from "@ionic-display/text/Text";
-import { Label } from "@ionic-display/label/Label";
-import { IonListHeader } from "@ionic/react";
-import { formatPublisherName } from "@format/formatPublisherName";
 import { useOutgoingSpeakers } from "../../hooks/useOutgoingSpeakers";
+import { OutgoingSpeakersHeader } from "./outgoing-speakers-header/OutgoingSpeakersHeader";
+import { OutgoingSpeakerItem } from "./outgoing-speaker-item/OutgoingSpeakerItem";
 
 type Props = {
   weekId: string;
@@ -23,21 +20,10 @@ export const OutgoingSpeakersList: FC<Props> = ({ weekId }) => {
 
   return (
     <>
-      <IonListHeader>Outgoing Speakers</IonListHeader>
-      {outgoingSpeakers.map((speaker) => {
-        const name = formatPublisherName(speaker, "display last");
-
-        return (
-          <Item key={speaker.speakerId}>
-            <Label>{name}</Label>
-            <Text>
-              {speaker.outlineTheme || "Unknown outline"}
-              {" → "}
-              {speaker.targetCongregationName || "Unknown congregation"}
-            </Text>
-          </Item>
-        );
-      })}
+      <OutgoingSpeakersHeader />
+      {outgoingSpeakers.map((speaker) => (
+        <OutgoingSpeakerItem key={speaker.speakerId} speaker={speaker} />
+      ))}
     </>
   );
 };

@@ -98,7 +98,9 @@ export const WeekendMeetingEditForm: React.FC<WeekendMeetingEditFormProps> = ({
           currentAssignment?.speakerCongregationId === congregationId
         }
       />
+      <Space height="1" />
       <WeekendAssignmentsList weekId={weekId} />
+      <Space height="1" />
       <OutgoingSpeakersList weekId={weekId} />
     </>
   );
