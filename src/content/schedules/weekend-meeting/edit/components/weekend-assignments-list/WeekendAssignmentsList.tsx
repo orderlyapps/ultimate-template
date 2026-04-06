@@ -1,6 +1,5 @@
 import type { FC } from "react";
 import { Item } from "@ionic-layout/item/Item";
-import { List } from "@ionic-layout/list/List";
 import { Text } from "@ionic-display/text/Text";
 import { formatPublisherName } from "@format/formatPublisherName";
 import { useWeekendAssignments } from "../../hooks/useWeekendAssignments";
@@ -27,7 +26,7 @@ export const WeekendAssignmentsList: FC<Props> = ({ weekId }) => {
   ];
 
   return (
-    <List>
+    <>
       {assignments.map(({ id, data: assignment }) => {
         const name = assignment
           ? formatPublisherName(
@@ -51,6 +50,6 @@ export const WeekendAssignmentsList: FC<Props> = ({ weekId }) => {
           </Item>
         );
       })}
-    </List>
+    </>
   );
 };

@@ -9,7 +9,7 @@ import {
 } from "@ionic/react";
 import { useParams } from "react-router-dom";
 import { WeekNavigation } from "@ui/components/custom/navigation/week-navigation/WeekNavigation";
-import { WeekendMeetingEditForm } from "@feature/weekend-meeting/edit/WeekendMeetingEditForm";
+import { WeekendMeetingEditForm } from "@/content/schedules/weekend-meeting/edit/WeekendMeetingEditForm";
 
 export const WeekendMeetingEdit: React.FC = () => {
   const { week_id } = useParams<{ week_id: string }>();

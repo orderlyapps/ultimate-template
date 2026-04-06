@@ -5,13 +5,13 @@ import { publisherCollection } from "@tanstack-db/publisher/publisherCollection"
 import { outlineCollection } from "@tanstack-db/outline/outlineCollection";
 import { congregationCollection } from "@tanstack-db/congregation/congregationCollection";
 import { and, eq } from "@tanstack/react-db";
-import { PublicTalkSelect } from "./components/public-talk-select/PublicTalkSelect";
-import { useWeekendMeetingEditStore } from "../../../content/schedules/weekend-meeting/edit/store/useWeekendMeetingEditStore";
+import { useWeekendMeetingEditStore } from "./store/useWeekendMeetingEditStore";
 import { getUserCongregation } from "@feature/db/congregation/user-congregation/get-user-congregation/getUserCongregation";
 import { formatPublisherName } from "@format/formatPublisherName";
 import { WeekEvents } from "@feature/db/shared/week-events/WeekEvents";
-import { WeekendAssignmentsList } from "./components/weekend-assignments-list/WeekendAssignmentsList";
 import { Space } from "@layout/space/Space";
+import { PublicTalkSelect } from "@/content/schedules/weekend-meeting/edit/components/public-talk-select/PublicTalkSelect";
+import { WeekendAssignmentsList } from "@/content/schedules/weekend-meeting/edit/components/weekend-assignments-list/WeekendAssignmentsList";
 
 type WeekendMeetingEditFormProps = {
   weekId: string;
@@ -88,6 +88,7 @@ export const WeekendMeetingEditForm: React.FC<WeekendMeetingEditFormProps> = ({
   return (
     <>
       <WeekEvents weekId={weekId} meetingType="weekend" />
+      <Space height="1.5" />
       <PublicTalkSelect
         speakerName={speakerName}
         outlineTheme={currentAssignment?.outlineTheme}
@@ -96,7 +97,6 @@ export const WeekendMeetingEditForm: React.FC<WeekendMeetingEditFormProps> = ({
           currentAssignment?.speakerCongregationId === congregationId
         }
       />
-      <Space height="1.5" />
       <WeekendAssignmentsList weekId={weekId} />
     </>
   );
