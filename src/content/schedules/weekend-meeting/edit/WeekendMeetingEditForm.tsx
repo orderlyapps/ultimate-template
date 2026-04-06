@@ -12,6 +12,7 @@ import { WeekEvents } from "@feature/db/shared/week-events/WeekEvents";
 import { Space } from "@layout/space/Space";
 import { PublicTalkSelect } from "@/content/schedules/weekend-meeting/edit/components/public-talk-select/PublicTalkSelect";
 import { WeekendAssignmentsList } from "@/content/schedules/weekend-meeting/edit/components/weekend-assignments-list/WeekendAssignmentsList";
+import { OutgoingSpeakersList } from "@/content/schedules/weekend-meeting/edit/components/outgoing-speakers-list/OutgoingSpeakersList";
 
 type WeekendMeetingEditFormProps = {
   weekId: string;
@@ -98,6 +99,7 @@ export const WeekendMeetingEditForm: React.FC<WeekendMeetingEditFormProps> = ({
         }
       />
       <WeekendAssignmentsList weekId={weekId} />
+      <OutgoingSpeakersList weekId={weekId} />
     </>
   );
 };
