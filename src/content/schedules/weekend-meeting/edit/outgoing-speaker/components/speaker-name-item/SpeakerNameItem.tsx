@@ -40,6 +40,8 @@ export const SpeakerNameItem: FC = () => {
       first_name: speaker.first_name,
       last_name: speaker.last_name,
       display_name: speaker.display_name,
+      outlineId: null,
+      outlineTheme: null,
     });
   };
 
