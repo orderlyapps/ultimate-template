@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { IonAlert, IonList } from "@ionic/react";
 import { Text } from "@ionic-display/text/Text";
 import { useOutgoingSpeakerAssignment } from "./hooks/useOutgoingSpeakerAssignment";
@@ -42,6 +43,7 @@ export const OutgoingSpeakerContent: FC<OutgoingSpeakerContentProps> = ({
   const setAssignment = useOutgoingSpeakerStore((state) => state.setAssignment);
   const { executeSave } = useSaveOutgoingSpeaker();
   const [showSaveAlert, setShowSaveAlert] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     setWeekId(weekId);
@@ -78,6 +80,9 @@ export const OutgoingSpeakerContent: FC<OutgoingSpeakerContentProps> = ({
       congregationId: storeAssignment.targetCongregationId!,
       outlineId: storeAssignment.outlineId,
     });
+
+    // Navigate back to the weekend meeting edit page after successful save
+    history.goBack();
   };
 
   return (
