@@ -3,9 +3,7 @@ import {
   IonButtons,
   IonContent,
   IonHeader,
-  IonPage,
-  IonTitle,
-  IonToolbar,
+  IonPage, IonToolbar
 } from "@ionic/react";
 import { useParams } from "react-router-dom";
 import { OutgoingSpeakerContent } from "@/content/schedules/weekend-meeting/edit/outgoing-speaker/OutgoingSpeakerContent";
@@ -29,7 +27,6 @@ export const OutgoingSpeaker: React.FC = () => {
               text="Back"
             />
           </IonButtons>
-          <IonTitle>Outgoing Speaker</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
