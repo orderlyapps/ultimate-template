@@ -77,7 +77,7 @@ export const LocalSpeakerSelect: FC<LocalSpeakerSelectProps> = ({
 
   return (
     <>
-      <Item onClick={() => !disabled && setIsOpen(true)} disabled={disabled}>
+      <Item onClick={() => !disabled && setIsOpen(true)}>
         {label && <Label>{label}</Label>}
         <Text>{displayText}</Text>
         <div style={{ width: "0.2rem" }}></div>

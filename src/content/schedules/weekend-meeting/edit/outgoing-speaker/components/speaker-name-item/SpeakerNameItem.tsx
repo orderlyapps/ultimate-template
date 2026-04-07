@@ -9,7 +9,11 @@ import type { LocalSpeaker } from "@feature/db/speaker_outline/components/local-
  */
 export const SpeakerNameItem: FC = () => {
   const assignment = useOutgoingSpeakerStore((state) => state.assignment);
+  const speakerId = useOutgoingSpeakerStore((state) => state.speakerId);
   const setAssignment = useOutgoingSpeakerStore((state) => state.setAssignment);
+
+  /** When speakerId is set, we are editing an existing assignment */
+  const isExisting = !!speakerId;
 
   /** Map the assignment to a LocalSpeaker value for the select */
   const selectedSpeaker: LocalSpeaker | null = assignment?.speakerId
@@ -49,6 +53,7 @@ export const SpeakerNameItem: FC = () => {
     <LocalSpeakerSelect
       value={selectedSpeaker}
       onSelect={handleSelect}
+      disabled={isExisting}
     />
   );
 };
