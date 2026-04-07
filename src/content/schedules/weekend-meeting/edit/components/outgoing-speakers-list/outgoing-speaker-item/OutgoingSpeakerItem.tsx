@@ -37,13 +37,13 @@ export const OutgoingSpeakerItem: FC<OutgoingSpeakerItemProps> = ({
     >
       <IonLabel>
         <Text bold>{name}</Text>
-        <Text size="xs" color={"medium"}>
+        <Text size="sm" color={"medium"}>
           {" ("}
           {speaker.targetCongregationName || "Unknown congregation"}
           {")"}
         </Text>
         <br />
-        <Text size="xs" color={"medium"}>
+        <Text size="sm" color={"medium"}>
           {speaker.outlineTheme || "Unknown outline"}
           <br />
         </Text>
