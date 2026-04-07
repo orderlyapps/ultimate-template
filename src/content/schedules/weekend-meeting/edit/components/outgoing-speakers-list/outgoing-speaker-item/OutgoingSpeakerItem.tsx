@@ -15,6 +15,7 @@ type OutgoingSpeaker = {
 
 type OutgoingSpeakerItemProps = {
   speaker: OutgoingSpeaker;
+  weekId: string;
 };
 
 /**
@@ -23,11 +24,17 @@ type OutgoingSpeakerItemProps = {
  */
 export const OutgoingSpeakerItem: FC<OutgoingSpeakerItemProps> = ({
   speaker,
+  weekId,
 }) => {
   const name = formatPublisherName(speaker, "display last");
 
   return (
-    <Item key={speaker.speakerId}>
+    <Item
+      key={speaker.speakerId}
+      button
+      detail
+      routerLink={`/schedules/weekend-meeting/${weekId}/edit/outgoing-speaker/${speaker.speakerId}`}
+    >
       <IonLabel>
         <Text bold>{name}</Text>
         <Text size="xs" color={"medium"}>

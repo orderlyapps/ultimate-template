@@ -22,7 +22,7 @@ export const OutgoingSpeakersList: FC<Props> = ({ weekId }) => {
     <>
       <OutgoingSpeakersHeader />
       {outgoingSpeakers.map((speaker) => (
-        <OutgoingSpeakerItem key={speaker.speakerId} speaker={speaker} />
+        <OutgoingSpeakerItem key={speaker.speakerId} speaker={speaker} weekId={weekId} />
       ))}
     </>
   );

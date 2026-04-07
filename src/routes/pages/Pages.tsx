@@ -30,6 +30,7 @@ import { WeekendMeeting } from "@pages/schedules/weekend-meeting/WeekendMeeting"
 import { WeekendMeetingEdit } from "@pages/schedules/weekend-meeting/edit/WeekendMeetingEdit";
 import { WeekendAssignmentEdit } from "@pages/schedules/weekend-meeting/edit/assignment/WeekendAssignmentEdit";
 import { EditSpeaker } from "@pages/schedules/weekend-meeting/edit/edit-speaker/EditSpeaker";
+import { OutgoingSpeaker } from "@pages/schedules/weekend-meeting/edit/outgoing-speaker/OutgoingSpeaker";
 import { AudioAndVideo } from "@pages/schedules/audio-and-video/AudioAndVideo";
 import { Cleaning } from "@pages/schedules/cleaning/Cleaning";
 import { Events } from "@pages/schedules/events/Events";
@@ -82,6 +83,7 @@ export const pages = (
     <Route exact path="/schedules/weekend-meeting/:week_id/edit" render={() => <WeekendMeetingEdit />} />
     <Route exact path="/schedules/weekend-meeting/:week_id/edit/:assignment_id" render={() => <WeekendAssignmentEdit />} />
     <Route exact path="/schedules/weekend-meeting/:week_id/edit/edit-speaker" render={() => <EditSpeaker />} />
+    <Route exact path="/schedules/weekend-meeting/:week_id/edit/outgoing-speaker/:speaker_id" render={() => <OutgoingSpeaker />} />
     <Route exact path="/schedules/audio-and-video" render={() => <AudioAndVideo />} />
     <Route exact path="/schedules/cleaning" render={() => <Cleaning />} />
     <Route exact path="/schedules/events" render={() => <Events />} />
