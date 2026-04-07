@@ -7,14 +7,19 @@ import { congregationCollection } from "@tanstack-db/congregation/congregationCo
 /**
  * Hook to fetch details for a specific outgoing speaker assignment.
  * Returns the speaker, outline, and target congregation details.
+ * Returns undefined data if speakerId is empty (for add mode).
  */
 export const useOutgoingSpeakerAssignment = (
   weekId: string,
   speakerId: string,
 ) => {
   const { data } = useLiveQuery(
-    (q) =>
-      q
+    (q) => {
+      // Skip query if speakerId is empty (add mode)
+      if (!speakerId) {
+        return undefined;
+      }
+      return q
         .from({ sa: speakerAssignmentCollection })
         .innerJoin({ p: publisherCollection }, ({ sa, p }) =>
           eq(sa.speaker_id, p.id),
@@ -37,7 +42,8 @@ export const useOutgoingSpeakerAssignment = (
           outlineTheme: o?.theme,
           targetCongregationId: sa.congregation_id,
           targetCongregationName: c?.name,
-        })),
+        }));
+    },
     [weekId, speakerId],
   );
 

@@ -1,13 +1,14 @@
 import type { FC } from "react";
-import { IonListHeader } from "@ionic/react";
+import { IonItem } from "@ionic/react";
+import { SectionHeading } from "@display/section-heading/SectionHeading";
 
 /**
  * Header component for the speaker details list.
  */
 export const SpeakerDetailsHeader: FC = () => {
   return (
-    <IonListHeader>
-        Outgoing Speaker Assignment
-    </IonListHeader>
+    <IonItem lines="none">
+      <SectionHeading>Outgoing Speaker Assignment</SectionHeading>
+    </IonItem>
   );
 };

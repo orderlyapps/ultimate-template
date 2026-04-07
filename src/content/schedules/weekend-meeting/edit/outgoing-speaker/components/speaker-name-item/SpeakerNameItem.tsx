@@ -5,17 +5,14 @@ import type { LocalSpeaker } from "@feature/db/speaker_outline/components/local-
 
 /**
  * Displays the speaker name from the outgoing speaker assignment.
+ * In add mode, allows selecting a speaker to create a new assignment.
  */
 export const SpeakerNameItem: FC = () => {
   const assignment = useOutgoingSpeakerStore((state) => state.assignment);
   const setAssignment = useOutgoingSpeakerStore((state) => state.setAssignment);
 
-  if (!assignment) {
-    return null;
-  }
-
   /** Map the assignment to a LocalSpeaker value for the select */
-  const selectedSpeaker: LocalSpeaker | null = assignment.speakerId
+  const selectedSpeaker: LocalSpeaker | null = assignment?.speakerId
     ? {
         id: assignment.speakerId,
         first_name: assignment.first_name ?? "",
@@ -25,8 +22,20 @@ export const SpeakerNameItem: FC = () => {
     : null;
 
   const handleSelect = (speaker: LocalSpeaker) => {
+    // Create new assignment object if none exists
+    const baseAssignment = assignment ?? {
+      speakerId: "",
+      first_name: null,
+      last_name: null,
+      display_name: null,
+      outlineId: null,
+      outlineTheme: null,
+      targetCongregationId: null,
+      targetCongregationName: null,
+    };
+
     setAssignment({
-      ...assignment,
+      ...baseAssignment,
       speakerId: speaker.id,
       first_name: speaker.first_name,
       last_name: speaker.last_name,

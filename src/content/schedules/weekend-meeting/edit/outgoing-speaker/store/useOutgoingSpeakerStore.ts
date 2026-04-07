@@ -23,7 +23,7 @@ interface OutgoingSpeakerState {
   speakerId: string | null;
   assignment: OutgoingSpeakerAssignment | null;
   setWeekId: (weekId: string) => void;
-  setSpeakerId: (speakerId: string) => void;
+  setSpeakerId: (speakerId: string | null) => void;
   setAssignment: (assignment: OutgoingSpeakerAssignment | null) => void;
   clear: () => void;
 }

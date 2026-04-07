@@ -8,6 +8,7 @@ import { useCongregationChangeTransaction } from "./hooks/useCongregationChangeT
 
 /**
  * Displays and allows changing the target congregation for an outgoing speaker.
+ * In add mode, updates the store without executing a transaction.
  */
 export const TargetCongregationItem: FC = () => {
   const weekId = useOutgoingSpeakerStore((state) => state.weekId);
@@ -25,12 +26,40 @@ export const TargetCongregationItem: FC = () => {
       }
     : null;
 
+  const isAddMode = !assignment?.targetCongregationId && !assignment?.outlineId;
+
   const handleSelect = (congregation: Congregation) => {
     setPendingCongregation(congregation);
   };
 
   const handleConfirm = async () => {
-    if (!weekId || !assignment || !pendingCongregation) return;
+    if (!pendingCongregation) return;
+
+    // In add mode, just update the store without executing transaction
+    if (isAddMode) {
+      // Create base assignment if needed
+      const baseAssignment = assignment ?? {
+        speakerId: "",
+        first_name: null,
+        last_name: null,
+        display_name: null,
+        outlineId: null,
+        outlineTheme: null,
+        targetCongregationId: null,
+        targetCongregationName: null,
+      };
+
+      setAssignment({
+        ...baseAssignment,
+        targetCongregationId: pendingCongregation.id,
+        targetCongregationName: pendingCongregation.name,
+      });
+      setPendingCongregation(null);
+      return;
+    }
+
+    // Edit mode - execute transaction for existing assignment
+    if (!weekId || !assignment) return;
 
     await executeChange({
       weekId,

@@ -16,25 +16,32 @@ import { Space } from "@layout/space/Space";
  */
 type OutgoingSpeakerContentProps = {
   weekId: string;
-  speakerId: string;
+  speakerId: string | null;
+  isAddMode?: boolean;
 };
 
 /**
- * Content component for displaying outgoing speaker details.
+ * Content component for displaying or adding outgoing speaker details.
  * Shows the speaker name, outline theme, and target congregation.
+ * In add mode, progressively reveals fields as the form is filled.
  */
 export const OutgoingSpeakerContent: FC<OutgoingSpeakerContentProps> = ({
   weekId,
   speakerId,
+  isAddMode = false,
 }) => {
-  const { data: assignment } = useOutgoingSpeakerAssignment(weekId, speakerId);
+  const { data: assignment } = useOutgoingSpeakerAssignment(
+    weekId,
+    speakerId ?? ""
+  );
+  const storeAssignment = useOutgoingSpeakerStore((state) => state.assignment);
   const setWeekId = useOutgoingSpeakerStore((state) => state.setWeekId);
   const setSpeakerId = useOutgoingSpeakerStore((state) => state.setSpeakerId);
   const setAssignment = useOutgoingSpeakerStore((state) => state.setAssignment);
 
   useEffect(() => {
     setWeekId(weekId);
-    setSpeakerId(speakerId);
+    setSpeakerId(speakerId ?? null);
   }, [weekId, speakerId, setWeekId, setSpeakerId]);
 
   useEffect(() => {
@@ -43,13 +50,18 @@ export const OutgoingSpeakerContent: FC<OutgoingSpeakerContentProps> = ({
     }
   }, [assignment, setAssignment]);
 
-  if (!assignment) {
+  // Show loading only in edit mode when no assignment exists yet
+  if (!isAddMode && !assignment) {
     return (
       <div className="ion-padding">
         <Text color="medium">Loading speaker details...</Text>
       </div>
     );
   }
+
+  // In add mode, determine progressive reveal state based on store assignment
+  const hasSpeakerSelected = !!storeAssignment?.speakerId;
+  const hasCongregationSelected = !!storeAssignment?.targetCongregationId;
 
   return (
     <IonList>
@@ -58,8 +70,8 @@ export const OutgoingSpeakerContent: FC<OutgoingSpeakerContentProps> = ({
       <Space height="1"></Space>
       <WeekItem />
       <SpeakerNameItem />
-      <TargetCongregationItem />
-      <PublicTalkOutlineItem />
+      {hasSpeakerSelected && <TargetCongregationItem />}
+      {hasCongregationSelected && <PublicTalkOutlineItem />}
     </IonList>
   );
 };
