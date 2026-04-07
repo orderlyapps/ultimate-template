@@ -3,6 +3,7 @@ import { IonItem, IonLabel } from "@ionic/react";
 import { Text } from "@ionic-display/text/Text";
 import { formatPublisherName } from "@format/formatPublisherName";
 import { useOutgoingSpeakerStore } from "../../store/useOutgoingSpeakerStore";
+import { LabelText } from "@display/label-text/LabelText";
 
 /**
  * Displays the speaker name from the outgoing speaker assignment.
@@ -26,11 +27,9 @@ export const SpeakerNameItem: FC = () => {
   return (
     <IonItem>
       <IonLabel>
-        <Text size="xs" color="medium">
-          Speaker
-        </Text>
-        <Text>{speakerName}</Text>
+        <LabelText>Speaker</LabelText>
       </IonLabel>
+      <Text>{speakerName}</Text>
     </IonItem>
   );
 };

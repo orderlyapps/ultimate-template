@@ -9,6 +9,7 @@ import { SpeakerNameItem } from "./components/speaker-name-item/SpeakerNameItem"
 import { TargetCongregationItem } from "./components/target-congregation-item/TargetCongregationItem";
 import { PublicTalkOutlineItem } from "./components/public-talk-outline-item/PublicTalkOutlineItem";
 import { WeekItem } from "./components/week-item/WeekItem";
+import { Space } from "@layout/space/Space";
 
 /**
  * Props for the OutgoingSpeakerContent component.
@@ -52,11 +53,13 @@ export const OutgoingSpeakerContent: FC<OutgoingSpeakerContentProps> = ({
 
   return (
     <IonList>
+      <Space height="1"></Space>
       <SpeakerDetailsHeader />
+      <Space height="1"></Space>
+      <WeekItem />
       <SpeakerNameItem />
       <TargetCongregationItem />
       <PublicTalkOutlineItem />
-      <WeekItem />
     </IonList>
   );
 };

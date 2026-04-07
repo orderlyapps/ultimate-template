@@ -1,7 +1,6 @@
 import type { FC } from "react";
 import { useState } from "react";
 import { CloseButton } from "@input/button/close-button/CloseButton";
-import { Label } from "@ionic-display/label/Label";
 import { Searchbar } from "@ionic-input/searchbar/Searchbar";
 import { Item } from "@ionic-layout/item/Item";
 import { List } from "@ionic-layout/list/List";
@@ -11,14 +10,17 @@ import {
   IonContent,
   IonHeader,
   IonIcon,
-  IonListHeader,
+  IonLabel,
   IonModal,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
 import { caretDownSharp, chevronExpand } from "ionicons/icons";
 import type { Outline } from "@tanstack-db/outline/outlineSchema";
+import { OutlineDisplay } from "@feature/db/outline/components/outline-display/OutlineDisplay";
 import { usePublisherOutlines } from "./hooks/usePublisherOutlines";
+import { Space } from "@layout/space/Space";
+import { sortByNumberString } from "@sort/sortByNumberString";
 
 type SpeakerOutlineSelectProps = {
   /** The publisher ID whose outlines are listed as options */
@@ -62,9 +64,6 @@ export const SpeakerOutlineSelect: FC<SpeakerOutlineSelectProps> = ({
   const [searchQuery, setSearchQuery] = useState("");
   const { outlines } = usePublisherOutlines(publisher_id);
 
-  /** Display text shown in the trigger item */
-  const displayText = value ? `${value.id} - ${value.theme}` : placeholder;
-
   /** Outlines filtered by the current search query, skipping rows with missing join data */
   const filteredOutlines = outlines.filter((o) => {
     if (!o.id || !o.theme) return false;
@@ -86,9 +85,16 @@ export const SpeakerOutlineSelect: FC<SpeakerOutlineSelectProps> = ({
   return (
     <>
       <Item onClick={() => !disabled && setIsOpen(true)} disabled={disabled}>
-        {label && <Label>{label}</Label>}
-        <Text>{displayText}</Text>
-        <div style={{ width: "0.2rem" }}></div>
+        {label && (
+          <IonLabel>
+            <Text bold>{label}</Text>
+            <Space height="0.3" />
+            <div className="ion-padding-start ion-margin-start">
+              {value && <OutlineDisplay outline={value} />}
+              {!value && <Text size="sm">{placeholder}</Text>}
+            </div>
+          </IonLabel>
+        )}
         <IonIcon
           ios={chevronExpand}
           md={caretDownSharp}
@@ -115,19 +121,18 @@ export const SpeakerOutlineSelect: FC<SpeakerOutlineSelectProps> = ({
           </IonToolbar>
         </IonHeader>
         <IonContent>
-          <List inset>
-            <IonListHeader>
-              <Label color="medium">Speaker Outlines</Label>
-            </IonListHeader>
-            {filteredOutlines.map((outline) => (
+          <List>
+            <Space height="2" />
+            {filteredOutlines.sort(sortByNumberString("id")).map((outline) => (
               <Item
                 key={outline.id}
                 onClick={() => handleSelect(outline)}
                 color={outline.id === value?.id ? "medium" : undefined}
               >
-                <Text bold={outline.id === value?.id}>
-                  {outline.id} - {outline.theme}
-                </Text>
+                <OutlineDisplay
+                  outline={{ id: outline.id, theme: outline.theme }}
+                  bold={outline.id === value?.id}
+                />
               </Item>
             ))}
           </List>

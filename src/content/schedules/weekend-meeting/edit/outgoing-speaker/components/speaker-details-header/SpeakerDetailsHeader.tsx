@@ -1,6 +1,5 @@
 import type { FC } from "react";
 import { IonListHeader } from "@ionic/react";
-import { Text } from "@ionic-display/text/Text";
 
 /**
  * Header component for the speaker details list.
@@ -8,9 +7,7 @@ import { Text } from "@ionic-display/text/Text";
 export const SpeakerDetailsHeader: FC = () => {
   return (
     <IonListHeader>
-      <Text size="md" bold>
-        Speaker Details
-      </Text>
+        Outgoing Speaker Assignment
     </IonListHeader>
   );
 };
