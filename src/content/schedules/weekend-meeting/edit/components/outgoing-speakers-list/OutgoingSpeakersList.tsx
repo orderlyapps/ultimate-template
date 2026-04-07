@@ -14,9 +14,9 @@ type Props = {
 export const OutgoingSpeakersList: FC<Props> = ({ weekId }) => {
   const { data: outgoingSpeakers } = useOutgoingSpeakers(weekId);
 
-  if (!outgoingSpeakers || outgoingSpeakers.length === 0) {
-    return null;
-  }
+  // if (!outgoingSpeakers || outgoingSpeakers.length === 0) {
+  //   return null;
+  // }
 
   return (
     <>
