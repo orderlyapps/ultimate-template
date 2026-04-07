@@ -6,6 +6,7 @@ import { Item } from "@ionic-layout/item/Item";
 import { List } from "@ionic-layout/list/List";
 import { Text } from "@ionic-display/text/Text";
 import {
+  IonAlert,
   IonButtons,
   IonContent,
   IonHeader,
@@ -15,8 +16,10 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { caretDownSharp, chevronExpand } from "ionicons/icons";
+import { addOutline, caretDownSharp, chevronExpand } from "ionicons/icons";
 import { useState, useMemo } from "react";
+import { congregationCollection } from "@tanstack-db/congregation/congregationCollection";
+import { useUserCongregation } from "../../user-congregation/use-user-congregation/useUserCongregation";
 import { useCongregations } from "./hooks/useCongregations";
 import type { Congregation } from "@tanstack-db/congregation/congregationSchema";
 
@@ -33,6 +36,8 @@ type CongregationSelectProps = {
   modalTitle?: string;
   /** Whether the select is disabled */
   disabled?: boolean;
+  /** Whether to hide the "Add New Congregation" option. Defaults to false (option shown) */
+  hideAddOption?: boolean;
 };
 
 /**
@@ -46,10 +51,13 @@ export const CongregationSelect: FC<CongregationSelectProps> = ({
   placeholder = "Select a congregation",
   modalTitle = "Select Congregation",
   disabled = false,
+  hideAddOption = false,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [showAddAlert, setShowAddAlert] = useState(false);
   const { congregations } = useCongregations();
+  const [userCongregation] = useUserCongregation();
 
   const displayText = value?.name ?? placeholder;
 
@@ -63,6 +71,28 @@ export const CongregationSelect: FC<CongregationSelectProps> = ({
     onSelect(congregation);
     setIsOpen(false);
     setSearchQuery("");
+  };
+
+  const handleAddNewCongregation = async (data: { congregationName?: string }) => {
+    const name = data.congregationName;
+    if (!name?.trim() || !userCongregation) return;
+
+    const newId = crypto.randomUUID();
+
+    await congregationCollection.insert({
+      id: newId,
+      name: name.trim(),
+      congregation_id: userCongregation.id,
+    });
+
+    // Construct the congregation object from known values
+    const newCongregation: Congregation = {
+      id: newId,
+      name: name.trim(),
+      congregation_id: userCongregation.id,
+    };
+
+    handleSelect(newCongregation);
   };
 
   return (
@@ -113,7 +143,37 @@ export const CongregationSelect: FC<CongregationSelectProps> = ({
                 </Text>
               </Item>
             ))}
+            {!hideAddOption && (
+              <Item onClick={() => setShowAddAlert(true)}>
+                <IonIcon icon={addOutline} color="primary" slot="start" />
+                <Text color="primary">Add New Congregation</Text>
+              </Item>
+            )}
           </List>
+
+          <IonAlert
+            isOpen={showAddAlert}
+            onDidDismiss={() => setShowAddAlert(false)}
+            header="Add New Congregation"
+            message="Enter the name of the new congregation:"
+            inputs={[
+              {
+                name: "congregationName",
+                type: "text",
+                placeholder: "Congregation name",
+              },
+            ]}
+            buttons={[
+              {
+                text: "Cancel",
+                role: "cancel",
+              },
+              {
+                text: "Add",
+                handler: handleAddNewCongregation,
+              },
+            ]}
+          />
         </IonContent>
       </IonModal>
     </>
