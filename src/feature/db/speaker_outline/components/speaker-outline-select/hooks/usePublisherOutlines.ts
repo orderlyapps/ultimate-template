@@ -10,16 +10,18 @@ import { outlineCollection } from "@tanstack-db/outline/outlineCollection";
  * @returns outlines - Array of Outline objects assigned to the publisher, sorted by theme
  */
 export const usePublisherOutlines = (publisher_id: string | null | undefined) => {
-  const { data } = useLiveQuery((q) =>
-    q
-      .from({ so: speakerOutlineCollection })
-      .join({ o: outlineCollection }, ({ so, o }) => eq(so.outline_id, o.id))
-      .where(({ so }) => eq(so.speaker_id, publisher_id ?? ""))
-      .select(({ o }) => ({
-        id: o.id,
-        theme: o.theme,
-      }))
-      .orderBy(({ o }) => o.theme),
+  const { data } = useLiveQuery(
+    (q) =>
+      q
+        .from({ so: speakerOutlineCollection })
+        .join({ o: outlineCollection }, ({ so, o }) => eq(so.outline_id, o.id))
+        .where(({ so }) => eq(so.speaker_id, publisher_id ?? ""))
+        .select(({ o }) => ({
+          id: o.id,
+          theme: o.theme,
+        }))
+        .orderBy(({ o }) => o.theme),
+    [publisher_id],
   );
 
   return { outlines: data ?? [] };
