@@ -1,8 +1,14 @@
 import type { FC } from "react";
-import { IonItem, IonLabel, IonList, IonListHeader } from "@ionic/react";
+import { useEffect } from "react";
+import { IonList } from "@ionic/react";
 import { Text } from "@ionic-display/text/Text";
-import { formatPublisherName } from "@format/formatPublisherName";
 import { useOutgoingSpeakerAssignment } from "./hooks/useOutgoingSpeakerAssignment";
+import { useOutgoingSpeakerStore } from "./store/useOutgoingSpeakerStore";
+import { SpeakerDetailsHeader } from "./components/speaker-details-header/SpeakerDetailsHeader";
+import { SpeakerNameItem } from "./components/speaker-name-item/SpeakerNameItem";
+import { TargetCongregationItem } from "./components/target-congregation-item/TargetCongregationItem";
+import { PublicTalkOutlineItem } from "./components/public-talk-outline-item/PublicTalkOutlineItem";
+import { WeekItem } from "./components/week-item/WeekItem";
 
 /**
  * Props for the OutgoingSpeakerContent component.
@@ -21,6 +27,20 @@ export const OutgoingSpeakerContent: FC<OutgoingSpeakerContentProps> = ({
   speakerId,
 }) => {
   const { data: assignment } = useOutgoingSpeakerAssignment(weekId, speakerId);
+  const setWeekId = useOutgoingSpeakerStore((state) => state.setWeekId);
+  const setSpeakerId = useOutgoingSpeakerStore((state) => state.setSpeakerId);
+  const setAssignment = useOutgoingSpeakerStore((state) => state.setAssignment);
+
+  useEffect(() => {
+    setWeekId(weekId);
+    setSpeakerId(speakerId);
+  }, [weekId, speakerId, setWeekId, setSpeakerId]);
+
+  useEffect(() => {
+    if (assignment) {
+      setAssignment(assignment);
+    }
+  }, [assignment, setAssignment]);
 
   if (!assignment) {
     return (
@@ -30,60 +50,13 @@ export const OutgoingSpeakerContent: FC<OutgoingSpeakerContentProps> = ({
     );
   }
 
-  const speakerName = formatPublisherName(
-    {
-      first_name: assignment.first_name,
-      last_name: assignment.last_name,
-      display_name: assignment.display_name,
-    },
-    "display last",
-  );
-
   return (
     <IonList>
-      <IonListHeader>
-        <Text size="md" bold>
-          Speaker Details
-        </Text>
-      </IonListHeader>
-
-      <IonItem>
-        <IonLabel>
-          <Text size="xs" color="medium">
-            Speaker
-          </Text>
-          <Text>{speakerName}</Text>
-        </IonLabel>
-      </IonItem>
-
-      <IonItem>
-        <IonLabel>
-          <Text size="xs" color="medium">
-            Target Congregation
-          </Text>
-          <Text>
-            {assignment.targetCongregationName || "Unknown congregation"}
-          </Text>
-        </IonLabel>
-      </IonItem>
-
-      <IonItem>
-        <IonLabel>
-          <Text size="xs" color="medium">
-            Public Talk Outline
-          </Text>
-          <Text>{assignment.outlineTheme || "Unknown outline"}</Text>
-        </IonLabel>
-      </IonItem>
-
-      <IonItem>
-        <IonLabel>
-          <Text size="xs" color="medium">
-            Week
-          </Text>
-          <Text>{weekId}</Text>
-        </IonLabel>
-      </IonItem>
+      <SpeakerDetailsHeader />
+      <SpeakerNameItem />
+      <TargetCongregationItem />
+      <PublicTalkOutlineItem />
+      <WeekItem />
     </IonList>
   );
 };
