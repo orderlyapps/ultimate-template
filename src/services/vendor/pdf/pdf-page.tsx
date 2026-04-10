@@ -3,8 +3,9 @@ import type React from "react";
 
 const styles = StyleSheet.create({
   page: {
-    padding: 30,
-    fontSize: 12,
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+    fontSize: 10,
     fontFamily: "Helvetica",
   },
   header: {

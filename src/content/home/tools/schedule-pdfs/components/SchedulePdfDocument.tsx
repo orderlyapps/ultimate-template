@@ -1,6 +1,8 @@
-import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import { Document, Text, View, StyleSheet } from "@react-pdf/renderer";
 import { format } from "date-fns";
 import { SchedulePdfHeader } from "./schedule-pdf-header/SchedulePdfHeader";
+import { MidweekSchedulePdfDocument } from "./midweek-schedule-pdf/MidweekSchedulePdfDocument";
+import { PdfPage } from "@services/vendor/pdf/pdf-page";
 
 const styles = StyleSheet.create({
   page: {
@@ -38,13 +40,21 @@ export const SchedulePdfDocument: React.FC<SchedulePdfDocumentProps> = ({
   title,
   dateRange,
 }) => {
+  // Render the specialized midweek schedule PDF for midweek meetings
+  if (title === "Midweek Meeting") {
+    return <MidweekSchedulePdfDocument dateRange={dateRange} />;
+  }
+
   const firstDate = format(new Date(dateRange.firstMonday), "MMMM d, yyyy");
   const lastDate = format(new Date(dateRange.lastMonday), "MMMM d, yyyy");
 
   return (
     <Document>
-      <Page size="A4" style={styles.page}>
-        <SchedulePdfHeader scheduleName={title} monthDate={dateRange.firstMonday} />
+      <PdfPage>
+        <SchedulePdfHeader
+          scheduleName={title}
+          monthDate={dateRange.firstMonday}
+        />
 
         <View style={styles.content}>
           <View style={styles.row}>
@@ -67,7 +77,7 @@ export const SchedulePdfDocument: React.FC<SchedulePdfDocumentProps> = ({
             <Text style={styles.value}>Ready for assignment</Text>
           </View>
         </View>
-      </Page>
+      </PdfPage>
     </Document>
   );
 };
