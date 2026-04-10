@@ -15,12 +15,12 @@ const styles = StyleSheet.create({
   },
   assistant: {
     width: "20%",
-    color: "#666",
+    color: "#777",
   },
   assistantLabel: {
     width: "10%",
     textAlign: "right",
-    color: "#666",
+    color: "#777",
     paddingRight: 5,
   },
   // Color variations for assignment types
@@ -103,7 +103,7 @@ export function AssignmentRow({
 
   return (
     <View style={styles.row}>
-      <Text style={[styles.title, colorStyle]}>{title}:</Text>
+      <Text style={[styles.title, colorStyle]}>{title}</Text>
       <Text style={styles.assistantLabel}>
         {(assignmentId === "ayf_part1" || assignmentId === "lc_cbs") &&
           assistantOrReader && (

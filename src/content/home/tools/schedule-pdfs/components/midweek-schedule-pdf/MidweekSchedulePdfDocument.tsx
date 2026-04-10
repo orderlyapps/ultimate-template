@@ -118,7 +118,7 @@ function WeekSection({ week }: { week: WeekScheduleData }) {
         {meetingData.mwb_ayf_part1 && (
           <AssignmentRow
             assignmentId="ayf_part1"
-            title={meetingData.mwb_ayf_part1_title ?? meetingData.mwb_ayf_part1}
+            title={`${meetingData.mwb_ayf_part1_title ?? meetingData.mwb_ayf_part1}${meetingData.mwb_ayf_part1_time ? ` (${meetingData.mwb_ayf_part1_time} min)` : ""}`}
             participant={formatPublisherName(
               assignments.get("school_1_apply_1"),
               "display last",
@@ -133,7 +133,7 @@ function WeekSection({ week }: { week: WeekScheduleData }) {
         {meetingData.mwb_ayf_part2 && (
           <AssignmentRow
             assignmentId="ayf_part2"
-            title={meetingData.mwb_ayf_part2_title ?? meetingData.mwb_ayf_part2}
+            title={`${meetingData.mwb_ayf_part2_title ?? meetingData.mwb_ayf_part2}${meetingData.mwb_ayf_part2_time ? ` (${meetingData.mwb_ayf_part2_time} min)` : ""}`}
             participant={formatPublisherName(
               assignments.get("school_1_apply_2"),
               "display last",
@@ -148,7 +148,7 @@ function WeekSection({ week }: { week: WeekScheduleData }) {
         {meetingData.mwb_ayf_part3 && (
           <AssignmentRow
             assignmentId="ayf_part3"
-            title={meetingData.mwb_ayf_part3_title ?? meetingData.mwb_ayf_part3}
+            title={`${meetingData.mwb_ayf_part3_title ?? meetingData.mwb_ayf_part3}${meetingData.mwb_ayf_part3_time ? ` (${meetingData.mwb_ayf_part3_time} min)` : ""}`}
             participant={formatPublisherName(
               assignments.get("school_1_apply_3"),
               "display last",
@@ -163,7 +163,7 @@ function WeekSection({ week }: { week: WeekScheduleData }) {
         {meetingData.mwb_ayf_part4 && (
           <AssignmentRow
             assignmentId="ayf_part4"
-            title={meetingData.mwb_ayf_part4_title ?? meetingData.mwb_ayf_part4}
+            title={`${meetingData.mwb_ayf_part4_title ?? meetingData.mwb_ayf_part4}${meetingData.mwb_ayf_part4_time ? ` (${meetingData.mwb_ayf_part4_time} min)` : ""}`}
             participant={formatPublisherName(
               assignments.get("school_1_apply_4"),
               "display last",
