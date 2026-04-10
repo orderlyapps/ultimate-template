@@ -1,9 +1,9 @@
 import { IonButton, IonModal, IonHeader, IonToolbar, IonTitle, IonContent, IonButtons } from "@ionic/react";
-import { pdf } from "@react-pdf/renderer";
 import { format } from "date-fns";
 import { MonthPicker } from "@ui/components/custom/input/date/month-picker/MonthPicker";
 import { SchedulePdfDocument } from "./components/SchedulePdfDocument";
 import { useSchedulePdfsStore } from "./store/useSchedulePdfsStore";
+import { PdfDownloadButton } from "@services/vendor/pdf/pdf-download-button";
 
 export const SchedulePdfsContent: React.FC = () => {
   const { activeModal, setActiveModal, selectedMonth, setSelectedMonth } = useSchedulePdfsStore();
@@ -25,30 +25,19 @@ export const SchedulePdfsContent: React.FC = () => {
 
   const getButtonLabel = () => {
     if (!selectedMonth) return `Download ${getModalTitle()} PDF`;
-    
+
     const firstDate = format(new Date(selectedMonth.firstMonday), "MMM d");
     const lastDate = format(new Date(selectedMonth.lastMonday), "MMM d, yyyy");
     return `Download ${getModalTitle()} PDF (${firstDate} - ${lastDate})`;
   };
 
-  const handleDownloadPdf = async () => {
-    if (!selectedMonth) return;
+  const getFilename = () => {
+    if (!selectedMonth) return "";
 
     const title = getModalTitle();
     const firstDate = format(new Date(selectedMonth.firstMonday), "MMM-d");
     const lastDate = format(new Date(selectedMonth.lastMonday), "MMM-d-yyyy");
-    const filename = `${title.replace(/\s+/g, "-")}_${firstDate}_${lastDate}.pdf`;
-
-    const blob = await pdf(
-      <SchedulePdfDocument title={title} dateRange={selectedMonth} />
-    ).toBlob();
-
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = filename;
-    link.click();
-    URL.revokeObjectURL(url);
+    return `${title.replace(/\s+/g, "-")}_${firstDate}_${lastDate}`;
   };
 
   return (
@@ -81,14 +70,20 @@ export const SchedulePdfsContent: React.FC = () => {
             onValueChange={setSelectedMonth}
           />
           
-          <IonButton 
-            expand="block" 
-            onClick={handleDownloadPdf}
-            disabled={!selectedMonth}
-            style={{ marginTop: "1rem" }}
-          >
-            {getButtonLabel()}
-          </IonButton>
+          {selectedMonth ? (
+            <PdfDownloadButton
+              document={<SchedulePdfDocument title={getModalTitle()} dateRange={selectedMonth} />}
+              filename={getFilename()}
+              expand="block"
+              style={{ marginTop: "1rem" }}
+            >
+              {getButtonLabel()}
+            </PdfDownloadButton>
+          ) : (
+            <IonButton expand="block" disabled style={{ marginTop: "1rem" }}>
+              {getButtonLabel()}
+            </IonButton>
+          )}
         </IonContent>
       </IonModal>
     </div>
