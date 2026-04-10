@@ -1,25 +1,12 @@
 import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 import { format } from "date-fns";
+import { SchedulePdfHeader } from "./schedule-pdf-header/SchedulePdfHeader";
 
 const styles = StyleSheet.create({
   page: {
     padding: 30,
     fontSize: 12,
     fontFamily: "Helvetica",
-  },
-  header: {
-    marginBottom: 20,
-    borderBottom: "2pt solid #333",
-    paddingBottom: 10,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 5,
-  },
-  subtitle: {
-    fontSize: 14,
-    color: "#666",
   },
   content: {
     marginTop: 20,
@@ -57,12 +44,7 @@ export const SchedulePdfDocument: React.FC<SchedulePdfDocumentProps> = ({
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        <View style={styles.header}>
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.subtitle}>
-            {firstDate} - {lastDate}
-          </Text>
-        </View>
+        <SchedulePdfHeader scheduleName={title} monthDate={dateRange.firstMonday} />
 
         <View style={styles.content}>
           <View style={styles.row}>
