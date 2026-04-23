@@ -1,4 +1,4 @@
-export type AppFeatureId = "talks" | "mapPrint" | "groups";
+export type AppFeatureId = "talks" | "mapPrint" | "groups" | "schedule-pdfs";
 
 export type FeatureGroupId = string;
 
@@ -39,6 +39,12 @@ export const appFeatures: readonly AppFeatureDefinition[] = [
   {
     id: "groups" as const,
     label: "Groups",
+    defaultEnabled: false,
+    groups: ["tools"],
+  },
+  {
+    id: "schedule-pdfs" as const,
+    label: "Schedule PDF's",
     defaultEnabled: false,
     groups: ["tools"],
   },

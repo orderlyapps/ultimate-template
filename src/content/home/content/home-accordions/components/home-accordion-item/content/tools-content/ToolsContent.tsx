@@ -45,15 +45,17 @@ export function ToolsContent() {
         </IonItem>
       </FeatureGuard>
 
-      <IonItem
-        className="ion-text-right ion-padding-bottom ion-margin-bottom"
-        routerLink="/home/tools/schedule-pdfs"
-        slot="end"
-      >
-        <IonLabel>
-          <Text bold>Schedule PDFs</Text>
-        </IonLabel>
-      </IonItem>
+      <FeatureGuard id="schedule-pdfs">
+        <IonItem
+          className="ion-text-right ion-padding-bottom ion-margin-bottom"
+          routerLink="/home/tools/schedule-pdfs"
+          slot="end"
+        >
+          <IonLabel>
+            <Text bold>Schedule PDF's</Text>
+          </IonLabel>
+        </IonItem>
+      </FeatureGuard>
     </List>
   );
 }
