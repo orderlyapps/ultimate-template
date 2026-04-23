@@ -3,17 +3,16 @@ import { IonRouterOutlet } from "@ionic/react";
 
 // HOME
 import { Home } from "@pages/home/Home";
-import { Tools } from "@pages/home/tools/Tools";
 import { SchedulePdfs } from "@pages/home/tools/schedule-pdfs/SchedulePdfs";
 import { Announcements } from "@pages/home/announcements/Announcements";
 import { Announcement } from "@pages/home/announcement/Announcement";
-import { Talks } from "@pages/home/talks/Talks";
-import { MapPrint } from "@pages/home/map-print/MapPrint";
-import { Groups } from "@pages/home/groups/Groups";
-import { Group } from "@pages/home/groups/group/Group";
-import { Talk } from "@pages/home/talks/talk/Talk";
-import { TalkSection } from "@pages/home/talks/talk/section/TalkSection";
-import { TalkSubsection } from "@pages/home/talks/talk/section/subsection/TalkSubsection";
+import { Talks } from "@pages/home/tools/talks/Talks";
+import { MapPrint } from "@pages/home/tools/map-print/MapPrint";
+import { Groups } from "@pages/home/tools/groups/Groups";
+import { Group } from "@pages/home/tools/groups/group/Group";
+import { Talk } from "@pages/home/tools/talks/talk/Talk";
+import { TalkSection } from "@pages/home/tools/talks/talk/section/TalkSection";
+import { TalkSubsection } from "@pages/home/tools/talks/talk/section/subsection/TalkSubsection";
 
 // MINISTRY
 import { Ministry } from "@pages/ministry/Ministry";
@@ -56,7 +55,6 @@ export const pages = (
   <IonRouterOutlet>
     <Route exact path="/login" render={() => <Login />} />
     <Route exact path="/home" render={() => <Home />} />
-    <Route exact path="/home/tools" render={() => <Tools />} />
     <Route exact path="/home/tools/schedule-pdfs" render={() => <SchedulePdfs />} />
     <Route exact path="/home/announcements" render={() => <Announcements />} />
     <Route exact path="/home/announcements/:announcementId" render={() => <Announcement />} />

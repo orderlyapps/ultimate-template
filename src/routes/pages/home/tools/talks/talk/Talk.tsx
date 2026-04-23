@@ -10,9 +10,9 @@ import {
 import { useTalksStore } from "@feature/talks/state/useTalksStore";
 import { useParams } from "react-router-dom";
 import { Space } from "@layout/space/Space";
-import { SectionsList } from "../../../../../feature/talks/components/page-contents/talk/sections-list/SectionsList";
 import { EditableCondensedHeader } from "@feature/talks/components/edit-header/EditHeader";
-import { TalkPageHeaderButtons } from "../../../../../feature/talks/components/page-contents/talk/talk-page-header-buttons/TalkPageHeaderButtons";
+import { TalkPageHeaderButtons } from "@feature/talks/components/page-contents/talk/talk-page-header-buttons/TalkPageHeaderButtons";
+import { SectionsList } from "@feature/talks/components/page-contents/talk/sections-list/SectionsList";
 
 export const Talk: React.FC = () => {
   const { talkId } = useParams<{ talkId: string }>();

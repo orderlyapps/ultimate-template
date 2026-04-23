@@ -10,10 +10,10 @@ import {
 import { Space } from "@layout/space/Space";
 import { AddButton } from "@input/button/add-button/AddButton";
 import { useState } from "react";
-import { AddTalkAlert } from "../../../../feature/talks/components/add-alerts/add-talk-alert/AddTalkAlert";
-import { TalksList } from "../../../../feature/talks/components/page-contents/talks/talks-list/TalksList";
 import { useTalksStore } from "@feature/talks/state/useTalksStore";
 import { FileImport } from "@input/file-import/FileImport";
+import { TalksList } from "@feature/talks/components/page-contents/talks/talks-list/TalksList";
+import { AddTalkAlert } from "@feature/talks/components/add-alerts/add-talk-alert/AddTalkAlert";
 
 export const Talks: React.FC = () => {
   const [isAddTalkOpen, setIsAddTalkOpen] = useState(false);
