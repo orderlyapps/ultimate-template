@@ -6,7 +6,7 @@
   "scripts": {
     "dev:prod": "vite --port 3000 --host --mode production",
     "deploy:beta": "pnpm run test:lint:build && npx wrangler pages deploy dist --project-name=orderly --branch=beta && echo DEPLOYED TO BETA",
-    "test:lint:build": "eslint . && tsc -b && vitest run && vite build",
+    "test:lint:build": "eslint . && tsc && vitest run && vite build",
     "deploy:both": "pnpm run test:lint:build && npx wrangler pages deploy dist --project-name=orderly --branch=main && npx wrangler pages deploy dist --project-name=proclaimer --branch=main",
     "dev": "vite --port 3000 --host",
     "dev:prod:beta": "VITE_IS_BETA=true vite --port 3000 --host --mode production",
@@ -27,8 +27,8 @@
   },
   "dependencies": {
     "@floating-ui/react": "^0.27.16",
-    "@ionic/react": "^8.7.11",
-    "@ionic/react-router": "^8.7.11",
+    "@ionic/react": "^8.8.4",
+    "@ionic/react-router": "^8.8.4",
     "@mapbox/mapbox-gl-draw": "^1.5.1",
     "@radix-ui/react-dropdown-menu": "^2.1.16",
     "@radix-ui/react-popover": "^1.1.15",
@@ -104,10 +104,5 @@
     "vite-plugin-pwa": "^1.2.0",
     "vitest": "^4.0.14",
     "wrangler": "^4.60.0"
-  },
-  "pnpm": {
-    "overrides": {
-      "vite": "npm:rolldown-vite@7.2.5"
-    }
   }
 }
