@@ -45,6 +45,19 @@ export function ToolsContent() {
         </IonItem>
       </FeatureGuard>
 
+      <FeatureGuard id="groupReports">
+        <IonItem
+          lines="none"
+          routerLink="/home/group-reports"
+          className="ion-text-right"
+          slot="end"
+        >
+          <IonLabel>
+            <Text bold>Group Reports</Text>
+          </IonLabel>
+        </IonItem>
+      </FeatureGuard>
+
       <FeatureGuard id="schedule-pdfs">
         <IonItem
           className="ion-text-right ion-padding-bottom ion-margin-bottom"
