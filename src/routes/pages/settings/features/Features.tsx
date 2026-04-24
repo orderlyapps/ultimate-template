@@ -124,7 +124,11 @@ export const Features: React.FC = () => {
 
             {appFeatures
               .filter(({ id }) => {
-                return id === "groups" ? damianUnlocked : true;
+                if (id === "groups") return damianUnlocked;
+                if (id === "mapPrint") return damianUnlocked;
+                if (id === "schedule-pdfs") return damianUnlocked;
+                if (id === "talks") return damianUnlocked;
+                return true;
               })
               .map((feature) => {
                 const enabled = isFeatureEnabled({

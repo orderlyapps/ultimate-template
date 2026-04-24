@@ -15,11 +15,14 @@ export function HomeAccordions() {
 
   const isTalksEnabled = useAppFeaturesStore((s) => s.isEnabled("talks"));
   const isMapPrintEnabled = useAppFeaturesStore((s) => s.isEnabled("mapPrint"));
-  const { isUnlocked, isUserAllowed } = useFeatureAccess(["damian"]);
+  const isGroupReportsEnabled = useAppFeaturesStore((s) =>
+    s.isEnabled("groupReports"),
+  );
+  const { isUnlocked: isUnlockedForDamian, isUserAllowed: isDamianAllowed } =
+    useFeatureAccess(["damian"]);
 
-  const hasAnyToolEnabled = isTalksEnabled || isMapPrintEnabled;
-
-  const showTools = hasAnyToolEnabled && isUnlocked && isUserAllowed;
+  const hasAnyToolEnabled =
+    isTalksEnabled || isMapPrintEnabled || isGroupReportsEnabled;
 
   return (
     <IonAccordionGroup
@@ -30,9 +33,12 @@ export function HomeAccordions() {
       }
     >
       {order.map((id) => {
-        if (id === "tools" && !showTools) return null;
+        if (id === "tools" && !hasAnyToolEnabled) return null;
 
-        if (id === "announcements" && (!isUnlocked || !isUserAllowed))
+        if (
+          id === "announcements" &&
+          (!isUnlockedForDamian || !isDamianAllowed)
+        )
           return null;
 
         if (id === "notifications")

@@ -6,39 +6,111 @@ const TEMP_FEATURE_ACCESS_KEY = "temp-feature-access-unlocked";
 
 // TEMPORARY: Authorized users with passwords
 const TEMP_AUTHORIZED_USERS = [
-  { id: "9da270dd-ef23-417b-89a8-2a61bcbe24e0", password: "amodeo" , name: "damian"},
-  { id: "3d0dbd38-c50d-487c-a6a4-2aa2f9b844b0", password: "bennies", name: "tom" },
+  {
+    id: "9da270dd-ef23-417b-89a8-2a61bcbe24e0",
+    password: "amodeo",
+    name: "damian",
+  },
+  {
+    id: "3d0dbd38-c50d-487c-a6a4-2aa2f9b844b0",
+    password: "bennies",
+    name: "tom",
+  },
+  {
+    id: "ddc538fb-6119-4319-a78d-e4d900e90a8e",
+    password: "knights",
+    name: "tristan",
+  },
+  {
+    id: "eb9faf2b-24a2-4444-81cb-76109538a13f",
+    password: "gravo",
+    name: "eric",
+  },
+  {
+    id: "eb5c8017-24ea-4bfe-9b9a-283ea692cdef",
+    password: "carpet",
+    name: "godfrey",
+  },
+  {
+    id: "758ebb12-a1ac-403e-91dc-fecc84a00e51",
+    password: "roof",
+    name: "darcy",
+  },
+  {
+    id: "3bd7ae27-ce4f-4972-909c-fb492099ab5d",
+    password: "coco",
+    name: "nigel",
+  },
+  {
+    id: "de3273fa-2f50-4635-8645-1790ddba8f42",
+    password: "grass",
+    name: "andy",
+  },
+  {
+    id: "ac025747-69ee-47b9-98d5-58ad87dddbfb",
+    password: "maria",
+    name: "ivan",
+  },
+  {
+    id: "4af14420-79cc-43eb-96aa-1aa440f8330c",
+    password: "shed",
+    name: "steve",
+  },
+  {
+    id: "5c30e0f4-b11b-4cb1-9bab-454fc831c7d2",
+    password: "whiteley",
+    name: "mark",
+  },
 ] as const;
+
+type AuthorizedUserName = (typeof TEMP_AUTHORIZED_USERS)[number]["name"];
+
+export const GROUP_REPORTS_ACCESS: AuthorizedUserName[] = [
+  "damian",
+  "eric",
+  "tristan",
+  "godfrey",
+  "ivan",
+  "andy",
+  "nigel",
+  "mark",
+  "steve",
+];
 
 export const useFeatureAccess = (allowedNames: string[]) => {
   const [userPublisher] = useUserPublisher();
   const [unlockedUsers, setUnlockedUsers] = useLocalStorage<string[]>(
     TEMP_FEATURE_ACCESS_KEY,
-    []
+    [],
   );
 
   const currentUserId = userPublisher?.id;
 
   const currentUserName = TEMP_AUTHORIZED_USERS.find(
-    (u) => u.id === currentUserId
+    (u) => u.id === currentUserId,
   )?.name;
 
   const isUserAllowed = currentUserName
     ? allowedNames.includes(currentUserName)
     : false;
 
-  const isUnlocked = currentUserId ? unlockedUsers.includes(currentUserId) : false;
+  const isUnlocked = currentUserId
+    ? unlockedUsers.includes(currentUserId)
+    : false;
 
   const validatePassword = (password: string): boolean => {
     if (!currentUserId) return false;
 
     const authorizedUser = TEMP_AUTHORIZED_USERS.find(
-      (u) => u.id === currentUserId
+      (u) => u.id === currentUserId,
     );
     if (!authorizedUser) return false;
 
     if (authorizedUser.password === password) {
-      setUnlockedUsers([...unlockedUsers.filter((id) => id !== currentUserId), currentUserId]);
+      setUnlockedUsers([
+        ...unlockedUsers.filter((id) => id !== currentUserId),
+        currentUserId,
+      ]);
       return true;
     }
     return false;
@@ -59,4 +131,6 @@ export const useFeatureAccess = (allowedNames: string[]) => {
 };
 
 // TEMPORARY: Get all authorized user names for convenience
-export const TEMP_ALL_AUTHORIZED_NAMES = TEMP_AUTHORIZED_USERS.map((u) => u.name);
+export const TEMP_ALL_AUTHORIZED_NAMES = TEMP_AUTHORIZED_USERS.map(
+  (u) => u.name,
+);
