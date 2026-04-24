@@ -1,4 +1,4 @@
-import { SelectUserCongregationModal } from "@feature/db/congregation/user-congregation/select-user-congregation-modal/SelectUserCongregationModal";
+// import { SelectUserCongregationModal } from "@feature/db/congregation/user-congregation/select-user-congregation-modal/SelectUserCongregationModal";
 import { SelectUserPublisherModal } from "@feature/db/publisher/user-publisher/select-user-publisher-modal/SelectUserPublisherModal";
 import {
   IonBackButton,
@@ -13,11 +13,14 @@ import {
 } from "@ionic/react";
 import { useUserCongregation } from "@feature/db/congregation/user-congregation/use-user-congregation/useUserCongregation";
 import { Space } from "@layout/space/Space";
-import { AuthSection } from "@services/app/auth/AuthSection";
+// import { AuthSection } from "@services/app/auth/AuthSection";
 import { List } from "@ionic-layout/list/List";
+import { EmailSignInForm } from "@services/app/auth/email-sign-in/EmailSignInForm";
+import { useFeatureAccess } from "@services/app/auth/temp-feature-access/useFeatureAccess";
 
 export const Profile: React.FC = () => {
-  const show = false;
+  const { isUnlocked, isUserAllowed } = useFeatureAccess(["damian"]);
+  const show = isUnlocked && isUserAllowed;
   const [presentAlert] = useIonAlert();
   const [userCongregation, setUserCongregation] = useUserCongregation();
 
@@ -85,9 +88,10 @@ export const Profile: React.FC = () => {
         <List inset>
           {show && (
             <>
-              <AuthSection />
+              {/* <AuthSection /> */}
+              <EmailSignInForm />
               <Space height="2" />
-              <SelectUserCongregationModal />
+              {/* <SelectUserCongregationModal /> */}
               <Space height="2" />
             </>
           )}
