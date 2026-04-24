@@ -23,6 +23,7 @@
     "generate-pwa-assets": "npx pwa-asset-generator public/assets/pwa/logo.svg ./public/assets/pwa/ --background '#4a6da7' --padding '10%' --scrape false --favicon true --log false",
     "wrangler:update": "pnpm add -D wrangler@latest",
     "supabase:update": "brew upgrade supabase",
+    "supabase:update:schema": "supabase db dump --schema public -f src/services/state/supabase/schema.sql",
     "after:create:worktree": "rm -rf node_modules pnpm-lock.yaml && pnpm install"
   },
   "dependencies": {

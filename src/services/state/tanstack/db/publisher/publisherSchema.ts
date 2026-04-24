@@ -12,6 +12,7 @@ export const publisherSchema = z.object({
   last_name: z.string(),
   family_id: z.uuid().nullable().optional(),
   group_id: z.uuid().nullable().optional(),
+  auth_id: z.uuid().nullable().optional(),
   gender: gender,
   standing: standing,
   type: type,
