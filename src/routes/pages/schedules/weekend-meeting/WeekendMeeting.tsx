@@ -17,7 +17,7 @@ export const WeekendMeeting: React.FC = () => {
   const history = useHistory();
   const { week_id } = useParams<{ week_id: string }>();
 
-  const { isUnlocked: show } = useFeatureAccess(["damian"]);
+  const { isUnlocked: show } = useFeatureAccess(["damian", "tom"]);
 
   return (
     <IonPage>

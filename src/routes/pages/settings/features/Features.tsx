@@ -24,6 +24,7 @@ import { useAppFeaturesStore } from "@services/app/features/useAppFeaturesStore"
 import {
   useFeatureAccess,
   TEMP_ALL_AUTHORIZED_NAMES,
+  GROUP_REPORTS_ACCESS,
 } from "@services/app/auth/temp-feature-access/useFeatureAccess";
 import { Button } from "@ionic-input/button/Button";
 
@@ -39,6 +40,9 @@ export const Features: React.FC = () => {
   );
 
   const { isUserAllowed: damianUnlocked } = useFeatureAccess(["damian"]);
+  const { isUserAllowed: isGroupReportsAllowed } =
+    useFeatureAccess(GROUP_REPORTS_ACCESS);
+
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
@@ -128,6 +132,7 @@ export const Features: React.FC = () => {
                 if (id === "mapPrint") return damianUnlocked;
                 if (id === "schedule-pdfs") return damianUnlocked;
                 if (id === "talks") return damianUnlocked;
+                if (id === "groupReports") return isGroupReportsAllowed;
                 return true;
               })
               .map((feature) => {
