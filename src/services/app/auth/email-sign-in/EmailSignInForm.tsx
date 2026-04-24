@@ -2,6 +2,7 @@ import { useUserPublisher } from "@feature/db/publisher/user-publisher/use-user-
 import { useAuth } from "../useAuth";
 import { SignedInPanel } from "@services/app/auth/email-sign-in/components/signed-in-panel/SignedInPanel";
 import { SignInForm } from "@services/app/auth/email-sign-in/components/sign-in-form/SignInForm";
+import { useFeatureAccess } from "@services/app/auth/temp-feature-access/useFeatureAccess";
 
 // Domain used to construct the supabase auth email from a publisher uuid.
 const EMAIL_DOMAIN = "proclaimer.app";
@@ -13,12 +14,13 @@ const EMAIL_DOMAIN = "proclaimer.app";
  * publisher uuid in the form `<publisher.id>@proclaimer.app`.
  */
 export const EmailSignInForm: React.FC = () => {
+  const { isUnlocked, isUserAllowed } = useFeatureAccess(["damian"]);
   const [publisher] = useUserPublisher();
   const { isAuthenticated, isLoading } = useAuth();
 
   // Supabase persists the session in localStorage by default, so an existing
   // session is rehydrated on reload via useAuth's getSession/onAuthStateChange.
-  if (isLoading) return null;
+  if (isLoading || !isUnlocked || !isUserAllowed) return null;
 
   if (isAuthenticated) return <SignedInPanel />;
 
