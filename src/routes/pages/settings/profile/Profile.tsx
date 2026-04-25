@@ -16,13 +16,10 @@ import { Space } from "@layout/space/Space";
 // import { AuthSection } from "@services/app/auth/AuthSection";
 import { List } from "@ionic-layout/list/List";
 import { EmailSignInForm } from "@services/app/auth/email-sign-in/EmailSignInForm";
-import { useFeatureAccess } from "@services/app/auth/temp-feature-access/useFeatureAccess";
 import { useAuth } from "@services/app/auth/useAuth";
 import { NavItem } from "@navigation/nav-item/NavItem";
 
 export const Profile: React.FC = () => {
-  const { isUnlocked, isUserAllowed } = useFeatureAccess(["damian"]);
-  const show = isUnlocked && isUserAllowed;
   const { isAuthenticated } = useAuth();
   const [presentAlert] = useIonAlert();
   const [userCongregation, setUserCongregation] = useUserCongregation();
@@ -89,18 +86,14 @@ export const Profile: React.FC = () => {
         </IonHeader>
         <Space height="2" />
         <List inset>
-          {show && (
-            <>
-              {/* <AuthSection /> */}
-              <EmailSignInForm />
-              <Space height="2" />
-              {isAuthenticated && (
-                <NavItem routerLink="/settings/profile/admin">Admin</NavItem>
-              )}
-              {/* <SelectUserCongregationModal /> */}
-              <Space height="2" />
-            </>
+          {/* <AuthSection /> */}
+          <EmailSignInForm />
+          <Space height="2" />
+          {isAuthenticated && (
+            <NavItem routerLink="/settings/profile/admin">Admin</NavItem>
           )}
+          {/* <SelectUserCongregationModal /> */}
+          <Space height="2" />
 
           {userCongregation?.id === "7b15d4e5-d4fa-4eb4-a276-3790b7c4897b" && (
             <SelectUserPublisherModal />

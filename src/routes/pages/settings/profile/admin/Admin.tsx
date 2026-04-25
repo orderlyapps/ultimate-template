@@ -7,7 +7,6 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { AdminContent } from "@/content/settings/profile/admin/AdminContent";
 
 /**
  * Admin child page of Profile.
@@ -33,7 +32,6 @@ export const Admin: React.FC = () => {
             <IonTitle size="large">Admin</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <AdminContent />
       </IonContent>
     </IonPage>
   );
