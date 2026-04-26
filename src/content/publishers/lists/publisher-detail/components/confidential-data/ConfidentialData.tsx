@@ -6,6 +6,9 @@ import { Text } from "@ionic-display/text/Text";
 import { Item } from "@ionic-layout/item/Item";
 import { usePublisherLocal } from "@/content/publishers/lists/publisher-detail/hooks/usePublisherLocal";
 import { useIsSuperAdmin } from "@/content/settings/profile/admin/components/use-is-super-admin/useIsSuperAdmin";
+import { Label } from "@ionic-display/label/Label";
+import { SectionHeading } from "@display/section-heading/SectionHeading";
+import { Space } from "@layout/space/Space";
 
 /** Formats an ISO date string (YYYY-MM-DD) to a human-readable format, e.g. "12 Jan 1990" */
 const formatDate = (isoDate: string): string => {
@@ -25,10 +28,16 @@ const timeSince = (isoDate: string): string => {
   let years = now.getFullYear() - start.getFullYear();
   let months = now.getMonth() - start.getMonth();
   if (now.getDate() < start.getDate()) months -= 1;
-  if (months < 0) { years -= 1; months += 12; }
+  if (months < 0) {
+    years -= 1;
+    months += 12;
+  }
   const yearPart = years > 0 ? `${years} year${years !== 1 ? "s" : ""}` : "";
-  const monthPart = months > 0 ? `${months} month${months !== 1 ? "s" : ""}` : "";
-  return [yearPart, monthPart].filter(Boolean).join(", ") || "Less than a month";
+  const monthPart =
+    months > 0 ? `${months} month${months !== 1 ? "s" : ""}` : "";
+  return (
+    [yearPart, monthPart].filter(Boolean).join(", ") || "Less than a month"
+  );
 };
 
 export const ConfidentialData: React.FC = () => {
@@ -64,37 +73,38 @@ export const ConfidentialData: React.FC = () => {
 
   return (
     <IonList>
+      <Space height="1" />
+      <Item>
+        <SectionHeading>Dates</SectionHeading>
+      </Item>
       {publisher.birth_date && (
         <IonItem>
-          <IonLabel>
-            <h2>Birth Date</h2>
-          </IonLabel>
-          <Text>
-            {formatDate(publisher.birth_date)}
-            <br />
-            <small>{timeSince(publisher.birth_date)}</small>
+          <Label>Birth</Label>
+          <Text size="sm">
+            {formatDate(publisher.birth_date)} (
+            {timeSince(publisher.birth_date)})
           </Text>
         </IonItem>
       )}
       {publisher.baptism_date && (
         <IonItem>
-          <IonLabel>
-            <h2>Baptism Date</h2>
-          </IonLabel>
-          <Text>
-            {formatDate(publisher.baptism_date)}
-            <br />
-            <small>{timeSince(publisher.baptism_date)}</small>
+          <Label>Baptism</Label>
+          <Text size="sm">
+            {formatDate(publisher.baptism_date)} (
+            {timeSince(publisher.baptism_date)})
           </Text>
         </IonItem>
       )}
 
       {publisher.phone && publisher.phone.length > 0 && (
         <>
-          <Item>Phone</Item>
+          <Space height="1" />
+          <Item>
+            <SectionHeading>Phone</SectionHeading>
+          </Item>
           {publisher.phone.map((p) => (
             <IonItem key={p.id}>
-              <IonLabel>{p.label}</IonLabel>
+              <Label>{p.label}</Label>
               <Text>{p.number}</Text>
             </IonItem>
           ))}
@@ -102,31 +112,40 @@ export const ConfidentialData: React.FC = () => {
       )}
 
       {publisher.email && publisher.email.length > 0 && (
-        <IonItem>
-          <IonLabel>
-            <h2>Email</h2>
-            {publisher.email.map((e) => (
-              <p key={e.id}>
-                {e.label}: {e.address}
-              </p>
-            ))}
-          </IonLabel>
-        </IonItem>
+        <>
+          <Space height="1" />
+          <Item>
+            <SectionHeading>Email</SectionHeading>
+          </Item>
+          {publisher.email.map((e) => (
+            <IonItem key={e.id}>
+              <Label>{e.label}</Label>
+              <Text slot="end">{e.address}</Text>
+            </IonItem>
+          ))}
+        </>
       )}
 
       {publisher.address && publisher.address.length > 0 && (
-        <IonItem>
-          <IonLabel>
-            <h2>Address</h2>
-            {publisher.address.map((a) => (
-              <p key={a.id}>
-                {a.label}: {a.unit_number} {a.house_number} {a.street},{" "}
+        <>
+          <Space height="1" />
+          <Item>
+            <SectionHeading>Address</SectionHeading>
+          </Item>
+
+          {publisher.address.map((a) => (
+            <IonItem key={a.id}>
+              <Label>{a.label}</Label>
+              <Text slot="end" className="ion-text-end">
+                {a.unit_number} {a.house_number} {a.street}
+                <br />
                 {a.suburb}
-              </p>
-            ))}
-          </IonLabel>
-        </IonItem>
+              </Text>
+            </IonItem>
+          ))}
+        </>
       )}
+      <Space />
       {isSuperAdmin && (
         <IonButton
           expand="block"
@@ -136,6 +155,7 @@ export const ConfidentialData: React.FC = () => {
           Edit Publisher
         </IonButton>
       )}
+      <Space />
     </IonList>
   );
 };
