@@ -10,6 +10,9 @@ import { Item } from "@ionic-layout/item/Item";
 import { Label } from "@ionic-display/label/Label";
 import { Button } from "@ionic-input/button/Button";
 import { AddEditAddressModal } from "./components/add-edit-address-modal/AddEditAddressModal";
+import { suburbCollection } from "@tanstack-db/suburb/suburbCollection";
+import { streetCollection } from "@tanstack-db/street/streetCollection";
+import { eq, useLiveQuery } from "@tanstack/react-db";
 
 const createVersion = () => ({
   created_by: "user",
@@ -109,77 +112,103 @@ const AddressItemEdit: React.FC<AddressItemEditProps> = ({
   onUpdate,
   onRemove,
   onEdit,
-}) => (
-  <>
-    <IonItem lines="none">
-      <Label>Label</Label>
-      <IonInput
-        slot="end"
-        className="ion-text-end"
-        value={item.label}
-        onIonInput={(e) => onUpdate({ label: e.detail.value ?? "" })}
-        clearInput={true}
-      />
-    </IonItem>
+}) => {
+  // Fetch suburb and street names from database using IDs
+  const { data: suburbData } = useLiveQuery(
+    (q) => {
+      if (!item.suburb) return null;
+      return q
+        .from({ s: suburbCollection })
+        .where(({ s }) => eq(s.id, item.suburb));
+    },
+    [item.suburb]
+  );
 
-    <IonItem lines="none">
-      <Label>Unit Number</Label>
-      <IonInput
-        slot="end"
-        className="ion-text-end"
-        value={item.unit_number ?? ""}
-        onIonInput={(e) => onUpdate({ unit_number: e.detail.value ?? "" })}
-        clearInput={true}
-      />
-    </IonItem>
+  const { data: streetData } = useLiveQuery(
+    (q) => {
+      if (!item.street) return null;
+      return q
+        .from({ s: streetCollection })
+        .where(({ s }) => eq(s.id, item.street));
+    },
+    [item.street]
+  );
 
-    <IonItem lines="none">
-      <Label>House Number</Label>
-      <IonInput
-        slot="end"
-        className="ion-text-end"
-        value={item.house_number ?? ""}
-        onIonInput={(e) => onUpdate({ house_number: e.detail.value ?? "" })}
-        clearInput={true}
-      />
-    </IonItem>
+  const suburbName = suburbData?.[0]?.name ?? item.suburb ?? "";
+  const streetName = streetData?.[0]?.name ?? item.street ?? "";
 
-    <IonItem lines="none">
-      <Label>Street</Label>
-      <IonInput
-        slot="end"
-        className="ion-text-end"
-        value={item.street ?? ""}
-        onIonInput={(e) => onUpdate({ street: e.detail.value ?? "" })}
-        clearInput={true}
-      />
-    </IonItem>
+  return (
+    <>
+      <IonItem lines="none">
+        <Label>Label</Label>
+        <IonInput
+          slot="end"
+          className="ion-text-end"
+          value={item.label}
+          onIonInput={(e) => onUpdate({ label: e.detail.value ?? "" })}
+          clearInput={true}
+        />
+      </IonItem>
 
-    <IonItem lines="none">
-      <Label>Suburb</Label>
-      <IonInput
-        slot="end"
-        className="ion-text-end"
-        value={item.suburb ?? ""}
-        onIonInput={(e) => onUpdate({ suburb: e.detail.value ?? "" })}
-        clearInput={true}
-      />
-    </IonItem>
+      <IonItem lines="none">
+        <Label>Unit Number</Label>
+        <IonInput
+          slot="end"
+          className="ion-text-end"
+          value={item.unit_number ?? ""}
+          onIonInput={(e) => onUpdate({ unit_number: e.detail.value ?? "" })}
+          clearInput={true}
+        />
+      </IonItem>
 
-    <IonItem lines="none">
-      <Label>
-        <Button fill="clear" color="primary" onClick={onEdit}>
-          Edit in Modal
-        </Button>
-      </Label>
-    </IonItem>
+      <IonItem lines="none">
+        <Label>House Number</Label>
+        <IonInput
+          slot="end"
+          className="ion-text-end"
+          value={item.house_number ?? ""}
+          onIonInput={(e) => onUpdate({ house_number: e.detail.value ?? "" })}
+          clearInput={true}
+        />
+      </IonItem>
 
-    <IonItem>
-      <Label>
-        <Button fill="clear" color="danger" onClick={onRemove}>
-          Delete
-        </Button>
-      </Label>
-    </IonItem>
-  </>
-);
+      <IonItem lines="none">
+        <Label>Street</Label>
+        <IonInput
+          slot="end"
+          className="ion-text-end"
+          value={streetName}
+          onIonInput={(e) => onUpdate({ street: e.detail.value ?? "" })}
+          clearInput={true}
+        />
+      </IonItem>
+
+      <IonItem lines="none">
+        <Label>Suburb</Label>
+        <IonInput
+          slot="end"
+          className="ion-text-end"
+          value={suburbName}
+          onIonInput={(e) => onUpdate({ suburb: e.detail.value ?? "" })}
+          clearInput={true}
+        />
+      </IonItem>
+
+      <IonItem lines="none">
+        <Label>
+          <Button fill="clear" color="primary" onClick={onEdit}>
+            Edit in Modal
+          </Button>
+        </Label>
+      </IonItem>
+
+      <IonItem>
+        <Label>
+          <Button fill="clear" color="danger" onClick={onRemove}>
+            Delete
+          </Button>
+        </Label>
+      </IonItem>
+    </>
+  );
+};

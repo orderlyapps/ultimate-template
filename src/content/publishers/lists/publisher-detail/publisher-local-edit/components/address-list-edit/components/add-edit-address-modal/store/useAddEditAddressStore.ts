@@ -62,13 +62,13 @@ export const useAddEditAddressStore = create<AddEditAddressState>((set) => ({
   resetForm: () => set(initialState),
   initializeForm: (existingAddress, suburbs, streets) => {
     const existingSuburb = existingAddress?.suburb
-      ? suburbs?.find((s) => s.name === existingAddress.suburb) ?? null
+      ? suburbs?.find((s) => s.id === existingAddress.suburb) ?? null
       : null;
 
     const existingStreet = existingAddress?.street && existingSuburb
       ? streets?.find(
           (s) =>
-            s.name === existingAddress.street &&
+            s.id === existingAddress.street &&
             s.suburb_id === existingSuburb.id
         ) ?? null
       : null;

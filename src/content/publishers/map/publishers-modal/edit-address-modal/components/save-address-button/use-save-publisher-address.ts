@@ -65,8 +65,8 @@ export const useSavePublisherAddress = () => {
       label: "Home",
       unit_number: unitNumber || undefined,
       house_number: houseNumber,
-      street: street.name,
-      suburb: suburb.name,
+      street: street.id,
+      suburb: suburb.id,
       coordinates,
       version: {
         created_by: existingAddress?.version?.created_by ?? userId,

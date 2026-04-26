@@ -108,8 +108,8 @@ export const AddEditAddressModal: React.FC<AddEditAddressModalProps> = ({
 
     onSave({
       label,
-      suburb: suburb?.name,
-      street: street?.name,
+      suburb: suburb?.id,
+      street: street?.id,
       house_number: houseNumber || undefined,
       unit_number: useAddEditAddressStore.getState().unitNumber || undefined,
       coordinates,
