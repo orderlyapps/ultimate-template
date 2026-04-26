@@ -3,6 +3,7 @@ import { create } from "zustand";
 interface Suburb {
   id: string;
   name: string;
+  bbox: [number, number, number, number];
 }
 
 interface Street {

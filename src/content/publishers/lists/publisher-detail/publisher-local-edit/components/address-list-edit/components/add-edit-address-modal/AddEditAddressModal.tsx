@@ -18,7 +18,8 @@ import { useAddEditAddressStore } from "./store/useAddEditAddressStore";
 import { suburbCollection } from "@tanstack-db/suburb/suburbCollection";
 import { streetCollection } from "@tanstack-db/street/streetCollection";
 import { eq, useLiveQuery } from "@tanstack/react-db";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { geocodeAddress } from "@services/vendor/mapbox/helper/geocodeAddress";
 
 interface AddEditAddressModalProps {
   isOpen: boolean;
@@ -29,6 +30,7 @@ interface AddEditAddressModalProps {
     street?: string;
     house_number?: string;
     unit_number?: string;
+    coordinates?: number[];
   }) => void;
   existingAddress?: {
     label?: string;
@@ -46,11 +48,12 @@ export const AddEditAddressModal: React.FC<AddEditAddressModalProps> = ({
   existingAddress,
 }) => {
   const label = useAddEditAddressStore((state: { label: string }) => state.label);
-  const suburb = useAddEditAddressStore((state: { suburb: { id: string; name: string } | null }) => state.suburb);
+  const suburb = useAddEditAddressStore((state: { suburb: { id: string; name: string; bbox: [number, number, number, number] } | null }) => state.suburb);
   const street = useAddEditAddressStore((state: { street: { id: string; name: string; suburb_id: string } | null }) => state.street);
   const houseNumber = useAddEditAddressStore((state: { houseNumber: string }) => state.houseNumber);
   const resetForm = useAddEditAddressStore((state: { resetForm: () => void }) => state.resetForm);
-  const initializeForm = useAddEditAddressStore((state: { initializeForm: (existingAddress?: { label?: string; suburb?: string; street?: string; house_number?: string; unit_number?: string; } | null, suburbs?: { id: string; name: string }[], streets?: { id: string; name: string; suburb_id: string }[]) => void }) => state.initializeForm);
+  const initializeForm = useAddEditAddressStore((state: { initializeForm: (existingAddress?: { label?: string; suburb?: string; street?: string; house_number?: string; unit_number?: string; } | null, suburbs?: { id: string; name: string; bbox: [number, number, number, number] }[], streets?: { id: string; name: string; suburb_id: string }[]) => void }) => state.initializeForm);
+  const [isSaving, setIsSaving] = useState(false);
 
   // Query suburbs and streets for initialization
   const { data: suburbs } = useLiveQuery((q) =>
@@ -78,14 +81,40 @@ export const AddEditAddressModal: React.FC<AddEditAddressModalProps> = ({
     onClose();
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
+    if (!suburb || !street || !houseNumber) return;
+
+    setIsSaving(true);
+    let coordinates: number[] | undefined;
+
+    try {
+      const geocodeResult = await geocodeAddress(
+        {
+          address_number: houseNumber,
+          street: street.name,
+          place: suburb.name,
+        },
+        {
+          bbox: suburb.bbox,
+        }
+      );
+
+      if (geocodeResult?.geometry?.coordinates) {
+        coordinates = geocodeResult.geometry.coordinates;
+      }
+    } catch (error) {
+      console.error("Geocoding failed:", error);
+    }
+
     onSave({
       label,
       suburb: suburb?.name,
       street: street?.name,
       house_number: houseNumber || undefined,
       unit_number: useAddEditAddressStore.getState().unitNumber || undefined,
+      coordinates,
     });
+    setIsSaving(false);
     resetForm();
     onClose();
   };
@@ -112,8 +141,8 @@ export const AddEditAddressModal: React.FC<AddEditAddressModalProps> = ({
           {suburb !== null && <StreetSelect />}
           {street !== null && <HouseNumberInput />}
           {houseNumber !== "" && <UnitNumberInput />}
-          <Button onClick={handleSave} disabled={!suburb || !street}>
-            Save
+          <Button onClick={handleSave} disabled={!suburb || !street || isSaving}>
+            {isSaving ? "Saving..." : "Save"}
           </Button>
         </List>
       </IonContent>

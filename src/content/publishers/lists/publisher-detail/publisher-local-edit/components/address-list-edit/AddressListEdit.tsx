@@ -44,6 +44,7 @@ export const AddressListEdit: React.FC = () => {
     street?: string;
     house_number?: string;
     unit_number?: string;
+    coordinates?: number[];
   }) => {
     if (editingAddress) {
       // Update existing address
@@ -53,6 +54,7 @@ export const AddressListEdit: React.FC = () => {
         street: data.street,
         house_number: data.house_number,
         unit_number: data.unit_number,
+        coordinates: data.coordinates,
       });
     } else {
       // Add new address
@@ -63,6 +65,7 @@ export const AddressListEdit: React.FC = () => {
         street: data.street,
         house_number: data.house_number,
         unit_number: data.unit_number,
+        coordinates: data.coordinates,
         version: createVersion(),
       };
       addAddress(newAddress);
