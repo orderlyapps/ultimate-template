@@ -9,6 +9,7 @@ import { useIsSuperAdmin } from "@/content/settings/profile/admin/components/use
 import { Label } from "@ionic-display/label/Label";
 import { SectionHeading } from "@display/section-heading/SectionHeading";
 import { Space } from "@layout/space/Space";
+import { AddressList } from "./components/address-list/AddressList";
 
 /** Formats an ISO date string (YYYY-MM-DD) to a human-readable format, e.g. "12 Jan 1990" */
 const formatDate = (isoDate: string): string => {
@@ -126,25 +127,7 @@ export const ConfidentialData: React.FC = () => {
         </>
       )}
 
-      {publisher.address && publisher.address.length > 0 && (
-        <>
-          <Space height="1" />
-          <Item>
-            <SectionHeading>Address</SectionHeading>
-          </Item>
-
-          {publisher.address.map((a) => (
-            <IonItem key={a.id}>
-              <Label>{a.label}</Label>
-              <Text slot="end" className="ion-text-end">
-                {a.unit_number} {a.house_number} {a.street}
-                <br />
-                {a.suburb}
-              </Text>
-            </IonItem>
-          ))}
-        </>
-      )}
+      <AddressList addresses={publisher.address} />
       <Space />
       {isSuperAdmin && (
         <IonButton
