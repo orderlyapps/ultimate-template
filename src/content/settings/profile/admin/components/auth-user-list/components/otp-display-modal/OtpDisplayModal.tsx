@@ -32,13 +32,14 @@ export const OtpDisplayModal: React.FC<OtpDisplayModalProps> = ({
   onDismiss,
 }) => {
   const handleSendSms = () => {
-    if (!smsPhone || !otp) return;
+    if (!otp) return;
     const expiry = new Date(Date.now() + 60 * 60 * 1000);
     const expiryTime = expiry.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: true });
     const body = encodeURIComponent(
       `Your sign-in code is: ${otp}\nThis code will expire at ${expiryTime}.`
     );
-    window.location.href = `sms:${smsPhone}?&body=${body}`;
+    /** If no phone is known, omit recipient — the user can enter it in the SMS app. */
+    window.location.href = `sms:${smsPhone ?? ""}?&body=${body}`;
   };
 
   return (
@@ -65,7 +66,7 @@ export const OtpDisplayModal: React.FC<OtpDisplayModalProps> = ({
           />
         )}
         <Space height="2" />
-        {smsPhone && otp && (
+        {otp && (
           <Button onClick={handleSendSms}>Send via SMS</Button>
         )}
         <Button fill="clear" onClick={onDismiss}>
