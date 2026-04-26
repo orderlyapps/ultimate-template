@@ -53,7 +53,7 @@ export const SelectUserPublisherModal: React.FC = () => {
         isOpen={!!pendingId}
         onDidDismiss={() => setPendingId(null)}
         header="Switch User Details?"
-        message="You are currently logged in. Switching to different user details will log you out, and you will need a new login code to log back in."
+        message="You are currently logged in. Switching to different user will log you out. To log back in you will need a new login code from your admin or you can generate a new code if you have another logged in device."
         buttons={[
           { text: "Cancel", role: "cancel" },
           {
