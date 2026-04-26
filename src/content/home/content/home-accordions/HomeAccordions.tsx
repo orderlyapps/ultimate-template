@@ -5,7 +5,7 @@ import {
 } from "@/content/home/content/home-accordions/store/useHomeAccordionOrderStore";
 import { HomeAccordionItem } from "./components/home-accordion-item/HomeAccordionItem";
 import { useAppFeaturesStore } from "@services/app/features/useAppFeaturesStore";
-import { useFeatureAccess } from "@services/app/auth/temp-feature-access/useFeatureAccess";
+// import { useFeatureAccess } from "@services/app/auth/temp-feature-access/useFeatureAccess";
 import { NotificationsAccordionItem } from "@/content/home/content/home-accordions/components/notifications-accordion-item/NotificationsAccordionItem";
 
 export function HomeAccordions() {
@@ -18,8 +18,8 @@ export function HomeAccordions() {
   const isGroupReportsEnabled = useAppFeaturesStore((s) =>
     s.isEnabled("groupReports"),
   );
-  const { isUnlocked: isUnlockedForDamian, isUserAllowed: isDamianAllowed } =
-    useFeatureAccess(["damian"]);
+  // const { isUnlocked: isUnlockedForDamian, isUserAllowed: isDamianAllowed } =
+  //   useFeatureAccess(["damian"]);
 
   const hasAnyToolEnabled =
     isTalksEnabled || isMapPrintEnabled || isGroupReportsEnabled;
@@ -36,8 +36,8 @@ export function HomeAccordions() {
         if (id === "tools" && !hasAnyToolEnabled) return null;
 
         if (
-          id === "announcements" &&
-          (!isUnlockedForDamian || !isDamianAllowed)
+          id === "announcements" 
+          // && (!isUnlockedForDamian || !isDamianAllowed)
         )
           return null;
 
