@@ -2,3 +2,7 @@
 
 @import '@css/tiptap/_variables.scss';
 @import '@css/tiptap/_keyframe-animations.scss';
+
+* {
+    text-wrap: balance;
+}
