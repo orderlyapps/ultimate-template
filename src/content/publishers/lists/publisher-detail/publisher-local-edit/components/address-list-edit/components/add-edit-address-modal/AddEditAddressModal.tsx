@@ -9,7 +9,6 @@ import {
 import { CloseButton } from "@input/button/close-button/CloseButton";
 import { List } from "@ionic-layout/list/List";
 import { Button } from "@ionic-input/button/Button";
-import { LabelInput } from "./components/label-input/LabelInput";
 import { SuburbSelect } from "./components/suburb-select/SuburbSelect";
 import { StreetSelect } from "./components/street-select/StreetSelect";
 import { HouseNumberInput } from "./components/house-number-input/HouseNumberInput";
@@ -136,7 +135,6 @@ export const AddEditAddressModal: React.FC<AddEditAddressModalProps> = ({
       </IonHeader>
       <IonContent>
         <List inset>
-          <LabelInput />
           <SuburbSelect />
           {suburb !== null && <StreetSelect />}
           {street !== null && <HouseNumberInput />}

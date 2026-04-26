@@ -8,11 +8,13 @@ import {
 import { SectionHeading } from "@display/section-heading/SectionHeading";
 import { Item } from "@ionic-layout/item/Item";
 import { Label } from "@ionic-display/label/Label";
+import { Text } from "@ionic-display/text/Text";
 import { Button } from "@ionic-input/button/Button";
 import { AddEditAddressModal } from "./components/add-edit-address-modal/AddEditAddressModal";
 import { suburbCollection } from "@tanstack-db/suburb/suburbCollection";
 import { streetCollection } from "@tanstack-db/street/streetCollection";
 import { eq, useLiveQuery } from "@tanstack/react-db";
+import { caretDownSharp, chevronExpand } from "ionicons/icons";
 
 const createVersion = () => ({
   created_by: "user",
@@ -22,9 +24,12 @@ const createVersion = () => ({
 });
 
 export const AddressListEdit: React.FC = () => {
-  const { address, addAddress, updateAddress, removeAddress } = usePublisherEditStore();
+  const { address, addAddress, updateAddress, removeAddress } =
+    usePublisherEditStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingAddress, setEditingAddress] = useState<AddressItem | null>(null);
+  const [editingAddress, setEditingAddress] = useState<AddressItem | null>(
+    null,
+  );
 
   const handleAdd = () => {
     setEditingAddress(null);
@@ -121,7 +126,7 @@ const AddressItemEdit: React.FC<AddressItemEditProps> = ({
         .from({ s: suburbCollection })
         .where(({ s }) => eq(s.id, item.suburb));
     },
-    [item.suburb]
+    [item.suburb],
   );
 
   const { data: streetData } = useLiveQuery(
@@ -131,7 +136,7 @@ const AddressItemEdit: React.FC<AddressItemEditProps> = ({
         .from({ s: streetCollection })
         .where(({ s }) => eq(s.id, item.street));
     },
-    [item.street]
+    [item.street],
   );
 
   const suburbName = suburbData?.[0]?.name ?? item.suburb ?? "";
@@ -150,56 +155,27 @@ const AddressItemEdit: React.FC<AddressItemEditProps> = ({
         />
       </IonItem>
 
-      <IonItem lines="none">
-        <Label>Unit Number</Label>
-        <IonInput
-          slot="end"
-          className="ion-text-end"
-          value={item.unit_number ?? ""}
-          onIonInput={(e) => onUpdate({ unit_number: e.detail.value ?? "" })}
-          clearInput={true}
-        />
-      </IonItem>
+      <IonItem lines="none" onClick={onEdit}>
+        <Label>Address</Label>
 
-      <IonItem lines="none">
-        <Label>House Number</Label>
-        <IonInput
-          slot="end"
-          className="ion-text-end"
-          value={item.house_number ?? ""}
-          onIonInput={(e) => onUpdate({ house_number: e.detail.value ?? "" })}
-          clearInput={true}
-        />
-      </IonItem>
-
-      <IonItem lines="none">
-        <Label>Street</Label>
-        <IonInput
-          slot="end"
-          className="ion-text-end"
-          value={streetName}
-          onIonInput={(e) => onUpdate({ street: e.detail.value ?? "" })}
-          clearInput={true}
-        />
-      </IonItem>
-
-      <IonItem lines="none">
-        <Label>Suburb</Label>
-        <IonInput
-          slot="end"
-          className="ion-text-end"
-          value={suburbName}
-          onIonInput={(e) => onUpdate({ suburb: e.detail.value ?? "" })}
-          clearInput={true}
-        />
-      </IonItem>
-
-      <IonItem lines="none">
-        <Label>
-          <Button fill="clear" color="primary" onClick={onEdit}>
-            Edit in Modal
-          </Button>
-        </Label>
+        <div slot="end" className="ion-display-flex">
+          <div className="ion-text-end ion-padding-end">
+            <Text >
+              {item.unit_number} {item.house_number} {streetName}
+              <br />
+              {suburbName}
+            </Text>
+          </div>
+          <div className="ion-display-flex ion-align-items-center">
+            <IonIcon
+              id="select-icon"
+              ios={chevronExpand}
+              md={caretDownSharp}
+              color="medium"
+              size="small"
+            />
+          </div>
+        </div>
       </IonItem>
 
       <IonItem>
