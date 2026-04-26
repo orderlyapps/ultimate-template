@@ -1,4 +1,5 @@
-import { IonIcon, IonInput, IonItem, useIonAlert } from "@ionic/react";
+import { useState } from "react";
+import { IonIcon, IonInput, IonItem } from "@ionic/react";
 import addIcon from "@icons/add.svg";
 import {
   usePublisherEditStore,
@@ -8,6 +9,7 @@ import { SectionHeading } from "@display/section-heading/SectionHeading";
 import { Item } from "@ionic-layout/item/Item";
 import { Label } from "@ionic-display/label/Label";
 import { Button } from "@ionic-input/button/Button";
+import { AddEditAddressModal } from "./components/add-edit-address-modal/AddEditAddressModal";
 
 const createVersion = () => ({
   created_by: "user",
@@ -18,37 +20,53 @@ const createVersion = () => ({
 
 export const AddressListEdit: React.FC = () => {
   const { address, addAddress, updateAddress, removeAddress } = usePublisherEditStore();
-  const [presentAlert] = useIonAlert();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingAddress, setEditingAddress] = useState<AddressItem | null>(null);
 
   const handleAdd = () => {
-    presentAlert({
-      header: "Add Address",
-      inputs: [
-        {
-          name: "label",
-          type: "text",
-          placeholder: "Label",
-          value: "Home",
-        },
-      ],
-      buttons: [
-        {
-          text: "Cancel",
-          role: "cancel",
-        },
-        {
-          text: "Add",
-          handler: (data: { label?: string }) => {
-            const newAddress: AddressItem = {
-              id: crypto.randomUUID(),
-              label: data.label ?? "Home",
-              version: createVersion(),
-            };
-            addAddress(newAddress);
-          },
-        },
-      ],
-    });
+    setEditingAddress(null);
+    setIsModalOpen(true);
+  };
+
+  const handleEdit = (item: AddressItem) => {
+    setEditingAddress(item);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setEditingAddress(null);
+  };
+
+  const handleSaveAddress = (data: {
+    label: string;
+    suburb?: string;
+    street?: string;
+    house_number?: string;
+    unit_number?: string;
+  }) => {
+    if (editingAddress) {
+      // Update existing address
+      updateAddress(editingAddress.id, {
+        label: data.label,
+        suburb: data.suburb,
+        street: data.street,
+        house_number: data.house_number,
+        unit_number: data.unit_number,
+      });
+    } else {
+      // Add new address
+      const newAddress: AddressItem = {
+        id: crypto.randomUUID(),
+        label: data.label,
+        suburb: data.suburb,
+        street: data.street,
+        house_number: data.house_number,
+        unit_number: data.unit_number,
+        version: createVersion(),
+      };
+      addAddress(newAddress);
+    }
   };
 
   return (
@@ -63,8 +81,15 @@ export const AddressListEdit: React.FC = () => {
           item={a}
           onUpdate={(updates) => updateAddress(a.id, updates)}
           onRemove={() => removeAddress(a.id)}
+          onEdit={() => handleEdit(a)}
         />
       ))}
+      <AddEditAddressModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onSave={handleSaveAddress}
+        existingAddress={editingAddress}
+      />
     </>
   );
 };
@@ -73,12 +98,14 @@ interface AddressItemEditProps {
   item: AddressItem;
   onUpdate: (updates: Partial<AddressItem>) => void;
   onRemove: () => void;
+  onEdit: () => void;
 }
 
 const AddressItemEdit: React.FC<AddressItemEditProps> = ({
   item,
   onUpdate,
   onRemove,
+  onEdit,
 }) => (
   <>
     <IonItem lines="none">
@@ -136,9 +163,17 @@ const AddressItemEdit: React.FC<AddressItemEditProps> = ({
       />
     </IonItem>
 
+    <IonItem lines="none">
+      <Label>
+        <Button fill="clear" color="primary" onClick={onEdit}>
+          Edit in Modal
+        </Button>
+      </Label>
+    </IonItem>
+
     <IonItem>
       <Label>
-        <Button fill="clear" color="danger" onClick={onRemove} className="">
+        <Button fill="clear" color="danger" onClick={onRemove}>
           Delete
         </Button>
       </Label>
