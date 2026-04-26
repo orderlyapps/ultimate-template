@@ -38,13 +38,13 @@ export const PublisherLists: React.FC = () => {
         </IonToolbar>
       </IonHeader>
 
-      <IonHeader collapse="condense">
-        <IonToolbar>
-          <IonTitle size="large">{activePresetName}</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-
       <IonContent fullscreen className="ion-padding">
+        <IonHeader collapse="condense">
+          <IonToolbar>
+            <IonTitle size="large">{activePresetName}</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+
         <PublisherListsContent />
       </IonContent>
     </IonPage>
