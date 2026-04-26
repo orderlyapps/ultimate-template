@@ -1,6 +1,13 @@
-import { IonButton, IonIcon, IonInput, IonItem, IonLabel, IonList } from "@ionic/react";
-import { addOutline, trashOutline } from "ionicons/icons";
-import { usePublisherEditStore, type EmailItem } from "../../store/usePublisherEditStore";
+import { IonIcon, IonInput, IonItem, useIonAlert } from "@ionic/react";
+import addIcon from "@icons/add.svg";
+import {
+  usePublisherEditStore,
+  type EmailItem,
+} from "../../store/usePublisherEditStore";
+import { SectionHeading } from "@display/section-heading/SectionHeading";
+import { Item } from "@ionic-layout/item/Item";
+import { Label } from "@ionic-display/label/Label";
+import { Button } from "@ionic-input/button/Button";
 
 const createVersion = () => ({
   created_by: "user",
@@ -11,25 +18,52 @@ const createVersion = () => ({
 
 export const EmailListEdit: React.FC = () => {
   const { email, addEmail, updateEmail, removeEmail } = usePublisherEditStore();
+  const [presentAlert] = useIonAlert();
 
   const handleAdd = () => {
-    const newEmail: EmailItem = {
-      id: crypto.randomUUID(),
-      address: "",
-      label: "Personal",
-      version: createVersion(),
-    };
-    addEmail(newEmail);
+    presentAlert({
+      header: "Add Email Address",
+      inputs: [
+        {
+          name: "label",
+          type: "text",
+          placeholder: "Label",
+          value: "Personal",
+        },
+        {
+          name: "address",
+          type: "email",
+          placeholder: "Email Address",
+        },
+      ],
+      buttons: [
+        {
+          text: "Cancel",
+          role: "cancel",
+        },
+        {
+          text: "Add",
+          handler: (data: { label?: string; address?: string }) => {
+            const newEmail: EmailItem = {
+              id: crypto.randomUUID(),
+              address: data.address ?? "",
+              label: data.label ?? "Personal",
+              version: createVersion(),
+            };
+            addEmail(newEmail);
+          },
+        },
+      ],
+    });
   };
 
   return (
-    <IonList>
-      <IonItem lines="none">
-        <IonLabel>Email Addresses</IonLabel>
-        <IonButton fill="clear" slot="end" onClick={handleAdd}>
-          <IonIcon icon={addOutline} />
-        </IonButton>
-      </IonItem>
+    <>
+      <Item>
+        <SectionHeading>Email</SectionHeading>
+        <IonIcon src={addIcon} slot="end" onClick={handleAdd} color="primary" />
+      </Item>
+
       {email.map((e) => (
         <EmailItemEdit
           key={e.id}
@@ -38,7 +72,7 @@ export const EmailListEdit: React.FC = () => {
           onRemove={() => removeEmail(e.id)}
         />
       ))}
-    </IonList>
+    </>
   );
 };
 
@@ -48,27 +82,41 @@ interface EmailItemEditProps {
   onRemove: () => void;
 }
 
-const EmailItemEdit: React.FC<EmailItemEditProps> = ({ item, onUpdate, onRemove }) => (
+const EmailItemEdit: React.FC<EmailItemEditProps> = ({
+  item,
+  onUpdate,
+  onRemove,
+}) => (
   <>
-    <IonItem>
+    <IonItem lines="none">
+      <Label>Label</Label>
       <IonInput
-        label="Label"
-        labelPlacement="stacked"
+        slot="end"
+        className="ion-text-end"
         value={item.label}
         onIonInput={(e) => onUpdate({ label: e.detail.value ?? "" })}
+        clearInput={true}
       />
     </IonItem>
-    <IonItem>
+
+    <IonItem lines="none">
+      <Label>Email</Label>
       <IonInput
-        label="Email"
-        labelPlacement="stacked"
+        slot="end"
+        className="ion-text-end"
         type="email"
         value={item.address}
         onIonInput={(e) => onUpdate({ address: e.detail.value ?? "" })}
+        clearInput={true}
       />
-      <IonButton fill="clear" slot="end" color="danger" onClick={onRemove}>
-        <IonIcon icon={trashOutline} />
-      </IonButton>
+    </IonItem>
+
+    <IonItem>
+      <Label>
+        <Button fill="clear" color="danger" onClick={onRemove} className="">
+          Delete
+        </Button>
+      </Label>
     </IonItem>
   </>
 );
