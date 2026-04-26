@@ -1,6 +1,13 @@
-import { IonButton, IonIcon, IonInput, IonItem, IonLabel, IonList } from "@ionic/react";
-import { addOutline, trashOutline } from "ionicons/icons";
-import { usePublisherEditStore, type AddressItem } from "../../store/usePublisherEditStore";
+import { IonIcon, IonInput, IonItem, useIonAlert } from "@ionic/react";
+import addIcon from "@icons/add.svg";
+import {
+  usePublisherEditStore,
+  type AddressItem,
+} from "../../store/usePublisherEditStore";
+import { SectionHeading } from "@display/section-heading/SectionHeading";
+import { Item } from "@ionic-layout/item/Item";
+import { Label } from "@ionic-display/label/Label";
+import { Button } from "@ionic-input/button/Button";
 
 const createVersion = () => ({
   created_by: "user",
@@ -11,24 +18,45 @@ const createVersion = () => ({
 
 export const AddressListEdit: React.FC = () => {
   const { address, addAddress, updateAddress, removeAddress } = usePublisherEditStore();
+  const [presentAlert] = useIonAlert();
 
   const handleAdd = () => {
-    const newAddress: AddressItem = {
-      id: crypto.randomUUID(),
-      label: "Home",
-      version: createVersion(),
-    };
-    addAddress(newAddress);
+    presentAlert({
+      header: "Add Address",
+      inputs: [
+        {
+          name: "label",
+          type: "text",
+          placeholder: "Label",
+          value: "Home",
+        },
+      ],
+      buttons: [
+        {
+          text: "Cancel",
+          role: "cancel",
+        },
+        {
+          text: "Add",
+          handler: (data: { label?: string }) => {
+            const newAddress: AddressItem = {
+              id: crypto.randomUUID(),
+              label: data.label ?? "Home",
+              version: createVersion(),
+            };
+            addAddress(newAddress);
+          },
+        },
+      ],
+    });
   };
 
   return (
-    <IonList>
-      <IonItem lines="none">
-        <IonLabel>Addresses</IonLabel>
-        <IonButton fill="clear" slot="end" onClick={handleAdd}>
-          <IonIcon icon={addOutline} />
-        </IonButton>
-      </IonItem>
+    <>
+      <Item>
+        <SectionHeading>Addresses</SectionHeading>
+        <IonIcon src={addIcon} slot="end" onClick={handleAdd} color="primary" />
+      </Item>
       {address.map((a) => (
         <AddressItemEdit
           key={a.id}
@@ -37,7 +65,7 @@ export const AddressListEdit: React.FC = () => {
           onRemove={() => removeAddress(a.id)}
         />
       ))}
-    </IonList>
+    </>
   );
 };
 
@@ -47,50 +75,73 @@ interface AddressItemEditProps {
   onRemove: () => void;
 }
 
-const AddressItemEdit: React.FC<AddressItemEditProps> = ({ item, onUpdate, onRemove }) => (
+const AddressItemEdit: React.FC<AddressItemEditProps> = ({
+  item,
+  onUpdate,
+  onRemove,
+}) => (
   <>
-    <IonItem>
+    <IonItem lines="none">
+      <Label>Label</Label>
       <IonInput
-        label="Label"
-        labelPlacement="stacked"
+        slot="end"
+        className="ion-text-end"
         value={item.label}
         onIonInput={(e) => onUpdate({ label: e.detail.value ?? "" })}
+        clearInput={true}
       />
-      <IonButton fill="clear" slot="end" color="danger" onClick={onRemove}>
-        <IonIcon icon={trashOutline} />
-      </IonButton>
     </IonItem>
-    <IonItem>
+
+    <IonItem lines="none">
+      <Label>Unit Number</Label>
       <IonInput
-        label="Unit Number"
-        labelPlacement="stacked"
+        slot="end"
+        className="ion-text-end"
         value={item.unit_number ?? ""}
         onIonInput={(e) => onUpdate({ unit_number: e.detail.value ?? "" })}
+        clearInput={true}
       />
     </IonItem>
-    <IonItem>
+
+    <IonItem lines="none">
+      <Label>House Number</Label>
       <IonInput
-        label="House Number"
-        labelPlacement="stacked"
+        slot="end"
+        className="ion-text-end"
         value={item.house_number ?? ""}
         onIonInput={(e) => onUpdate({ house_number: e.detail.value ?? "" })}
+        clearInput={true}
       />
     </IonItem>
-    <IonItem>
+
+    <IonItem lines="none">
+      <Label>Street</Label>
       <IonInput
-        label="Street"
-        labelPlacement="stacked"
+        slot="end"
+        className="ion-text-end"
         value={item.street ?? ""}
         onIonInput={(e) => onUpdate({ street: e.detail.value ?? "" })}
+        clearInput={true}
       />
     </IonItem>
-    <IonItem>
+
+    <IonItem lines="none">
+      <Label>Suburb</Label>
       <IonInput
-        label="Suburb"
-        labelPlacement="stacked"
+        slot="end"
+        className="ion-text-end"
         value={item.suburb ?? ""}
         onIonInput={(e) => onUpdate({ suburb: e.detail.value ?? "" })}
+        clearInput={true}
       />
+    </IonItem>
+
+    <IonItem>
+      <Label>
+        <Button fill="clear" color="danger" onClick={onRemove} className="">
+          Delete
+        </Button>
+      </Label>
     </IonItem>
   </>
 );

@@ -1,6 +1,7 @@
-import { IonButton, IonIcon, IonInput, IonItem } from "@ionic/react";
-import { trashOutline } from "ionicons/icons";
+import { IonInput, IonItem } from "@ionic/react";
 import type { EmergencyContactItem } from "../../../../store/usePublisherEditStore";
+import { Label } from "@ionic-display/label/Label";
+import { Button } from "@ionic-input/button/Button";
 
 interface EmergencyContactItemEditProps {
   item: EmergencyContactItem;
@@ -14,37 +15,44 @@ export const EmergencyContactItemEdit: React.FC<EmergencyContactItemEditProps> =
   onRemove,
 }) => (
   <>
-    <IonItem>
+    <IonItem lines="none">
+      <Label>First Name</Label>
       <IonInput
-        label="First Name"
-        labelPlacement="stacked"
+        slot="end"
+        className="ion-text-end"
         value={item.first_name}
         onIonInput={(e) => onUpdate({ first_name: e.detail.value ?? "" })}
+        clearInput={true}
       />
-      <IonButton fill="clear" slot="end" color="danger" onClick={onRemove}>
-        <IonIcon icon={trashOutline} />
-      </IonButton>
     </IonItem>
-    <IonItem>
+
+    <IonItem lines="none">
+      <Label>Last Name</Label>
       <IonInput
-        label="Last Name"
-        labelPlacement="stacked"
+        slot="end"
+        className="ion-text-end"
         value={item.last_name}
         onIonInput={(e) => onUpdate({ last_name: e.detail.value ?? "" })}
+        clearInput={true}
       />
     </IonItem>
-    <IonItem>
+
+    <IonItem lines="none">
+      <Label>Relationship</Label>
       <IonInput
-        label="Relationship"
-        labelPlacement="stacked"
+        slot="end"
+        className="ion-text-end"
         value={item.relationship}
         onIonInput={(e) => onUpdate({ relationship: e.detail.value ?? "" })}
+        clearInput={true}
       />
     </IonItem>
-    <IonItem>
+
+    <IonItem lines="none">
+      <Label>Phone</Label>
       <IonInput
-        label="Phone"
-        labelPlacement="stacked"
+        slot="end"
+        className="ion-text-end"
         type="tel"
         value={item.phone?.[0]?.number ?? ""}
         onIonInput={(e) => {
@@ -59,7 +67,16 @@ export const EmergencyContactItemEdit: React.FC<EmergencyContactItemEditProps> =
             : [{ id: crypto.randomUUID(), number: e.detail.value ?? "", label: "Mobile", version }];
           onUpdate({ phone });
         }}
+        clearInput={true}
       />
+    </IonItem>
+
+    <IonItem>
+      <Label>
+        <Button fill="clear" color="danger" onClick={onRemove} className="">
+          Delete
+        </Button>
+      </Label>
     </IonItem>
   </>
 );
