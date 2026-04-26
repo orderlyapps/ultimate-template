@@ -5,6 +5,7 @@ import {
 } from "@/content/home/content/home-accordions/store/useHomeAccordionOrderStore";
 import { HomeAccordionItem } from "./components/home-accordion-item/HomeAccordionItem";
 import { useAppFeaturesStore } from "@services/app/features/useAppFeaturesStore";
+import { useUserPermissions } from "@services/app/auth/permissions/useUserPermissions";
 // import { useFeatureAccess } from "@services/app/auth/temp-feature-access/useFeatureAccess";
 import { NotificationsAccordionItem } from "@/content/home/content/home-accordions/components/notifications-accordion-item/NotificationsAccordionItem";
 
@@ -21,8 +22,12 @@ export function HomeAccordions() {
   // const { isUnlocked: isUnlockedForDamian, isUserAllowed: isDamianAllowed } =
   //   useFeatureAccess(["damian"]);
 
+  const { isSuperAdmin, isCongregationAdmin, groupPermissions } = useUserPermissions();
+  const hasAnyPermission =
+    isSuperAdmin || isCongregationAdmin || groupPermissions.length > 0;
+
   const hasAnyToolEnabled =
-    isTalksEnabled || isMapPrintEnabled || isGroupReportsEnabled;
+    isTalksEnabled || isMapPrintEnabled || isGroupReportsEnabled || hasAnyPermission;
 
   return (
     <IonAccordionGroup
