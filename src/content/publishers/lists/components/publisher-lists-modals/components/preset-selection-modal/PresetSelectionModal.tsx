@@ -2,10 +2,10 @@ import {
   IonButtons,
   IonContent,
   IonHeader,
+  IonIcon,
   IonItemOptions,
   IonItemSliding,
   IonLabel,
-  IonListHeader,
   IonModal,
   IonTitle,
   IonToolbar,
@@ -29,6 +29,10 @@ import type {
   PublisherFilterState,
   UserFilterPreset,
 } from "./publisherFilterState";
+import addIcon from "@icons/add.svg";
+import { usePublisherListsStore } from "@/content/publishers/lists/store/usePublisherListsStore";
+import { SectionHeading } from "@display/section-heading/SectionHeading";
+import { Space } from "@layout/space/Space";
 
 interface PresetSelectionModalProps {
   isOpen: boolean;
@@ -73,7 +77,7 @@ export function PresetSelectionModal({
       </IonHeader>
       <IonContent>
         <BuiltInPresetsList onSelect={handleSelect} />
-        {userPresets.length > 0 && (
+        {
           <UserPresetsList
             presets={userPresets}
             onSelect={handleSelect}
@@ -81,7 +85,7 @@ export function PresetSelectionModal({
             onDuplicate={onDuplicate}
             onDelete={setDeleteTarget}
           />
-        )}
+        }
         <RenamePresetAlert
           isOpen={renameTarget !== null}
           onDismiss={() => setRenameTarget(null)}
@@ -105,7 +109,7 @@ function BuiltInPresetsList({
   onSelect: (filters: PublisherFilterState, name: string) => void;
 }) {
   const { isUnlocked } = useFeatureAccess(TEMP_ALL_AUTHORIZED_NAMES);
-  
+
   const presets = isUnlocked
     ? builtInPresets
     : builtInPresets.filter(
@@ -117,9 +121,11 @@ function BuiltInPresetsList({
 
   return (
     <List>
-      <IonListHeader>
-        <IonLabel>Lists</IonLabel>
-      </IonListHeader>
+      <Item>
+        <IonLabel>
+          <SectionHeading>Presets</SectionHeading>
+        </IonLabel>
+      </Item>
       {presets.map((preset) => (
         <Item
           key={preset.id}
@@ -148,11 +154,18 @@ function UserPresetsList({
   onDuplicate: (id: string) => void;
   onDelete: (preset: UserFilterPreset) => void;
 }) {
+  const { setIsFilterModalOpen } = usePublisherListsStore();
+
   return (
     <List>
-      <IonListHeader>
-        <IonLabel>My Presets</IonLabel>
-      </IonListHeader>
+      <Space height="2"/>
+      <Item>
+        <IonLabel>
+          <SectionHeading>User Presets</SectionHeading>
+        </IonLabel>
+
+        <IonIcon onClick={() => setIsFilterModalOpen(true)} src={addIcon} />
+      </Item>
       {presets.map((preset) => (
         <IonItemSliding key={preset.id}>
           <Item button onClick={() => onSelect(preset.filters, preset.name)}>

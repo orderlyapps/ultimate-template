@@ -1,5 +1,3 @@
-import { IonButton, IonIcon } from "@ionic/react";
-import { funnel } from "ionicons/icons";
 import { AddButton } from "@input/button/add-button/AddButton";
 import { FileExport } from "@input/file-export/FileExport";
 import { FileImport } from "@input/file-import/FileImport";
@@ -14,12 +12,7 @@ import {
 import { usePublisherListsStore } from "../../store/usePublisherListsStore";
 
 export const PublisherListsHeaderButtons: React.FC = () => {
-  const {
-    setIsAddModalOpen,
-    setIsFilterModalOpen,
-    setPendingImportFile,
-    hasActiveFilters,
-  } = usePublisherListsStore();
+  const { setIsAddModalOpen, setPendingImportFile } = usePublisherListsStore();
 
   const { isUnlocked } = useFeatureAccess(TEMP_ALL_AUTHORIZED_NAMES);
 
@@ -37,13 +30,7 @@ export const PublisherListsHeaderButtons: React.FC = () => {
             filename={generateExportFilename()}
             iconOnly
           />
-          <IonButton onClick={() => setIsFilterModalOpen(true)}>
-            <IonIcon
-              icon={funnel}
-              slot="icon-only"
-              color={hasActiveFilters() ? "primary" : undefined}
-            />
-          </IonButton>
+
           <AddButton onClick={() => setIsAddModalOpen(true)} />
         </>
       )}
