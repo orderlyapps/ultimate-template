@@ -91,6 +91,14 @@ export const Profile: React.FC = () => {
           {/* <AuthSection /> */}
           <EmailSignInForm />
           <Space height="2" />
+          {userCongregation?.id !== "7b15d4e5-d4fa-4eb4-a276-3790b7c4897b" && (
+            <IonButton expand="block" color="danger" onClick={handleResetApp}>
+              Reset App
+            </IonButton>
+          )}
+          {userCongregation?.id === "7b15d4e5-d4fa-4eb4-a276-3790b7c4897b" && (
+            <SelectUserPublisherModal />
+          )}
           {!isAuthenticated && <SignInWithCodeButton />}
           {isAuthenticated && (
             <>
@@ -98,16 +106,8 @@ export const Profile: React.FC = () => {
               <NavItem routerLink="/settings/profile/admin">Admin</NavItem>
             </>
           )}
-          {/* <SelectUserCongregationModal /> */}
-          <Space height="2" />
 
-          {userCongregation?.id === "7b15d4e5-d4fa-4eb4-a276-3790b7c4897b" && (
-            <SelectUserPublisherModal />
-          )}
           <Space />
-          <IonButton expand="block" color="danger" onClick={handleResetApp}>
-            Reset App
-          </IonButton>
         </List>
       </IonContent>
     </IonPage>
