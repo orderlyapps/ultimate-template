@@ -10,6 +10,7 @@ import { Label } from "@ionic-display/label/Label";
 import { SectionHeading } from "@display/section-heading/SectionHeading";
 import { Space } from "@layout/space/Space";
 import { AddressList } from "./components/address-list/AddressList";
+import { EmergencyContactList } from "./components/emergency-contact-list/EmergencyContactList";
 
 /** Formats an ISO date string (YYYY-MM-DD) to a human-readable format, e.g. "12 Jan 1990" */
 const formatDate = (isoDate: string): string => {
@@ -128,6 +129,11 @@ export const ConfidentialData: React.FC = () => {
       )}
 
       <AddressList addresses={publisher.address} />
+
+      <Space height="1" />
+
+      <EmergencyContactList emergencyContacts={publisher.emergency_contact} />
+
       <Space />
       {isSuperAdmin && (
         <IonButton
