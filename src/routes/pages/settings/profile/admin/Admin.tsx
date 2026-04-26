@@ -7,7 +7,10 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
+import { AddButton } from "@input/button/add-button/AddButton";
 import { AdminContent } from "@/content/settings/profile/admin/AdminContent";
+import { PublisherSelectModal } from "@/content/settings/profile/admin/components/publisher-select-modal/PublisherSelectModal";
+import { useState } from "react";
 
 /**
  * Admin child page of Profile.
@@ -17,6 +20,8 @@ import { AdminContent } from "@/content/settings/profile/admin/AdminContent";
  * later if direct URL access needs to be prevented.
  */
 export const Admin: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <IonPage>
       <IonHeader>
@@ -25,6 +30,9 @@ export const Admin: React.FC = () => {
             <IonBackButton defaultHref="/settings/profile" text="Profile" />
           </IonButtons>
           <IonTitle>Admin</IonTitle>
+          <IonButtons slot="end">
+            <AddButton onClick={() => setIsModalOpen(true)} />
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent>
@@ -35,6 +43,10 @@ export const Admin: React.FC = () => {
         </IonHeader>
         <AdminContent />
       </IonContent>
+      <PublisherSelectModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </IonPage>
   );
 };

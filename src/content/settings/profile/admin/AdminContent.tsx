@@ -4,7 +4,6 @@ import { List } from "@ionic-layout/list/List";
 import { Text } from "@ionic-display/text/Text";
 import { Space } from "@layout/space/Space";
 import { useIsSuperAdmin } from "./components/use-is-super-admin/useIsSuperAdmin";
-import { PublisherSelectList } from "./components/publisher-select-list/PublisherSelectList";
 import { AuthUserList } from "./components/auth-user-list/AuthUserList";
 import { SectionHeading } from "@display/section-heading/SectionHeading";
 
@@ -32,13 +31,6 @@ export const AdminContent: React.FC = () => {
   return (
     <>
       <Space height="2" />
-      <Item lines="none">
-        <IonLabel>
-          <Text size="lg">Create auth user for publisher</Text>
-        </IonLabel>
-      </Item>
-      <PublisherSelectList />
-      <Space height="3" />
       <Item lines="none">
         <IonLabel>
           <SectionHeading>Auth Users</SectionHeading>
