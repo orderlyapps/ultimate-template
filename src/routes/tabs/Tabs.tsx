@@ -5,10 +5,7 @@ import ministry from "@icons/ministry.svg";
 import schedules from "@icons/schedules.svg";
 import publishers from "@icons/publishers.svg";
 import settings from "@icons/settings.svg";
-import {
-  useFeatureAccess,
-  TEMP_ALL_AUTHORIZED_NAMES,
-} from "@services/app/auth/temp-feature-access/useFeatureAccess";
+import { useAuth } from "@services/app/auth/useAuth";
 
 const useOrientation = () => {
   const [isPortrait, setIsPortrait] = useState(
@@ -30,7 +27,7 @@ export const Tabs: React.FC = () => {
   const layout = isPortrait ? "icon-top" : "icon-start";
   const className = isPortrait ? "" : "ion-padding-end";
 
-  const { isUnlocked } = useFeatureAccess(TEMP_ALL_AUTHORIZED_NAMES);
+  const { isAuthenticated } = useAuth();
 
   return (
     <IonTabBar slot="bottom">
@@ -46,7 +43,7 @@ export const Tabs: React.FC = () => {
         <IonIcon src={schedules} className={className} />
         <IonLabel>Schedules</IonLabel>
       </IonTabButton>
-      {isUnlocked && (
+      {isAuthenticated && (
         <IonTabButton tab="publishers" href="/publishers" layout={layout}>
           <IonIcon src={publishers} className={className} />
           <IonLabel>Publishers</IonLabel>
