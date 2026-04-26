@@ -1,6 +1,7 @@
 import { List } from "@ionic-layout/list/List";
 import { IonItem, IonLabel } from "@ionic/react";
 import { FeatureGuard } from "@services/app/features/FeatureGuard";
+import { PermissionGuard } from "@services/app/auth/permissions/PermissionGuard";
 import { Text } from "@ionic-display/text/Text";
 
 export function ToolsContent() {
@@ -45,7 +46,7 @@ export function ToolsContent() {
         </IonItem>
       </FeatureGuard>
 
-      <FeatureGuard id="groupReports">
+      <PermissionGuard permission="read:report">
         <IonItem
           lines="none"
           routerLink="/home/group-reports"
@@ -56,7 +57,7 @@ export function ToolsContent() {
             <Text bold>Group Reports</Text>
           </IonLabel>
         </IonItem>
-      </FeatureGuard>
+      </PermissionGuard>
 
       <FeatureGuard id="schedule-pdfs">
         <IonItem

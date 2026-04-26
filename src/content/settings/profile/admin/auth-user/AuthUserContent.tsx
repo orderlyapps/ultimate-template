@@ -13,6 +13,9 @@ import { usePublisherPhoneLookup } from "../components/auth-user-list/components
 import { OtpDisplayModal } from "../components/auth-user-list/components/otp-display-modal/OtpDisplayModal";
 import { useAuthUserStore } from "./store/useAuthUserStore";
 import { SectionHeading } from "@display/section-heading/SectionHeading";
+import { CongregationAdminToggle } from "./components/congregation-admin-toggle/CongregationAdminToggle";
+import { GroupPermissionsManager } from "./components/group-permissions-manager/GroupPermissionsManager";
+import { useUserPermissions } from "@services/app/auth/permissions/useUserPermissions";
 
 /**
  * Displays auth user details for a specific publisher and provides
@@ -33,6 +36,10 @@ export const AuthUserContent: React.FC = () => {
   );
 
   const publisher = publishers?.[0];
+
+  // Get current user's permissions to determine what controls to show
+  const { isSuperAdmin, isCongregationAdmin } = useUserPermissions();
+  const canManagePermissions = isSuperAdmin || isCongregationAdmin;
 
   const handleGenerate = async () => {
     if (!publisherId) return;
@@ -67,6 +74,25 @@ export const AuthUserContent: React.FC = () => {
       <Space height="2" />
 
       <Button onClick={handleGenerate}>Generate OTP</Button>
+
+      {/* Permission management - only shown to admins */}
+      {canManagePermissions && publisher.auth_id && (
+        <>
+          <Space height="4" />
+          <List>
+            <CongregationAdminToggle
+              authUserId={publisher.auth_id}
+              congregationId={publisher.congregation_id}
+            />
+            <GroupPermissionsManager
+              authUserId={publisher.auth_id}
+              congregationId={publisher.congregation_id}
+            />
+          </List>
+        </>
+      )}
+      
+      <Space />
 
       <OtpDisplayModal
         isOpen={isModalOpen}

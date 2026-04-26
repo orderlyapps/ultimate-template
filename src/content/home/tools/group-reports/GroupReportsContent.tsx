@@ -1,11 +1,35 @@
+import { IonLabel } from "@ionic/react";
+import { List } from "@ionic-layout/list/List";
+import { Item } from "@ionic-layout/item/Item";
 import { Text } from "@ionic-display/text/Text";
+import { usePermissionedGroups } from "@services/app/auth/permissions/usePermissionedGroups";
 
 /**
  * Content component for the Group Reports page.
- * Displays group report data and controls.
+ * Displays only groups the user has permission to read or edit.
  */
 export const GroupReportsContent: React.FC = () => {
+  const { groups, isLoading } = usePermissionedGroups();
+
+  if (isLoading) {
+    return <Text>Loading groups...</Text>;
+  }
+
+  if (groups.length === 0) {
+    return (
+      <Text>You do not have permission to view any group reports.</Text>
+    );
+  }
+
   return (
-    <Text>Group Reports — placeholder content. Coming soon.</Text>
+    <List>
+      {groups.map((group) => (
+        <Item key={group.id} lines="full">
+          <IonLabel>
+            <Text bold>{group.name}</Text>
+          </IonLabel>
+        </Item>
+      ))}
+    </List>
   );
 };
