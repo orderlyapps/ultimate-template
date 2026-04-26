@@ -6,6 +6,7 @@ import { Space } from "@layout/space/Space";
 import { useIsSuperAdmin } from "./components/use-is-super-admin/useIsSuperAdmin";
 import { PublisherSelectList } from "./components/publisher-select-list/PublisherSelectList";
 import { AuthUserList } from "./components/auth-user-list/AuthUserList";
+import { SectionHeading } from "@display/section-heading/SectionHeading";
 
 /**
  * Admin page content. Currently lets a super admin pick a publisher and
@@ -40,7 +41,7 @@ export const AdminContent: React.FC = () => {
       <Space height="3" />
       <Item lines="none">
         <IonLabel>
-          <Text size="lg">Generate sign-in code</Text>
+          <SectionHeading>Auth Users</SectionHeading>
         </IonLabel>
       </Item>
       <AuthUserList />

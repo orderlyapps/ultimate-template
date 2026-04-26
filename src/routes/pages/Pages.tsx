@@ -47,6 +47,7 @@ import { PublishersMap } from "@pages/publishers/map/Map";
 import { Settings } from "@pages/settings/Settings";
 import { Profile } from "@pages/settings/profile/Profile";
 import { Admin } from "@pages/settings/profile/admin/Admin";
+import { AuthUser } from "@pages/settings/profile/admin/auth-user/AuthUser";
 import { Appearance } from "@pages/settings/appearance/Appearance";
 import { Features } from "@pages/settings/features/Features";
 import { HelpTextSettings } from "@pages/settings/help-text/HelpTextSettings";
@@ -101,6 +102,7 @@ export const pages = (
     <Route exact path="/settings" render={() => <Settings />} />
     <Route exact path="/settings/profile" render={() => <Profile />} />
     <Route exact path="/settings/profile/admin" render={() => <Admin />} />
+    <Route exact path="/settings/profile/admin/auth-user/:publisherId" render={() => <AuthUser />} />
     <Route exact path="/settings/appearance" render={() => <Appearance />} />
     <Route exact path="/settings/features" render={() => <Features />} />
     <Route exact path="/settings/help-text" render={() => <HelpTextSettings />} />
