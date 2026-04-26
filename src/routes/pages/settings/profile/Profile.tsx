@@ -18,6 +18,8 @@ import { List } from "@ionic-layout/list/List";
 import { EmailSignInForm } from "@services/app/auth/email-sign-in/EmailSignInForm";
 import { useAuth } from "@services/app/auth/useAuth";
 import { NavItem } from "@navigation/nav-item/NavItem";
+import { SignInWithCodeButton } from "@/content/settings/profile/components/sign-in-with-code-button/SignInWithCodeButton";
+import { GenerateOwnOtpButton } from "@/content/settings/profile/components/generate-own-otp-button/GenerateOwnOtpButton";
 
 export const Profile: React.FC = () => {
   const { isAuthenticated } = useAuth();
@@ -89,8 +91,12 @@ export const Profile: React.FC = () => {
           {/* <AuthSection /> */}
           <EmailSignInForm />
           <Space height="2" />
+          {!isAuthenticated && <SignInWithCodeButton />}
           {isAuthenticated && (
-            <NavItem routerLink="/settings/profile/admin">Admin</NavItem>
+            <>
+              <GenerateOwnOtpButton />
+              <NavItem routerLink="/settings/profile/admin">Admin</NavItem>
+            </>
           )}
           {/* <SelectUserCongregationModal /> */}
           <Space height="2" />

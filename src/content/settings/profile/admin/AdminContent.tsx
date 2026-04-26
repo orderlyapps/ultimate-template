@@ -5,6 +5,7 @@ import { Text } from "@ionic-display/text/Text";
 import { Space } from "@layout/space/Space";
 import { useIsSuperAdmin } from "./components/use-is-super-admin/useIsSuperAdmin";
 import { PublisherSelectList } from "./components/publisher-select-list/PublisherSelectList";
+import { AuthUserList } from "./components/auth-user-list/AuthUserList";
 
 /**
  * Admin page content. Currently lets a super admin pick a publisher and
@@ -36,6 +37,13 @@ export const AdminContent: React.FC = () => {
         </IonLabel>
       </Item>
       <PublisherSelectList />
+      <Space height="3" />
+      <Item lines="none">
+        <IonLabel>
+          <Text size="lg">Generate sign-in code</Text>
+        </IonLabel>
+      </Item>
+      <AuthUserList />
       <Space />
     </>
   );
