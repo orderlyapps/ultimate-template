@@ -1,6 +1,13 @@
-import { IonButton, IonIcon, IonInput, IonItem, IonLabel } from "@ionic/react";
-import { addOutline, trashOutline } from "ionicons/icons";
-import { usePublisherEditStore, type PhoneItem } from "../../store/usePublisherEditStore";
+import { IonIcon, IonInput, IonItem, useIonAlert } from "@ionic/react";
+import addIcon from "@icons/add.svg";
+import {
+  usePublisherEditStore,
+  type PhoneItem,
+} from "../../store/usePublisherEditStore";
+import { SectionHeading } from "@display/section-heading/SectionHeading";
+import { Item } from "@ionic-layout/item/Item";
+import { Label } from "@ionic-display/label/Label";
+import { Button } from "@ionic-input/button/Button";
 
 const createVersion = () => ({
   created_by: "user",
@@ -11,25 +18,52 @@ const createVersion = () => ({
 
 export const PhoneListEdit: React.FC = () => {
   const { phone, addPhone, updatePhone, removePhone } = usePublisherEditStore();
+  const [presentAlert] = useIonAlert();
 
   const handleAdd = () => {
-    const newPhone: PhoneItem = {
-      id: crypto.randomUUID(),
-      number: "",
-      label: "Mobile",
-      version: createVersion(),
-    };
-    addPhone(newPhone);
+    presentAlert({
+      header: "Add Phone Number",
+      inputs: [
+        {
+          name: "label",
+          type: "text",
+          placeholder: "Label",
+          value: "Mobile",
+        },
+        {
+          name: "number",
+          type: "tel",
+          placeholder: "Phone Number",
+        },
+      ],
+      buttons: [
+        {
+          text: "Cancel",
+          role: "cancel",
+        },
+        {
+          text: "Add",
+          handler: (data: { label?: string; number?: string }) => {
+            const newPhone: PhoneItem = {
+              id: crypto.randomUUID(),
+              number: data.number ?? "",
+              label: data.label ?? "Mobile",
+              version: createVersion(),
+            };
+            addPhone(newPhone);
+          },
+        },
+      ],
+    });
   };
 
   return (
     <>
-      <IonItem lines="none">
-        <IonLabel>Phone Numbers</IonLabel>
-        <IonButton fill="clear" slot="end" onClick={handleAdd}>
-          <IonIcon icon={addOutline} />
-        </IonButton>
-      </IonItem>
+      <Item>
+        <SectionHeading>Phone</SectionHeading>
+        <IonIcon src={addIcon} slot="end" onClick={handleAdd} color="primary" />
+      </Item>
+
       {phone.map((p) => (
         <PhoneItemEdit
           key={p.id}
@@ -48,27 +82,41 @@ interface PhoneItemEditProps {
   onRemove: () => void;
 }
 
-const PhoneItemEdit: React.FC<PhoneItemEditProps> = ({ item, onUpdate, onRemove }) => (
+const PhoneItemEdit: React.FC<PhoneItemEditProps> = ({
+  item,
+  onUpdate,
+  onRemove,
+}) => (
   <>
-    <IonItem>
+    <IonItem lines="none">
+      <Label>Label</Label>
       <IonInput
-        label="Label"
-        labelPlacement="stacked"
+        slot="end"
+        className="ion-text-end"
         value={item.label}
         onIonInput={(e) => onUpdate({ label: e.detail.value ?? "" })}
+        clearInput={true}
       />
     </IonItem>
-    <IonItem>
+
+    <IonItem lines="none">
+      <Label>Number</Label>
       <IonInput
-        label="Number"
-        labelPlacement="stacked"
+        slot="end"
+        className="ion-text-end"
         type="tel"
         value={item.number}
         onIonInput={(e) => onUpdate({ number: e.detail.value ?? "" })}
+        clearInput={true}
       />
-      <IonButton fill="clear" slot="end" color="danger" onClick={onRemove}>
-        <IonIcon icon={trashOutline} />
-      </IonButton>
+    </IonItem>
+
+    <IonItem>
+      <Label>
+        <Button fill="clear" color="danger" onClick={onRemove} className="">
+          Delete
+        </Button>
+      </Label>
     </IonItem>
   </>
 );

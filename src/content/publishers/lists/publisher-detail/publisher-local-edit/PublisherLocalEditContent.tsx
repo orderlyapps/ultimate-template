@@ -9,6 +9,7 @@ import { PhoneListEdit } from "./components/phone-list-edit/PhoneListEdit";
 import { EmailListEdit } from "./components/email-list-edit/EmailListEdit";
 import { AddressListEdit } from "./components/address-list-edit/AddressListEdit";
 import { EmergencyContactListEdit } from "./components/emergency-contact-list-edit/EmergencyContactListEdit";
+import { Space } from "@layout/space/Space";
 
 export const PublisherLocalEditContent: React.FC = () => {
   const { publisherId } = useParams<{ publisherId: string }>();
@@ -90,9 +91,13 @@ export const PublisherLocalEditContent: React.FC = () => {
   return (
     <IonList>
       <DateFieldsEdit />
+      <Space height="2" />
       <PhoneListEdit />
+      <Space height="2" />
       <EmailListEdit />
+      <Space height="2" />
       <AddressListEdit />
+      <Space height="2" />
       <EmergencyContactListEdit />
       <IonButton expand="block" onClick={handleSave} className="ion-margin-top">
         Save

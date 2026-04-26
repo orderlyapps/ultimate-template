@@ -2,12 +2,12 @@ import {
   IonDatetime,
   IonDatetimeButton,
   IonItem,
-  IonLabel,
   IonModal,
 } from "@ionic/react";
 import { usePublisherEditStore } from "../../store/usePublisherEditStore";
 import { Item } from "@ionic-layout/item/Item";
 import { SectionHeading } from "@display/section-heading/SectionHeading";
+import { Label } from "@ionic-display/label/Label";
 
 /** Renders Birth Date and Baptism Date pickers using IonDatetime modals. */
 export const DateFieldsEdit: React.FC = () => {
@@ -21,7 +21,7 @@ export const DateFieldsEdit: React.FC = () => {
       </Item>
 
       <IonItem>
-        <IonLabel>Birth</IonLabel>
+        <Label>Birth</Label>
 
         <IonDatetimeButton datetime="birth-date-picker" />
         <IonModal keepContentsMounted>
@@ -36,7 +36,7 @@ export const DateFieldsEdit: React.FC = () => {
       </IonItem>
 
       <IonItem>
-        <IonLabel>Baptism</IonLabel>
+        <Label>Baptism</Label>
         <IonDatetimeButton datetime="baptism-date-picker" />
         <IonModal keepContentsMounted>
           <IonDatetime
