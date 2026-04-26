@@ -6,12 +6,10 @@ import { Text } from "@ionic-display/text/Text";
 import { formatPublisherName } from "@format/formatPublisherName";
 import { Space } from "@layout/space/Space";
 import { Button } from "@ionic-input/button/Button";
-import { useFeatureAccess } from "@services/app/auth/temp-feature-access/useFeatureAccess";
 import { usePublisherListsStore } from "@/content/publishers/lists/store/usePublisherListsStore";
 import { useFilteredPublishers } from "./useFilteredPublishers";
 
 export function PublishersList() {
-  const { isUnlocked } = useFeatureAccess(["damian"]);
   const { setIsPresetModalOpen } = usePublisherListsStore();
 
   const { publishers, filteredPublishers } = useFilteredPublishers();
@@ -45,9 +43,7 @@ export function PublishersList() {
         {filteredPublishers?.map((publisher) => (
           <Item
             key={publisher.id}
-            routerLink={
-              isUnlocked ? `/publishers/all/${publisher.id}` : undefined
-            }
+            routerLink={`/publishers/all/${publisher.id}`}
           >
             <IonLabel>
               <Text>{formatPublisherName(publisher)}</Text>

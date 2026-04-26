@@ -5,6 +5,7 @@ import type { PublisherLocal } from "@state/rxdb/collections/publisher";
 import { Text } from "@ionic-display/text/Text";
 import { Item } from "@ionic-layout/item/Item";
 import { usePublisherLocal } from "@/content/publishers/lists/publisher-detail/hooks/usePublisherLocal";
+import { useIsSuperAdmin } from "@/content/settings/profile/admin/components/use-is-super-admin/useIsSuperAdmin";
 
 /** Formats an ISO date string (YYYY-MM-DD) to a human-readable format, e.g. "12 Jan 1990" */
 const formatDate = (isoDate: string): string => {
@@ -34,6 +35,7 @@ export const ConfidentialData: React.FC = () => {
   const { publisherId } = useParams<{ publisherId: string }>();
   const history = useHistory();
   const { data, isLoading } = usePublisherLocal(publisherId);
+  const isSuperAdmin = useIsSuperAdmin();
 
   if (isLoading) return <p>Loading...</p>;
 
@@ -47,13 +49,15 @@ export const ConfidentialData: React.FC = () => {
             <p>No local data found for this publisher.</p>
           </IonLabel>
         </IonItem>
-        <IonButton
-          expand="block"
-          onClick={() => history.push(`/publishers/all/${publisherId}/edit`)}
-        >
-          <IonIcon src={editIcon} slot="start" />
-          Add Local Data
-        </IonButton>
+        {isSuperAdmin && (
+          <IonButton
+            expand="block"
+            onClick={() => history.push(`/publishers/all/${publisherId}/edit`)}
+          >
+            <IonIcon src={editIcon} slot="start" />
+            Add Local Data
+          </IonButton>
+        )}
       </IonList>
     );
   }
@@ -123,13 +127,15 @@ export const ConfidentialData: React.FC = () => {
           </IonLabel>
         </IonItem>
       )}
-      <IonButton
-        expand="block"
-        onClick={() => history.push(`/publishers/all/${publisherId}/edit`)}
-      >
-        <IonIcon src={editIcon} slot="start" />
-        Edit Publisher
-      </IonButton>
+      {isSuperAdmin && (
+        <IonButton
+          expand="block"
+          onClick={() => history.push(`/publishers/all/${publisherId}/edit`)}
+        >
+          <IonIcon src={editIcon} slot="start" />
+          Edit Publisher
+        </IonButton>
+      )}
     </IonList>
   );
 };
