@@ -1,15 +1,24 @@
-import { IonLabel } from "@ionic/react";
-import { List } from "@ionic-layout/list/List";
-import { Item } from "@ionic-layout/item/Item";
+import { IonAccordionGroup } from "@ionic/react";
 import { Text } from "@ionic-display/text/Text";
 import { usePermissionedGroups } from "@services/app/auth/permissions/usePermissionedGroups";
+import { GroupPublisherAccordion } from "./components/group-publisher-accordion/GroupPublisherAccordion";
+
+/** Returns the first day of the previous month as "yyyy-mm-dd" using local time */
+const getPreviousMonthDate = (): string => {
+  const now = new Date();
+  const year = now.getMonth() === 0 ? now.getFullYear() - 1 : now.getFullYear();
+  const month = now.getMonth() === 0 ? 12 : now.getMonth();
+  return `${year}-${String(month).padStart(2, "0")}-01`;
+};
 
 /**
  * Content component for the Group Reports page.
- * Displays only groups the user has permission to read or edit.
+ * Displays permissioned groups as accordions, each listing their publishers.
+ * Tapping a publisher navigates to their report form for the previous month.
  */
 export const GroupReportsContent: React.FC = () => {
   const { groups, isLoading } = usePermissionedGroups();
+  const reportDate = getPreviousMonthDate();
 
   if (isLoading) {
     return <Text>Loading groups...</Text>;
@@ -21,15 +30,17 @@ export const GroupReportsContent: React.FC = () => {
     );
   }
 
+  const sorted = [...groups].sort((a, b) => a.name.localeCompare(b.name));
+
   return (
-    <List>
-      {groups.sort((a, b) => a.name.localeCompare(b.name)).map((group) => (
-        <Item key={group.id} lines="full">
-          <IonLabel>
-            <Text bold>{group.name}</Text>
-          </IonLabel>
-        </Item>
+    <IonAccordionGroup multiple>
+      {sorted.map((group) => (
+        <GroupPublisherAccordion
+          key={group.id}
+          group={group}
+          reportDate={reportDate}
+        />
       ))}
-    </List>
+    </IonAccordionGroup>
   );
 };

@@ -27,8 +27,8 @@ export const reportCollection = createCollection(
       confidential_id + congregation_id + date,
 
     onInsert: async ({ transaction }) => {
-      const { changes } = transaction.mutations[0];
-      await supabase.from("report").insert(changes);
+      const { modified } = transaction.mutations[0];
+      await supabase.from("report").insert(modified);
     },
 
     onUpdate: async ({ transaction }) => {
