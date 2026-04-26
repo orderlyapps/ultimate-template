@@ -12,6 +12,7 @@ import {
   useIonAlert,
 } from "@ionic/react";
 import { useUserCongregation } from "@feature/db/congregation/user-congregation/use-user-congregation/useUserCongregation";
+import { useUserPublisher } from "@feature/db/publisher/user-publisher/use-user-publisher/useUserPublisher";
 import { Space } from "@layout/space/Space";
 // import { AuthSection } from "@services/app/auth/AuthSection";
 import { List } from "@ionic-layout/list/List";
@@ -25,6 +26,7 @@ export const Profile: React.FC = () => {
   const { isAuthenticated } = useAuth();
   const [presentAlert] = useIonAlert();
   const [userCongregation, setUserCongregation] = useUserCongregation();
+  const [userPublisher] = useUserPublisher();
 
   const handleResetApp = () => {
     presentAlert({
@@ -97,13 +99,17 @@ export const Profile: React.FC = () => {
             </IonButton>
           )}
           {userCongregation?.id === "7b15d4e5-d4fa-4eb4-a276-3790b7c4897b" && (
-            <SelectUserPublisherModal />
-          )}
-          {!isAuthenticated && <SignInWithCodeButton />}
-          {isAuthenticated && (
             <>
-              <GenerateOwnOtpButton />
-              <NavItem routerLink="/settings/profile/admin">Admin</NavItem>
+              <SelectUserPublisherModal />
+              {!isAuthenticated && userPublisher && userPublisher.auth_id && (
+                <SignInWithCodeButton />
+              )}
+              {isAuthenticated && (
+                <>
+                  <GenerateOwnOtpButton />
+                  <NavItem routerLink="/settings/profile/admin">Admin</NavItem>
+                </>
+              )}
             </>
           )}
 
