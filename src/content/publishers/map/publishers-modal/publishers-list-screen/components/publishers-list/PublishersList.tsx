@@ -1,4 +1,5 @@
 import { IonList, IonItem, IonLabel, IonSpinner, IonIcon, IonButton } from "@ionic/react";
+import { useState } from "react";
 import { usePublishersQuery } from "./use-publishers-query";
 import { formatPublisherName } from "@format/formatPublisherName";
 import { Text } from "@ionic-display/text/Text";
@@ -7,41 +8,33 @@ import { useZoomToPublisher } from "./use-zoom-to-publisher";
 import type { Publisher } from "@tanstack-db/publisher/publisherSchema";
 import type { PublisherLocal } from "@state/rxdb/collections/publisher";
 import editIcon from "@icons/edit.svg";
+import { useInitializeAddressForm } from "./hooks/useInitializeAddressForm";
 
 export const PublishersList: React.FC = () => {
   const { data: publishers = [], isLoading } = usePublishersQuery();
   const { handlePublisherClick } = useZoomToPublisher();
+  const resetForm = usePublisherAddressStore((state) => state.resetForm);
+  const [initializingPublisher, setInitializingPublisher] = useState<{
+    publisher: Publisher;
+    publisherLocal: PublisherLocal | null;
+  } | null>(null);
 
-  const setSelectedPublisher = usePublisherAddressStore(
-    (state) => state.setSelectedPublisher
-  );
-  const setExistingAddress = usePublisherAddressStore(
-    (state) => state.setExistingAddress
-  );
-  const setSuburb = usePublisherAddressStore((state) => state.setSuburb);
-  const setStreet = usePublisherAddressStore((state) => state.setStreet);
-  const setHouseNumber = usePublisherAddressStore(
-    (state) => state.setHouseNumber
-  );
-  const setUnitNumber = usePublisherAddressStore(
-    (state) => state.setUnitNumber
-  );
+  // Initialize form when a publisher is selected for editing
+  useInitializeAddressForm({
+    publisher: initializingPublisher?.publisher ?? null,
+    publisherLocal: initializingPublisher?.publisherLocal ?? null,
+    shouldInitialize: initializingPublisher !== null,
+    onInitialized: () => setInitializingPublisher(null),
+  });
 
   const handleEditAddress = (
     publisher: Publisher,
     publisherLocal: PublisherLocal | null
   ) => {
-    setSelectedPublisher(publisher);
-
-    const existingAddr = publisherLocal?.address?.[0] ?? null;
-    setExistingAddress(existingAddr);
-
-    if (existingAddr) {
-      setSuburb({ id: "", congregation_id: "", name: existingAddr.suburb ?? "", bbox: [0, 0, 0, 0] });
-      setStreet({ id: "", congregation_id: "", suburb_id: "", name: existingAddr.street ?? "", coordinates: [] });
-      setHouseNumber(existingAddr.house_number ?? "");
-      setUnitNumber(existingAddr.unit_number ?? "");
-    }
+    // Reset any existing form state first
+    resetForm();
+    // Set the initializing state which will trigger the hook
+    setInitializingPublisher({ publisher, publisherLocal });
   };
 
   if (isLoading) {
