@@ -23,7 +23,7 @@ export const GroupReportsContent: React.FC = () => {
 
   return (
     <List>
-      {groups.map((group) => (
+      {groups.sort((a, b) => a.name.localeCompare(b.name)).map((group) => (
         <Item key={group.id} lines="full">
           <IonLabel>
             <Text bold>{group.name}</Text>
