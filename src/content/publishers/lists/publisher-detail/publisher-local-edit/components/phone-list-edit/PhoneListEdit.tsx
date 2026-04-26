@@ -1,4 +1,4 @@
-import { IonButton, IonIcon, IonInput, IonItem, IonLabel, IonList } from "@ionic/react";
+import { IonButton, IonIcon, IonInput, IonItem, IonLabel } from "@ionic/react";
 import { addOutline, trashOutline } from "ionicons/icons";
 import { usePublisherEditStore, type PhoneItem } from "../../store/usePublisherEditStore";
 
@@ -23,7 +23,7 @@ export const PhoneListEdit: React.FC = () => {
   };
 
   return (
-    <IonList>
+    <>
       <IonItem lines="none">
         <IonLabel>Phone Numbers</IonLabel>
         <IonButton fill="clear" slot="end" onClick={handleAdd}>
@@ -38,7 +38,7 @@ export const PhoneListEdit: React.FC = () => {
           onRemove={() => removePhone(p.id)}
         />
       ))}
-    </IonList>
+    </>
   );
 };
 

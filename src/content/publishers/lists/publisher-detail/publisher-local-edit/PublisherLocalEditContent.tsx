@@ -1,9 +1,10 @@
-import { IonButton, IonInput, IonItem, IonList } from "@ionic/react";
+import { IonButton, IonList } from "@ionic/react";
 import { useParams, useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { usePublisherLocal } from "../hooks/usePublisherLocal";
 import { usePublisherEditStore } from "./store/usePublisherEditStore";
 import { publisherLocalCollection } from "@state/tanstack/db/publisher-local/publisherLocalCollection";
+import { DateFieldsEdit } from "./components/date-fields-edit/DateFieldsEdit";
 import { PhoneListEdit } from "./components/phone-list-edit/PhoneListEdit";
 import { EmailListEdit } from "./components/email-list-edit/EmailListEdit";
 import { AddressListEdit } from "./components/address-list-edit/AddressListEdit";
@@ -22,8 +23,6 @@ export const PublisherLocalEditContent: React.FC = () => {
     address,
     email,
     emergency_contact,
-    setBirthDate,
-    setBaptismDate,
     initializeFromPublisher,
     reset,
   } = usePublisherEditStore();
@@ -39,7 +38,9 @@ export const PublisherLocalEditContent: React.FC = () => {
         phone: publisher.phone as typeof phone | undefined,
         address: publisher.address as typeof address | undefined,
         email: publisher.email as typeof email | undefined,
-        emergency_contact: publisher.emergency_contact as typeof emergency_contact | undefined,
+        emergency_contact: publisher.emergency_contact as
+          | typeof emergency_contact
+          | undefined,
       });
     }
     return () => reset();
@@ -61,7 +62,8 @@ export const PublisherLocalEditContent: React.FC = () => {
         phone: phone.length > 0 ? phone : undefined,
         address: address.length > 0 ? address : undefined,
         email: email.length > 0 ? email : undefined,
-        emergency_contact: emergency_contact.length > 0 ? emergency_contact : undefined,
+        emergency_contact:
+          emergency_contact.length > 0 ? emergency_contact : undefined,
         version: {
           created_by: "user",
           updated_by: "user",
@@ -77,7 +79,8 @@ export const PublisherLocalEditContent: React.FC = () => {
         draft.phone = phone.length > 0 ? phone : undefined;
         draft.address = address.length > 0 ? address : undefined;
         draft.email = email.length > 0 ? email : undefined;
-        draft.emergency_contact = emergency_contact.length > 0 ? emergency_contact : undefined;
+        draft.emergency_contact =
+          emergency_contact.length > 0 ? emergency_contact : undefined;
         draft.version.updated_at = now;
       });
     }
@@ -86,24 +89,7 @@ export const PublisherLocalEditContent: React.FC = () => {
 
   return (
     <IonList>
-      <IonItem>
-        <IonInput
-          label="Birth Date"
-          labelPlacement="stacked"
-          type="date"
-          value={birth_date}
-          onIonInput={(e) => setBirthDate(e.detail.value ?? "")}
-        />
-      </IonItem>
-      <IonItem>
-        <IonInput
-          label="Baptism Date"
-          labelPlacement="stacked"
-          type="date"
-          value={baptism_date}
-          onIonInput={(e) => setBaptismDate(e.detail.value ?? "")}
-        />
-      </IonItem>
+      <DateFieldsEdit />
       <PhoneListEdit />
       <EmailListEdit />
       <AddressListEdit />
