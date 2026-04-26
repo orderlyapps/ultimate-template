@@ -1,5 +1,6 @@
 import { IonItem, IonLabel } from "@ionic/react";
 import { Text } from "@ionic-display/text/Text";
+import { PhoneNumber } from "@ionic-display/phone-number/PhoneNumber";
 import { Item } from "@ionic-layout/item/Item";
 import { SectionHeading } from "@display/section-heading/SectionHeading";
 import type { EmergencyContact } from "@state/rxdb/collections/publisher";
@@ -31,7 +32,7 @@ export const EmergencyContactList: React.FC<EmergencyContactListProps> = ({
               ({contact.relationship})
             </Text>
           </IonLabel>
-          <Text slot="end">{contact.phone[0].number}</Text>
+          <PhoneNumber slot="end" number={contact.phone[0].number} />
         </IonItem>
       ))}
     </>

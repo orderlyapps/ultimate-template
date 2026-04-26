@@ -3,6 +3,7 @@ import { useParams, useHistory } from "react-router-dom";
 import editIcon from "@icons/edit.svg";
 import type { PublisherLocal } from "@state/rxdb/collections/publisher";
 import { Text } from "@ionic-display/text/Text";
+import { PhoneNumber } from "@ionic-display/phone-number/PhoneNumber";
 import { Item } from "@ionic-layout/item/Item";
 import { usePublisherLocal } from "@/content/publishers/lists/publisher-detail/hooks/usePublisherLocal";
 import { useIsSuperAdmin } from "@/content/settings/profile/admin/components/use-is-super-admin/useIsSuperAdmin";
@@ -107,7 +108,7 @@ export const ConfidentialData: React.FC = () => {
           {publisher.phone.map((p) => (
             <IonItem key={p.id}>
               <Label>{p.label}</Label>
-              <Text>{p.number}</Text>
+              <PhoneNumber slot="end" number={p.number} />
             </IonItem>
           ))}
         </>
