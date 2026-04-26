@@ -32,7 +32,9 @@ export const EmergencyContactList: React.FC<EmergencyContactListProps> = ({
               ({contact.relationship})
             </Text>
           </IonLabel>
-          <PhoneNumber slot="end" number={contact.phone[0].number} />
+          {contact.phone[0] && (
+            <PhoneNumber slot="end" number={contact.phone[0].number} />
+          )}
         </IonItem>
       ))}
     </>
