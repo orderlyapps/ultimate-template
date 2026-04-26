@@ -30,7 +30,7 @@ export const DateFieldsEdit: React.FC = () => {
             presentation="date"
             showDefaultButtons
             value={birth_date || undefined}
-            onIonChange={(e) => setBirthDate(String(e.detail.value ?? ""))}
+            onIonChange={(e) => setBirthDate(String(e.detail.value ?? "").slice(0, 10))}
           />
         </IonModal>
       </IonItem>
@@ -44,7 +44,7 @@ export const DateFieldsEdit: React.FC = () => {
             presentation="date"
             showDefaultButtons
             value={baptism_date || undefined}
-            onIonChange={(e) => setBaptismDate(String(e.detail.value ?? ""))}
+            onIonChange={(e) => setBaptismDate(String(e.detail.value ?? "").slice(0, 10))}
           />
         </IonModal>
       </IonItem>

@@ -41,7 +41,7 @@ const AddressItem: React.FC<AddressItemProps> = ({ address }) => {
   return (
     <IonItem key={address.id}>
       <Label>{address.label}</Label>
-      <Text slot="end" className="ion-text-end">
+      <Text slot="end" className="ion-text-end ion-margin-vertical">
         {address.unit_number} {address.house_number} {streetName}
         <br />
         {suburbName}

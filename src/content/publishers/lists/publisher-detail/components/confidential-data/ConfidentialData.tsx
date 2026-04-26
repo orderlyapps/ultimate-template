@@ -13,6 +13,9 @@ import { Space } from "@layout/space/Space";
 import { AddressList } from "./components/address-list/AddressList";
 import { EmergencyContactList } from "./components/emergency-contact-list/EmergencyContactList";
 
+/** Strips the time component from an ISO date string, returning just YYYY-MM-DD */
+const dateOnly = (isoDate: string): string => isoDate.slice(0, 10);
+
 /** Formats an ISO date string (YYYY-MM-DD) to a human-readable format, e.g. "12 Jan 1990" */
 const formatDate = (isoDate: string): string => {
   const [year, month, day] = isoDate.split("-").map(Number);
@@ -21,6 +24,25 @@ const formatDate = (isoDate: string): string => {
     month: "short",
     year: "numeric",
   });
+};
+
+/** Returns a string like "18 years, 3 months" between two ISO date strings */
+const ageAtDate = (birthIso: string, atIso: string): string => {
+  const [by, bm, bd] = birthIso.split("-").map(Number);
+  const [ay, am, ad] = atIso.split("-").map(Number);
+  let years = ay - by;
+  let months = am - bm;
+  if (ad < bd) months -= 1;
+  if (months < 0) {
+    years -= 1;
+    months += 12;
+  }
+  const yearPart = years > 0 ? `${years} year${years !== 1 ? "s" : ""}` : "";
+  const monthPart =
+    months > 0 ? `${months} month${months !== 1 ? "s" : ""}` : "";
+  return (
+    [yearPart, monthPart].filter(Boolean).join(", ") || "Less than a month"
+  );
 };
 
 /** Returns a string like "34 years, 2 months" since an ISO date string */
@@ -77,25 +99,38 @@ export const ConfidentialData: React.FC = () => {
   return (
     <IonList>
       <Space height="1" />
-      <Item>
-        <SectionHeading>Dates</SectionHeading>
-      </Item>
+      {(publisher.birth_date || publisher.baptism_date) && (
+        <Item>
+          <SectionHeading>Dates</SectionHeading>
+        </Item>
+      )}
       {publisher.birth_date && (
         <IonItem>
           <Label>Birth</Label>
-          <Text size="sm">
-            {formatDate(publisher.birth_date)} (
-            {timeSince(publisher.birth_date)})
-          </Text>
+          <div className="ion-text-end ion-margin-vertical">
+            <Text size="sm">{formatDate(dateOnly(publisher.birth_date))}</Text>
+            <br />
+            <Text size="sm">
+              {timeSince(dateOnly(publisher.birth_date))}
+            </Text>
+          </div>
         </IonItem>
       )}
       {publisher.baptism_date && (
         <IonItem>
           <Label>Baptism</Label>
-          <Text size="sm">
-            {formatDate(publisher.baptism_date)} (
-            {timeSince(publisher.baptism_date)})
-          </Text>
+          <div className="ion-text-end ion-margin-vertical">
+            <Text size="sm">
+              {formatDate(dateOnly(publisher.baptism_date))}
+            </Text>
+            <br />
+            <Text size="sm">
+              {publisher.birth_date &&
+                `${ageAtDate(dateOnly(publisher.birth_date), dateOnly(publisher.baptism_date))}`}
+            </Text>
+            <br />
+            <Text size="sm">{timeSince(publisher.baptism_date)} ago</Text>
+          </div>
         </IonItem>
       )}
 
