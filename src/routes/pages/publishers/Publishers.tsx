@@ -5,9 +5,7 @@ import {
   IonTitle,
   IonContent,
 } from "@ionic/react";
-import { List } from "@ionic-layout/list/List";
-import { NavItem } from "@navigation/nav-item/NavItem";
-import { Space } from "@layout/space/Space";
+import { PublishersContent } from "@/content/publishers/PublishersContent";
 
 export const Publishers: React.FC = () => {
   return (
@@ -23,12 +21,7 @@ export const Publishers: React.FC = () => {
             <IonTitle size="large">Publishers</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <Space height="2" />
-        <List>
-          <NavItem routerLink="/publishers/all">Publisher Lists</NavItem>
-          <NavItem routerLink="/publishers/groups">Groups</NavItem>
-          <NavItem routerLink="/publishers/map">Map</NavItem>
-        </List>
+        <PublishersContent />
       </IonContent>
     </IonPage>
   );
