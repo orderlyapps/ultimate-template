@@ -19,12 +19,14 @@ import { useAuth } from "@services/app/auth/useAuth";
 import { NavItem } from "@navigation/nav-item/NavItem";
 import { SignInWithCodeButton } from "@/content/settings/profile/components/sign-in-with-code-button/SignInWithCodeButton";
 import { GenerateOwnOtpButton } from "@/content/settings/profile/components/generate-own-otp-button/GenerateOwnOtpButton";
+import { useIsSuperAdmin } from "@/content/settings/profile/admin/components/use-is-super-admin/useIsSuperAdmin";
 
 export const Profile: React.FC = () => {
   const { isAuthenticated } = useAuth();
   const [presentAlert] = useIonAlert();
   const [userCongregation, setUserCongregation] = useUserCongregation();
   const [userPublisher] = useUserPublisher();
+  const isSuperAdmin = useIsSuperAdmin();
 
   const handleResetApp = () => {
     presentAlert({
@@ -106,7 +108,11 @@ export const Profile: React.FC = () => {
                 <>
                   <GenerateOwnOtpButton />
                   <Space />
-                  <NavItem routerLink="/settings/profile/admin">Admin</NavItem>
+                  {isSuperAdmin && (
+                    <NavItem routerLink="/settings/profile/admin">
+                      Admin
+                    </NavItem>
+                  )}
                 </>
               )}
             </>
