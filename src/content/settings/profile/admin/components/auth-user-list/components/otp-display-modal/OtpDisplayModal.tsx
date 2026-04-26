@@ -33,7 +33,11 @@ export const OtpDisplayModal: React.FC<OtpDisplayModalProps> = ({
 }) => {
   const handleSendSms = () => {
     if (!smsPhone || !otp) return;
-    const body = encodeURIComponent(`Your sign-in code is: ${otp}`);
+    const expiry = new Date(Date.now() + 60 * 60 * 1000);
+    const expiryTime = expiry.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: true });
+    const body = encodeURIComponent(
+      `Your sign-in code is: ${otp}\nThis code will expire at ${expiryTime}.`
+    );
     window.location.href = `sms:${smsPhone}?&body=${body}`;
   };
 
