@@ -6,6 +6,30 @@ import { Text } from "@ionic-display/text/Text";
 import { Item } from "@ionic-layout/item/Item";
 import { usePublisherLocal } from "@/content/publishers/lists/publisher-detail/hooks/usePublisherLocal";
 
+/** Formats an ISO date string (YYYY-MM-DD) to a human-readable format, e.g. "12 Jan 1990" */
+const formatDate = (isoDate: string): string => {
+  const [year, month, day] = isoDate.split("-").map(Number);
+  return new Date(year, month - 1, day).toLocaleDateString("en-AU", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+};
+
+/** Returns a string like "34 years, 2 months" since an ISO date string */
+const timeSince = (isoDate: string): string => {
+  const [year, month, day] = isoDate.split("-").map(Number);
+  const start = new Date(year, month - 1, day);
+  const now = new Date();
+  let years = now.getFullYear() - start.getFullYear();
+  let months = now.getMonth() - start.getMonth();
+  if (now.getDate() < start.getDate()) months -= 1;
+  if (months < 0) { years -= 1; months += 12; }
+  const yearPart = years > 0 ? `${years} year${years !== 1 ? "s" : ""}` : "";
+  const monthPart = months > 0 ? `${months} month${months !== 1 ? "s" : ""}` : "";
+  return [yearPart, monthPart].filter(Boolean).join(", ") || "Less than a month";
+};
+
 export const ConfidentialData: React.FC = () => {
   const { publisherId } = useParams<{ publisherId: string }>();
   const history = useHistory();
@@ -36,24 +60,16 @@ export const ConfidentialData: React.FC = () => {
 
   return (
     <IonList>
-      <IonItem>
-        <IonLabel>
-          <h2>Publisher ID</h2>
-          <p>{publisher.publisher_id}</p>
-        </IonLabel>
-      </IonItem>
-      <IonItem>
-        <IonLabel>
-          <h2>Confidential ID</h2>
-          <p>{publisher.confidential_id}</p>
-        </IonLabel>
-      </IonItem>
       {publisher.birth_date && (
         <IonItem>
           <IonLabel>
             <h2>Birth Date</h2>
           </IonLabel>
-          <Text>{publisher.birth_date}</Text>
+          <Text>
+            {formatDate(publisher.birth_date)}
+            <br />
+            <small>{timeSince(publisher.birth_date)}</small>
+          </Text>
         </IonItem>
       )}
       {publisher.baptism_date && (
@@ -61,7 +77,11 @@ export const ConfidentialData: React.FC = () => {
           <IonLabel>
             <h2>Baptism Date</h2>
           </IonLabel>
-          <Text>{publisher.baptism_date}</Text>
+          <Text>
+            {formatDate(publisher.baptism_date)}
+            <br />
+            <small>{timeSince(publisher.baptism_date)}</small>
+          </Text>
         </IonItem>
       )}
 

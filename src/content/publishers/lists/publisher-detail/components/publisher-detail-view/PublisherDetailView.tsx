@@ -58,7 +58,7 @@ export function PublisherDetailView() {
         publisher.standing === "ministerial_servant") && (
         <Item>
           <IonLabel>
-            <Text color="medium">Standing</Text>
+            <Text>Standing</Text>
           </IonLabel>
           <Text>{standingLabel}</Text>
         </Item>
@@ -67,7 +67,7 @@ export function PublisherDetailView() {
         publisher.type === "continuous_auxilary") && (
         <Item>
           <IonLabel>
-            <Text color="medium">Type</Text>
+            <Text>Type</Text>
           </IonLabel>
           <Text>{typeLabel}</Text>
         </Item>
