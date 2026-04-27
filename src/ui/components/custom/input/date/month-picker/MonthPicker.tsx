@@ -43,8 +43,9 @@ function getMonthOptions(monthsInPast: number, monthsInFuture: number): MonthOpt
 function getFirstMondayOfMonth(year: number, month: number): Date {
   const firstDayOfMonth = new Date(year, month - 1, 1);
   const dayOfWeek = firstDayOfMonth.getDay();
-  const daysUntilMonday = dayOfWeek === 0 ? 1 : 8 - dayOfWeek;
-  return new Date(year, month - 1, daysUntilMonday);
+  // Days from the 1st to the first Monday: 0 if the 1st is Monday, otherwise the offset to the next Monday.
+  const offsetToMonday = (8 - dayOfWeek) % 7;
+  return new Date(year, month - 1, 1 + offsetToMonday);
 }
 
 function getLastMondayOfMonth(year: number, month: number): Date {
