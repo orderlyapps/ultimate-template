@@ -30,6 +30,7 @@ const defaultForm: FormState = {
 
 type Props = {
   confidentialId: string;
+  groupId: string | null;
   date: string;
   monthLabel: string;
   existingReport: Report | undefined;
@@ -42,6 +43,7 @@ type Props = {
  */
 export const ReportForm: React.FC<Props> = ({
   confidentialId,
+  groupId,
   date,
   monthLabel,
   existingReport,
@@ -76,6 +78,7 @@ export const ReportForm: React.FC<Props> = ({
     const payload = {
       confidential_id: confidentialId,
       congregation_id: congregationId,
+      group_id: groupId,
       date,
       active: form.active,
       hours: form.hours !== "" ? Number(form.hours) : null,
@@ -92,6 +95,10 @@ export const ReportForm: React.FC<Props> = ({
           draft.hours = payload.hours;
           draft.bible_studies = payload.bible_studies;
           draft.comments = payload.comments;
+          /** Backfill group_id for legacy reports created before group_id existed */
+          if (draft.group_id == null && groupId != null) {
+            draft.group_id = groupId;
+          }
         },
       );
     } else {

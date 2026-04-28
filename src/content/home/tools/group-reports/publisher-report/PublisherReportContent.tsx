@@ -57,6 +57,7 @@ export const PublisherReportContent: React.FC = () => {
     return (
       <ReportForm
         confidentialId={confidentialId}
+        groupId={groupId}
         date={date}
         monthLabel={monthLabel}
         existingReport={existingReport}
