@@ -18,7 +18,7 @@ export function NotificationsAccordionItem() {
   return (
     <IonAccordion value="notifications" id="no-lines">
       <ItemAccordionHeader lines="none">
-        <IonLabel>
+        <IonLabel className="ion-margin">
           <SectionHeading>{ACCORDION_LABELS.notifications}</SectionHeading>
         </IonLabel>
         <IonBadge color="medium" className="ion-margin-end">

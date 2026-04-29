@@ -31,7 +31,7 @@ export function HomeAccordionItem({ id }: Props) {
   return (
     <IonAccordion value={id} id="no-lines">
       <ItemAccordionHeader lines="none">
-        <IonLabel>
+        <IonLabel className="ion-margin">
           <SectionHeading>{ACCORDION_LABELS[id]}</SectionHeading>
         </IonLabel>
       </ItemAccordionHeader>

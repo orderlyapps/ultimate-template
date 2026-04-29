@@ -36,7 +36,7 @@ export const GroupPublisherAccordion: React.FC<Props> = ({
   return (
     <IonAccordion value={group.id}>
       <ItemAccordionHeader>
-        <IonLabel>
+        <IonLabel className="ion-margin">
           <SectionHeading>{group.name}</SectionHeading>
         </IonLabel>
         <IonNote slot="end" className="ion-padding-end">

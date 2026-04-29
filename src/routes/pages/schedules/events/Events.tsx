@@ -7,7 +7,7 @@ import {
   IonTitle,
   IonContent,
 } from "@ionic/react";
-import { EventList } from "@feature/db/event/event-list/EventList";
+import { EventList } from "@/content/schedules/events/EventList";
 
 export const Events: React.FC = () => {
   return (
