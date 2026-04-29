@@ -8,6 +8,7 @@ import type { Group } from "@tanstack-db/group/groupSchema";
 import { SectionHeading } from "@display/section-heading/SectionHeading";
 import { ItemAccordionHeader } from "@ionic-layout/accordion-header/AccordionHeader";
 import { Space } from "@layout/space/Space";
+import { GroupReportPdfDownloadButton } from "./components/group-report-pdf-download-button/GroupReportPdfDownloadButton";
 
 type Props = {
   /** The group whose publishers to display */
@@ -26,6 +27,12 @@ export const GroupPublisherAccordion: React.FC<Props> = ({
   const { data: publishers } = usePublishersByGroup(group.id);
   const count = publishers?.length ?? 0;
 
+  /** Format reportDate as human-readable month label, e.g. "March 2025" */
+  const monthLabel = new Date(reportDate + "T00:00:00").toLocaleDateString(
+    undefined,
+    { month: "long", year: "numeric" },
+  );
+
   return (
     <IonAccordion value={group.id}>
       <ItemAccordionHeader>
@@ -37,6 +44,14 @@ export const GroupPublisherAccordion: React.FC<Props> = ({
         </IonNote>
       </ItemAccordionHeader>
       <List slot="content">
+        {count > 0 && (
+          <GroupReportPdfDownloadButton
+            groupName={group.name}
+            monthLabel={monthLabel}
+            reportDate={reportDate}
+            publishers={publishers!}
+          />
+        )}
         {count === 0 ? (
           <Item lines="none">
             <IonLabel>
