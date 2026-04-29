@@ -16,6 +16,7 @@ import { TalkSubsection } from "@pages/home/tools/talks/talk/section/subsection/
 import { GroupReports } from "@pages/home/tools/group-reports/GroupReports";
 import { PublisherReport } from "@pages/home/tools/group-reports/publisher-report/PublisherReport";
 import { HomeEvents } from "@pages/home/events/Events";
+import { HomeAssignments } from "@pages/home/assignments/Assignments";
 
 // MINISTRY
 import { Ministry } from "@pages/ministry/Ministry";
@@ -93,6 +94,7 @@ export const pages = (
       render={() => <PublisherReport />}
     />
     <Route exact path="/home/events" render={() => <HomeEvents />} />
+    <Route exact path="/home/assignments" render={() => <HomeAssignments />} />
 
     {/* MINISTRY */}
     <Route exact path="/ministry" render={() => <Ministry />} />

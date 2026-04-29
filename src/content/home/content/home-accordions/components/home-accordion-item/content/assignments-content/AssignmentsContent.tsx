@@ -1,6 +1,7 @@
 import { IonLabel } from "@ionic/react";
 import { Item } from "@ionic-layout/item/Item";
 import { Text } from "@ionic-display/text/Text";
+import { Button } from "@ionic-input/button/Button";
 import { usePublisherAssignments } from "./hooks/usePublisherAssignments";
 import { AssignmentRow } from "./components/assignment-row/AssignmentRow";
 
@@ -31,6 +32,16 @@ export function AssignmentsContent() {
         {assignments.slice(0, 3).map((item) => (
           <AssignmentRow key={item.key} item={item} />
         ))}
+        <br />
+        <Item>
+          <Button slot="end"
+            fill="clear"
+            routerLink="/home/assignments"
+            className="ion-text-end"
+          >
+            show more
+          </Button>
+        </Item>
       </IonLabel>
     </Item>
   );
