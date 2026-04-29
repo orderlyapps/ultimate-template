@@ -43,6 +43,8 @@ export const GroupReportsContent: React.FC = () => {
           />
         ))}
       </IonAccordionGroup>
+
+      <Space />
     </>
   );
 };

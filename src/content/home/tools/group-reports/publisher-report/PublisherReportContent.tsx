@@ -6,6 +6,7 @@ import { usePublisherGroupId } from "../hooks/usePublisherGroupId";
 import { useGroupPermissions } from "@services/app/auth/permissions/useGroupPermissions";
 import { ReportForm } from "./components/report-form/ReportForm";
 import { ReportReadOnly } from "./components/report-read-only/ReportReadOnly";
+import { Item } from "@ionic-layout/item/Item";
 
 /**
  * Content component for the publisher report page.
@@ -17,15 +18,20 @@ export const PublisherReportContent: React.FC = () => {
   const history = useHistory();
 
   /** Extract date from query string, fall back to previous month using local time */
-  const date = new URLSearchParams(location.search).get("date") ?? (() => {
-    const now = new Date();
-    const year = now.getMonth() === 0 ? now.getFullYear() - 1 : now.getFullYear();
-    const month = now.getMonth() === 0 ? 12 : now.getMonth();
-    return `${year}-${String(month).padStart(2, "0")}-01`;
-  })();
+  const date =
+    new URLSearchParams(location.search).get("date") ??
+    (() => {
+      const now = new Date();
+      const year =
+        now.getMonth() === 0 ? now.getFullYear() - 1 : now.getFullYear();
+      const month = now.getMonth() === 0 ? 12 : now.getMonth();
+      return `${year}-${String(month).padStart(2, "0")}-01`;
+    })();
 
-  const { confidentialId, isLoading: isLoadingId } = useConfidentialId(publisherId);
-  const { groupId, isLoading: isLoadingGroup } = usePublisherGroupId(publisherId);
+  const { confidentialId, isLoading: isLoadingId } =
+    useConfidentialId(publisherId);
+  const { groupId, isLoading: isLoadingGroup } =
+    usePublisherGroupId(publisherId);
   const { canEdit } = useGroupPermissions(groupId ?? "");
 
   const { data: reports, isLoading: isLoadingReport } = usePublisherReport(
@@ -47,9 +53,12 @@ export const PublisherReportContent: React.FC = () => {
 
   if (!confidentialId) {
     return (
-      <Text color="medium">
-        No local record found for this publisher. Please add their local data first.
-      </Text>
+      <Item className="ion-text-center ion-padding ion-margin">
+        <Text>
+          No Confidential ID found for this publisher. Please request an updated
+          Confidential Publisher Data file from your secretary.
+        </Text>
+      </Item>
     );
   }
 

@@ -2,6 +2,8 @@ import { IonItem, IonLabel } from "@ionic/react";
 import { List } from "@ionic-layout/list/List";
 import { Text } from "@ionic-display/text/Text";
 import type { Report } from "@tanstack-db/report/reportSchema";
+import { Item } from "@ionic-layout/item/Item";
+import { SectionHeading } from "@display/section-heading/SectionHeading";
 
 type Props = {
   report: Report | undefined;
@@ -13,9 +15,13 @@ type Props = {
  */
 export const ReportReadOnly: React.FC<Props> = ({ report, monthLabel }) => (
   <>
-    <Text color="medium">{monthLabel}</Text>
+    <Item>
+      <SectionHeading>{monthLabel}</SectionHeading>
+    </Item>
     {!report ? (
-      <Text color="medium">No report submitted for this month.</Text>
+      <Item lines='none'>
+        <Text color="medium">No report submitted for this month.</Text>
+      </Item>
     ) : (
       <List>
         <IonItem lines="full">
