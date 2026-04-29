@@ -7,12 +7,8 @@ import {
   IonButtons,
 } from "@ionic/react";
 import { PublishersContent } from "@/content/publishers/PublishersContent";
-import { FileExport } from "@input/file-export/FileExport";
 import { FileImport } from "@input/file-import/FileImport";
-import {
-  exportPublisherLocalData,
-  generateExportFilename,
-} from "@state/tanstack/db/publisher-local/publisherLocalExportImport";
+import { ExportPublishersButton } from "@feature/db/publisher/export-publishers/ExportPublishersButton";
 import { usePublisherListsStore } from "@/content/publishers/lists/store/usePublisherListsStore";
 
 export const Publishers: React.FC = () => {
@@ -29,11 +25,7 @@ export const Publishers: React.FC = () => {
               accept=".json"
               iconOnly
             />
-            <FileExport
-              getData={exportPublisherLocalData}
-              filename={generateExportFilename()}
-              iconOnly
-            />
+            <ExportPublishersButton />
           </IonButtons>
         </IonToolbar>
       </IonHeader>
