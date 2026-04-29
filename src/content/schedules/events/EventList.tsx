@@ -9,6 +9,7 @@ import { IonLabel } from "@ionic/react";
 import { Text } from "@ionic-display/text/Text";
 import { groupEventsByMonth } from "./groupEventsByMonth";
 import { EventMonthGroup } from "./components/event-month-group/EventMonthGroup";
+import { Space } from "@layout/space/Space";
 
 export const EventList: FC = () => {
   const [userCongregation] = useUserCongregation();
@@ -49,6 +50,8 @@ export const EventList: FC = () => {
       {groups.map((group) => (
         <EventMonthGroup key={group.label} group={group} />
       ))}
+
+      <Space />
     </>
   );
 };
