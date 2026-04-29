@@ -24,7 +24,7 @@ export const GroupReports: React.FC = () => {
           <IonTitle>Group Reports</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen className="ion-padding">
+      <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">Group Reports</IonTitle>

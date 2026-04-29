@@ -2,6 +2,7 @@ import { IonAccordionGroup } from "@ionic/react";
 import { Text } from "@ionic-display/text/Text";
 import { usePermissionedGroups } from "@services/app/auth/permissions/usePermissionedGroups";
 import { GroupPublisherAccordion } from "./components/group-publisher-accordion/GroupPublisherAccordion";
+import { Space } from "@layout/space/Space";
 
 /** Returns the first day of the previous month as "yyyy-mm-dd" using local time */
 const getPreviousMonthDate = (): string => {
@@ -25,22 +26,23 @@ export const GroupReportsContent: React.FC = () => {
   }
 
   if (groups.length === 0) {
-    return (
-      <Text>You do not have permission to view any group reports.</Text>
-    );
+    return <Text>You do not have permission to view any group reports.</Text>;
   }
 
   const sorted = [...groups].sort((a, b) => a.name.localeCompare(b.name));
 
   return (
-    <IonAccordionGroup multiple>
-      {sorted.map((group) => (
-        <GroupPublisherAccordion
-          key={group.id}
-          group={group}
-          reportDate={reportDate}
-        />
-      ))}
-    </IonAccordionGroup>
+    <>
+      <Space height="2" />
+      <IonAccordionGroup multiple>
+        {sorted.map((group) => (
+          <GroupPublisherAccordion
+            key={group.id}
+            group={group}
+            reportDate={reportDate}
+          />
+        ))}
+      </IonAccordionGroup>
+    </>
   );
 };

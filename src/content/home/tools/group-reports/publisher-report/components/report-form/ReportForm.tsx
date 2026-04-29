@@ -13,6 +13,7 @@ import type { Report } from "@tanstack-db/report/reportSchema";
 import { Item } from "@ionic-layout/item/Item";
 import { SectionHeading } from "@display/section-heading/SectionHeading";
 import { Label } from "@ionic-display/label/Label";
+import { Space } from "@layout/space/Space";
 
 interface FormState {
   active: boolean;
@@ -162,12 +163,13 @@ export const ReportForm: React.FC<Props> = ({
             className="ion-text-end"
             value={form.comments}
             autoGrow={true}
-            onIonInput={(e) =>
-              updateField("comments", e.detail.value ?? "")
-            }
+            onIonInput={(e) => updateField("comments", e.detail.value ?? "")}
           />
         </IonItem>
       </List>
+
+      <Space />
+
       <IonButton expand="block" className="ion-margin-top" onClick={handleSave}>
         {existingReport ? "Update Report" : "Save Report"}
       </IonButton>

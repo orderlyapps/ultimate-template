@@ -6,6 +6,8 @@ import { formatPublisherName } from "@format/formatPublisherName";
 import { usePublishersByGroup } from "../../hooks/usePublishersByGroup";
 import type { Group } from "@tanstack-db/group/groupSchema";
 import { SectionHeading } from "@display/section-heading/SectionHeading";
+import { ItemAccordionHeader } from "@ionic-layout/accordion-header/AccordionHeader";
+import { Space } from "@layout/space/Space";
 
 type Props = {
   /** The group whose publishers to display */
@@ -26,12 +28,14 @@ export const GroupPublisherAccordion: React.FC<Props> = ({
 
   return (
     <IonAccordion value={group.id}>
-      <Item slot="header">
+      <ItemAccordionHeader>
         <IonLabel>
           <SectionHeading>{group.name}</SectionHeading>
         </IonLabel>
-        <IonNote slot="end">{count}</IonNote>
-      </Item>
+        <IonNote slot="end" className="ion-padding-end">
+          {count}
+        </IonNote>
+      </ItemAccordionHeader>
       <List slot="content">
         {count === 0 ? (
           <Item lines="none">
@@ -53,6 +57,7 @@ export const GroupPublisherAccordion: React.FC<Props> = ({
             </Item>
           ))
         )}
+        <Space />
       </List>
     </IonAccordion>
   );
