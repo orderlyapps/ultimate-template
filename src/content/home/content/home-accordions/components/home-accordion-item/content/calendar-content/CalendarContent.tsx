@@ -7,6 +7,7 @@ import { CalendarItemRow } from "./components/calendar-item-row/CalendarItemRow"
 import { CalendarMonthHeader } from "./components/calendar-month-header/CalendarMonthHeader";
 import { PublicTalkRow } from "./components/public-talk-row/PublicTalkRow";
 import { Fragment } from "react";
+import { Button } from "@ionic-input/button/Button";
 
 /**
  * Displays the first upcoming public talk above a month-grouped
@@ -31,22 +32,34 @@ export function CalendarContent() {
   }
 
   return (
-    <IonItem lines="inset" className="ion-padding-bottom ion-margin-bottom">
-      <IonLabel>
-        {publicTalk && <PublicTalkRow talk={publicTalk} />}
-        {items.slice(0, 3).map((item, index) => {
-          const showHeader =
-            index === 0 || item.monthId !== items[index - 1].monthId;
-          return (
-            <Fragment key={item.key}>
-              {showHeader && (
-                <CalendarMonthHeader label={getMonthLabel(item.monthId)} />
-              )}
-              <CalendarItemRow item={item} />
-            </Fragment>
-          );
-        })}
-      </IonLabel>
-    </IonItem>
+    <>
+      <IonItem lines="inset" className="ion-padding-bottom ion-margin-bottom">
+        <IonLabel>
+          {publicTalk && <PublicTalkRow talk={publicTalk} />}
+          {items.slice(0, 3).map((item, index) => {
+            const showHeader =
+              index === 0 || item.monthId !== items[index - 1].monthId;
+            return (
+              <Fragment key={item.key}>
+                {showHeader && (
+                  <CalendarMonthHeader label={getMonthLabel(item.monthId)} />
+                )}
+                <CalendarItemRow item={item} />
+              </Fragment>
+            );
+          })}
+          <br />
+          <Item>
+            <Button slot="end"
+              fill="clear"
+              routerLink="/home/events"
+              className="ion-text-end"
+            >
+              show more
+            </Button>
+          </Item>
+        </IonLabel>
+      </IonItem>
+    </>
   );
 }
