@@ -7,7 +7,7 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { PublisherGroupsList } from "@feature/db/publisher/lists/publisher-groups-list/PublisherGroupsList";
+import { PublisherGroupsList } from "@/content/publishers/groups/PublisherGroupsList";
 import { Space } from "@layout/space/Space";
 
 export const PublisherGroups: React.FC = () => {
@@ -21,7 +21,7 @@ export const PublisherGroups: React.FC = () => {
           <IonTitle>Groups</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen className="ion-padding">
+      <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">Groups</IonTitle>
