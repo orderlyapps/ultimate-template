@@ -3,21 +3,16 @@ import { List } from "@ionic-layout/list/List";
 import { Text } from "@ionic-display/text/Text";
 import type { Report } from "@tanstack-db/report/reportSchema";
 import { Item } from "@ionic-layout/item/Item";
-import { SectionHeading } from "@display/section-heading/SectionHeading";
 
 type Props = {
   report: Report | undefined;
-  monthLabel: string;
 };
 
 /**
  * Read-only view of a publisher's report for users with can_read but not can_edit.
  */
-export const ReportReadOnly: React.FC<Props> = ({ report, monthLabel }) => (
+export const ReportReadOnly: React.FC<Props> = ({ report }) => (
   <>
-    <Item>
-      <SectionHeading>{monthLabel}</SectionHeading>
-    </Item>
     {!report ? (
       <Item lines='none'>
         <Text color="medium">No report submitted for this month.</Text>

@@ -10,8 +10,6 @@ import { List } from "@ionic-layout/list/List";
 import { reportCollection } from "@tanstack-db/report/reportCollection";
 import { getUserCongregation } from "@feature/db/congregation/user-congregation/get-user-congregation/getUserCongregation";
 import type { Report } from "@tanstack-db/report/reportSchema";
-import { Item } from "@ionic-layout/item/Item";
-import { SectionHeading } from "@display/section-heading/SectionHeading";
 import { Label } from "@ionic-display/label/Label";
 import { Space } from "@layout/space/Space";
 
@@ -33,7 +31,6 @@ type Props = {
   confidentialId: string;
   groupId: string | null;
   date: string;
-  monthLabel: string;
   existingReport: Report | undefined;
   onSave: () => void;
 };
@@ -46,7 +43,6 @@ export const ReportForm: React.FC<Props> = ({
   confidentialId,
   groupId,
   date,
-  monthLabel,
   existingReport,
   onSave,
 }) => {
@@ -112,9 +108,6 @@ export const ReportForm: React.FC<Props> = ({
   return (
     <>
       <List>
-        <Item>
-          <SectionHeading>{monthLabel}</SectionHeading>
-        </Item>
         <IonItem>
           <Label>Participated</Label>
           <IonToggle

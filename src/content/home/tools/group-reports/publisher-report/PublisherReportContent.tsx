@@ -6,6 +6,7 @@ import { usePublisherGroupId } from "../hooks/usePublisherGroupId";
 import { useGroupPermissions } from "@services/app/auth/permissions/useGroupPermissions";
 import { ReportForm } from "./components/report-form/ReportForm";
 import { ReportReadOnly } from "./components/report-read-only/ReportReadOnly";
+import { MonthNavigation } from "./components/month-navigation/MonthNavigation";
 import { Item } from "@ionic-layout/item/Item";
 
 /**
@@ -62,18 +63,21 @@ export const PublisherReportContent: React.FC = () => {
     );
   }
 
-  if (canEdit) {
-    return (
-      <ReportForm
-        confidentialId={confidentialId}
-        groupId={groupId}
-        date={date}
-        monthLabel={monthLabel}
-        existingReport={existingReport}
-        onSave={() => history.goBack()}
-      />
-    );
-  }
-
-  return <ReportReadOnly report={existingReport} monthLabel={monthLabel} />;
+  return (
+    <>
+      <MonthNavigation date={date} monthLabel={monthLabel} />
+      {canEdit ? (
+        <ReportForm
+          key={date}
+          confidentialId={confidentialId}
+          groupId={groupId}
+          date={date}
+          existingReport={existingReport}
+          onSave={() => history.goBack()}
+        />
+      ) : (
+        <ReportReadOnly report={existingReport} />
+      )}
+    </>
+  );
 };
