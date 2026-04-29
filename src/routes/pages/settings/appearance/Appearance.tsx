@@ -12,9 +12,9 @@ import { useState } from "react";
 import { Space } from "@layout/space/Space";
 import { Item } from "@ionic-layout/item/Item";
 import { List } from "@ionic-layout/list/List";
-import { Text } from "@ionic-display/text/Text";
 import { SelectTheme } from "@services/app/theme/SelectTheme";
 import { ReorderAccordionsModal } from "@/content/home/content/home-accordions/components/reorder-accordions-modal/ReorderAccordionsModal";
+import { SectionHeading } from "@display/section-heading/SectionHeading";
 
 export const Appearance: React.FC = () => {
   const [isReorderOpen, setIsReorderOpen] = useState(false);
@@ -40,8 +40,8 @@ export const Appearance: React.FC = () => {
         <Space height="2" />
         <List>
           <Item button detail onClick={() => setIsReorderOpen(true)}>
-            <IonLabel>
-              <Text>Reorder Home Sections</Text>
+            <IonLabel className="ion-margin">
+              <SectionHeading>Reorder Home Sections</SectionHeading>
             </IonLabel>
           </Item>
         </List>

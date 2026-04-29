@@ -1,4 +1,4 @@
-import { WelcomeHeading } from "./content/welcome-heading/WelcomeHeading";
+// import { WelcomeHeading } from "./content/welcome-heading/WelcomeHeading";
 import { List } from "@ionic-layout/list/List";
 import { Item } from "@ionic-layout/item/Item";
 import { Text } from "@ionic-display/text/Text";
@@ -12,10 +12,9 @@ export const HomeContent: React.FC = () => {
 
   return (
     <>
-      <Space height="5" />
       {congregation?.id === "7b15d4e5-d4fa-4eb4-a276-3790b7c4897b" && (
         <>
-          <WelcomeHeading />
+          {/* <WelcomeHeading /> */}
           <Space height="2" />
           <HomeAccordions />
         </>
