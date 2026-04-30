@@ -10,6 +10,7 @@ import { CircuitVisitEvent } from "./components/circuit-visit-event/CircuitVisit
 import { SpecialMeetingEvent } from "./components/special-meeting-event/SpecialMeetingEvent";
 import { SpecialTalkEvent } from "./components/special-talk-event/SpecialTalkEvent";
 import type { Event } from "@tanstack-db/event/eventSchema";
+import { Space } from "@layout/space/Space";
 
 type MeetingType = "midweek" | "weekend";
 
@@ -34,7 +35,7 @@ const EventComponent: FC<{ event: Event; meetingType: MeetingType }> = ({
     case "special_meeting":
       return <SpecialMeetingEvent />;
     case "special_talk":
-      return <SpecialTalkEvent meetingType={meetingType}/>;
+      return <SpecialTalkEvent meetingType={meetingType} />;
   }
 };
 
@@ -76,8 +77,14 @@ export const WeekEvents: FC<Props> = ({ weekId, meetingType }) => {
   return (
     <>
       {events.map((event) => (
-        <EventComponent key={event.id} event={event} meetingType={meetingType} />
+        <EventComponent
+          key={event.id}
+          event={event}
+          meetingType={meetingType}
+        />
       ))}
+
+      <Space height="1" />
     </>
   );
 };

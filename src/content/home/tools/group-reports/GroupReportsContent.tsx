@@ -3,6 +3,7 @@ import { Text } from "@ionic-display/text/Text";
 import { usePermissionedGroups } from "@services/app/auth/permissions/usePermissionedGroups";
 import { GroupPublisherAccordion } from "./components/group-publisher-accordion/GroupPublisherAccordion";
 import { Space } from "@layout/space/Space";
+import { Item } from "@ionic-layout/item/Item";
 
 /** Returns the first day of the previous month as "yyyy-mm-dd" using local time */
 const getPreviousMonthDate = (): string => {
@@ -22,7 +23,11 @@ export const GroupReportsContent: React.FC = () => {
   const reportDate = getPreviousMonthDate();
 
   if (isLoading) {
-    return <Text>Loading groups...</Text>;
+    return (
+      <Item lines="none" className="ion-text-center ion-margin ion-padding">
+        Loading groups...
+      </Item>
+    );
   }
 
   if (groups.length === 0) {

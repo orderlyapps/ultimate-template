@@ -27,7 +27,7 @@ export const GroupReportPdfDownloadButton: React.FC<Props> = ({
   const safeName = groupName.replace(/\s+/g, "-").toLowerCase();
 
   return (
-    <div className="ion-padding-horizontal ion-padding-top">
+    <div className="ion-padding ion-margin">
       <PdfDownloadButton
         expand="block"
         fill="outline"
