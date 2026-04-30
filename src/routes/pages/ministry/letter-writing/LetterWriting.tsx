@@ -21,7 +21,7 @@ export const LetterWriting: React.FC = () => {
           <IonTitle>Letter Writing</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen className="ion-padding">
+      <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">Letter Writing</IonTitle>

@@ -16,9 +16,9 @@ export function NotificationsAccordionItem() {
   if (newItems.length < 1) return null;
 
   return (
-    <IonAccordion value="notifications" id="no-lines">
-      <ItemAccordionHeader lines="none">
-        <IonLabel className="ion-margin">
+    <IonAccordion value="notifications" id="no-lines-xxx">
+      <ItemAccordionHeader>
+        <IonLabel className="ion-margin-vertical">
           <SectionHeading>{ACCORDION_LABELS.notifications}</SectionHeading>
         </IonLabel>
         <IonBadge color="medium" className="ion-margin-end">

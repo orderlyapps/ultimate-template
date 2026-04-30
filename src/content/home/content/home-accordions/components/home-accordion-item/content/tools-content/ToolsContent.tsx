@@ -3,6 +3,7 @@ import { IonItem, IonLabel } from "@ionic/react";
 import { FeatureGuard } from "@services/app/features/FeatureGuard";
 import { PermissionGuard } from "@services/app/auth/permissions/PermissionGuard";
 import { Text } from "@ionic-display/text/Text";
+import { Space } from "@layout/space/Space";
 
 export function ToolsContent() {
   return (
@@ -15,7 +16,9 @@ export function ToolsContent() {
           slot="end"
         >
           <IonLabel>
+            <Space height="0.5" />
             <Text bold>Talks</Text>
+            <Space height="0.5" />
           </IonLabel>
         </IonItem>
       </FeatureGuard>
@@ -28,7 +31,9 @@ export function ToolsContent() {
           slot="end"
         >
           <IonLabel>
+            <Space height="0.5" />
             <Text bold>Map Print</Text>
+            <Space height="0.5" />
           </IonLabel>
         </IonItem>
       </FeatureGuard>
@@ -41,7 +46,9 @@ export function ToolsContent() {
           slot="end"
         >
           <IonLabel>
+            <Space height="0.5" />
             <Text bold>Groups</Text>
+            <Space height="0.5" />
           </IonLabel>
         </IonItem>
       </FeatureGuard>
@@ -54,7 +61,9 @@ export function ToolsContent() {
           slot="end"
         >
           <IonLabel>
+            <Space height="0.5" />
             <Text bold>Group Reports</Text>
+            <Space height="0.5" />
           </IonLabel>
         </IonItem>
       </PermissionGuard>
@@ -66,10 +75,13 @@ export function ToolsContent() {
           slot="end"
         >
           <IonLabel>
+            <Space height="0.5" />
             <Text bold>Schedule PDF's</Text>
+            <Space height="0.5" />
           </IonLabel>
         </IonItem>
       </FeatureGuard>
+      <Space height="2" />
     </List>
   );
 }

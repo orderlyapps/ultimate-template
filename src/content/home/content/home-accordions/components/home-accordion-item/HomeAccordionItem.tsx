@@ -29,9 +29,9 @@ export function HomeAccordionItem({ id }: Props) {
   const Content = CONTENT_MAP[id];
 
   return (
-    <IonAccordion value={id} id="no-lines">
-      <ItemAccordionHeader lines="none">
-        <IonLabel className="ion-margin">
+    <IonAccordion value={id} id="no-lines-xxx">
+      <ItemAccordionHeader>
+        <IonLabel className="ion-margin-vertical">
           <SectionHeading>{ACCORDION_LABELS[id]}</SectionHeading>
         </IonLabel>
       </ItemAccordionHeader>
