@@ -16,8 +16,8 @@ type Props = {
 export const SuburbGroup: FC<Props> = ({ suburb, onDelete }) => {
   return (
     <Accordion value={suburb.suburbId}>
-      <ItemAccordionHeader>
-        <IonLabel>
+      <ItemAccordionHeader >
+        <IonLabel className="ion-margin-vertical">
           <SectionHeading>{suburb.suburbName}</SectionHeading>
         </IonLabel>
       </ItemAccordionHeader>

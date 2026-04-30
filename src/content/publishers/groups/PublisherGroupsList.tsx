@@ -46,7 +46,7 @@ export function PublisherGroupsList() {
           return (
             <IonAccordion key={group.id} value={group.id}>
               <ItemAccordionHeader>
-                <IonLabel>
+                <IonLabel className="ion-margin-vertical">
                   <SectionHeading>{group.name}</SectionHeading>
                 </IonLabel>
                 <IonNote slot="end" className="ion-padding-end">

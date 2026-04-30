@@ -15,11 +15,13 @@ export const CleaningWeekGroup: FC<Props> = ({ week, groupMap }) => {
       <IonLabel>
         <Text>{week.weekLabel}</Text>
         {week.entries.map((entry) => (
-          <Text key={entry.type} size="sm" color="medium">
+          <>
             <br />
-            {entry.type === "major" ? "Thorough" : "Light"} —{" "}
-            {groupMap.get(entry.group_id) ?? ""}
-          </Text>
+            <Text key={entry.type} bold>
+              {entry.type === "major" ? "Thorough" : "Light"}:{" "}
+            </Text>
+            <Text key={entry.type}>{groupMap.get(entry.group_id) ?? ""}</Text>
+          </>
         ))}
       </IonLabel>
     </Item>
