@@ -12,7 +12,8 @@ import { SectionHeading } from "@display/section-heading/SectionHeading";
 import { Space } from "@layout/space/Space";
 import { AddressList } from "./components/address-list/AddressList";
 import { EmergencyContactList } from "./components/emergency-contact-list/EmergencyContactList";
-import reportIcon from "@icons/check-list.svg";
+import { NavItem } from "@navigation/nav-item/NavItem";
+import { Button } from "@ionic-input/button/Button";
 
 /** Strips the time component from an ISO date string, returning just YYYY-MM-DD */
 const dateOnly = (isoDate: string): string => isoDate.slice(0, 10);
@@ -111,9 +112,7 @@ export const ConfidentialData: React.FC = () => {
           <div className="ion-text-end ion-margin-vertical">
             <Text size="sm">{formatDate(dateOnly(publisher.birth_date))}</Text>
             <br />
-            <Text size="sm">
-              {timeSince(dateOnly(publisher.birth_date))}
-            </Text>
+            <Text size="sm">{timeSince(dateOnly(publisher.birth_date))}</Text>
           </div>
         </IonItem>
       )}
@@ -171,25 +170,23 @@ export const ConfidentialData: React.FC = () => {
 
       <EmergencyContactList emergencyContacts={publisher.emergency_contact} />
 
-      <Space height="2" />
+      <Space height="1" />
 
-      <IonButton
-        expand="block"
-        onClick={() => history.push(`/publishers/all/${publisherId}/reports`)}
-      >
-        <IonIcon src={reportIcon} slot="start" />
-        Monthly Reports
-      </IonButton>
+      <NavItem routerLink={`/publishers/all/${publisherId}/reports`}>
+        Field Service
+      </NavItem>
+
+      <Space height="2" />
 
       <Space />
       {isSuperAdmin && (
-        <IonButton
+        <Button
           expand="block"
           onClick={() => history.push(`/publishers/all/${publisherId}/edit`)}
+          fill="outline"
         >
-          <IonIcon src={editIcon} slot="start" />
-          Edit Publisher
-        </IonButton>
+          Edit
+        </Button>
       )}
       <Space />
     </IonList>
