@@ -43,6 +43,7 @@ import { Publishers } from "@pages/publishers/Publishers";
 import { PublisherLists } from "@pages/publishers/lists/PublisherLists";
 import { PublisherDetail } from "@pages/publishers/lists/publisher-detail/PublisherDetail";
 import { PublisherEdit } from "@pages/publishers/lists/publisher-detail/publisher-local-edit/PublisherLocalEdit";
+import { PublisherReports } from "@pages/publishers/lists/publisher-detail/publisher-reports/PublisherReports";
 import { PublisherGroups } from "@pages/publishers/groups/PublisherGroups";
 import { PublishersMap } from "@pages/publishers/map/Map";
 
@@ -164,6 +165,11 @@ export const pages = (
       exact
       path="/publishers/all/:publisherId/edit"
       render={() => <PublisherEdit />}
+    />
+    <Route
+      exact
+      path="/publishers/all/:publisherId/reports"
+      render={() => <PublisherReports />}
     />
     <Route exact path="/publishers/groups" render={() => <PublisherGroups />} />
     <Route exact path="/publishers/map" render={() => <PublishersMap />} />

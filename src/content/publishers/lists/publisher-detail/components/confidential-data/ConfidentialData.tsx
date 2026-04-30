@@ -12,6 +12,7 @@ import { SectionHeading } from "@display/section-heading/SectionHeading";
 import { Space } from "@layout/space/Space";
 import { AddressList } from "./components/address-list/AddressList";
 import { EmergencyContactList } from "./components/emergency-contact-list/EmergencyContactList";
+import reportIcon from "@icons/check-list.svg";
 
 /** Strips the time component from an ISO date string, returning just YYYY-MM-DD */
 const dateOnly = (isoDate: string): string => isoDate.slice(0, 10);
@@ -169,6 +170,16 @@ export const ConfidentialData: React.FC = () => {
       <Space height="1" />
 
       <EmergencyContactList emergencyContacts={publisher.emergency_contact} />
+
+      <Space height="2" />
+
+      <IonButton
+        expand="block"
+        onClick={() => history.push(`/publishers/all/${publisherId}/reports`)}
+      >
+        <IonIcon src={reportIcon} slot="start" />
+        Monthly Reports
+      </IonButton>
 
       <Space />
       {isSuperAdmin && (
