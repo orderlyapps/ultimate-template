@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { IonList } from "@ionic/react";
 import { Text } from "@ionic-display/text/Text";
 import { Item } from "@ionic-layout/item/Item";
+import { AccordionGroup } from "@ionic-layout/accordion-group/AccordionGroup";
 import { Space } from "@layout/space/Space";
 import { useConfidentialId } from "@/content/home/tools/group-reports/hooks/useConfidentialId";
 import { usePublisherGroupId } from "@/content/home/tools/group-reports/hooks/usePublisherGroupId";
@@ -73,19 +74,21 @@ export const MonthlyReportsContent: React.FC = () => {
     );
   }
 
+  const items = monthDates.map((date) => (
+    <ReportMonthItem
+      key={date}
+      date={date}
+      report={reportsByDate.get(date)}
+      canEdit={canEdit}
+      confidentialId={confidentialId}
+      groupId={groupId}
+    />
+  ));
+
   return (
     <IonList>
       <Space height="1" />
-      {monthDates.map((date) => (
-        <ReportMonthItem
-          key={date}
-          date={date}
-          report={reportsByDate.get(date)}
-          canEdit={canEdit}
-          confidentialId={confidentialId}
-          groupId={groupId}
-        />
-      ))}
+      {canEdit ? <AccordionGroup>{items}</AccordionGroup> : items}
       <Space />
     </IonList>
   );
