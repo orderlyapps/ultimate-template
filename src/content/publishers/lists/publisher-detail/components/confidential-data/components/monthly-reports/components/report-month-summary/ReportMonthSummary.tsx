@@ -3,6 +3,7 @@ import { Col } from "@ionic-layout/col/Col";
 import { Grid } from "@ionic-layout/grid/Grid";
 import { Row } from "@ionic-layout/row/Row";
 import { IonIcon } from "@ionic/react";
+import { Space } from "@layout/space/Space";
 import type { Report } from "@tanstack-db/report/reportSchema";
 import {
   checkmarkCircleOutline,
@@ -58,6 +59,7 @@ export const ReportMonthSummary: React.FC<Props> = ({ date, report }) => {
         </Col>
 
         <Col className="ion-text-end" size="auto">
+          <Space height="0.2" />
           {!report ? (
             <IonIcon icon={removeCircleOutline} color="medium"></IonIcon>
           ) : report.active ? (

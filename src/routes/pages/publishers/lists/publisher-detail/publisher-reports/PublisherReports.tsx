@@ -20,13 +20,13 @@ export const PublisherReports: React.FC = () => {
           <IonButtons slot="start">
             <IonBackButton defaultHref="/publishers/all" text="Back" />
           </IonButtons>
-          <IonTitle>Monthly Reports</IonTitle>
+          <IonTitle>Publisher Record</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen className="ion-padding">
+      <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Monthly Reports</IonTitle>
+            <IonTitle size="large"> Publisher Record</IonTitle>
           </IonToolbar>
         </IonHeader>
         <MonthlyReportsContent />

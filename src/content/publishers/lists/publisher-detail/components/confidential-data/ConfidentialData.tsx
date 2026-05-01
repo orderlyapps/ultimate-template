@@ -173,7 +173,7 @@ export const ConfidentialData: React.FC = () => {
       <Space height="1" />
 
       <NavItem routerLink={`/publishers/all/${publisherId}/reports`}>
-        Field Service
+        Publisher Record
       </NavItem>
 
       <Space height="2" />
