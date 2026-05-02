@@ -3,6 +3,7 @@ import { List } from "@ionic-layout/list/List";
 import { Item } from "@ionic-layout/item/Item";
 import { Text } from "@ionic-display/text/Text";
 import { usePublishersByGroup } from "../../hooks/usePublishersByGroup";
+import { useMissingReportCount } from "../../hooks/useMissingReportCount";
 import type { Group } from "@tanstack-db/group/groupSchema";
 import { SectionHeading } from "@display/section-heading/SectionHeading";
 import { ItemAccordionHeader } from "@ionic-layout/accordion-header/AccordionHeader";
@@ -26,6 +27,8 @@ export const GroupPublisherAccordion: React.FC<Props> = ({
 }) => {
   const { data: publishers } = usePublishersByGroup(group.id);
   const count = publishers?.length ?? 0;
+  /** Number of publishers without a submitted report for this month */
+  const missingCount = useMissingReportCount(publishers, reportDate);
 
   /** Format reportDate as human-readable month label, e.g. "March 2025" */
   const monthLabel = new Date(reportDate + "T00:00:00").toLocaleDateString(
@@ -40,7 +43,7 @@ export const GroupPublisherAccordion: React.FC<Props> = ({
           <SectionHeading>{group.name}</SectionHeading>
         </IonLabel>
         <IonNote slot="end" className="ion-padding-end">
-          {count}
+          {missingCount}
         </IonNote>
       </ItemAccordionHeader>
       <List slot="content">
