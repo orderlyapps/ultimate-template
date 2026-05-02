@@ -16,6 +16,11 @@ interface Props {
   date: string;
   /** The existing report for this month, if any */
   report: Report | undefined;
+  /**
+   * Optional override for the leading label.
+   * Defaults to the month name derived from `date`.
+   */
+  label?: string;
 }
 
 /**
@@ -32,33 +37,31 @@ const formatMonthLabel = (date: string): string => {
  * Displays a single month's report summary (label + status + comments).
  * Rendered inside an IonItem (read-only) or an accordion header (editable).
  */
-export const ReportMonthSummary: React.FC<Props> = ({ date, report }) => {
-  const monthLabel = formatMonthLabel(date);
+export const ReportMonthSummary: React.FC<Props> = ({
+  date,
+  report,
+  label,
+}) => {
+  const monthLabel = label ?? formatMonthLabel(date);
 
   return (
     <Grid>
       <Row>
-        <Col size="6">
-          <Text color="primary">{monthLabel}</Text>
+        <Col size="7">
+          <Text>{monthLabel}</Text>
         </Col>
 
         <Col size="2">
-          {report?.hours && (
-            <Text size="sm" bold>
-              {report?.hours}
-            </Text>
-          )}
+          {report?.hours && <Text size="sm">{report?.hours}</Text>}
         </Col>
 
-        <Col size="2">
+        <Col size="1">
           {report?.bible_studies && (
-            <Text size="sm" bold>
-              {report?.bible_studies}
-            </Text>
+            <Text size="sm">{report?.bible_studies}</Text>
           )}
         </Col>
 
-        <Col className="ion-text-end" size="auto">
+        <Col className="ion-text-end" size="1">
           <Space height="0.2" />
           {!report ? (
             <IonIcon icon={removeCircleOutline} color="medium"></IonIcon>

@@ -2,13 +2,13 @@ import { IonAccordion, IonLabel, IonNote } from "@ionic/react";
 import { List } from "@ionic-layout/list/List";
 import { Item } from "@ionic-layout/item/Item";
 import { Text } from "@ionic-display/text/Text";
-import { formatPublisherName } from "@format/formatPublisherName";
 import { usePublishersByGroup } from "../../hooks/usePublishersByGroup";
 import type { Group } from "@tanstack-db/group/groupSchema";
 import { SectionHeading } from "@display/section-heading/SectionHeading";
 import { ItemAccordionHeader } from "@ionic-layout/accordion-header/AccordionHeader";
 import { Space } from "@layout/space/Space";
 import { GroupReportPdfDownloadButton } from "./components/group-report-pdf-download-button/GroupReportPdfDownloadButton";
+import { PublisherReportItem } from "./components/publisher-report-item/PublisherReportItem";
 
 type Props = {
   /** The group whose publishers to display */
@@ -60,16 +60,11 @@ export const GroupPublisherAccordion: React.FC<Props> = ({
           </Item>
         ) : (
           publishers!.map((publisher) => (
-            <Item
+            <PublisherReportItem
               key={publisher.id}
-              detail
-              button
-              routerLink={`/home/group-reports/${publisher.id}?date=${reportDate}`}
-            >
-              <IonLabel>
-                <Text>{formatPublisherName(publisher)}</Text>
-              </IonLabel>
-            </Item>
+              publisher={publisher}
+              reportDate={reportDate}
+            />
           ))
         )}
         <Space />

@@ -9,6 +9,7 @@ import { usePublisherGroupId } from "@/content/home/tools/group-reports/hooks/us
 import { useGroupPermissions } from "@services/app/auth/permissions/useGroupPermissions";
 import { usePublisherReports24Months } from "./hooks/usePublisherReports24Months";
 import { ReportMonthItem } from "./components/report-month-item/ReportMonthItem";
+import { SectionHeading } from "@display/section-heading/SectionHeading";
 
 /**
  * Generates an array of month date strings (YYYY-MM-01) starting from the
@@ -84,8 +85,8 @@ export const MonthlyReportsContent: React.FC = () => {
     return (
       <Item className="ion-text-center ion-padding">
         <Text>
-          No Confidential ID found for this publisher. Please request an
-          updated Confidential Publisher Data file from your secretary.
+          No Confidential ID found for this publisher. Please request an updated
+          Confidential Publisher Data file from your secretary.
         </Text>
       </Item>
     );
@@ -99,8 +100,12 @@ export const MonthlyReportsContent: React.FC = () => {
     const [yearStr, monthStr] = date.split("-");
     if (monthStr === "12") {
       items.push(
-        <IonItemDivider key={`year-${yearStr}`} sticky className="ion-margin ion-padding-vertical">
-          <Text size="lg">{yearStr}</Text>
+        <IonItemDivider
+          key={`year-${yearStr}`}
+          sticky
+          className="ion-margin ion-padding-vertical"
+        >
+          <SectionHeading>{yearStr}</SectionHeading>
         </IonItemDivider>,
       );
     }
