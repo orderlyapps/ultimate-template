@@ -53,7 +53,7 @@ export const PublisherReportItem: React.FC<Props> = ({
           report={report}
           confidentialId={confidentialId}
           groupId={publisher.group_id ?? null}
-          title={publisherName}
+          publisherName={publisherName}
         />
       )}
     </>

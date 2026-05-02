@@ -15,6 +15,8 @@ interface Props {
   confidentialId: string;
   /** The publisher's group_id, if known */
   groupId: string | null;
+  /** The publisher's display name, shown in the edit modal title */
+  publisherName: string;
 }
 
 /**
@@ -29,6 +31,7 @@ export const ReportMonthItem: React.FC<Props> = ({
   canEdit,
   confidentialId,
   groupId,
+  publisherName,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -52,6 +55,7 @@ export const ReportMonthItem: React.FC<Props> = ({
         report={report}
         confidentialId={confidentialId}
         groupId={groupId}
+        publisherName={publisherName}
       />
     </>
   );

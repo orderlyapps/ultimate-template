@@ -7,6 +7,8 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import { CloseButton } from "@input/button/close-button/CloseButton";
+import { SectionHeading } from "@display/section-heading/SectionHeading";
+import { Space } from "@layout/space/Space";
 import type { Report } from "@tanstack-db/report/reportSchema";
 import { ReportMonthForm } from "../report-month-form/ReportMonthForm";
 
@@ -23,11 +25,8 @@ interface Props {
   confidentialId: string;
   /** The publisher's group_id, if known */
   groupId: string | null;
-  /**
-   * Optional title override. Defaults to the month label derived from `date`,
-   * e.g. "March 2026".
-   */
-  title?: string;
+  /** The publisher's display name, shown in the modal title */
+  publisherName: string;
 }
 
 /** Formats a date string (YYYY-MM-01) to "Month YYYY". */
@@ -48,19 +47,21 @@ export const ReportMonthFormModal: React.FC<Props> = ({
   report,
   confidentialId,
   groupId,
-  title,
+  publisherName,
 }) => {
   return (
     <IonModal isOpen={isOpen} onDidDismiss={onDismiss}>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>{title ?? formatMonthLabel(date)}</IonTitle>
+          <IonTitle>{publisherName}</IonTitle>
           <IonButtons slot="end">
             <CloseButton onClick={onDismiss} />
           </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent>
+        <Space height="1" />
+        <SectionHeading>{formatMonthLabel(date)}</SectionHeading>
         <ReportMonthForm
           date={date}
           report={report}

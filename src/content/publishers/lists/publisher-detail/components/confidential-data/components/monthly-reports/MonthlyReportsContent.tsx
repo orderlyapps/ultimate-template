@@ -5,6 +5,8 @@ import { Item } from "@ionic-layout/item/Item";
 import { Space } from "@layout/space/Space";
 import { useConfidentialId } from "@/content/home/tools/group-reports/hooks/useConfidentialId";
 import { usePublisherGroupId } from "@/content/home/tools/group-reports/hooks/usePublisherGroupId";
+import { usePublisherById } from "@/content/publishers/lists/publisher-detail/publisher-local-edit/hooks/usePublisherById";
+import { formatPublisherName } from "@format/formatPublisherName";
 import { useGroupPermissions } from "@services/app/auth/permissions/useGroupPermissions";
 import { usePublisherReports24Months } from "./hooks/usePublisherReports24Months";
 import { ReportMonthItem } from "./components/report-month-item/ReportMonthItem";
@@ -60,6 +62,9 @@ export const MonthlyReportsContent: React.FC = () => {
   const { groupId, isLoading: isLoadingGroup } =
     usePublisherGroupId(publisherId);
   const { canEdit } = useGroupPermissions(groupId ?? "");
+  const { data: publishers } = usePublisherById(publisherId);
+  const publisher = publishers?.[0];
+  const publisherName = publisher ? formatPublisherName(publisher) : "";
 
   const { data: reports, isLoading: isLoadingReports } =
     usePublisherReports24Months(confidentialId);
@@ -116,6 +121,7 @@ export const MonthlyReportsContent: React.FC = () => {
         canEdit={canEdit}
         confidentialId={confidentialId}
         groupId={groupId}
+        publisherName={publisherName}
       />,
     );
   });
