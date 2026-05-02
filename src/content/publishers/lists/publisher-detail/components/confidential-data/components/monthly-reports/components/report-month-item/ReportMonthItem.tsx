@@ -1,9 +1,7 @@
-import { Accordion } from "@ionic-layout/accordion/Accordion";
-import { AccordionContent } from "@ionic-layout/accordion-content/AccordionContent";
-import { ItemAccordionHeader } from "@ionic-layout/accordion-header/AccordionHeader";
+import { useState } from "react";
 import { Item } from "@ionic-layout/item/Item";
 import type { Report } from "@tanstack-db/report/reportSchema";
-import { ReportMonthForm } from "../report-month-form/ReportMonthForm";
+import { ReportMonthFormModal } from "../report-month-form-modal/ReportMonthFormModal";
 import { ReportMonthSummary } from "../report-month-summary/ReportMonthSummary";
 
 interface Props {
@@ -22,8 +20,8 @@ interface Props {
 /**
  * Displays a single month's report.
  * - Read-only: rendered as a plain IonItem with the summary.
- * - Editable: rendered as an IonAccordion with summary in the header
- *   and the editable form in the content section.
+ * - Editable: rendered as a tappable IonItem that opens a modal containing
+ *   the editable report form.
  */
 export const ReportMonthItem: React.FC<Props> = ({
   date,
@@ -32,6 +30,8 @@ export const ReportMonthItem: React.FC<Props> = ({
   confidentialId,
   groupId,
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
   if (!canEdit) {
     return (
       <Item>
@@ -41,18 +41,18 @@ export const ReportMonthItem: React.FC<Props> = ({
   }
 
   return (
-    <Accordion value={date}>
-      <ItemAccordionHeader>
+    <>
+      <Item button detail onClick={() => setIsOpen(true)}>
         <ReportMonthSummary date={date} report={report} />
-      </ItemAccordionHeader>
-      <AccordionContent>
-        <ReportMonthForm
-          date={date}
-          report={report}
-          confidentialId={confidentialId}
-          groupId={groupId}
-        />
-      </AccordionContent>
-    </Accordion>
+      </Item>
+      <ReportMonthFormModal
+        isOpen={isOpen}
+        onDismiss={() => setIsOpen(false)}
+        date={date}
+        report={report}
+        confidentialId={confidentialId}
+        groupId={groupId}
+      />
+    </>
   );
 };

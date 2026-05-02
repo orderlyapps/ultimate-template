@@ -22,6 +22,8 @@ interface Props {
   confidentialId: string;
   /** The publisher's group_id, if known */
   groupId: string | null;
+  /** Optional callback invoked after a successful save */
+  onSaved?: () => void;
 }
 
 interface FormState {
@@ -56,6 +58,7 @@ export const ReportMonthForm: React.FC<Props> = ({
   report,
   confidentialId,
   groupId,
+  onSaved,
 }) => {
   const [form, setForm] = useState<FormState>(() => buildInitialState(report));
   const congregationId = getUserCongregation()?.id;
@@ -94,6 +97,8 @@ export const ReportMonthForm: React.FC<Props> = ({
         comments,
       });
     }
+
+    onSaved?.();
   };
 
   const handleSave = () => {

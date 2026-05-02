@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import { IonList, IonItemDivider } from "@ionic/react";
 import { Text } from "@ionic-display/text/Text";
 import { Item } from "@ionic-layout/item/Item";
-import { AccordionGroup } from "@ionic-layout/accordion-group/AccordionGroup";
 import { Space } from "@layout/space/Space";
 import { useConfidentialId } from "@/content/home/tools/group-reports/hooks/useConfidentialId";
 import { usePublisherGroupId } from "@/content/home/tools/group-reports/hooks/usePublisherGroupId";
@@ -124,7 +123,7 @@ export const MonthlyReportsContent: React.FC = () => {
   return (
     <IonList>
       <Space height="1" />
-      {canEdit ? <AccordionGroup>{items}</AccordionGroup> : items}
+      {items}
       <Space />
     </IonList>
   );
