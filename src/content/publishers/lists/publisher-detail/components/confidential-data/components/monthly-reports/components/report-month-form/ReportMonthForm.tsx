@@ -4,6 +4,7 @@ import {
   IonItem,
   IonTextarea,
   IonToggle,
+  useIonAlert,
 } from "@ionic/react";
 import { Label } from "@ionic-display/label/Label";
 import { reportCollection } from "@tanstack-db/report/reportCollection";
@@ -38,6 +39,14 @@ const buildInitialState = (report: Report | undefined): FormState => ({
   comments: report?.comments ?? "",
 });
 
+/** Returns the first day of the previous month as "YYYY-MM-01" using local time */
+const getPreviousMonthDate = (): string => {
+  const now = new Date();
+  const year = now.getMonth() === 0 ? now.getFullYear() - 1 : now.getFullYear();
+  const month = now.getMonth() === 0 ? 12 : now.getMonth();
+  return `${year}-${String(month).padStart(2, "0")}-01`;
+};
+
 /**
  * Editable form fields for a single month's report.
  * Persists changes via reportCollection on save.
@@ -50,8 +59,9 @@ export const ReportMonthForm: React.FC<Props> = ({
 }) => {
   const [form, setForm] = useState<FormState>(() => buildInitialState(report));
   const congregationId = getUserCongregation()?.id;
+  const [presentAlert] = useIonAlert();
 
-  const handleSave = () => {
+  const persistReport = () => {
     if (!congregationId) return;
 
     const hours = form.hours !== "" ? Number(form.hours) : null;
@@ -84,6 +94,25 @@ export const ReportMonthForm: React.FC<Props> = ({
         comments,
       });
     }
+  };
+
+  const handleSave = () => {
+    // Warn when editing any month other than the standard reporting window
+    // (the previous calendar month), as those reports have already been
+    // submitted to the branch.
+    if (date !== getPreviousMonthDate()) {
+      presentAlert({
+        header: "Report already submitted",
+        message:
+          "This report has already been submitted to the branch. Do you want to continue?",
+        buttons: [
+          { text: "Cancel", role: "cancel" },
+          { text: "Continue", handler: () => persistReport() },
+        ],
+      });
+      return;
+    }
+    persistReport();
   };
 
   // const handleCancel = () => setForm(buildInitialState(report));

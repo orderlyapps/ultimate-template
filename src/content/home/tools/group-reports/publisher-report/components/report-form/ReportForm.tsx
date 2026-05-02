@@ -5,6 +5,7 @@ import {
   IonInput,
   IonToggle,
   IonTextarea,
+  useIonAlert,
 } from "@ionic/react";
 import { List } from "@ionic-layout/list/List";
 import { reportCollection } from "@tanstack-db/report/reportCollection";
@@ -25,6 +26,14 @@ const defaultForm: FormState = {
   hours: "",
   bible_studies: "",
   comments: "",
+};
+
+/** Returns the first day of the previous month as "YYYY-MM-01" using local time */
+const getPreviousMonthDate = (): string => {
+  const now = new Date();
+  const year = now.getMonth() === 0 ? now.getFullYear() - 1 : now.getFullYear();
+  const month = now.getMonth() === 0 ? 12 : now.getMonth();
+  return `${year}-${String(month).padStart(2, "0")}-01`;
 };
 
 type Props = {
@@ -48,6 +57,7 @@ export const ReportForm: React.FC<Props> = ({
 }) => {
   const [form, setForm] = useState<FormState>(defaultForm);
   const [initialized, setInitialized] = useState(false);
+  const [presentAlert] = useIonAlert();
 
   /** Pre-fill form when an existing report loads */
   if (existingReport && !initialized) {
@@ -68,7 +78,7 @@ export const ReportForm: React.FC<Props> = ({
     value: FormState[K],
   ) => setForm((prev) => ({ ...prev, [field]: value }));
 
-  const handleSave = () => {
+  const persistReport = () => {
     const congregationId = getUserCongregation()?.id;
     if (!congregationId) return;
 
@@ -103,6 +113,25 @@ export const ReportForm: React.FC<Props> = ({
     }
 
     onSave();
+  };
+
+  const handleSave = () => {
+    // Warn when editing any month other than the standard reporting window
+    // (the previous calendar month), as those reports have already been
+    // submitted to the branch.
+    if (date !== getPreviousMonthDate()) {
+      presentAlert({
+        header: "Report already submitted",
+        message:
+          "This report has already been submitted to the branch. Do you want to continue?",
+        buttons: [
+          { text: "Cancel", role: "cancel" },
+          { text: "Continue", handler: () => persistReport() },
+        ],
+      });
+      return;
+    }
+    persistReport();
   };
 
   return (

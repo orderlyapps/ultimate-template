@@ -97,7 +97,7 @@ export const MonthlyReportsContent: React.FC = () => {
   const items: React.ReactNode[] = [];
   monthDates.forEach((date) => {
     const [yearStr, monthStr] = date.split("-");
-    if (monthStr === "01") {
+    if (monthStr === "12") {
       items.push(
         <IonItemDivider key={`year-${yearStr}`} sticky className="ion-margin ion-padding-vertical">
           <Text size="lg">{yearStr}</Text>
