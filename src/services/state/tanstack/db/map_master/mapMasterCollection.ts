@@ -1,12 +1,14 @@
 import { createCollection } from "@tanstack/react-db";
 import { queryCollectionOptions } from "@tanstack/query-db-collection";
+import { persistedCollectionOptions } from "@tanstack/browser-db-sqlite-persistence";
 import { supabase } from "@supabase-db/client";
 import { queryClient } from "@tanstack-query/client";
 import { mapMasterSchema } from "@tanstack-db/map_master/mapMasterSchema";
 import { getUserCongregation } from "@feature/db/congregation/user-congregation/get-user-congregation/getUserCongregation";
+import { persistence } from "@tanstack-db/persistence";
 
-export const mapMasterCollection = createCollection(
-  queryCollectionOptions({
+const baseOptions = queryCollectionOptions({
+  id: "map_master",
     queryKey: ["map_master"],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -41,5 +43,15 @@ export const mapMasterCollection = createCollection(
         .delete()
         .eq("congregation_id", original.congregation_id);
     },
-  }),
-);
+  });
+
+const persistedOptions = persistedCollectionOptions({
+  ...baseOptions,
+  persistence,
+  schemaVersion: 1,
+});
+
+export const mapMasterCollection = createCollection({
+  ...persistedOptions,
+  schema: mapMasterSchema,
+});

@@ -1,11 +1,13 @@
 import { createCollection } from "@tanstack/react-db";
 import { queryCollectionOptions } from "@tanstack/query-db-collection";
+import { persistedCollectionOptions } from "@tanstack/browser-db-sqlite-persistence";
 import { supabase } from "@supabase-db/client";
 import { queryClient } from "@tanstack-query/client";
 import { authUserSchema } from "@tanstack-db/auth-user/authUserSchema";
+import { persistence } from "@tanstack-db/persistence";
 
-export const authUserCollection = createCollection(
-  queryCollectionOptions({
+const baseOptions = queryCollectionOptions({
+  id: "auth_user",
     queryKey: ["auth_user"],
 
     queryFn: async () => {
@@ -44,5 +46,15 @@ export const authUserCollection = createCollection(
         .delete()
         .eq("auth_user_id", original.auth_user_id);
     },
-  })
-);
+  });
+
+const persistedOptions = persistedCollectionOptions({
+  ...baseOptions,
+  persistence,
+  schemaVersion: 1,
+});
+
+export const authUserCollection = createCollection({
+  ...persistedOptions,
+  schema: authUserSchema,
+});

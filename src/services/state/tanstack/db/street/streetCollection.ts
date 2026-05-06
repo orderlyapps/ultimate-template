@@ -1,11 +1,13 @@
 import { createCollection } from "@tanstack/react-db";
 import { queryCollectionOptions } from "@tanstack/query-db-collection";
+import { persistedCollectionOptions } from "@tanstack/browser-db-sqlite-persistence";
 import { supabase } from "@supabase-db/client";
 import { queryClient } from "@tanstack-query/client";
 import { streetSchema } from "@tanstack-db/street/streetSchema";
+import { persistence } from "@tanstack-db/persistence";
 
-export const streetCollection = createCollection(
-  queryCollectionOptions({
+const baseOptions = queryCollectionOptions({
+  id: "street",
     queryKey: ["street"],
     queryFn: async () => {
       const { data, error } = await supabase.from("street").select("*");
@@ -49,5 +51,15 @@ export const streetCollection = createCollection(
       }
       return data;
     },
-  }),
-);
+  });
+
+const persistedOptions = persistedCollectionOptions({
+  ...baseOptions,
+  persistence,
+  schemaVersion: 1,
+});
+
+export const streetCollection = createCollection({
+  ...persistedOptions,
+  schema: streetSchema,
+});

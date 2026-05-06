@@ -1,11 +1,13 @@
 import { createCollection } from "@tanstack/react-db";
 import { queryCollectionOptions } from "@tanstack/query-db-collection";
+import { persistedCollectionOptions } from "@tanstack/browser-db-sqlite-persistence";
 import { supabase } from "@supabase-db/client";
 import { queryClient } from "@tanstack-query/client";
 import { weekendAssignmentSchema } from "@tanstack-db/weekend_assignment/weekendAssignmentSchema";
+import { persistence } from "@tanstack-db/persistence";
 
-export const weekendAssignmentCollection = createCollection(
-  queryCollectionOptions({
+const baseOptions = queryCollectionOptions({
+  id: "weekend_assignment",
     queryKey: ["weekend_assignment"],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -44,5 +46,15 @@ export const weekendAssignmentCollection = createCollection(
         .eq("congregation_id", original.congregation_id)
         .eq("week_id", original.week_id);
     },
-  }),
-);
+  });
+
+const persistedOptions = persistedCollectionOptions({
+  ...baseOptions,
+  persistence,
+  schemaVersion: 1,
+});
+
+export const weekendAssignmentCollection = createCollection({
+  ...persistedOptions,
+  schema: weekendAssignmentSchema,
+});

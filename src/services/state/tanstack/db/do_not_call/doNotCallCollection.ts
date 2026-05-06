@@ -1,11 +1,13 @@
 import { createCollection } from "@tanstack/react-db";
 import { queryCollectionOptions } from "@tanstack/query-db-collection";
+import { persistedCollectionOptions } from "@tanstack/browser-db-sqlite-persistence";
 import { supabase } from "@supabase-db/client";
 import { queryClient } from "@tanstack-query/client";
 import { doNotCallSchema } from "@tanstack-db/do_not_call/doNotCallSchema";
+import { persistence } from "@tanstack-db/persistence";
 
-export const doNotCallCollection = createCollection(
-  queryCollectionOptions({
+const baseOptions = queryCollectionOptions({
+  id: "do_not_call",
     queryKey: ["do_not_call"],
     queryFn: async () => {
       const { data, error } = await supabase.from("do_not_call").select("*");
@@ -34,5 +36,15 @@ export const doNotCallCollection = createCollection(
       const { original } = transaction.mutations[0];
       await supabase.from("do_no_call").delete().eq("id", original.id);
     },
-  }),
-);
+  });
+
+const persistedOptions = persistedCollectionOptions({
+  ...baseOptions,
+  persistence,
+  schemaVersion: 1,
+});
+
+export const doNotCallCollection = createCollection({
+  ...persistedOptions,
+  schema: doNotCallSchema,
+});

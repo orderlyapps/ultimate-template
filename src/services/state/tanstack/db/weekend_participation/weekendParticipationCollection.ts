@@ -1,11 +1,13 @@
 import { createCollection } from "@tanstack/react-db";
 import { queryCollectionOptions } from "@tanstack/query-db-collection";
+import { persistedCollectionOptions } from "@tanstack/browser-db-sqlite-persistence";
 import { supabase } from "@supabase-db/client";
 import { queryClient } from "@tanstack-query/client";
 import { weekendParticipationSchema } from "@tanstack-db/weekend_participation/weekendParticipationSchema";
+import { persistence } from "@tanstack-db/persistence";
 
-export const weekendParticipationCollection = createCollection(
-  queryCollectionOptions({
+const baseOptions = queryCollectionOptions({
+  id: "weekend_participation",
     queryKey: ["weekend_participation"],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -33,5 +35,15 @@ export const weekendParticipationCollection = createCollection(
         .eq("participant_id", original.participant_id)
         .eq("participation_id", original.participation_id);
     },
-  })
-);
+  });
+
+const persistedOptions = persistedCollectionOptions({
+  ...baseOptions,
+  persistence,
+  schemaVersion: 1,
+});
+
+export const weekendParticipationCollection = createCollection({
+  ...persistedOptions,
+  schema: weekendParticipationSchema,
+});

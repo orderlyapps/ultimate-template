@@ -1,11 +1,13 @@
 import { createCollection } from "@tanstack/react-db";
 import { queryCollectionOptions } from "@tanstack/query-db-collection";
+import { persistedCollectionOptions } from "@tanstack/browser-db-sqlite-persistence";
 import { supabase } from "@supabase-db/client";
 import { queryClient } from "@tanstack-query/client";
 import { speakerAvailabilitySchema } from "@tanstack-db/speaker_availability/speakerAvailabilitySchema";
+import { persistence } from "@tanstack-db/persistence";
 
-export const speakerAvailabilityCollection = createCollection(
-  queryCollectionOptions({
+const baseOptions = queryCollectionOptions({
+  id: "speaker_availability",
     queryKey: ["speaker_availability"],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -33,5 +35,15 @@ export const speakerAvailabilityCollection = createCollection(
       const { original } = transaction.mutations[0];
       await supabase.from("speaker_availability").delete().eq("speaker_id", original.speaker_id);
     },
-  })
-);
+  });
+
+const persistedOptions = persistedCollectionOptions({
+  ...baseOptions,
+  persistence,
+  schemaVersion: 1,
+});
+
+export const speakerAvailabilityCollection = createCollection({
+  ...persistedOptions,
+  schema: speakerAvailabilitySchema,
+});

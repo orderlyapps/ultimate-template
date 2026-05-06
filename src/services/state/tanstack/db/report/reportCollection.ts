@@ -1,12 +1,14 @@
 import { createCollection } from "@tanstack/react-db";
 import { queryCollectionOptions } from "@tanstack/query-db-collection";
+import { persistedCollectionOptions } from "@tanstack/browser-db-sqlite-persistence";
 import { supabase } from "@supabase-db/client";
 import { queryClient } from "@tanstack-query/client";
 import { reportSchema } from "@tanstack-db/report/reportSchema";
+import { persistence } from "@tanstack-db/persistence";
 
 /** Collection for the public.report table with composite key (confidential_id, congregation_id, date) */
-export const reportCollection = createCollection(
-  queryCollectionOptions({
+const baseOptions = queryCollectionOptions({
+  id: "report",
     queryKey: ["report"],
 
     queryFn: async () => {
@@ -50,5 +52,15 @@ export const reportCollection = createCollection(
         .eq("congregation_id", original.congregation_id)
         .eq("date", original.date);
     },
-  })
-);
+  });
+
+const persistedOptions = persistedCollectionOptions({
+  ...baseOptions,
+  persistence,
+  schemaVersion: 1,
+});
+
+export const reportCollection = createCollection({
+  ...persistedOptions,
+  schema: reportSchema,
+});

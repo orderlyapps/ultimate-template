@@ -1,11 +1,13 @@
 import { createCollection } from "@tanstack/react-db";
 import { queryCollectionOptions } from "@tanstack/query-db-collection";
+import { persistedCollectionOptions } from "@tanstack/browser-db-sqlite-persistence";
 import { supabase } from "@supabase-db/client";
 import { queryClient } from "@tanstack-query/client";
 import { suburbSchema } from "@tanstack-db/suburb/suburbSchema";
+import { persistence } from "@tanstack-db/persistence";
 
-export const suburbCollection = createCollection(
-  queryCollectionOptions({
+const baseOptions = queryCollectionOptions({
+  id: "suburb",
     queryKey: ["suburb"],
     queryFn: async () => {
       const { data, error } = await supabase.from("suburb").select("*");
@@ -52,5 +54,15 @@ export const suburbCollection = createCollection(
       }
       return data;
     },
-  }),
-);
+  });
+
+const persistedOptions = persistedCollectionOptions({
+  ...baseOptions,
+  persistence,
+  schemaVersion: 1,
+});
+
+export const suburbCollection = createCollection({
+  ...persistedOptions,
+  schema: suburbSchema,
+});

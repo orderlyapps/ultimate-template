@@ -1,11 +1,13 @@
 import { createCollection } from "@tanstack/react-db";
 import { queryCollectionOptions } from "@tanstack/query-db-collection";
+import { persistedCollectionOptions } from "@tanstack/browser-db-sqlite-persistence";
 import { supabase } from "@supabase-db/client";
 import { queryClient } from "@tanstack-query/client";
 import { speakerAssignmentSchema } from "@tanstack-db/speaker_assignment/speakerAssignmentSchema";
+import { persistence } from "@tanstack-db/persistence";
 
-export const speakerAssignmentCollection = createCollection(
-  queryCollectionOptions({
+const baseOptions = queryCollectionOptions({
+  id: "speaker_assignment",
     queryKey: ["speaker_assignment"],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -46,5 +48,15 @@ export const speakerAssignmentCollection = createCollection(
         .eq("week_id", original.week_id)
         .eq("congregation_id", original.congregation_id);
     },
-  })
-);
+  });
+
+const persistedOptions = persistedCollectionOptions({
+  ...baseOptions,
+  persistence,
+  schemaVersion: 1,
+});
+
+export const speakerAssignmentCollection = createCollection({
+  ...persistedOptions,
+  schema: speakerAssignmentSchema,
+});

@@ -1,11 +1,13 @@
 import { createCollection } from "@tanstack/react-db";
 import { queryCollectionOptions } from "@tanstack/query-db-collection";
+import { persistedCollectionOptions } from "@tanstack/browser-db-sqlite-persistence";
 import { supabase } from "@supabase-db/client";
 import { queryClient } from "@tanstack-query/client";
 import { mapSchema } from "@tanstack-db/map/mapSchema";
+import { persistence } from "@tanstack-db/persistence";
 
-export const mapCollection = createCollection(
-  queryCollectionOptions({
+const baseOptions = queryCollectionOptions({
+  id: "map",
     queryKey: ["map"],
     queryFn: async () => {
       const { data, error } = await supabase.from("map").select("*");
@@ -45,5 +47,15 @@ export const mapCollection = createCollection(
       if (error) return error;
       return data;
     },
-  }),
-);
+  });
+
+const persistedOptions = persistedCollectionOptions({
+  ...baseOptions,
+  persistence,
+  schemaVersion: 1,
+});
+
+export const mapCollection = createCollection({
+  ...persistedOptions,
+  schema: mapSchema,
+});

@@ -1,12 +1,14 @@
 import { createCollection } from "@tanstack/react-db";
 import { queryCollectionOptions } from "@tanstack/query-db-collection";
+import { persistedCollectionOptions } from "@tanstack/browser-db-sqlite-persistence";
 import { supabase } from "@supabase-db/client";
 import { queryClient } from "@tanstack-query/client";
 import { congregationAdminSchema } from "./congregationAdminSchema";
+import { persistence } from "@tanstack-db/persistence";
 
 /** Collection for the congregation_admin table */
-export const congregationAdminCollection = createCollection(
-  queryCollectionOptions({
+const baseOptions = queryCollectionOptions({
+  id: "congregation_admin",
     queryKey: ["congregation_admin"],
 
     queryFn: async () => {
@@ -42,5 +44,15 @@ export const congregationAdminCollection = createCollection(
       const { original } = transaction.mutations[0];
       await supabase.from("congregation_admin").delete().eq("id", original.id);
     },
-  })
-);
+  });
+
+const persistedOptions = persistedCollectionOptions({
+  ...baseOptions,
+  persistence,
+  schemaVersion: 1,
+});
+
+export const congregationAdminCollection = createCollection({
+  ...persistedOptions,
+  schema: congregationAdminSchema,
+});

@@ -1,11 +1,13 @@
 import { createCollection } from "@tanstack/react-db";
 import { queryCollectionOptions } from "@tanstack/query-db-collection";
+import { persistedCollectionOptions } from "@tanstack/browser-db-sqlite-persistence";
 import { supabase } from "@supabase-db/client";
 import { queryClient } from "@tanstack-query/client";
 import { authOtpLogSchema } from "@tanstack-db/auth-otp-log/authOtpLogSchema";
+import { persistence } from "@tanstack-db/persistence";
 
-export const authOtpLogCollection = createCollection(
-  queryCollectionOptions({
+const baseOptions = queryCollectionOptions({
+  id: "auth_otp_log",
     queryKey: ["auth_otp_log"],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -29,5 +31,15 @@ export const authOtpLogCollection = createCollection(
         .update(changes)
         .eq("id", original.id);
     },
-  }),
-);
+  });
+
+const persistedOptions = persistedCollectionOptions({
+  ...baseOptions,
+  persistence,
+  schemaVersion: 1,
+});
+
+export const authOtpLogCollection = createCollection({
+  ...persistedOptions,
+  schema: authOtpLogSchema,
+});

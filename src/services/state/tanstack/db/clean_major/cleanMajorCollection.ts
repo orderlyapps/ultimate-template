@@ -1,11 +1,13 @@
 import { createCollection } from "@tanstack/react-db";
 import { queryCollectionOptions } from "@tanstack/query-db-collection";
+import { persistedCollectionOptions } from "@tanstack/browser-db-sqlite-persistence";
 import { supabase } from "@supabase-db/client";
 import { queryClient } from "@tanstack-query/client";
 import { cleanMajorSchema } from "@tanstack-db/clean_major/cleanMajorSchema";
+import { persistence } from "@tanstack-db/persistence";
 
-export const cleanMajorCollection = createCollection(
-  queryCollectionOptions({
+const baseOptions = queryCollectionOptions({
+  id: "clean_major",
     queryKey: ["clean_major"],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -65,5 +67,15 @@ export const cleanMajorCollection = createCollection(
 
       return data;
     },
-  }),
-);
+  });
+
+const persistedOptions = persistedCollectionOptions({
+  ...baseOptions,
+  persistence,
+  schemaVersion: 1,
+});
+
+export const cleanMajorCollection = createCollection({
+  ...persistedOptions,
+  schema: cleanMajorSchema,
+});

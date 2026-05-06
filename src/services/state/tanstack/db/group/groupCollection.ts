@@ -1,11 +1,13 @@
 import { createCollection } from "@tanstack/react-db";
 import { queryCollectionOptions } from "@tanstack/query-db-collection";
+import { persistedCollectionOptions } from "@tanstack/browser-db-sqlite-persistence";
 import { supabase } from "@supabase-db/client";
 import { queryClient } from "@tanstack-query/client";
 import { groupSchema } from "@tanstack-db/group/groupSchema";
+import { persistence } from "@tanstack-db/persistence";
 
-export const groupCollection = createCollection(
-  queryCollectionOptions({
+const baseOptions = queryCollectionOptions({
+  id: "group",
     queryKey: ["group"],
     queryFn: async () => {
       const { data, error } = await supabase.from("group").select("*");
@@ -58,5 +60,15 @@ export const groupCollection = createCollection(
 
       return data;
     },
-  }),
-);
+  });
+
+const persistedOptions = persistedCollectionOptions({
+  ...baseOptions,
+  persistence,
+  schemaVersion: 1,
+});
+
+export const groupCollection = createCollection({
+  ...persistedOptions,
+  schema: groupSchema,
+});
