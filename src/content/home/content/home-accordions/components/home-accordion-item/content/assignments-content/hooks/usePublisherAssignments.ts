@@ -43,7 +43,7 @@ export function usePublisherAssignments(): {
   const thisWeekId = getThisWeekID();
 
   // Resolve the publisher's group_id for cleaning assignments
-  const { data: livePublisher } = useLiveQuery(
+  const { data: livePublisher, isReady: publisherReady } = useLiveQuery(
     (q) =>
       q
         .from({ p: publisherCollection })
@@ -54,7 +54,7 @@ export function usePublisherAssignments(): {
   const groupId = livePublisher?.[0]?.group_id ?? "";
 
   // --- Midweek assignments (participant-based) ---
-  const { data: midweekAssignments } = useLiveQuery(
+  const { data: midweekAssignments, isReady: midweekReady } = useLiveQuery(
     (q) =>
       q
         .from({ ma: midweekAssignmentCollection })
@@ -69,7 +69,7 @@ export function usePublisherAssignments(): {
   );
 
   // --- Weekend assignments (participant-based) ---
-  const { data: weekendAssignments } = useLiveQuery(
+  const { data: weekendAssignments, isReady: weekendReady } = useLiveQuery(
     (q) =>
       q
         .from({ wa: weekendAssignmentCollection })
@@ -84,7 +84,7 @@ export function usePublisherAssignments(): {
   );
 
   // --- AV assignments (participant-based, covers both midweek and weekend) ---
-  const { data: avAssignments } = useLiveQuery(
+  const { data: avAssignments, isReady: avReady } = useLiveQuery(
     (q) =>
       q
         .from({ av: avAssignmentCollection })
@@ -99,7 +99,7 @@ export function usePublisherAssignments(): {
   );
 
   // --- Speaker assignments (speaker_id based, join congregation for name) ---
-  const { data: speakerAssignments } = useLiveQuery(
+  const { data: speakerAssignments, isReady: speakerReady } = useLiveQuery(
     (q) =>
       q
         .from({ sa: speakerAssignmentCollection })
@@ -117,7 +117,7 @@ export function usePublisherAssignments(): {
   );
 
   // --- Cleaning major (group-based) ---
-  const { data: cleanMajorAssignments } = useLiveQuery(
+  const { data: cleanMajorAssignments, isReady: cleanMajorReady } = useLiveQuery(
     (q) =>
       q
         .from({ cm: cleanMajorCollection })
@@ -132,7 +132,7 @@ export function usePublisherAssignments(): {
   );
 
   // --- Cleaning minor (group-based) ---
-  const { data: cleanMinorAssignments } = useLiveQuery(
+  const { data: cleanMinorAssignments, isReady: cleanMinorReady } = useLiveQuery(
     (q) =>
       q
         .from({ cm: cleanMinorCollection })
@@ -146,15 +146,19 @@ export function usePublisherAssignments(): {
     [groupId, congregationId, thisWeekId],
   );
 
-  // Queries are loading if publisher exists but all data arrays are still undefined
+  // While any collection hasn't reached "ready" status, treat as loading so
+  // we don't flash an empty state before persisted/synced data hydrates.
+  // useLiveQuery's `data` is always an array (never undefined), so we rely
+  // on the per-query isReady flag instead.
   const isLoading =
     !!publisher &&
-    (midweekAssignments === undefined ||
-      weekendAssignments === undefined ||
-      avAssignments === undefined ||
-      speakerAssignments === undefined ||
-      cleanMajorAssignments === undefined ||
-      cleanMinorAssignments === undefined);
+    (!publisherReady ||
+      !midweekReady ||
+      !weekendReady ||
+      !avReady ||
+      !speakerReady ||
+      !cleanMajorReady ||
+      !cleanMinorReady);
 
   // --- Build the grouped items ---
   const items: AssignmentItem[] = [];

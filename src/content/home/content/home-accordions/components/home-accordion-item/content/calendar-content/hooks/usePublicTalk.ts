@@ -30,7 +30,7 @@ export function usePublicTalk(): {
   const congregationId = getUserCongregation()?.id;
   const thisWeekId = getThisWeekID();
 
-  const { data: publicTalks } = useLiveQuery(
+  const { data: publicTalks, isReady } = useLiveQuery(
     (q) =>
       q
         .from({ sa: speakerAssignmentCollection })
@@ -59,7 +59,9 @@ export function usePublicTalk(): {
     [congregationId, thisWeekId],
   );
 
-  const isLoading = !!congregationId && publicTalks === undefined;
+  // While the collection hasn't reached "ready" status, treat as loading so
+  // we don't flash an empty state before persisted/synced data hydrates.
+  const isLoading = !!congregationId && !isReady;
 
   // Pick the earliest upcoming talk
   const sorted = [...(publicTalks ?? [])].sort((a, b) =>

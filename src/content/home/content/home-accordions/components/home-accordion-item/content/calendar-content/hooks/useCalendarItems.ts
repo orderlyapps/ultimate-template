@@ -58,7 +58,7 @@ export function useCalendarItems(): {
   const thisWeekId = getThisWeekID();
 
   // --- Upcoming events for the congregation ---
-  const { data: events } = useLiveQuery(
+  const { data: events, isReady } = useLiveQuery(
     (q) =>
       q
         .from({ e: eventCollection })
@@ -71,7 +71,9 @@ export function useCalendarItems(): {
     [congregationId, thisWeekId],
   );
 
-  const isLoading = !!congregationId && events === undefined;
+  // While the collection hasn't reached "ready" status, treat as loading so
+  // we don't flash an empty state before persisted/synced data hydrates.
+  const isLoading = !!congregationId && !isReady;
 
   // Today's date string for filtering past events
   const todayStr = format(new Date(), "yyyy-MM-dd");
