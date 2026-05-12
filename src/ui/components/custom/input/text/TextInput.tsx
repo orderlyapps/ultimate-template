@@ -1,6 +1,6 @@
 import { Label } from "@ionic-display/label/Label";
 import { Item } from "@ionic-layout/item/Item";
-import { IonInput } from "@ionic/react";
+import { IonInput, IonLabel } from "@ionic/react";
 import type { ComponentProps } from "react";
 
 type TextInputProps = ComponentProps<typeof IonInput>;
@@ -13,9 +13,10 @@ export const TextInput = ({ label, ...props }: TextInputProps) => {
   };
   return (
     <Item>
-      <IonInput {...defaultProps}>
-        <Label slot="label">{label}</Label>
-      </IonInput>
+      <IonLabel>
+        <Label>{label}</Label>
+      </IonLabel>
+      <IonInput slot="end" {...defaultProps}></IonInput>
     </Item>
   );
 };

@@ -11,6 +11,7 @@ import { genderOptions } from "@tanstack-db/publisher/genderSchema";
 import type { PublisherStanding } from "@tanstack-db/publisher/standingSchema";
 import type { PublisherType } from "@tanstack-db/publisher/typeSchema";
 import type { PublisherGender } from "@tanstack-db/publisher/genderSchema";
+import { useUserCongregation } from "@feature/db/congregation/user-congregation/use-user-congregation/useUserCongregation";
 
 interface PublisherFormProps {
   publisherId?: string;
@@ -40,6 +41,7 @@ const defaultFormState: FormState = {
 export function PublisherForm({ publisherId, onSuccess }: PublisherFormProps) {
   const [formState, setFormState] = useState<FormState>(defaultFormState);
   const [isInitialized, setIsInitialized] = useState(false);
+  const [userCongregation] = useUserCongregation();
 
   const { data: publishers } = useLiveQuery((q) =>
     q
@@ -67,11 +69,6 @@ export function PublisherForm({ publisherId, onSuccess }: PublisherFormProps) {
       return;
     }
 
-    const congregationId = localStorage.getItem("congregationId");
-    if (!congregationId) {
-      return;
-    }
-
     if (publisherId && existingPublisher) {
       publisherCollection.update(publisherId, (draft) => {
         draft.first_name = formState.first_name.trim();
@@ -83,6 +80,10 @@ export function PublisherForm({ publisherId, onSuccess }: PublisherFormProps) {
         draft.gender = formState.gender;
       });
     } else {
+      const congregationId = userCongregation?.id;
+      if (!congregationId || congregationId === "null") {
+        return;
+      }
       publisherCollection.insert({
         id: crypto.randomUUID(),
         congregation_id: congregationId,
