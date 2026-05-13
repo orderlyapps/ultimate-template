@@ -195,6 +195,7 @@ export default defineConfig({
         globIgnores: ["**/*.map"],
         runtimeCaching: [
           {
+            // Cache SVG icons
             urlPattern: ({ url }) => url.pathname.endsWith(".svg"),
             handler: "CacheFirst",
             options: {
@@ -202,6 +203,89 @@ export default defineConfig({
               expiration: {
                 maxEntries: 200,
                 maxAgeSeconds: 60 * 60 * 24 * 30,
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
+          {
+            // Cache Mapbox vector tiles (highest priority for map performance)
+            urlPattern: ({ url }) =>
+              url.hostname === "api.mapbox.com" &&
+              (url.pathname.includes("/v4/") || url.pathname.includes("/tiles/")),
+            handler: "CacheFirst",
+            options: {
+              cacheName: "mapbox-tiles",
+              expiration: {
+                maxEntries: 500,
+                maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
+          {
+            // Cache Mapbox styles (JSON style definitions)
+            urlPattern: ({ url }) =>
+              url.hostname === "api.mapbox.com" &&
+              url.pathname.includes("/styles/v1/"),
+            handler: "StaleWhileRevalidate",
+            options: {
+              cacheName: "mapbox-styles",
+              expiration: {
+                maxEntries: 10,
+                maxAgeSeconds: 60 * 60 * 24 * 7, // 7 days
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
+          {
+            // Cache Mapbox sprites (icons, markers)
+            urlPattern: ({ url }) =>
+              url.hostname === "api.mapbox.com" &&
+              url.pathname.includes("/sprites/"),
+            handler: "CacheFirst",
+            options: {
+              cacheName: "mapbox-sprites",
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
+          {
+            // Cache Mapbox fonts (glyphs for labels)
+            urlPattern: ({ url }) =>
+              url.hostname === "api.mapbox.com" &&
+              url.pathname.includes("/fonts/"),
+            handler: "CacheFirst",
+            options: {
+              cacheName: "mapbox-fonts",
+              expiration: {
+                maxEntries: 100,
+                maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
+          {
+            // Cache other Mapbox API responses (fallback)
+            urlPattern: ({ url }) => url.hostname === "api.mapbox.com",
+            handler: "StaleWhileRevalidate",
+            options: {
+              cacheName: "mapbox-api",
+              expiration: {
+                maxEntries: 100,
+                maxAgeSeconds: 60 * 60 * 24 * 7, // 7 days
               },
               cacheableResponse: {
                 statuses: [0, 200],
