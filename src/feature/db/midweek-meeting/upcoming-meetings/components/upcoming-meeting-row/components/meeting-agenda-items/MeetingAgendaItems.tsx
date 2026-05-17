@@ -183,6 +183,12 @@ export const MeetingAgendaItems: FC<Props> = ({ meeting, weekId }) => {
 
   return (
     <>
+      <Space height="1.5" />
+      <Item lines="none">
+        <Text bold size="xl">
+          Meeting Parts
+        </Text>
+      </Item>
       {items.map(
         (
           {
@@ -228,21 +234,35 @@ export const MeetingAgendaItems: FC<Props> = ({ meeting, weekId }) => {
                     <Col>
                       {participant && (
                         <Text>
-                          {formatPublisherName(participant as Parameters<typeof formatPublisherName>[0], "display last")}
+                          {formatPublisherName(
+                            participant as Parameters<
+                              typeof formatPublisherName
+                            >[0],
+                            "display last",
+                          )}
                           <br />
                         </Text>
                       )}
 
                       {reader && (
                         <Text color="medium">
-                          Reader: {formatPublisherName(reader as Parameters<typeof formatPublisherName>[0], "display last")}
+                          Reader:{" "}
+                          {formatPublisherName(
+                            reader as Parameters<typeof formatPublisherName>[0],
+                            "display last",
+                          )}
                         </Text>
                       )}
 
                       {assistant && (
                         <Text color="medium">
                           Assistant:{" "}
-                          {formatPublisherName(assistant as Parameters<typeof formatPublisherName>[0], "display last")}
+                          {formatPublisherName(
+                            assistant as Parameters<
+                              typeof formatPublisherName
+                            >[0],
+                            "display last",
+                          )}
                         </Text>
                       )}
                     </Col>

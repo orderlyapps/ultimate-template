@@ -24,7 +24,7 @@ export const MidweekMeeting: React.FC = () => {
           <IonTitle>Midweek Meeting</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
+      <IonContent fullscreen id="fullscreen">
         <WeekNavigation week_id={week_id} />
         <UpcomingMeetings weekId={week_id} />
       </IonContent>

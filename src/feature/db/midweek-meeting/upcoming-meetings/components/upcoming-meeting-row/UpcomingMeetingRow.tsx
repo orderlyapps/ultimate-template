@@ -8,6 +8,7 @@ import { MidweekAttendantAssignments } from "./components/midweek-attendant-assi
 import { WeekEvents } from "@feature/db/shared/week-events/WeekEvents";
 import { useBlockingEvents } from "@feature/db/shared/week-events/useBlockingEvents";
 import { Space } from "@layout/space/Space";
+import { IonGrid, IonRow, IonCol } from "@ionic/react";
 
 type Props = {
   weekId: string;
@@ -30,11 +31,17 @@ export const UpcomingMeetingRow: FC<Props> = ({ weekId }) => {
     <List lines="none">
       <WeekEvents weekId={weekId} meetingType="midweek" />
       {!hasBlockingEvent && meeting && (
-        <>
-          <MeetingAgendaItems meeting={meeting} weekId={weekId} />
-          <MidweekAVAssignments weekId={weekId} />
-          <MidweekAttendantAssignments weekId={weekId} />
-        </>
+        <IonGrid className="ion-no-padding ion-padding-start">
+          <IonRow>
+            <IonCol size="12" sizeMd="6">
+              <MeetingAgendaItems meeting={meeting} weekId={weekId} />
+            </IonCol>
+            <IonCol size="12" sizeMd="6">
+              <MidweekAVAssignments weekId={weekId} />
+              <MidweekAttendantAssignments weekId={weekId} />
+            </IonCol>
+          </IonRow>
+        </IonGrid>
       )}
       <Space />
     </List>
