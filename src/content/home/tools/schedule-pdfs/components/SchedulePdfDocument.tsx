@@ -2,6 +2,7 @@ import { Document, Text, View, StyleSheet } from "@react-pdf/renderer";
 import { format } from "date-fns";
 import { SchedulePdfHeader } from "./schedule-pdf-header/SchedulePdfHeader";
 import { MidweekSchedulePdfDocument } from "./midweek-schedule-pdf/MidweekSchedulePdfDocument";
+import { AudioVideoPdfDocument } from "./audio-video-pdf/AudioVideoPdfDocument";
 import { PdfPage } from "@services/vendor/pdf/pdf-page";
 
 const styles = StyleSheet.create({
@@ -43,6 +44,11 @@ export const SchedulePdfDocument: React.FC<SchedulePdfDocumentProps> = ({
   // Render the specialized midweek schedule PDF for midweek meetings
   if (title === "Midweek Meeting") {
     return <MidweekSchedulePdfDocument dateRange={dateRange} />;
+  }
+
+  // Render the audio/video schedule PDF for audio-video
+  if (title === "Audio Video") {
+    return <AudioVideoPdfDocument dateRange={dateRange} />;
   }
 
   const firstDate = format(new Date(dateRange.firstMonday), "MMMM d, yyyy");
