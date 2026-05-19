@@ -46,9 +46,9 @@ export const StyleControlsModal: React.FC = () => {
             <IonInput
               label="Road Label Size"
               type="number"
-              min="1.5"
+              min="0.5"
               max="4"
-              step="0.1"
+              step="0.05"
               value={String(styling.roadLabelSize)}
               onIonChange={(e) => {
                 const value = parseFloat(e.detail.value as string);
@@ -60,7 +60,7 @@ export const StyleControlsModal: React.FC = () => {
             <IonInput
               label="Text Size (px)"
               type="number"
-              min="48"
+              min="12"
               max="188"
               step="1"
               value={String(styling.mapNameSize)}
