@@ -15,6 +15,7 @@ import { useAuthUserStore } from "./store/useAuthUserStore";
 import { SectionHeading } from "@display/section-heading/SectionHeading";
 import { CongregationAdminToggle } from "./components/congregation-admin-toggle/CongregationAdminToggle";
 import { GroupPermissionsManager } from "./components/group-permissions-manager/GroupPermissionsManager";
+import { CleanPermissionsManager } from "./components/clean-permissions-manager/CleanPermissionsManager";
 import { useUserPermissions } from "@services/app/auth/permissions/useUserPermissions";
 
 /**
@@ -85,6 +86,10 @@ export const AuthUserContent: React.FC = () => {
               congregationId={publisher.congregation_id}
             />
             <GroupPermissionsManager
+              authUserId={publisher.auth_id}
+              congregationId={publisher.congregation_id}
+            />
+            <CleanPermissionsManager
               authUserId={publisher.auth_id}
               congregationId={publisher.congregation_id}
             />
