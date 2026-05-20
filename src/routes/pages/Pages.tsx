@@ -15,6 +15,7 @@ import { TalkSection } from "@pages/home/tools/talks/talk/section/TalkSection";
 import { TalkSubsection } from "@pages/home/tools/talks/talk/section/subsection/TalkSubsection";
 import { GroupReports } from "@pages/home/tools/group-reports/GroupReports";
 import { Reminders } from "@pages/home/tools/reminders/Reminders";
+import { ClamAssignmentForms } from "@pages/home/tools/clam-assignment-forms/ClamAssignmentForms";
 import { HomeEvents } from "@pages/home/events/Events";
 import { HomeAssignments } from "@pages/home/assignments/Assignments";
 
@@ -90,6 +91,7 @@ export const pages = (
     />
     <Route exact path="/home/group-reports" render={() => <GroupReports />} />
     <Route exact path="/home/tools/reminders" render={() => <Reminders />} />
+    <Route exact path="/home/tools/clam-assignment-forms" render={() => <ClamAssignmentForms />} />
     <Route exact path="/home/events" render={() => <HomeEvents />} />
     <Route exact path="/home/assignments" render={() => <HomeAssignments />} />
 
