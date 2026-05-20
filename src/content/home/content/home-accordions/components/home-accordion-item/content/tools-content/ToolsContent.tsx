@@ -2,6 +2,7 @@ import { List } from "@ionic-layout/list/List";
 import { IonItem, IonLabel } from "@ionic/react";
 import { FeatureGuard } from "@services/app/features/FeatureGuard";
 import { PermissionGuard } from "@services/app/auth/permissions/PermissionGuard";
+import { AuthGuard } from "@services/app/auth/AuthGuard";
 import { Text } from "@ionic-display/text/Text";
 import { Space } from "@layout/space/Space";
 
@@ -96,7 +97,7 @@ export function ToolsContent() {
         </IonLabel>
       </IonItem>
 
-      <FeatureGuard id="schedule-pdfs">
+      <AuthGuard>
         <IonItem
           className="ion-text-right ion-padding-bottom ion-margin-bottom"
           routerLink="/home/tools/schedule-pdfs"
@@ -108,7 +109,7 @@ export function ToolsContent() {
             <Space height="0.5" />
           </IonLabel>
         </IonItem>
-      </FeatureGuard>
+      </AuthGuard>
 
       <Space height="2" />
     </List>
