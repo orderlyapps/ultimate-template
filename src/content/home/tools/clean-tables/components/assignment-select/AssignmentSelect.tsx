@@ -58,8 +58,8 @@ export const AssignmentSelect: React.FC<AssignmentSelectProps> = ({
         style={{ flex: 1 }}
         interface="popover"
       >
-        <IonSelectOption value="">Unassigned</IonSelectOption>
-        {groups.map((group) => (
+        {value && <IonSelectOption value="">Unassign</IonSelectOption>}
+        {groups.sort((a, b) => a.name.localeCompare(b.name)).map((group) => (
           <IonSelectOption key={group.id} value={group.id}>
             {group.name}
           </IonSelectOption>
