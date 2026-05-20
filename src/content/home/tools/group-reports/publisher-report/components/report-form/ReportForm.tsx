@@ -93,7 +93,6 @@ export const ReportForm: React.FC<Props> = ({
         form.bible_studies !== "" ? Number(form.bible_studies) : null,
       comments: form.comments.trim() || null,
     };
-
     if (existingReport) {
       reportCollection.update(
         confidentialId + congregationId + date,

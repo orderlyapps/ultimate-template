@@ -28,21 +28,35 @@ const baseOptions = queryCollectionOptions({
     getKey: (item) => item.id,
 
     onInsert: async ({ transaction }) => {
-      const { changes } = transaction.mutations[0];
-      await supabase.from("report_permission").insert(changes);
+      const { modified } = transaction.mutations[0];
+      const { error } = await supabase
+        .from("report_permission")
+        .insert(modified);
+      if (error) {
+        throw new Error(`Failed to insert report_permission: ${error.message}`);
+      }
     },
 
     onUpdate: async ({ transaction }) => {
       const { changes, original } = transaction.mutations[0];
-      await supabase
+      const { error } = await supabase
         .from("report_permission")
         .update(changes)
         .eq("id", original.id);
+      if (error) {
+        throw new Error(`Failed to update report_permission: ${error.message}`);
+      }
     },
 
     onDelete: async ({ transaction }) => {
       const { original } = transaction.mutations[0];
-      await supabase.from("report_permission").delete().eq("id", original.id);
+      const { error } = await supabase
+        .from("report_permission")
+        .delete()
+        .eq("id", original.id);
+      if (error) {
+        throw new Error(`Failed to delete report_permission: ${error.message}`);
+      }
     },
   });
 
