@@ -3,6 +3,7 @@ import { format } from "date-fns";
 import { SchedulePdfHeader } from "./schedule-pdf-header/SchedulePdfHeader";
 import { MidweekSchedulePdfDocument } from "./midweek-schedule-pdf/MidweekSchedulePdfDocument";
 import { AudioVideoPdfDocument } from "./audio-video-pdf/AudioVideoPdfDocument";
+import { CleaningSchedulePdfDocument } from "./cleaning-schedule-pdf/CleaningSchedulePdfDocument";
 import { PdfPage } from "@services/vendor/pdf/pdf-page";
 
 const styles = StyleSheet.create({
@@ -49,6 +50,11 @@ export const SchedulePdfDocument: React.FC<SchedulePdfDocumentProps> = ({
   // Render the audio/video schedule PDF for audio-video
   if (title === "Audio Video") {
     return <AudioVideoPdfDocument dateRange={dateRange} />;
+  }
+
+  // Render the cleaning schedule PDF for cleaning
+  if (title === "Cleaning") {
+    return <CleaningSchedulePdfDocument dateRange={dateRange} />;
   }
 
   const firstDate = format(new Date(dateRange.firstMonday), "MMMM d, yyyy");
