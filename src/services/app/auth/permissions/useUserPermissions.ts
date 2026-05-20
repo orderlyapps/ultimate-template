@@ -4,7 +4,8 @@ import { authUserCollection } from "@tanstack-db/auth-user/authUserCollection";
 import { congregationAdminCollection } from "@tanstack-db/congregation-admin/congregationAdminCollection";
 import { reportPermissionCollection } from "@tanstack-db/report-permission/reportPermissionCollection";
 import { publisherCollection } from "@tanstack-db/publisher/publisherCollection";
-import type { UserPermissions, GroupPermission } from "./types";
+import { cleanPermissionCollection } from "@tanstack-db/clean-permission/cleanPermissionCollection";
+import type { UserPermissions, GroupPermission, CleanPermission } from "./types";
 
 /**
  * Fetches and consolidates all permissions for the current user.
@@ -36,12 +37,18 @@ export const useUserPermissions = (): UserPermissions => {
     q.from({ p: publisherCollection })
   );
 
+  // Fetch clean_permission data
+  const { data: cleanPermissions, isLoading: isCleanPermissionLoading } = useLiveQuery((q) =>
+    q.from({ cp: cleanPermissionCollection })
+  );
+
   const isLoading =
     isAuthLoading ||
     isAuthUserLoading ||
     isCongregationAdminLoading ||
     isReportPermissionLoading ||
-    isPublisherLoading;
+    isPublisherLoading ||
+    isCleanPermissionLoading;
 
   // Not authenticated
   if (!currentUserId) {
@@ -50,6 +57,7 @@ export const useUserPermissions = (): UserPermissions => {
       isCongregationAdmin: false,
       congregationId: null,
       groupPermissions: [],
+      cleanPermissions: [],
       isLoading,
     };
   }
@@ -78,11 +86,21 @@ export const useUserPermissions = (): UserPermissions => {
         can_edit: rp.can_edit,
       })) ?? [];
 
+  // Get clean permissions for current user
+  const userCleanPermissions: CleanPermission[] =
+    cleanPermissions
+      ?.filter((cp) => cp.auth_user_id === currentUserId)
+      .map((cp) => ({
+        congregation_id: cp.congregation_id,
+        can_edit: cp.can_edit,
+      })) ?? [];
+
   return {
     isSuperAdmin,
     isCongregationAdmin,
     congregationId,
     groupPermissions: userGroupPermissions,
+    cleanPermissions: userCleanPermissions,
     isLoading,
   };
 };

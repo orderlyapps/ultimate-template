@@ -29,6 +29,7 @@ export const useHasPermission = (
     isCongregationAdmin,
     congregationId,
     groupPermissions,
+    cleanPermissions,
     isLoading,
   } = useUserPermissions();
 
@@ -76,6 +77,14 @@ export const useHasPermission = (
         );
       }
       return groupPermissionResult.canEdit;
+
+    case "edit:clean":
+      // Check if user can edit clean tables
+      return (
+        isSuperAdmin ||
+        isCongregationAdmin ||
+        cleanPermissions.some((cp) => cp.can_edit)
+      );
 
     default:
       return false;

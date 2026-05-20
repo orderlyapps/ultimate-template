@@ -68,6 +68,21 @@ export function ToolsContent() {
         </IonItem>
       </PermissionGuard>
 
+      <PermissionGuard permission="edit:clean">
+        <IonItem
+          lines="none"
+          routerLink="/home/tools/clean-tables"
+          className="ion-text-right"
+          slot="end"
+        >
+          <IonLabel>
+            <Space height="0.5" />
+            <Text bold>Cleaning Assignments</Text>
+            <Space height="0.5" />
+          </IonLabel>
+        </IonItem>
+      </PermissionGuard>
+
       <IonItem
         lines="none"
         routerLink="/home/tools/reminders"

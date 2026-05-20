@@ -13,6 +13,12 @@ export interface GroupPermission {
   can_edit: boolean;
 }
 
+/** Clean permission from clean_permission table */
+export interface CleanPermission {
+  congregation_id: string;
+  can_edit: boolean;
+}
+
 /** Consolidated user permissions across all systems */
 export interface UserPermissions {
   /** Whether the user is a super admin (full database access) */
@@ -27,6 +33,9 @@ export interface UserPermissions {
   /** Group-level permissions from report_permission table */
   groupPermissions: GroupPermission[];
 
+  /** Clean table permissions from clean_permission table */
+  cleanPermissions: CleanPermission[];
+
   /** Whether permissions are still loading */
   isLoading: boolean;
 }
@@ -36,7 +45,8 @@ export type PermissionCheck =
   | "super_admin"
   | "congregation_admin"
   | "read:report"
-  | "edit:report";
+  | "edit:report"
+  | "edit:clean";
 
 /** Result of a group permission check */
 export interface GroupPermissionResult {
