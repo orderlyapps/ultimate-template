@@ -8,9 +8,12 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
+import { useParams } from "react-router-dom";
 import { ClamAssignmentFormsContent } from "@/content/home/tools/clam-assignment-forms/ClamAssignmentFormsContent";
 
 export const ClamAssignmentForms: React.FC = () => {
+  const { week_id } = useParams<{ week_id: string }>();
+
   return (
     <IonPage>
       <IonHeader>
@@ -21,13 +24,8 @@ export const ClamAssignmentForms: React.FC = () => {
           <IonTitle>CLAM Assignment Forms</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen className="ion-padding">
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">CLAM Assignment Forms</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <ClamAssignmentFormsContent />
+      <IonContent fullscreen>
+        <ClamAssignmentFormsContent week_id={week_id} />
       </IonContent>
     </IonPage>
   );

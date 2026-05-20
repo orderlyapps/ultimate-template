@@ -91,7 +91,7 @@ export const pages = (
     />
     <Route exact path="/home/group-reports" render={() => <GroupReports />} />
     <Route exact path="/home/tools/reminders" render={() => <Reminders />} />
-    <Route exact path="/home/tools/clam-assignment-forms" render={() => <ClamAssignmentForms />} />
+    <Route exact path="/home/tools/clam-assignment-forms/:week_id" render={() => <ClamAssignmentForms />} />
     <Route exact path="/home/events" render={() => <HomeEvents />} />
     <Route exact path="/home/assignments" render={() => <HomeAssignments />} />
 
