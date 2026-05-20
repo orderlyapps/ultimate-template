@@ -46,7 +46,7 @@ export const AssignmentSelect: React.FC<AssignmentSelectProps> = ({
       </Text>
       <IonSelect
         value={value || undefined}
-        placeholder={`- - - - - - - - -`}
+        placeholder={`- - - - -`}
         onIonChange={(e) => {
           const selectedValue = e.detail.value;
           if (selectedValue === "") {
