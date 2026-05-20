@@ -9,17 +9,17 @@ const styles = StyleSheet.create({
     fontFamily: "Helvetica",
   },
   header: {
-    marginBottom: 20,
+    marginBottom: 10,
     borderBottom: "2pt solid #333",
-    paddingBottom: 10,
+    paddingBottom: 5,
   },
   title: {
-    fontSize: 24,
+    fontSize: 16,
     fontWeight: "bold",
     marginBottom: 5,
   },
   subtitle: {
-    fontSize: 14,
+    fontSize: 12,
     color: "#666",
   },
   content: {
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
  */
 type PdfPageProps = {
   /** Page size - defaults to A4 */
-  size?: "A4" | "LETTER" | [number, number];
+  size?: "A4" | "A6" | "LETTER" | [number, number];
   /** Page orientation */
   orientation?: "portrait" | "landscape";
   /** Page title displayed in the header */

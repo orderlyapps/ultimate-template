@@ -68,6 +68,19 @@ export function ToolsContent() {
         </IonItem>
       </PermissionGuard>
 
+      <IonItem
+        lines="none"
+        routerLink="/home/tools/reminders"
+        className="ion-text-right"
+        slot="end"
+      >
+        <IonLabel>
+          <Space height="0.5" />
+          <Text bold>Reminders</Text>
+          <Space height="0.5" />
+        </IonLabel>
+      </IonItem>
+
       <FeatureGuard id="schedule-pdfs">
         <IonItem
           className="ion-text-right ion-padding-bottom ion-margin-bottom"
@@ -81,19 +94,6 @@ export function ToolsContent() {
           </IonLabel>
         </IonItem>
       </FeatureGuard>
-
-      <IonItem
-        lines="none"
-        routerLink="/home/tools/reminders"
-        className="ion-text-right"
-        slot="end"
-      >
-        <IonLabel>
-          <Space height="0.5" />
-          <Text bold>Reminders</Text>
-          <Space height="0.5" />
-        </IonLabel>
-      </IonItem>
 
       <Space height="2" />
     </List>

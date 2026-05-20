@@ -45,6 +45,7 @@ export function ClamAssignmentFormsContent({ week_id }: Props) {
       </Item>
       {meeting && (
         <StudentPartsList
+          week_id={week_id}
           meeting={meeting}
           participant={participant}
           hasSecondSchool={hasSecondSchool}
