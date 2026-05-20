@@ -71,9 +71,6 @@ export const MonthPicker: React.FC<MonthPickerProps> = ({
   ...props
 }) => {
   const monthOptions = getMonthOptions(monthsInPast, monthsInFuture);
-  const now = new Date();
-  const currentMonthValue = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
-  const displayValue = value ?? currentMonthValue;
 
   const handleChange = (e: CustomEvent) => {
     const selectedValue = e.detail.value as string;
@@ -101,9 +98,10 @@ export const MonthPicker: React.FC<MonthPickerProps> = ({
         </IonLabel>
       )}
       <IonSelect
-        value={displayValue}
+        value={value}
         onIonChange={handleChange}
         interface="popover"
+        placeholder="Select month"
         {...props}
         slot="end"
       >

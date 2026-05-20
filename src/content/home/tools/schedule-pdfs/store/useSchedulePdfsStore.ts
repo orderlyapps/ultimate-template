@@ -14,7 +14,7 @@ type SchedulePdfsStore = {
 
 export const useSchedulePdfsStore = create<SchedulePdfsStore>((set) => ({
   activeModal: null,
-  setActiveModal: (modal) => set({ activeModal: modal }),
+  setActiveModal: (modal) => set({ activeModal: modal, selectedMonth: null }),
   selectedMonth: null,
   setSelectedMonth: (month) => set({ selectedMonth: month }),
 }));
