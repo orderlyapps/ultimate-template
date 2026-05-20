@@ -81,6 +81,20 @@ export function ToolsContent() {
           </IonLabel>
         </IonItem>
       </FeatureGuard>
+
+      <IonItem
+        lines="none"
+        routerLink="/home/tools/reminders"
+        className="ion-text-right"
+        slot="end"
+      >
+        <IonLabel>
+          <Space height="0.5" />
+          <Text bold>Reminders</Text>
+          <Space height="0.5" />
+        </IonLabel>
+      </IonItem>
+
       <Space height="2" />
     </List>
   );

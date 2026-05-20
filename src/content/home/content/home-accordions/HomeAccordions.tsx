@@ -4,8 +4,7 @@ import {
   type HomeAccordionId,
 } from "@/content/home/content/home-accordions/store/useHomeAccordionOrderStore";
 import { HomeAccordionItem } from "./components/home-accordion-item/HomeAccordionItem";
-import { useAppFeaturesStore } from "@services/app/features/useAppFeaturesStore";
-import { useUserPermissions } from "@services/app/auth/permissions/useUserPermissions";
+import { useAuth } from "@services/app/auth/useAuth";
 // import { useFeatureAccess } from "@services/app/auth/temp-feature-access/useFeatureAccess";
 import { NotificationsAccordionItem } from "@/content/home/content/home-accordions/components/notifications-accordion-item/NotificationsAccordionItem";
 
@@ -14,20 +13,7 @@ export function HomeAccordions() {
   const expandedIds = useHomeAccordionOrderStore((s) => s.expandedIds);
   const setExpandedIds = useHomeAccordionOrderStore((s) => s.setExpandedIds);
 
-  const isTalksEnabled = useAppFeaturesStore((s) => s.isEnabled("talks"));
-  const isMapPrintEnabled = useAppFeaturesStore((s) => s.isEnabled("mapPrint"));
-  const isGroupReportsEnabled = useAppFeaturesStore((s) =>
-    s.isEnabled("groupReports"),
-  );
-  // const { isUnlocked: isUnlockedForDamian, isUserAllowed: isDamianAllowed } =
-  //   useFeatureAccess(["damian"]);
-
-  const { isSuperAdmin, isCongregationAdmin, groupPermissions } = useUserPermissions();
-  const hasAnyPermission =
-    isSuperAdmin || isCongregationAdmin || groupPermissions.length > 0;
-
-  const hasAnyToolEnabled =
-    isTalksEnabled || isMapPrintEnabled || isGroupReportsEnabled || hasAnyPermission;
+  const { isAuthenticated } = useAuth();
 
   return (
     <IonAccordionGroup
@@ -38,7 +24,7 @@ export function HomeAccordions() {
       }
     >
       {order.map((id) => {
-        if (id === "tools" && !hasAnyToolEnabled) return null;
+        if (id === "tools" && !isAuthenticated) return null;
 
         if (
           id === "announcements" 
