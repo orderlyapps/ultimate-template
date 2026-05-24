@@ -19,6 +19,11 @@ export interface CleanPermission {
   can_edit: boolean;
 }
 
+/** Secretary permission from secretary_permission table */
+export interface SecretaryPermission {
+  congregation_id: string;
+}
+
 /** Consolidated user permissions across all systems */
 export interface UserPermissions {
   /** Whether the user is a super admin (full database access) */
@@ -36,6 +41,9 @@ export interface UserPermissions {
   /** Clean table permissions from clean_permission table */
   cleanPermissions: CleanPermission[];
 
+  /** Secretary permissions from secretary_permission table */
+  secretaryPermissions: SecretaryPermission[];
+
   /** Whether permissions are still loading */
   isLoading: boolean;
 }
@@ -46,7 +54,8 @@ export type PermissionCheck =
   | "congregation_admin"
   | "read:report"
   | "edit:report"
-  | "edit:clean";
+  | "edit:clean"
+  | "secretary";
 
 /** Result of a group permission check */
 export interface GroupPermissionResult {

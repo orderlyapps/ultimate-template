@@ -5,7 +5,8 @@ import { congregationAdminCollection } from "@tanstack-db/congregation-admin/con
 import { reportPermissionCollection } from "@tanstack-db/report-permission/reportPermissionCollection";
 import { publisherCollection } from "@tanstack-db/publisher/publisherCollection";
 import { cleanPermissionCollection } from "@tanstack-db/clean-permission/cleanPermissionCollection";
-import type { UserPermissions, GroupPermission, CleanPermission } from "./types";
+import { secretaryPermissionCollection } from "@tanstack-db/secretary-permission/secretaryPermissionCollection";
+import type { UserPermissions, GroupPermission, CleanPermission, SecretaryPermission } from "./types";
 
 /**
  * Fetches and consolidates all permissions for the current user.
@@ -42,13 +43,19 @@ export const useUserPermissions = (): UserPermissions => {
     q.from({ cp: cleanPermissionCollection })
   );
 
+  // Fetch secretary_permission data
+  const { data: secretaryPermissions, isLoading: isSecretaryPermissionLoading } = useLiveQuery((q) =>
+    q.from({ sp: secretaryPermissionCollection })
+  );
+
   const isLoading =
     isAuthLoading ||
     isAuthUserLoading ||
     isCongregationAdminLoading ||
     isReportPermissionLoading ||
     isPublisherLoading ||
-    isCleanPermissionLoading;
+    isCleanPermissionLoading ||
+    isSecretaryPermissionLoading;
 
   // Not authenticated
   if (!currentUserId) {
@@ -58,6 +65,7 @@ export const useUserPermissions = (): UserPermissions => {
       congregationId: null,
       groupPermissions: [],
       cleanPermissions: [],
+      secretaryPermissions: [],
       isLoading,
     };
   }
@@ -95,12 +103,21 @@ export const useUserPermissions = (): UserPermissions => {
         can_edit: cp.can_edit,
       })) ?? [];
 
+  // Get secretary permissions for current user
+  const userSecretaryPermissions: SecretaryPermission[] =
+    secretaryPermissions
+      ?.filter((sp) => sp.auth_user_id === currentUserId)
+      .map((sp) => ({
+        congregation_id: sp.congregation_id,
+      })) ?? [];
+
   return {
     isSuperAdmin,
     isCongregationAdmin,
     congregationId,
     groupPermissions: userGroupPermissions,
     cleanPermissions: userCleanPermissions,
+    secretaryPermissions: userSecretaryPermissions,
     isLoading,
   };
 };

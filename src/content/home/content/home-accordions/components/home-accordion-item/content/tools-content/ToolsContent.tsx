@@ -69,6 +69,21 @@ export function ToolsContent() {
         </IonItem>
       </PermissionGuard>
 
+      <PermissionGuard permission="secretary">
+        <IonItem
+          lines="none"
+          routerLink="/home/tools/secretary"
+          className="ion-text-right"
+          slot="end"
+        >
+          <IonLabel>
+            <Space height="0.5" />
+            <Text bold>Secretary</Text>
+            <Space height="0.5" />
+          </IonLabel>
+        </IonItem>
+      </PermissionGuard>
+
       <PermissionGuard permission="edit:clean">
         <IonItem
           lines="none"

@@ -30,6 +30,7 @@ export const useHasPermission = (
     congregationId,
     groupPermissions,
     cleanPermissions,
+    secretaryPermissions,
     isLoading,
   } = useUserPermissions();
 
@@ -84,6 +85,14 @@ export const useHasPermission = (
         isSuperAdmin ||
         isCongregationAdmin ||
         cleanPermissions.some((cp) => cp.can_edit)
+      );
+
+    case "secretary":
+      // Check if user has secretary permission
+      return (
+        isSuperAdmin ||
+        isCongregationAdmin ||
+        secretaryPermissions.length > 0
       );
 
     default:

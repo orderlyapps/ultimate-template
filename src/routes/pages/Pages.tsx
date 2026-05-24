@@ -19,6 +19,7 @@ import { ClamAssignmentForms } from "@pages/home/tools/clam-assignment-forms/Cla
 import { CleanTables } from "@pages/home/tools/clean-tables/CleanTables";
 import { HomeEvents } from "@pages/home/events/Events";
 import { HomeAssignments } from "@pages/home/assignments/Assignments";
+import { Secretary } from "@pages/home/tools/secretary/Secretary";
 
 // MINISTRY
 import { Ministry } from "@pages/ministry/Ministry";
@@ -96,6 +97,7 @@ export const pages = (
     <Route exact path="/home/tools/clean-tables" render={() => <CleanTables />} />
     <Route exact path="/home/events" render={() => <HomeEvents />} />
     <Route exact path="/home/assignments" render={() => <HomeAssignments />} />
+    <Route exact path="/home/tools/secretary" render={() => <Secretary />} />
 
     {/* MINISTRY */}
     <Route exact path="/ministry" render={() => <Ministry />} />
