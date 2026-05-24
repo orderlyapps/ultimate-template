@@ -108,5 +108,10 @@
     "vite-plugin-pwa": "^1.2.0",
     "vitest": "^4.0.14",
     "wrangler": "^4.60.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "@tanstack/query-core": "5.100.9"
+    }
   }
 }

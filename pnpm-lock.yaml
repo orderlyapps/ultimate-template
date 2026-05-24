@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  '@tanstack/query-core': 5.100.9
+
 dependencies:
   '@floating-ui/react':
     specifier: ^0.27.16
@@ -34,7 +37,7 @@ dependencies:
     version: 0.1.9(@journeyapps/wa-sqlite@1.7.0)(typescript@5.9.3)
   '@tanstack/query-db-collection':
     specifier: ^1.0.36
-    version: 1.0.36(@tanstack/query-core@5.100.11)(typescript@5.9.3)
+    version: 1.0.36(@tanstack/query-core@5.100.9)(typescript@5.9.3)
   '@tanstack/react-db':
     specifier: ^0.1.83
     version: 0.1.83(react@19.2.4)(typescript@5.9.3)
@@ -4405,23 +4408,19 @@ packages:
     engines: {node: '>=18'}
     dev: false
 
-  /@tanstack/query-core@5.100.11:
-    resolution: {integrity: sha512-lmE0994apShXPj8CUxgx4ch5yUJhE9k/+tVwihBvPOyerACWdBocfFg24t8+0RhtlTd7tEgchDkhlCxNssvDxw==}
-    dev: false
-
   /@tanstack/query-core@5.100.9:
     resolution: {integrity: sha512-SJSFw1S8+kQ0+knv/XGfrbocWoAlT7vDKsSImtLx3ZPQmEcR46hkDjLSvynSy25N8Ms4tIEini1FuBd5k7IscQ==}
     dev: false
 
-  /@tanstack/query-db-collection@1.0.36(@tanstack/query-core@5.100.11)(typescript@5.9.3):
+  /@tanstack/query-db-collection@1.0.36(@tanstack/query-core@5.100.9)(typescript@5.9.3):
     resolution: {integrity: sha512-WOHSZeqFOflWpMxp7ndu8x3M8GyLieWyUsS1fReG8wv6I/1MGOz1j3+XNlGoeoWolYF2hV4l324/dB9BxjAwxw==}
     peerDependencies:
-      '@tanstack/query-core': ^5.0.0
+      '@tanstack/query-core': 5.100.9
       typescript: '>=4.7'
     dependencies:
       '@standard-schema/spec': 1.1.0
       '@tanstack/db': 0.6.5(typescript@5.9.3)
-      '@tanstack/query-core': 5.100.11
+      '@tanstack/query-core': 5.100.9
       typescript: 5.9.3
     dev: false
 
