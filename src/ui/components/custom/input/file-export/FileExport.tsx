@@ -46,7 +46,7 @@ export const FileExport: React.FC<FileExportProps> = ({
     }
   };
 
-  const Content = () => (
+  const content = (
     <>
       {isExporting ? (
         <IonSpinner
@@ -68,14 +68,14 @@ export const FileExport: React.FC<FileExportProps> = ({
         onClick={handleExport}
         disabled={disabled || isExporting}
       >
-        <Content />
+        {content}
       </IonItemOption>
     );
   }
 
   return (
     <IonButton onClick={handleExport} disabled={disabled || isExporting}>
-      <Content />
+      {content}
     </IonButton>
   );
 };
