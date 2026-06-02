@@ -6,6 +6,7 @@ import { getTheocraticWeekLabel } from "@date/getTheocraticWeekLabel";
 import { AssignmentRow } from "./components/assignment-row/AssignmentRow";
 import { formatPublisherName } from "@format/formatPublisherName";
 import { PdfPage } from "@services/vendor/pdf/pdf-page";
+import { SecondSchoolSection } from "./components/second-school-section/SecondSchoolSection";
 
 const styles = StyleSheet.create({
   weekSection: {
@@ -47,23 +48,11 @@ type MidweekSchedulePdfDocumentProps = {
 };
 
 /**
- * Gets the display name for a publisher
- */
-// function formatPublisherName(
-//   publisher:
-//     | { first_name: string; last_name: string; display_name?: string | null }
-//     | undefined,
-// ): string {
-//   if (!publisher) return "—";
-//   if (publisher.display_name) return publisher.display_name;
-//   return `${publisher.first_name} ${publisher.last_name}`;
-// }
-
-/**
  * Renders a single week's schedule
  */
 function WeekSection({ week }: { week: WeekScheduleData }) {
   const { meetingData, assignments } = week;
+  const hasSecondSchool = assignments.has("chairman_2");
   const dateLabel = getTheocraticWeekLabel(week.weekId);
   return (
     <View style={styles.weekSection}>
@@ -176,6 +165,9 @@ function WeekSection({ week }: { week: WeekScheduleData }) {
           />
         )}
       </View>
+
+      {/* Second School (only shown when chairman_2 is assigned) */}
+      {hasSecondSchool && <SecondSchoolSection week={week} />}
 
       {/* Living as Christians */}
       <View style={styles.section}>

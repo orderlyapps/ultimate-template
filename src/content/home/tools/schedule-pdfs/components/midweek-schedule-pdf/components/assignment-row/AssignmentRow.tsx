@@ -49,6 +49,8 @@ type AssignmentRowProps = {
   readonly assistantOrReader?: string;
   /** Label for the assistant/reader (e.g., "Assistant", "Reader") */
   readonly assistantLabel?: string;
+  /** Whether to always show the assistant label (used for second school parts) */
+  readonly showAssistantLabel?: boolean;
 };
 
 /**
@@ -98,14 +100,21 @@ export function AssignmentRow({
   participant,
   assistantOrReader,
   assistantLabel = "Assistants",
+  showAssistantLabel = false,
 }: AssignmentRowProps) {
   const colorStyle = getColorStyle(assignmentId);
+
+  // Show the assistant label for specific assignment types or when explicitly requested
+  const shouldShowLabel =
+    showAssistantLabel ||
+    assignmentId === "ayf_part1" ||
+    assignmentId === "lc_cbs";
 
   return (
     <View style={styles.row}>
       <Text style={[styles.title, colorStyle]}>{title}</Text>
       <Text style={styles.assistantLabel}>
-        {(assignmentId === "ayf_part1" || assignmentId === "lc_cbs") &&
+        {shouldShowLabel &&
           assistantOrReader && (
             <Text style={styles.assistant}>{assistantLabel}:</Text>
           )}
